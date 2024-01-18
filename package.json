@@ -1,0 +1,28 @@
+{
+  "name": "exercise-db-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "client": "vite client",
+    "build": "vite build client",
+    "server": "nodemon server/server.cjs",
+    "setup-db": "node server/setup-db.cjs",
+    "list-users": "node server/list-users.cjs"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.8.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "katex": "^0.16.9",
+    "ors": "^1.0.0",
+    "preact": "^10.19.1"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.6.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.1.0",
+    "prisma": "^5.8.1",
+    "vite": "^5.0.0"
+  }
+}
