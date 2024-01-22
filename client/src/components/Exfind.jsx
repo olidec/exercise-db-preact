@@ -8,12 +8,10 @@ export default function Exfind() {
     const getEx = async () => {
         const res = await askServer("/api/ex","GET")
         setEx(res)
-        console.log(res[1].content)
+        // console.log(res[1].content)
         const element = document.getElementById("exercise")
-        element.innerHTML = res[5].content
+        element.innerHTML = res[1].content
         MathJax.typeset([element])
-        
-    
     }
 
 
