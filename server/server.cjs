@@ -99,15 +99,6 @@ function checkLogin(req, res, next) {
 
 router.get("/api/ex", async (req,res) => {
   const exs = await prisma.exercise.findMany()
-  exs.forEach(ex => {
-    ex.content = katex.renderToString(ex.content, {
-      throwOnError: false
-    })
-    ex.solution = katex.renderToString(ex.solution, {
-      throwOnError: false
-    })
-  })
-  // console.log(exs)
   res.json(exs)
 })
 
