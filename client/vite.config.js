@@ -7,5 +7,5 @@ export default defineConfig({
   build: {
     outDir: "../docs",
   },
-  base: "/exercise-db-test/",
+  base: "/exercise-db-preact/",
 })

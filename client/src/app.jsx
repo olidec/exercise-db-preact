@@ -6,7 +6,6 @@ import Button from "./components/Button"
 import Form from "./components/Form"
 import Exform from "./components/Exform"
 import Exfind from "./components/Exfind"
-import EquationRenderer from "./components/Equationrenderer"
 
 export function App() {
   const [data, setData] = useState({})
@@ -47,8 +46,6 @@ export function App() {
   return (
     <>
       <h1>Hello World!</h1>
-      <h2>Hallo Patrick</h2>
-      <EquationRenderer>{String.raw`\sqrt{3} x^2 + y^2 = c^2`}</EquationRenderer>
       <div>
         <button onClick={() => getRoot()}>Get Root</button>
         <button onClick={() => getTest()}>Get Test</button>
@@ -56,7 +53,7 @@ export function App() {
         <button onClick={() => getWrongPassword()}>
           Get Secret (wrong password)
         </button>
-        <button onClick={() => getKaTeX()}>Get KaTeX</button>
+        {/* <button onClick={() => getKaTeX()}>Get KaTeX</button> */}
       </div>
       <div id="equation"></div>
       <Data data={data} />
