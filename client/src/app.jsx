@@ -6,7 +6,6 @@ import Button from "./components/Button"
 import Form from "./components/Form"
 import Exform from "./components/Exform"
 import Exfind from "./components/Exfind"
-import EquationRenderer from "./components/Equationrenderer"
 
 export function App() {
   const [data, setData] = useState({})
