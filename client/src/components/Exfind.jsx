@@ -1,5 +1,6 @@
 import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
+// import { signal } from "../utils/signal";
 
 export default function Exfind() {
     const [ex, setEx] = useState([]) 
