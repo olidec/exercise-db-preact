@@ -2,7 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const PrismaClient = require("@prisma/client")
 const prisma = new PrismaClient.PrismaClient()
-const katex = require("katex")
+// const katex = require("katex")
 
 const app = express()
 const router = express.Router()
@@ -17,16 +17,6 @@ router.get("/api/users", async (req,res) => {
   res.json(users)
 
 })
-
-router.get("/api/katex", (req, res) => {
-  const html = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}", {
-    throwOnError: false
-});
-  res.json({msg: html})
-  // res.setHeader("Content-Type", "text/html")
-  // res.send(`<span>ojqnsd</span>`)
-}
-)
 
 router.get("/api/test", (req, res) => {
   res.json({

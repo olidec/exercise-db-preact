@@ -34,12 +34,6 @@ export function App() {
     setData(res)
   }
 
-  const getKaTeX = async () => {
-    const res = await askServer("/api/katex", "GET")
-    setMath(res)
-    document.getElementById("equation").innerHTML = res.msg
-  }
-
   
   
 
@@ -53,7 +47,6 @@ export function App() {
         <button onClick={() => getWrongPassword()}>
           Get Secret (wrong password)
         </button>
-        {/* <button onClick={() => getKaTeX()}>Get KaTeX</button> */}
       </div>
       <div id="equation"></div>
       <Data data={data} />
