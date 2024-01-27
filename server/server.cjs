@@ -29,7 +29,7 @@ router.get("/api/test", (req, res) => {
 })
 
 router.post("/api/user", async (req,res) => {
-  const {email, name, password} = req.body;
+  const { email, name, password } = req.body;
   try {
     const newUser = await prisma.user.create({
       data: {
@@ -92,12 +92,16 @@ router.get("/api/ex", async (req,res) => {
   res.json(exs)
 })
 
-// router.get("/api/ex/:id", async (req,res) => {
-//   const {id} = req.params
-//   const ex = await prisma.exercise.findUnique({where: {id: Number(id)}})
-//   console.log(ex)
-//   res.json(ex)
-// })
+
+
+router.get("/api/ex/:id", async (req,res) => {
+  console.log("Hi")
+  const id = req.params.id;
+  // const id = 1;
+  const ex = await prisma.exercise.findUnique({where: {id: Number(id)}})
+  console.log(ex)
+  res.json(ex)
+})
 
 router.get("/api/exercise-ids", async (req, res) => {
   try {

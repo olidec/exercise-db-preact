@@ -1,28 +1,35 @@
 import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
-import { signal } from "@preact/signals";
+import { signal, useSignal } from "@preact/signals";
 
 export default function Exfind() {
-    const [ex, setEx] = signal([]) 
+    const ex = useSignal([]) 
 
     const getEx = async () => {
-        const element = document.getElementById("exercise")
-        const res = await askServer("/api/ex","GET")
-        ex = res.value
+        // const element = document.getElementById("exercise")
+        const res = await askServer("/api/ex/1","GET")
+        ex.value = res
+        console.log(ex.value.content)
+        // ex.value = res
 
-        for (let i = 0; i < ex.length; i++) {
-            const element = document.createElement("li")
-            element.innerHTML = ex[i].content
-            document.getElementById("exercise").appendChild(element)
-        }
+        // for (let i = 0; i < ex.value.length; i++) {
+        //     const el = document.createElement("li")
+        //     el.innerHTML = ex.value[i].content
+        //     document.getElementById("exercise").appendChild(el)
+        //     MathJax.typeset([el])
+        // }
+        const el = document.createElement("li")
+        el.innerHTML = ex.value.content
+        document.getElementById("exercise").appendChild(el)
 
-        // res.map((ex) => {
+        // ex.map((ex) => {
         //     const el = document.createElement("li")
         //     el.innerHTML = ex.content
         //     document.getElementById("exercise").appendChild(el)
+        //     MathJax.typeset([el])
         // })
 
-        MathJax.typeset([element])
+        // MathJax.typeset([element])
     }
 
     return (
