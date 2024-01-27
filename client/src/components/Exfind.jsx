@@ -26,10 +26,10 @@ export default function Exfind() {
 
     return (
         <>
-            <button onClick={() => getEx()}>Get Exercises</button>
+            <button className="pure-button" onClick={() => getEx()}>Get Exercises</button>
             <div>
                 <ol id="exercise">
-                    
+
                 </ol>
             </div>
         </>
