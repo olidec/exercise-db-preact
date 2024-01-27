@@ -3,29 +3,44 @@ import { askServer } from "../utils/connector";
 import { signal, useSignal } from "@preact/signals";
 
 export default function Exfind() {
-    // const currentEx = signal(1)
-    const ex = useSignal([]) 
+    const ex = signal([])
+    const id = signal(1)
 
-    const getEx = async () => {
-        // const element = document.getElementById("exercise")
+    const loadEx = async () => {
         const res = await askServer("/api/ex/","GET")
-        console.log(res.value.content)
         ex.value = res
-        // console.log(ex.value.content)
+    }
+    useEffect(() => {
+        loadEx()
+    }, [])  
+
+    const onChange = (e) => {
+        e.preventDefault()
+        const { value } = e.target
+        id.value = value
+    }
+
+    // Alle Aufgaben werden in der Variable ex.value gespeichert. Dies sollte später geändert werden, da es nicht gut ist, wenn alle AUfgaben auf einmal geladen werden (Speicherplatz, Ladezeit, etc.) Idealerweise wird beim updaten der id nur die Aufgabe mit der entsprechenden id geladen.
+    const getEx = (e) => {
+        e.preventDefault()
+        // const element = document.getElementById("exercise")
+        // console.log(ex.value[id])
         // ex.value = res
 
-        for (let i = 0; i < ex.value.length; i++) {
-            const el = document.createElement("li")
-            el.innerHTML = ex.value[i].content
-            document.getElementById("exercise").appendChild(el)
-            MathJax.typeset([el])
-        }
-        
+        // for (let i = 0; i < ex.value.length; i++) {
+        //     const el = document.createElement("li")
+        //     el.innerHTML = ex.value[i].content
+        //     document.getElementById("exercise").appendChild(el)
+        //     MathJax.typeset([el])
+        // }
         // const el = document.createElement("li")
-        // el.innerHTML = ex.value.content
-        // document.getElementById("exercise").innerHTML = res.content
+        myexid.innerHTML = ex.value[id].id
+        myexcont.innerHTML = ex.value[id].content
+        myexsol.innerHTML = ex.value[id].solution
+        MathJax.typeset([extable])
+        // document.getElementById("exercise").appendChild(el)
 
-        // ex.map((ex) => {
+        // ex.value.map((ex) => {
         //     const el = document.createElement("li")
         //     el.innerHTML = ex.content
         //     document.getElementById("exercise").appendChild(el)
@@ -37,37 +52,28 @@ export default function Exfind() {
 
     return (
         <>
-            <form className="pure-form">
-            <fieldset>
-            <select name="exno" id="exno">
-                {Array.from({length: 5}, (_, i) => (
-                    <option key={i+1} value={i+1}>{i+1}</option>
-                ))}
-            </select>
-            <button className="pure-button pure-button-primary" onClick={() => getEx()}>Get Exercises</button>
-            </fieldset>
+            <form onSubmit={(e) => getEx(e)}>
+            <input type="number" value={id} onChange={onChange}/>
+            <button className="pure-button">Get Exercise from ID</button>
             </form>
             <div>
-                <ol className="exercise"></ol>
+                <table id="extable" className="pure-table pure-table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Content</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="myexid"></td>
+                            <td id="myexcont"></td>
+                            <td id="myexsol"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            {/* <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Exercise No.</th>
-                                <th>Exercise Text</th>
-                                <th>Solution</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <td></td>
-                            <td id="exercise"></td>
-                            <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-            </div> */}
         </>
     )
 }
