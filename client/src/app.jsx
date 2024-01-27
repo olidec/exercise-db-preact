@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks"
 import "./app.css"
 import { askServer } from "./utils/connector"
+
 import Data from "./components/Data"
 import Button from "./components/Button"
 import Form from "./components/Form"
@@ -9,7 +10,6 @@ import Exfind from "./components/Exfind"
 
 export function App() {
   const [data, setData] = useState({})
-  const [math, setMath] = useState({})
   
 
   // useEffect(async () => {
