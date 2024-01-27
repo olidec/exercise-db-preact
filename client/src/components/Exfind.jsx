@@ -18,6 +18,8 @@ export default function Exfind() {
         e.preventDefault()
         const { value } = e.target
         id.value = value
+        // unccoment line below to update view immediately on change
+        // getEx(e)
     }
 
     // Alle Aufgaben werden in der Variable ex.value gespeichert. Dies sollte später geändert werden, da es nicht gut ist, wenn alle AUfgaben auf einmal geladen werden (Speicherplatz, Ladezeit, etc.) Idealerweise wird beim updaten der id nur die Aufgabe mit der entsprechenden id geladen.
