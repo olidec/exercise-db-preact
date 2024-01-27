@@ -9,7 +9,6 @@ import Exfind from "./components/Exfind"
 
 export function App() {
   const [data, setData] = useState({})
-  const [math, setMath] = useState({})
   
 
   // useEffect(async () => {
@@ -41,10 +40,10 @@ export function App() {
     <>
       <h1>Hello World!</h1>
       <div>
-        <button onClick={() => getRoot()}>Get Root</button>
-        <button onClick={() => getTest()}>Get Test</button>
-        <button onClick={() => getSecret()}>Get Secret</button>
-        <button onClick={() => getWrongPassword()}>
+        <button className="pure-button" onClick={() => getTest()}>Get Test</button>
+        <button className="pure-button" onClick={() => getRoot()}>Get Root</button>
+        <button className="pure-button" onClick={() => getSecret()}>Get Secret</button>
+        <button className="pure-button" onClick={() => getWrongPassword()}>
           Get Secret (wrong password)
         </button>
       </div>
