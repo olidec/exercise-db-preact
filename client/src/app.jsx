@@ -7,6 +7,7 @@ import Form from "./components/Form"
 import Exform from "./components/Exform"
 import FindExAll from "./components/FindExAll"
 import FindExById from "./components/FindExById"
+import FindExByIdFromServer from "./components/FindExByIdFromServer"
 
 export function App() {
   const [data, setData] = useState({})
@@ -61,6 +62,8 @@ export function App() {
       <FindExById />
 
       <FindExAll />
+
+      <FindExByIdFromServer />
 
     </>
   )

@@ -15,7 +15,7 @@ export default function Exfind() {
 
     const getEx = () => {
         // const element = document.getElementById("exercise")
-        console.log(ex.value.content)
+        // console.log(ex.value.content)
         // ex.value = res
 
         // for (let i = 0; i < ex.value.length; i++) {

@@ -95,11 +95,9 @@ router.get("/api/ex", async (req,res) => {
 
 
 router.get("/api/ex/:id", async (req,res) => {
-  console.log("Hi")
-  // const id = req.params.id;
-  const id = 4;
+  const { id } = req.params;
   const ex = await prisma.exercise.findUnique({where: {id: Number(id)}})
-  console.log(ex)
+  // console.log(ex)
   res.json(ex)
 })
 
