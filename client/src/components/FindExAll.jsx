@@ -3,12 +3,18 @@ import { askServer } from "../utils/connector";
 import { signal, useSignal } from "@preact/signals";
 
 export default function Exfind() {
-    const ex = useSignal([]) 
+    const ex = signal([]) 
 
-    const getEx = async () => {
-        // const element = document.getElementById("exercise")
+    const loadEx = async () => {
         const res = await askServer("/api/ex/","GET")
         ex.value = res
+    }
+    useEffect(() => {
+        loadEx()
+    }, [])  
+
+    const getEx = () => {
+        // const element = document.getElementById("exercise")
         console.log(ex.value.content)
         // ex.value = res
 

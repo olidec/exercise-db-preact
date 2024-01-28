@@ -55,7 +55,8 @@ export default function FindExById() {
     return (
         <>
             <form onSubmit={(e) => getEx(e)}>
-            <input type="number" value={id} onChange={onChange}/>
+                <label htmlFor="exid">Select Exercise via ID</label>
+            <input id="exid" type="number" value={id} onChange={onChange}/>
             <button className="pure-button">Get Exercise from ID</button>
             </form>
             <div>

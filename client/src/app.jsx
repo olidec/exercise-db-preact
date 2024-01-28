@@ -5,7 +5,7 @@ import Data from "./components/Data"
 import Button from "./components/Button"
 import Form from "./components/Form"
 import Exform from "./components/Exform"
-import Exfind from "./components/Exfind"
+import FindExAll from "./components/FindExAll"
 import FindExById from "./components/FindExById"
 
 export function App() {
@@ -59,6 +59,8 @@ export function App() {
       <Exform />
       </div>
       <FindExById />
+
+      <FindExAll />
 
     </>
   )
