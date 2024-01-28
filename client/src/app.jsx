@@ -6,6 +6,7 @@ import Button from "./components/Button"
 import Form from "./components/Form"
 import Exform from "./components/Exform"
 import Exfind from "./components/Exfind"
+import FindExById from "./components/FindExById"
 
 export function App() {
   const [data, setData] = useState({})
@@ -57,7 +58,7 @@ export function App() {
       <div id="ex-form">
       <Exform />
       </div>
-      <Exfind />
+      <FindExById />
 
     </>
   )
