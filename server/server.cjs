@@ -2,7 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const PrismaClient = require("@prisma/client")
 const prisma = new PrismaClient.PrismaClient()
-const katex = require("katex")
+// const katex = require("katex")
 
 const app = express()
 const router = express.Router()
@@ -18,16 +18,6 @@ router.get("/api/users", async (req,res) => {
 
 })
 
-router.get("/api/katex", (req, res) => {
-  const html = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}", {
-    throwOnError: false
-});
-  res.json({msg: html})
-  // res.setHeader("Content-Type", "text/html")
-  // res.send(`<span>ojqnsd</span>`)
-}
-)
-
 router.get("/api/test", (req, res) => {
   res.json({
     msg: "Hello",
@@ -39,7 +29,7 @@ router.get("/api/test", (req, res) => {
 })
 
 router.post("/api/user", async (req,res) => {
-  const {email, name, password} = req.body;
+  const { email, name, password } = req.body;
   try {
     const newUser = await prisma.user.create({
       data: {
@@ -102,12 +92,14 @@ router.get("/api/ex", async (req,res) => {
   res.json(exs)
 })
 
-// router.get("/api/ex/:id", async (req,res) => {
-//   const {id} = req.params
-//   const ex = await prisma.exercise.findUnique({where: {id: Number(id)}})
-//   console.log(ex)
-//   res.json(ex)
-// })
+
+
+router.get("/api/ex/:id", async (req,res) => {
+  const { id } = req.params;
+  const ex = await prisma.exercise.findUnique({where: {id: Number(id)}})
+  // console.log(ex)
+  res.json(ex)
+})
 
 router.get("/api/exercise-ids", async (req, res) => {
   try {

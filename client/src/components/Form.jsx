@@ -37,14 +37,15 @@ export default function Form() {
 
     return (
         <>
-        <form onSubmit={(e) => addNewUser(e)}>
-            <label htmlFor="email">E-Mail</label>
-            <input type="email" name="email" id="email" value={user.email} onChange={updateUserHandler} />
-            <label htmlFor="name">Name:</label>
-            <input type="text" name="name" id="name" value={user.name} onChange={updateUserHandler} />
-            <label htmlFor="password">Password:</label>
-            <input type="password" name="password" id="password" value={user.password} onChange={updateUserHandler} />
-            <button type="submit">Add new user</button>
+        <form className="pure-form" onSubmit={(e) => addNewUser(e)}>
+            <legend>Add a new User</legend>
+            {/* <label htmlFor="email">E-Mail</label> */}
+            <input type="email" name="email" id="email" value={user.email} onChange={updateUserHandler} placeholder="E-Mail"/>
+            {/* <label htmlFor="name">Name:</label> */}
+            <input type="text" name="name" id="name" value={user.name} onChange={updateUserHandler} placeholder="Name"/>
+            {/* <label htmlFor="password">Password:</label> */}
+            <input type="password" name="password" id="password" value={user.password} onChange={updateUserHandler} placeholder="Password"/>
+            <button className="pure-button pure-button-primary" type="submit">Add new user</button>
         </form>
         </>
     )

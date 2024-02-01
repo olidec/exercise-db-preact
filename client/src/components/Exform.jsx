@@ -36,15 +36,25 @@ export default function Form() {
 
     return (
         <>
-        <form onSubmit={(e) => addNewEx(e)}>
-            <label htmlFor="summary">Summary</label>
-            <input type="text" name="summary" id="summary" value={ex.summary} onChange={updateExHandler} />
-            
-            <label htmlFor="content">Content:</label>
-            <textarea rows="5" cols="20" name="content" id="content" value={ex.content} onChange={updateExHandler} />
-            <label htmlFor="solution">Solution:</label>
-            <textarea rows="5" cols="20" name="solution" id="solution" value={ex.solution} onChange={updateExHandler} />
-            <button type="submit">Add new exercise</button>
+        <form className="pure-form pure-form-aligned" onSubmit={(e) => addNewEx(e)}>
+            <legend>Add your own Exercise</legend>
+            <fieldset>
+                <div className="pure-control-group">
+                    <label htmlFor="summary">Summary: </label>
+                        <textarea rows={2} cols={100} type="text" name="summary" id="summary" value={ex.summary} onChange={updateExHandler} placeholder="Write a short summary of you exercise"/>
+                </div>
+            <div className="pure-control-group">
+                <label htmlFor="content">Exercise Text: </label>
+                    <textarea rows="5" cols="100" name="content" id="content" value={ex.content} onChange={updateExHandler} placeholder="Enter the exercise text in the LaTeX format"/>
+            </div>
+            <div className="pure-control-group">
+            <label htmlFor="solution">Solution: </label>
+                <textarea rows="5" cols="100" name="solution" id="solution" value={ex.solution} onChange={updateExHandler} placeholder="Enter the exercise solution in the LaTeX format"/>
+            </div>
+            <div className="pure-controls">
+                <button type="submit" className="pure-button pure-button-primary">Add new exercise</button>
+            </div>
+            </fieldset>
         </form>
         </>
     )

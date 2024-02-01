@@ -5,11 +5,12 @@ import Data from "./components/Data"
 import Button from "./components/Button"
 import Form from "./components/Form"
 import Exform from "./components/Exform"
-import Exfind from "./components/Exfind"
+import FindExAll from "./components/FindExAll"
+import FindExById from "./components/FindExById"
+import FindExByIdFromServer from "./components/FindExByIdFromServer"
 
 export function App() {
   const [data, setData] = useState({})
-  const [math, setMath] = useState({})
   
 
   // useEffect(async () => {
@@ -34,12 +35,6 @@ export function App() {
     setData(res)
   }
 
-  const getKaTeX = async () => {
-    const res = await askServer("/api/katex", "GET")
-    setMath(res)
-    document.getElementById("equation").innerHTML = res.msg
-  }
-
   
   
 
@@ -47,13 +42,12 @@ export function App() {
     <>
       <h1>Hello World!</h1>
       <div>
-        <button onClick={() => getRoot()}>Get Root</button>
-        <button onClick={() => getTest()}>Get Test</button>
-        <button onClick={() => getSecret()}>Get Secret</button>
-        <button onClick={() => getWrongPassword()}>
+        <button className="pure-button" onClick={() => getTest()}>Get Test</button>
+        <button className="pure-button" onClick={() => getRoot()}>Get Root</button>
+        <button className="pure-button" onClick={() => getSecret()}>Get Secret</button>
+        <button className="pure-button" onClick={() => getWrongPassword()}>
           Get Secret (wrong password)
         </button>
-        {/* <button onClick={() => getKaTeX()}>Get KaTeX</button> */}
       </div>
       <div id="equation"></div>
       <Data data={data} />
@@ -65,7 +59,11 @@ export function App() {
       <div id="ex-form">
       <Exform />
       </div>
-      <Exfind />
+      <FindExById />
+
+      <FindExAll />
+
+      <FindExByIdFromServer />
 
     </>
   )

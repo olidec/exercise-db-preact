@@ -11,7 +11,7 @@ export default function Button() {
 
     return (
         <>
-            <button onClick={() => getAllUsers()}>Get all Users</button>
+            <button className="pure-button" onClick={() => getAllUsers()}>Get all Users</button>
             <ol>
                 {users.map((user) => {
                     return <li key={user.id}>{user.name}</li>
