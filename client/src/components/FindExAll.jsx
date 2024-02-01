@@ -1,14 +1,16 @@
 import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
 import { signal, useSignal } from "@preact/signals";
+import { ex, loadEx } from "../signals/exercise";
 
 export default function Exfind() {
-    const ex = signal([]) 
+    // const ex = signal([]) 
 
-    const loadEx = async () => {
-        const res = await askServer("/api/ex/","GET")
-        ex.value = res
-    }
+    // const loadEx = async () => {
+    //     const res = await askServer("/api/ex/","GET")
+    //     ex.value = res
+    // }
+    
     useEffect(() => {
         loadEx()
     }, [])  
