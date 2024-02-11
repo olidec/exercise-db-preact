@@ -1,0 +1,15 @@
+.pure-menu-horizontal {
+  background-color: rgb(85, 197, 154);
+}
+
+.pure-menu-link {
+  color: rgb(215, 17, 17);
+}
+
+.pure-menu-link:hover {
+  background-color: rgb(30, 161, 213);
+}
+
+.pure-menu-item:hover {
+  background-color: rgb(213, 146, 30);
+}
