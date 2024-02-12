@@ -10,12 +10,12 @@ export default function Menu() {
         }}
       >
         <li className="pure-menu-item pure-menu-selected">
-          <a href="#" className="pure-menu-link">
+          <a href="." className="pure-menu-link">
             Home
           </a>
         </li>
         <li className="pure-menu-item pure-menu-selected">
-          <a href="#" className="pure-menu-link">
+          <a href="./aufgaben" className="pure-menu-link">
             Aufgaben
           </a>
         </li>
@@ -24,22 +24,22 @@ export default function Menu() {
           className="pure-menu-item pure-menu-has-children pure-menu-allow-hover"
           style={{ marginLeft: "auto" }}
         >
-          <a href="#" id="menuLink1" className="pure-menu-link">
+          <a href="./contact" id="menuLink1" className="pure-menu-link">
             Contact
           </a>
           <ul className="pure-menu-children">
             <li className="pure-menu-item">
-              <a href="#" className="pure-menu-link">
+              <a href="./contact" className="pure-menu-link">
                 Email
               </a>
             </li>
             <li className="pure-menu-item">
-              <a href="#" className="pure-menu-link">
+              <a href="./contact" className="pure-menu-link">
                 Twitter
               </a>
             </li>
             <li className="pure-menu-item">
-              <a href="#" className="pure-menu-link">
+              <a href="./contact" className="pure-menu-link">
                 Tumblr Blog
               </a>
             </li>

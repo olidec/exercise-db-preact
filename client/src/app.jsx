@@ -9,6 +9,10 @@ import FindExAll from "./components/FindExAll";
 import FindExById from "./components/FindExById";
 import FindExByIdFromServer from "./components/FindExByIdFromServer";
 import Menu from "./components/Menu";
+import Aufgaben from "./pages/aufgaben.jsx";
+import { Router, route } from "preact-router";
+import { h } from "preact";
+import Home from "./pages/home.jsx";
 export function App() {
   const [data, setData] = useState({});
 
@@ -16,7 +20,10 @@ export function App() {
   //   const res = await askServer("/", "GET")
   //   setData(res)
   // }, [])
-
+  const handleRoute = (e) => {
+    // Beispiel für zusätzliche Logik bei Routenänderungen
+    console.log("Route changed to", e.url);
+  };
   const getRoot = async () => {
     const res = await askServer("/", "GET");
     setData(res);
@@ -37,6 +44,7 @@ export function App() {
   return (
     <>
       <Menu />
+
       <div>
         <button className="pure-button" onClick={() => getTest()}>
           Get Test
@@ -67,6 +75,15 @@ export function App() {
       <FindExAll />
 
       <FindExByIdFromServer />
+
+      <div>
+        <Router onChange={handleRoute}>
+          {/* Andere Routen */}
+
+          <Aufgaben path="/exercise-db-preact/aufgaben" />
+          <Home path="/exercise-db-preact/home" />
+        </Router>
+      </div>
     </>
   );
 }
