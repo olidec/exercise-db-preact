@@ -90,18 +90,23 @@ function checkLogin(req, res, next) {
 const searchValidation = [
   query("id", "id must be a number").notEmpty().isInt().optional(),
   query("search").isString().notEmpty().optional().escape(),
+  query("cat").isString().notEmpty().optional().escape(),
 ]
 
 router.get("/api/ex", searchValidation, async (req,res) => {
   const result = validationResult(req)
   if (result.isEmpty()) {
-    const { id , search } = req.query
+    const { id , search , cat } = req.query
     if (id) {
       const ex = await prisma.exercise.findUnique({where: {id: Number(id)}})
       res.json(ex)
     }
     else if (search) {
       const exs = await prisma.exercise.findMany({where: {content: {contains: search}}})
+      res.json(exs)
+    }
+    else if (cat) {
+      const exs = await prisma.exercise.findMany({where: {categories: {some: {name: {equals: cat}}}}})
       res.json(exs)
     }
     else {
@@ -116,25 +121,17 @@ else {
 
 
 
-router.get("/api/ex/:id", async (req,res) => {
-  const { id } = req.params;
-  const ex = await prisma.exercise.findUnique({where: {id: Number(id)}})
-  // console.log(ex)
-  res.json(ex)
+router.get("/api/cat", async (req,res) => {
+  const cat = await prisma.category.findMany({
+    include: {
+      subcategory: true
+    }
+  })
+  console.log(cat)
+  res.json(cat)
 })
 
-router.get("/api/exercise-ids", async (req, res) => {
-  try {
-    const exercises = await prisma.exercise.findMany({
-      select: {
-        id: true, // Only select the id field
-      },
-    });
-    res.json(exercises.map(exercise => exercise.id));
-  } catch (error) {
-    res.status(500).json({ msg: "Error retrieving exercise IDs", err: error });
-  }
-});
+
 
 router.post("/api/ex", async (req,res) => {
   const { summary, content, solution } = req.body;
