@@ -50,7 +50,6 @@ export function App() {
       <Router>
         <Aufgaben path="/exercise-db-preact/aufgaben" />
       </Router>
-      ;
     </>
   );
 }
