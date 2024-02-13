@@ -14,8 +14,6 @@ import { Router, route } from "preact-router";
 import { h } from "preact";
 import Home from "./pages/home.jsx";
 export function App() {
-  const [data, setData] = useState({});
-
   // useEffect(async () => {
   //   const res = await askServer("/", "GET")
   //   setData(res)
@@ -49,13 +47,6 @@ export function App() {
       <Router>
         <Aufgaben path="/exercise-db-preact/aufgaben" />
       </Router>
-      {/* Andere Routen */}
-      <div id="equation"></div>
-      <Data data={data} />
-      <Button />
-      <div id="user-form">
-        <Form />
-      </div>
       ;
     </>
   );
