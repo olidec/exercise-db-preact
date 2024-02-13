@@ -10,7 +10,7 @@ export default function Menu() {
         }}
       >
         <li className="pure-menu-item pure-menu-selected">
-          <a href="." className="pure-menu-link">
+          <a href="./home" className="pure-menu-link">
             Home
           </a>
         </li>
