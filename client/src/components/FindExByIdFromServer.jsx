@@ -1,4 +1,3 @@
-import { useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
 import { signal } from "@preact/signals";
 
@@ -16,7 +15,7 @@ export default function FindExById() {
     // Alle Aufgaben werden in der Variable ex.value gespeichert. Dies sollte später geändert werden, da es nicht gut ist, wenn alle AUfgaben auf einmal geladen werden (Speicherplatz, Ladezeit, etc.) Idealerweise wird beim updaten der id nur die Aufgabe mit der entsprechenden id geladen.
     const getEx = async (e) => {
         e.preventDefault()
-        const route = `/api/ex/${myId.value}`
+        const route = `/api/ex?id=${myId.value}`
         // console.log(route)
         const res = await askServer(route,"GET")
         // console.log(res.content)
