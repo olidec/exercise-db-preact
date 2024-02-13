@@ -10,13 +10,18 @@ export default function Menu() {
         }}
       >
         <li className="pure-menu-item pure-menu-selected">
-          <a href="./home" className="pure-menu-link">
+          <a href="./" className="pure-menu-link">
             Home
           </a>
         </li>
         <li className="pure-menu-item pure-menu-selected">
-          <a href="./aufgaben" className="pure-menu-link">
-            Aufgaben
+          <a href="./add" className="pure-menu-link">
+            Aufgaben hinzufügen
+          </a>
+        </li>
+        <li className="pure-menu-item pure-menu-selected">
+          <a href="./find" className="pure-menu-link">
+            Aufgaben finden
           </a>
         </li>
 

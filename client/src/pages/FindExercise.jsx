@@ -9,11 +9,7 @@ const Aufgaben = () => {
     <>
       <Menu></Menu>
       <div>
-        <h1>Aufgaben</h1>
-        {/* Hier kannst du den Inhalt der Aufgaben-Seite hinzufügen */}
-        <div id="ex-form">
-          <Exform />
-        </div>
+        <h1>Aufgaben Finden</h1>
         <FindExById />
 
         <FindExAll />

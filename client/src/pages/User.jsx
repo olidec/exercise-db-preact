@@ -5,12 +5,12 @@ import Menu from "../components/Menu.jsx";
 import Form from "../components/Form.jsx";
 import { useState } from "preact/hooks";
 
-const Home = () => {
+const User = () => {
   const [data, setData] = useState({});
 
   return (
     <>
-      <Menu></Menu>;{/* Andere Routen */}
+      <Menu></Menu>{/* Andere Routen */}
       <div id="equation"></div>
       <Data data={data} />
       <Button />
@@ -20,4 +20,4 @@ const Home = () => {
     </>
   );
 };
-export default Home;
+export default User;

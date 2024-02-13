@@ -9,10 +9,11 @@ import FindExAll from "./components/FindExAll.jsx";
 import FindExById from "./components/FindExById.jsx";
 import FindExByIdFromServer from "./components/FindExByIdFromServer.jsx";
 import Menu from "./components/Menu.jsx";
-import Aufgaben from "./pages/aufgaben.jsx";
+import AddExercise from "./pages/AddExercise.jsx";
+import FindExercise from "./pages/FindExercise.jsx";
 import { Router, route } from "preact-router";
 import { h } from "preact";
-import Home from "./pages/home.jsx";
+import User from "./pages/User.jsx";
 export function App() {
   // useEffect(async () => {
   //   const res = await askServer("/", "GET")
@@ -42,13 +43,9 @@ export function App() {
   return (
     <>
       <Router>
-        <Menu path="/exercise-db-preact" />
-      </Router>
-      <Router>
-        <Home path="/exercise-db-preact/home" />
-      </Router>
-      <Router>
-        <Aufgaben path="/exercise-db-preact/aufgaben" />
+        <User path="/exercise-db-preact/" />
+        <AddExercise path="/exercise-db-preact/add" />
+        <FindExercise path="/exercise-db-preact/find" />
       </Router>
       ;
     </>
