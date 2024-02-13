@@ -47,7 +47,6 @@ export function App() {
         <AddExercise path="/exercise-db-preact/add" />
         <FindExercise path="/exercise-db-preact/find" />
       </Router>
-      ;
     </>
   );
 }
