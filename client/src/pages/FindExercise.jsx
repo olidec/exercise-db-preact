@@ -9,6 +9,7 @@ const Aufgaben = () => {
       <div>
         <h1>Aufgaben Finden</h1>
         <h2>Aufgaben per ID finden</h2>
+
         <FindExByIdFromServer />
         <hr />
         <h2>Aufgaben nach Text finden</h2>
