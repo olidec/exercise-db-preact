@@ -1,8 +1,8 @@
 const express = require("express")
 const cors = require("cors")
+const { query, validationResult } = require("express-validator")
 const PrismaClient = require("@prisma/client")
 const prisma = new PrismaClient.PrismaClient()
-// const katex = require("katex")
 
 const app = express()
 const router = express.Router()
@@ -87,9 +87,31 @@ function checkLogin(req, res, next) {
   })
 }
 
-router.get("/api/ex", async (req,res) => {
-  const exs = await prisma.exercise.findMany()
-  res.json(exs)
+const searchValidation = [
+  query("id", "id must be a number").notEmpty().isInt().optional(),
+  query("search").isString().notEmpty().optional().escape(),
+]
+
+router.get("/api/ex", searchValidation, async (req,res) => {
+  const result = validationResult(req)
+  if (result.isEmpty()) {
+    const { id , search } = req.query
+    if (id) {
+      const ex = await prisma.exercise.findUnique({where: {id: Number(id)}})
+      res.json(ex)
+    }
+    else if (search) {
+      const exs = await prisma.exercise.findMany({where: {content: {contains: search}}})
+      res.json(exs)
+    }
+    else {
+      const exs = await prisma.exercise.findMany()
+      res.json(exs)
+    }
+  }
+else {
+  res.json({ errors: result.array() });
+}
 })
 
 
