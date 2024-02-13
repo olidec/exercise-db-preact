@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -11,32 +12,47 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  name String?
-  password String?
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  name      String?
+  password  String?
   // role Role @default(USER)
-  // exercises Exercise[]
+  exercises Exercise[]
 }
 
 model Exercise {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime? @updatedAt
-  summary String
-  content String @unique
-  solution String
-  // author User @relation(fields: [authorId], references: [id])
-  // authorId Int
-  // categories Category[]
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime?  @updatedAt
+  summary    String
+  content    String     @unique
+  solution   String
+  author     User       @relation(fields: [authorId], references: [id])
+  authorId   Int        @default(1)
+  categories Category[]
 }
 
 model Category {
-  id Int @id @default(autoincrement())
-  name String
-  // exercises Exercise[]
+  id          Int           @id @default(autoincrement())
+  name        String
+  exercises   Exercise[]
+  subcategory Subcategory[]
 }
 
+model Subcategory {
+  id         Int      @id @default(autoincrement())
+  name       String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  subcategory Subsubcategory[]
+}
+
+model Subsubcategory {
+  id            Int           @id @default(autoincrement())
+  name          String
+  subcategory   Subcategory   @relation(fields: [subcategoryId], references: [id])
+  subcategoryId Int
+}
 
 // enum Role {
 //   USER
