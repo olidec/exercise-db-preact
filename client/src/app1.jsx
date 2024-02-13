@@ -43,20 +43,47 @@ export function App() {
 
   return (
     <>
-      <Router>
-        <Home path="/exercise-db-preact/home" />
-      </Router>
-      <Router>
-        <Aufgaben path="/exercise-db-preact/aufgaben" />
-      </Router>
-      {/* Andere Routen */}
+      <Menu />
+
+      <div>
+        <button className="pure-button" onClick={() => getTest()}>
+          Get Test
+        </button>
+        <button className="pure-button" onClick={() => getRoot()}>
+          Get Root
+        </button>
+        <button className="pure-button" onClick={() => getSecret()}>
+          Get Secret
+        </button>
+        <button className="pure-button" onClick={() => getWrongPassword()}>
+          Get Secret (wrong password)
+        </button>
+      </div>
       <div id="equation"></div>
       <Data data={data} />
       <Button />
       <div id="user-form">
         <Form />
       </div>
-      ;
+      <hr />
+      <hr />
+      <div id="ex-form">
+        <Exform />
+      </div>
+      <FindExById />
+
+      <FindExAll />
+
+      <FindExByIdFromServer />
+
+      <div>
+        <Router onChange={handleRoute}>
+          {/* Andere Routen */}
+
+          <Aufgaben path="/exercise-db-preact/aufgaben" />
+          <Home path="/exercise-db-preact/home" />
+        </Router>
+      </div>
     </>
   );
 }
