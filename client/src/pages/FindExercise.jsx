@@ -10,7 +10,6 @@ const Aufgaben = () => {
       <Menu></Menu>
       <div>
         <h1>Aufgaben Finden</h1>
-        <FindExById />
 
         <FindExAll />
 

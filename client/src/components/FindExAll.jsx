@@ -4,50 +4,32 @@ import { signal, useSignal } from "@preact/signals";
 import { ex, loadEx } from "../signals/exercise";
 
 export default function Exfind() {
-    // const ex = signal([]) 
+  useEffect(() => {
+    loadEx();
+  }, []);
 
-    // const loadEx = async () => {
-    //     const res = await askServer("/api/ex/","GET")
-    //     ex.value = res
-    // }
-    
-    useEffect(() => {
-        loadEx()
-    }, [])  
+  const getEx = () => {
+    const exerciseList = document.getElementById("exercise");
 
-    const getEx = () => {
-        // const element = document.getElementById("exercise")
-        // console.log(ex.value.content)
-        // ex.value = res
+    // Lösche den vorherigen Inhalt des ol-Elements
+    exerciseList.innerHTML = "";
 
-        // for (let i = 0; i < ex.value.length; i++) {
-        //     const el = document.createElement("li")
-        //     el.innerHTML = ex.value[i].content
-        //     document.getElementById("exercise").appendChild(el)
-        //     MathJax.typeset([el])
-        // }
-        // const el = document.createElement("li")
-        // el.innerHTML = ex.value.content
-        // document.getElementById("exercise").appendChild(el)
+    ex.value.map((ex) => {
+      const el = document.createElement("li");
+      el.innerHTML = ex.content;
+      document.getElementById("exercise").appendChild(el);
+      MathJax.typeset([el]);
+    });
+  };
 
-        ex.value.map((ex) => {
-            const el = document.createElement("li")
-            el.innerHTML = ex.content
-            document.getElementById("exercise").appendChild(el)
-            MathJax.typeset([el])
-        })
-
-        // MathJax.typeset([element])
-    }
-
-    return (
-        <>
-            <button className="pure-button" onClick={() => getEx()}>Get Exercises</button>
-            <div>
-                <ol id="exercise">
-
-                </ol>
-            </div>
-        </>
-    )
+  return (
+    <>
+      <button className="pure-button" onClick={() => getEx()}>
+        Get Exercises
+      </button>
+      <div>
+        <ol id="exercise"></ol>
+      </div>
+    </>
+  );
 }
