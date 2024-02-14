@@ -25,6 +25,15 @@ export default function FindExBySearchText() {
     } else {
       setExerciseList(res);
     }
+
+    exsearchlist.innerHTML = "";
+    exerciseList.value.map((ex, key) => {
+      const el = document.createElement("tr");
+      el.setAttribute("key", key);
+      el.innerHTML = `<td>${ex.id}</td><td>${ex.content}</td><td>${ex.solution}</td>`;
+      exsearchlist.appendChild(el);
+      MathJax.typeset([el]);
+    });
   };
 
   const handleDelete = (index) => {
@@ -33,7 +42,6 @@ export default function FindExBySearchText() {
     setExerciseList(updatedList);
     MathJax.typeset();
   };
-
   useEffect(() => {
     MathJax.typeset();
   }, [exerciseList]);

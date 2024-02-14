@@ -1,7 +1,7 @@
 import Menu from "../components/Menu.jsx";
 import { h } from "preact";
 import FindExByIdFromServer from "../components/FindExByIdFromServer.jsx";
-import FindExBySearchText from "../components/FindExBySearchText.jsx";
+import FindExBySearchText from "../components/test.jsx";
 const Aufgaben = () => {
   return (
     <>
