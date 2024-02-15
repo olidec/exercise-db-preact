@@ -44,7 +44,7 @@ model Subcategory {
   name       String
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
-  subcategory Subsubcategory[]
+  subsubcategory Subsubcategory[]
 }
 
 model Subsubcategory {
