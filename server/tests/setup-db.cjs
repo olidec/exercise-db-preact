@@ -2,13 +2,18 @@ const PrismaClient = require("@prisma/client")
 const prisma = new PrismaClient.PrismaClient()
 
 async function setup() {
-    await prisma.user.create({
-        data: {
-            name: "Oli",
-            password: "123456",
-            email: "oli@dec.ch"
-
-        }
+    await prisma.subcategory.update({
+        where: { id: 20 },
+        data: { 
+            subsubcategory: {
+                create: [
+                        { name: "Bedingte Wahrscheinlichkeit" },
+                        { name: "Verteilungen" },
+                        { name: "Erwartungswert" },
+                    ]
+            }
+        },
+        include: { subsubcategory: true }
     })
     console.log("done")
 }

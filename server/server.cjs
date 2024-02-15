@@ -124,8 +124,12 @@ else {
 router.get("/api/cat", async (req,res) => {
   const cat = await prisma.category.findMany({
     include: {
-      subcategory: true
+      subcategory: {
+        include: {
+          subsubcategory: true
+      },
     }
+  }
   })
   console.log(cat)
   res.json(cat)
