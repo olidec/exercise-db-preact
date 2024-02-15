@@ -3,6 +3,8 @@ import { h } from "preact";
 import FindExByIdFromServer from "../components/FindExByIdFromServer.jsx";
 import FindExBySearchText from "../components/FindExBySearchText.jsx";
 import FindExByCategory from "../components/FindExByCategory.jsx";
+import CardList from "../components/CardList.jsx";
+import Card from "../components/Card.jsx";
 const Aufgaben = () => {
   return (
     <>
@@ -18,6 +20,8 @@ const Aufgaben = () => {
         <hr />
         <h2>Aufgaben nach Kategorie finden</h2>
         <FindExByCategory />
+        <hr />
+        <CardList />
       </div>
     </>
   );
