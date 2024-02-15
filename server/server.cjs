@@ -122,27 +122,26 @@ else {
 
 
 router.get("/api/cat", async (req,res) => {
-  const cat = await prisma.category.findMany({
-    include: {
-      subcategory: true
-    }
-  })
-  console.log(cat)
+  const cat = await prisma.category.findMany()
+  // console.log(cat)
   res.json(cat)
 })
 
 
 
 router.post("/api/ex", async (req,res) => {
-  const { summary, content, solution } = req.body;
+  const { content, solution, categories } = req.body;
+  const catlist = categories.map((c) => {return {id: Number(c)}})
   try {
     const newEx = await prisma.exercise.create({
       data: {
-        summary,
         content,
         solution,
-      },
-    })  
+        categories: {
+          connect: catlist
+      }
+    }
+  })
     console.log(newEx)
     res.json(newEx)
     
