@@ -2,18 +2,15 @@ const PrismaClient = require("@prisma/client")
 const prisma = new PrismaClient.PrismaClient()
 
 async function setup() {
-    await prisma.subcategory.update({
-        where: { id: 20 },
+    await prisma.exercise.create({
         data: { 
-            subsubcategory: {
-                create: [
-                        { name: "Bedingte Wahrscheinlichkeit" },
-                        { name: "Verteilungen" },
-                        { name: "Erwartungswert" },
-                    ]
+            content: "Some content",
+            solution: "Some Solution",
+            categories: {
+                connect: { id: 1 }
             }
         },
-        include: { subsubcategory: true }
+        include: { categories: true }
     })
     console.log("done")
 }
