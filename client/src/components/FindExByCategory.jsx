@@ -68,7 +68,7 @@ export default function FindExBySearchText() {
             <form onSubmit={(e) => getEx(e)}>
             <label htmlFor="exid-4">Search Exercises for contents</label>
             <select id="exid-4" onChange={onChange}>
-                <option value="="> -- Kategorie auswählen -- </option>
+                <option value=""> -- Kategorie auswählen -- </option>
             </select>
             <button className="pure-button">Find Exercises containing</button>
             </form>
