@@ -24,7 +24,11 @@ export default function Menu() {
             Aufgaben finden
           </a>
         </li>
-
+        <li className="pure-menu-item pure-menu-selected">
+          <a href="./warenkorb" className="pure-menu-link">
+            Warenkorb
+          </a>
+        </li>
         <li
           className="pure-menu-item pure-menu-has-children pure-menu-allow-hover"
           style={{ marginLeft: "auto" }}

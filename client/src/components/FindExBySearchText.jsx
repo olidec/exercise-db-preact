@@ -3,10 +3,12 @@ import { useState, useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
 import Card from "./Card";
 import CardList from "./CardList";
-export default function FindExBySearchText() {
-  const searchText = signal("");
-  const [exerciseList, setExerciseList] = useState([]);
 
+export default function FindExBySearchText() {
+  const [exerciseList, setExerciseList] = useState([]);
+  const searchText = signal("");
+
+  const [cartItems, setcartItems] = useState([]);
   const onChange = (e) => {
     e.preventDefault();
     const { value } = e.target;
@@ -46,10 +48,15 @@ export default function FindExBySearchText() {
         <button className="pure-button">Find Exercises containing</button>
       </form>
 
-      <div id="exsearchlist">
+      <div>
         <CardList
           cards={exerciseList.map((ex, index) => (
-            <Card key={index} content={ex.content} summary={ex.summary} />
+            <Card
+              key={index}
+              id={ex.id}
+              content={ex.content}
+              summary={ex.summary}
+            />
           ))}
         />
       </div>

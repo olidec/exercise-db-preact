@@ -14,6 +14,7 @@ import FindExercise from "./pages/FindExercise.jsx";
 import { Router, route } from "preact-router";
 import { h } from "preact";
 import User from "./pages/User.jsx";
+import Warenkorb from "./pages/Warenkorb.jsx";
 export function App() {
   // useEffect(async () => {
   //   const res = await askServer("/", "GET")
@@ -46,6 +47,7 @@ export function App() {
         <User path="/exercise-db-preact/" />
         <AddExercise path="/exercise-db-preact/add" />
         <FindExercise path="/exercise-db-preact/find" />
+        <Warenkorb path="/exercise-db-preact/warenkorb" />
       </Router>
     </>
   );

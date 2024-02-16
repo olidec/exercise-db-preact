@@ -1,7 +1,16 @@
 import { h } from "preact";
-//import style from "./Karte.css"; // Stelle sicher, dass die CSS-Datei für die Komponente existiert
 
-const Card = ({ key, summary, content }) => {
+import { useState } from "preact/hooks";
+import { signal } from "@preact/signals";
+const Card = ({ key, id, summary, content }) => {
+  //const [cartItems, setcartItems] = useState([]);
+  //const [exerciseList, setExerciseList] = useState([]);
+  const cartItems = signal([]);
+  const addToCart = (id) => {
+    cartItems.value.push(id);
+
+    console.log(cartItems.value);
+  };
   return (
     <>
       <div key={key} className="kartenContainer">
@@ -16,11 +25,12 @@ const Card = ({ key, summary, content }) => {
           <hr />
           <div className="warenkorbColumn">
             <label>Zum Warenkorb hinzufügen</label>
-            <input type="checkbox" onChange={() => addToCart(id)} />
+            <input type="checkbox" onChange={() => addToCart({ id })} />
           </div>
         </div>
       </div>
     </>
   );
 };
+
 export default Card;

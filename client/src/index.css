@@ -20,7 +20,7 @@
   align-items: center;
   flex-wrap: wrap; /* Hier wird die Zeilenumbruch-Eigenschaft hinzugefügt */
   gap: 16px; /* Hier kannst du den Abstand zwischen den Karten einstellen */
-  height: 40vh;
+  height: 50vh;
 }
 
 .karte {
