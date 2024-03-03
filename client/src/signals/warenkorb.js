@@ -19,6 +19,12 @@ export function clearCart() {
   cartItems.value = [];
 }
 
+export function handleDelete(id, summary, content) {
+  const updatedList = [...cartItems.value];
+  updatedList.splice(id, 1);
+  cartItems.value = updatedList;
+}
+
 export const cartCount = computed(() => cartItems.value.length);
 
 export { cartItems };

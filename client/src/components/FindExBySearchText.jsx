@@ -1,7 +1,7 @@
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
-import Card from "./Card";
+import CardComp from "./CardComp";
 import CardList from "./CardList";
 
 export default function FindExBySearchText() {
@@ -29,13 +29,6 @@ export default function FindExBySearchText() {
     }
   };
 
-  const handleDelete = (index) => {
-    const updatedList = [...exerciseList];
-    updatedList.splice(index, 1);
-    setExerciseList(updatedList);
-    MathJax.typeset();
-  };
-
   useEffect(() => {
     MathJax.typeset();
   }, [exerciseList]);
@@ -51,7 +44,7 @@ export default function FindExBySearchText() {
       <div>
         <CardList
           cards={exerciseList.map((ex, index) => (
-            <Card
+            <CardComp
               key={index}
               id={ex.id}
               content={ex.content}
