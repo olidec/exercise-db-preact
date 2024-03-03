@@ -10,7 +10,6 @@ const Home = () => {
 
   return (
     <>
-      <Menu></Menu>{/* Andere Routen */}
       <div id="equation"></div>
       <Data data={data} />
       <Button />

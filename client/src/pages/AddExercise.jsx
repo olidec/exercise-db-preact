@@ -7,7 +7,6 @@ import FindExByIdFromServer from "../components/FindExByIdFromServer.jsx";
 const Aufgaben = () => {
   return (
     <>
-      <Menu></Menu>
       <div>
         <h1>Aufgaben hinzufügen</h1>
         {/* Hier kannst du den Inhalt der Aufgaben-Seite hinzufügen */}

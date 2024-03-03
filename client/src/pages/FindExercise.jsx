@@ -8,7 +8,6 @@ import Card from "../components/Card.jsx";
 const Aufgaben = () => {
   return (
     <>
-      <Menu></Menu>
       <div>
         <h1>Aufgaben Finden</h1>
         <h2>Aufgaben per ID finden</h2>
