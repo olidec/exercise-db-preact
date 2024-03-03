@@ -1,7 +1,7 @@
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
-import CardComp from "./CardComp";
+import AddCard from "./AddCard";
 import CardList from "./CardList";
 
 export default function FindExBySearchText() {
@@ -44,7 +44,7 @@ export default function FindExBySearchText() {
       <div>
         <CardList
           cards={exerciseList.map((ex, index) => (
-            <CardComp
+            <AddCard
               key={index}
               id={ex.id}
               content={ex.content}

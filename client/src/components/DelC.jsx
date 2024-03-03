@@ -2,7 +2,7 @@ import { h } from "preact";
 import { signal } from "@preact/signals";
 import { handleDelete } from "../signals/warenkorb";
 
-const DeleteCard = ({ id, summary, content }) => {
+const DelC = ({ index, id, summary, content }) => {
   return (
     <>
       <div className="warenkorbColumn">
@@ -16,4 +16,4 @@ const DeleteCard = ({ id, summary, content }) => {
   );
 };
 
-export default DeleteCard;
+export default DelC;

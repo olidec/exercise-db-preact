@@ -1,16 +1,18 @@
 import { h } from "preact";
 import { signal } from "@preact/signals";
 import { addToCart } from "../signals/warenkorb";
+import Card from "./Card";
+import AddC from "./AddC";
 
-const AddCard = ({ key, id, summary, content }) => {
+const AddCard = ({ key, id, content, summary }) => {
   return (
     <>
-      <div className="warenkorbColumn">
-        <label>Zum Warenkorb hinzufügen</label>
-        <input
-          type="checkbox"
-          onChange={() => addToCart({ id, summary, content })}
-        />
+      <div key={key} className="kartenContainer">
+        <div>
+          <Card id={id} summary={summary} content={content} />
+
+          <AddC id={id} summary={summary} content={content} />
+        </div>
       </div>
     </>
   );

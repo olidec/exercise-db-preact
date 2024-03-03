@@ -2,20 +2,20 @@ import { h } from "preact";
 import { signal } from "@preact/signals";
 import { addToCart } from "../signals/warenkorb";
 import Card from "./Card";
-import AddCard from "./AddCard";
+import DelC from "./DelC";
 
-const CardComp = ({ key, id, content, summary }) => {
+const DelCard = ({ key, id, content, summary }) => {
   return (
     <>
       <div key={key} className="kartenContainer">
         <div>
           <Card id={id} summary={summary} content={content} />
 
-          <AddCard id={id} summary={summary} content={content} />
+          <DelC index={key} id={id} summary={summary} content={content} />
         </div>
       </div>
     </>
   );
 };
 
-export default CardComp;
+export default DelCard;
