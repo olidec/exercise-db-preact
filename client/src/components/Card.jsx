@@ -1,16 +1,8 @@
 import { h } from "preact";
-
-import { useState } from "preact/hooks";
 import { signal } from "@preact/signals";
-const Card = ({ key, id, summary, content }) => {
-  //const [cartItems, setcartItems] = useState([]);
-  //const [exerciseList, setExerciseList] = useState([]);
-  const cartItems = signal([]);
-  const addToCart = (id) => {
-    cartItems.value.push(id);
+import { addToCart } from "../signals/warenkorb";
 
-    console.log(cartItems.value);
-  };
+const Card = ({ key, id, summary, content }) => {
   return (
     <>
       <div key={key} className="kartenContainer">
@@ -25,7 +17,10 @@ const Card = ({ key, id, summary, content }) => {
           <hr />
           <div className="warenkorbColumn">
             <label>Zum Warenkorb hinzufügen</label>
-            <input type="checkbox" onChange={() => addToCart({ id })} />
+            <input
+              type="checkbox"
+              onChange={() => addToCart({ id, summary, content })}
+            />
           </div>
         </div>
       </div>

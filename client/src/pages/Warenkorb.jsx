@@ -1,32 +1,17 @@
 import { h } from "preact";
-
+import { useEffect, useState } from "preact/hooks";
 import Menu from "../components/Menu.jsx";
+import { cartCount, cartItems } from "../signals/warenkorb";
 
-import { useState } from "preact/hooks";
-import Card from "../components/Card.jsx";
-import CardList from "../components/CardList.jsx";
 const Warenkorb = () => {
-  const [cartItems, setcartItems] = useState([]);
-  const [exerciseList, setExerciseList] = useState([]);
   return (
     <>
-      <Menu></Menu>
       <div>
         <h2>Warenkorb</h2>
-
-        <CardList
-          cards={exerciseList.map((ex, index) => (
-            <Card
-              key={index}
-              id={ex.id}
-              content={ex.content}
-              summary={ex.summary}
-            />
-          ))}
-        />
+        <h2>{cartCount}</h2>
       </div>
-      {/* Andere Routen */}
     </>
   );
 };
+
 export default Warenkorb;
