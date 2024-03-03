@@ -42,6 +42,7 @@ export function App() {
 
   return (
     <>
+      <Menu> </Menu>
       <Router>
         <User path="/exercise-db-preact/" />
         <AddExercise path="/exercise-db-preact/add" />
