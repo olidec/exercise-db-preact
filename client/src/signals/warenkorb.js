@@ -25,6 +25,6 @@ export function handleDelete(id, summary, content) {
   cartItems.value = updatedList;
 }
 
-export const cartCount = computed(() => cartItems.value.length);
+//export const cartCount = computed(() => cartItems.value.length);
 
 export { cartItems };

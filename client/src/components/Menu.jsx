@@ -1,3 +1,5 @@
+import { Link } from "preact-router/match";
+
 export default function Menu() {
   return (
     <div className="pure-menu pure-menu-horizontal">
@@ -10,47 +12,47 @@ export default function Menu() {
         }}
       >
         <li className="pure-menu-item pure-menu-selected">
-          <a href="./" className="pure-menu-link">
+          <Link href="./" className="pure-menu-link">
             Home
-          </a>
+          </Link>
         </li>
         <li className="pure-menu-item pure-menu-selected">
-          <a href="./add" className="pure-menu-link">
+          <Link href="./add" className="pure-menu-link">
             Aufgaben hinzufügen
-          </a>
+          </Link>
         </li>
         <li className="pure-menu-item pure-menu-selected">
-          <a href="./find" className="pure-menu-link">
+          <Link href="./find" className="pure-menu-link">
             Aufgaben finden
-          </a>
+          </Link>
         </li>
         <li className="pure-menu-item pure-menu-selected">
-          <a href="./warenkorb" className="pure-menu-link">
+          <Link href="./warenkorb" className="pure-menu-link">
             Warenkorb
-          </a>
+          </Link>
         </li>
         <li
           className="pure-menu-item pure-menu-has-children pure-menu-allow-hover"
           style={{ marginLeft: "auto" }}
         >
-          <a href="./contact" id="menuLink1" className="pure-menu-link">
+          <Link href="./contact" id="menuLink1" className="pure-menu-link">
             Contact
-          </a>
+          </Link>
           <ul className="pure-menu-children">
             <li className="pure-menu-item">
-              <a href="./contact" className="pure-menu-link">
+              <Link href="./contact" className="pure-menu-link">
                 Email
-              </a>
+              </Link>
             </li>
             <li className="pure-menu-item">
-              <a href="./contact" className="pure-menu-link">
+              <Link href="./contact" className="pure-menu-link">
                 Twitter
-              </a>
+              </Link>
             </li>
             <li className="pure-menu-item">
-              <a href="./contact" className="pure-menu-link">
+              <Link href="./contact" className="pure-menu-link">
                 Tumblr Blog
-              </a>
+              </Link>
             </li>
           </ul>
         </li>

@@ -14,40 +14,23 @@ import FindExercise from "./pages/FindExercise.jsx";
 import { Router, route } from "preact-router";
 import { h } from "preact";
 import User from "./pages/User.jsx";
-import Warenkorb from "./pages/Warenkorb.jsx";
+import WarenkorbTotal from "./pages/WarenkorbTotal.jsx";
+import DelCard from "./components/DelCard";
+import CardList from "./components/CardList";
+import { cartItems } from "./signals/warenkorb";
 export function App() {
   // useEffect(async () => {
   //   const res = await askServer("/", "GET")
   //   setData(res)
   // }, [])
-  const handleRoute = (e) => {
-    // Beispiel für zusätzliche Logik bei Routenänderungen
-    console.log("Route changed to", e.url);
-  };
-  const getRoot = async () => {
-    const res = await askServer("/", "GET");
-    setData(res);
-  };
-  const getTest = async () => {
-    const res = await askServer("/api/test", "GET");
-    setData(res);
-  };
-  const getSecret = async () => {
-    const res = await askServer("/api/secret", "POST", { pw: "password" });
-    setData(res);
-  };
-  const getWrongPassword = async () => {
-    const res = await askServer("/api/secret", "POST", { pw: "not this one" });
-    setData(res);
-  };
 
   return (
     <>
       <Router>
         <User path="/exercise-db-preact/" />
         <AddExercise path="/exercise-db-preact/add" />
-        <FindExercise path="/exercise-db-preact/find" />
-        <Warenkorb path="/exercise-db-preact/warenkorb" />
+        <FindExercise path="/exercise-db-preact/find"></FindExercise>
+        <WarenkorbTotal path="/exercise-db-preact/warenkorb"></WarenkorbTotal>
       </Router>
     </>
   );

@@ -1,20 +1,22 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import Menu from "../components/Menu.jsx";
-import { cartCount, cartItems } from "../signals/warenkorb";
+import { cartItems } from "../signals/warenkorb";
 import DelCard from "../components/DelCard.jsx";
 import CardList from "../components/CardList";
-const Warenkorb = () => {
+import { useSignal } from "@preact/signals";
+
+const Warenkorb = ({ items }) => {
   useEffect(() => {
     MathJax.typeset();
-  }, [cartItems.value]);
+  }, [items]);
 
   return (
     <>
-      <h1>Warenkorb</h1>
+      <h1>Waren</h1>
       <div>
         <CardList
-          cards={cartItems.value.map((ex, index) => (
+          cards={items.map((ex, index) => (
             <DelCard
               key={ex.id}
               id={ex.id}
