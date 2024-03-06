@@ -12,11 +12,11 @@ const Warenkorb = () => {
   return (
     <>
       <h1>Warenkorb</h1>
-      <div className="kartenContainer">
+      <div>
         <CardList
           cards={cartItems.value.map((ex, index) => (
             <DelCard
-              key={index}
+              key={ex.id}
               id={ex.id}
               content={ex.content}
               summary={ex.summary}

@@ -2,7 +2,7 @@ import { h } from "preact";
 import { signal } from "@preact/signals";
 import { addToCart } from "../signals/warenkorb";
 
-const AddC = ({ key, id, summary, content }) => {
+const AddC = ({ id, summary, content }) => {
   return (
     <>
       <div className="warenkorbColumn">

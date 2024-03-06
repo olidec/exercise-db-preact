@@ -9,7 +9,7 @@ const AddCard = ({ key, id, content, summary }) => {
     <>
       <div key={key} className="kartenContainer">
         <div>
-          <Card id={id} summary={summary} content={content} />
+          <Card key={id} id={id} summary={summary} content={content} />
 
           <AddC id={id} summary={summary} content={content} />
         </div>

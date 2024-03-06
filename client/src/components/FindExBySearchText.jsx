@@ -45,7 +45,7 @@ export default function FindExBySearchText() {
         <CardList
           cards={exerciseList.map((ex, index) => (
             <AddCard
-              key={index}
+              key={ex.id}
               id={ex.id}
               content={ex.content}
               summary={ex.summary}

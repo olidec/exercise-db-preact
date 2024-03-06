@@ -2,7 +2,7 @@ import { h } from "preact";
 import { signal } from "@preact/signals";
 import { handleDelete } from "../signals/warenkorb";
 
-const DelC = ({ index, id, summary, content }) => {
+const DelC = ({ id, summary, content }) => {
   return (
     <>
       <div className="warenkorbColumn">

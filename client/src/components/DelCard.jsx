@@ -9,9 +9,9 @@ const DelCard = ({ key, id, content, summary }) => {
     <>
       <div key={key} className="kartenContainer">
         <div>
-          <Card id={id} summary={summary} content={content} />
+          <Card key={id} id={id} summary={summary} content={content} />
 
-          <DelC index={key} id={id} summary={summary} content={content} />
+          <DelC id={id} summary={summary} content={content} />
         </div>
       </div>
     </>
