@@ -11,7 +11,7 @@ const DelCard = ({ key, id, content, summary }) => {
         <div>
           <Card key={id} id={id} summary={summary} content={content} />
 
-          <DelC id={id} summary={summary} content={content} />
+          <DelC id={id} />
         </div>
       </div>
     </>

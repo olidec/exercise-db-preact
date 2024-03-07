@@ -2,7 +2,7 @@ import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
 import AddCard from "./AddCard";
-import CardList from "./CardList";
+import CardListSearch from "./CardListSearch";
 
 export default function FindExBySearchText() {
   const [exerciseList, setExerciseList] = useState([]);
@@ -42,16 +42,7 @@ export default function FindExBySearchText() {
       </form>
 
       <div>
-        <CardList
-          cards={exerciseList.map((ex, index) => (
-            <AddCard
-              key={ex.id}
-              id={ex.id}
-              content={ex.content}
-              summary={ex.summary}
-            />
-          ))}
-        />
+        <CardListSearch list={exerciseList} />
       </div>
     </>
   );

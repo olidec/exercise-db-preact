@@ -1,5 +1,6 @@
 import { Link } from "preact-router/match";
-
+import { cartItems } from "../signals/warenkorb";
+import { signal } from "@preact/signals";
 export default function Menu() {
   return (
     <div className="pure-menu pure-menu-horizontal">

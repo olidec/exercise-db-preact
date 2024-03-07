@@ -14,23 +14,29 @@ import FindExercise from "./pages/FindExercise.jsx";
 import { Router, route } from "preact-router";
 import { h } from "preact";
 import User from "./pages/User.jsx";
-import WarenkorbTotal from "./pages/WarenkorbTotal.jsx";
+import Warenkorb from "./pages/Warenkorb.jsx";
 import DelCard from "./components/DelCard";
-import CardList from "./components/CardList";
-import { cartItems } from "./signals/warenkorb";
-export function App() {
-  // useEffect(async () => {
-  //   const res = await askServer("/", "GET")
-  //   setData(res)
-  // }, [])
+import CardList from "./components/CardListSearch.jsx";
+import {
+  cartItems,
+  cartCount,
+  getCart,
+  getCartCount,
+} from "./signals/warenkorb";
 
+import { useContext } from "preact/hooks";
+import { createContext } from "preact";
+export function App() {
+  const AppState = createContext();
+  const state = useContext(getCart());
   return (
     <>
       <Router>
         <User path="/exercise-db-preact/" />
         <AddExercise path="/exercise-db-preact/add" />
         <FindExercise path="/exercise-db-preact/find"></FindExercise>
-        <WarenkorbTotal path="/exercise-db-preact/warenkorb"></WarenkorbTotal>
+
+        <Warenkorb items={getCart()} path="/exercise-db-preact/warenkorb" />
       </Router>
     </>
   );
