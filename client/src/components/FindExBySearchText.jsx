@@ -1,7 +1,7 @@
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
-import AddCard from "./AddCard";
+import AddCard from "./SearchCard";
 import CardListSearch from "./CardListSearch";
 
 export default function FindExBySearchText() {

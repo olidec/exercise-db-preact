@@ -15,7 +15,7 @@ import { Router, route } from "preact-router";
 import { h } from "preact";
 import User from "./pages/User.jsx";
 import Warenkorb from "./pages/Warenkorb.jsx";
-import DelCard from "./components/DelCard";
+import DelCard from "./components/WarenCard.jsx";
 import CardList from "./components/CardListSearch.jsx";
 import {
   cartItems,

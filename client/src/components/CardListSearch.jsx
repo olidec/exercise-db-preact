@@ -1,6 +1,6 @@
 import { h } from "preact";
-import AddCard from "./AddCard.jsx";
-
+import SearchCard from "./SearchCard.jsx";
+import { addToCart } from "../signals/warenkorb";
 const CardListSearch = ({ list }) => {
   if (!list) {
     return null; // oder eine alternative UI-Anzeige
@@ -10,11 +10,12 @@ const CardListSearch = ({ list }) => {
     <>
       <div>
         {list.map((ex, index) => (
-          <AddCard
+          <SearchCard
             key={ex.id}
             id={ex.id}
             content={ex.content}
             summary={ex.summary}
+            addToCart={addToCart}
           />
         ))}
       </div>

@@ -8,7 +8,7 @@ import {
   getCartCount,
 } from "../signals/warenkorb";
 
-import CardListKorb from "../components/CardListKorb.jsx";
+import CardListWaren from "../components/CardListWaren.jsx";
 import { useSignal } from "@preact/signals";
 
 const Warenkorb = ({ items }) => {
@@ -21,7 +21,7 @@ const Warenkorb = ({ items }) => {
       <h1>Waren</h1>
       <div>
         <p>{getCartCount()}</p>
-        <CardListKorb list={cartItems.value} />
+        <CardListWaren list={cartItems.value} />
       </div>
     </>
   );
