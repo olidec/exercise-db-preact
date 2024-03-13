@@ -12,13 +12,15 @@ export default function FindExBySearchText() {
   }, []);
 
   console.log(cat.value);
-  cat.value.map((c) => {
-    const el = document.createElement("option");
-    el.innerHTML = c.name;
-    el.value = c.name;
-    document.getElementById("exid-4").appendChild(el);
-  });
-
+  const element = document.getElementById("exid-4");
+  if (element) {
+    cat.value.map((c) => {
+      const el = document.createElement("option");
+      el.innerHTML = c.name;
+      el.value = c.name;
+      element.appendChild(el);
+    });
+  }
   const onChange = (e) => {
     e.preventDefault();
     const { value } = e.target;

@@ -2,7 +2,13 @@ import { h } from "preact";
 import { signal } from "@preact/signals";
 import Card from "./Card";
 import { useParams } from "react-router-dom";
-import Menu from "./Menu";
+
+import {
+  addToKorb,
+  handleDelete,
+  cartItems,
+  getIndex,
+} from "../signals/warenkorb";
 
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
@@ -14,7 +20,8 @@ const AufgDetails = ({ id }) => {
     (async () => {
       const route = `/api/ex?id=${id}`;
       const exDetails = await askServer(route, "GET");
-      console.log(exDetails);
+      //console.log(exDetails);
+      //console.log(cartItems.value);
       setExDetails(exDetails);
     })();
   }, [id]); // Stellt sicher, dass dieser Effekt erneut ausgeführt wird, wenn sich `id` ändert
@@ -23,6 +30,9 @@ const AufgDetails = ({ id }) => {
     MathJax.typeset();
   }, [exDetails]);
 
+  const index = getIndex({ id: exDetails?.id });
+  console.log(index);
+  console.log(cartItems.value);
   // Überprüfen, ob die Daten noch geladen werden
   if (!exDetails) {
     return <div>Lädt...</div>;
@@ -39,6 +49,29 @@ const AufgDetails = ({ id }) => {
           summary={exDetails.summary}
           content={exDetails.content}
         />
+        <div className="warenkorbColumn">
+          {index === -1 ? (
+            <button
+              className="pure-button"
+              onClick={() =>
+                addToKorb({
+                  id: exDetails.id,
+                  content: exDetails.content,
+                  summary: exDetails.summary,
+                })
+              }
+            >
+              Zum Warenkorb
+            </button>
+          ) : (
+            <button
+              className="pure-button"
+              onClick={() => handleDelete({ id: exDetails.id })}
+            >
+              Löschen aus Warenkorb
+            </button>
+          )}
+        </div>
       </div>
     </>
   );

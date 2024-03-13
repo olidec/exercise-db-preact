@@ -6,9 +6,7 @@ const cartItems = signal([]);
 export function addToKorb({ id, summary, content }) {
   const itemIndex = cartItems.value.findIndex((item) => item.id === id);
   if (itemIndex > -1) {
-    const updatedList = [...cartItems.value];
-    updatedList.splice(itemIndex, 1);
-    cartItems.value = updatedList;
+    alert("Dieses Element ist bereits im Warenkorb");
   } else {
     cartItems.value = [...cartItems.value, { id, summary, content }];
   }
@@ -29,8 +27,12 @@ export function handleDelete({ id }) {
       (item, itemIndex) => itemIndex !== index
     );
     cartItems.value = updatedList; // Setzen eines neuen Arrays
+  } else {
+    alert("Dieses Element ist nicht im Warenkorb");
   }
+
   console.log(index);
+  console.log(cartItems.value);
 }
 
 export function getCart() {
@@ -39,6 +41,11 @@ export function getCart() {
 
 export function getCartCount() {
   return cartItems.value.length;
+}
+
+export function getIndex({ id }) {
+  const index = cartItems.value.findIndex((item) => item.id === id);
+  return index;
 }
 
 //export const cartCount = computed(() => cartItems.value.length);
