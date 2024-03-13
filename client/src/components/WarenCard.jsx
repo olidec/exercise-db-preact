@@ -1,11 +1,9 @@
 import { h } from "preact";
 import { signal } from "@preact/signals";
-import { addToCart } from "../signals/warenkorb";
+import { handleDelete } from "../signals/warenkorb";
 import Card from "./Card";
 
-import { handleDelete } from "../signals/warenkorb";
-
-const WarenCard = ({ key, id, content, summary, handleDelete }) => {
+const WarenCard = ({ key, id, content, summary }) => {
   return (
     <>
       <div key={key} className="kartenContainer">

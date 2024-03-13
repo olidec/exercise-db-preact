@@ -2,7 +2,8 @@ import { h } from "preact";
 import { signal } from "@preact/signals";
 import Card from "./Card";
 
-const SearchCard = ({ key, id, content, summary, addToCart }) => {
+import { addToKorb } from "../signals/warenkorb";
+const SearchCard = ({ key, id, content, summary }) => {
   return (
     <>
       <div key={key} className="kartenContainer">
@@ -13,7 +14,7 @@ const SearchCard = ({ key, id, content, summary, addToCart }) => {
             <label>Zum Warenkorb hinzufügen</label>
             <input
               type="checkbox"
-              onChange={() => addToCart({ id, summary, content })}
+              onChange={() => addToKorb({ id, summary, content })}
             />
           </div>
         </div>

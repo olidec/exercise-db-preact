@@ -1,27 +1,30 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import Menu from "../components/Menu.jsx";
+import Menu from "./Menu.jsx";
 import {
   cartItems,
-  cartCount,
   getCart,
   getCartCount,
-} from "../signals/warenkorb";
+  addToKorb,
+} from "../signals/warenkorb.js";
 
-import CardListWaren from "../components/CardListWaren.jsx";
+import CardListWaren from "./CardListWaren.jsx";
 import { useSignal } from "@preact/signals";
 
-const Warenkorb = ({ items }) => {
+const Warenkorb = ({}) => {
+  const [warenKorb, setWarenKorb] = useState(null);
+
   useEffect(() => {
-    MathJax.typeset();
-  }, [items]);
+    setWarenKorb(getCart());
+  }, [cartItems.value]);
 
   return (
     <>
-      <h1>Waren</h1>
+      <h1>Warenkorb</h1>
       <div>
         <p>{getCartCount()}</p>
         <CardListWaren list={cartItems.value} />
+        <hr />
       </div>
     </>
   );

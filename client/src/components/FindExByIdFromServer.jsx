@@ -23,36 +23,13 @@ export default function FindExById() {
   const getEx = async (e) => {
     e.preventDefault();
     const route = `/api/ex?id=${myId.value}`;
-    // console.log(route)
+
     const res = await askServer(route, "GET");
-    // console.log(res.content)
-    // ex.value = res
 
-    // const element = document.getElementById("exercise")
-    // console.log(ex.value[id])
-    // ex.value = res
-
-    // for (let i = 0; i < ex.value.length; i++) {
-    //     const el = document.createElement("li")
-    //     el.innerHTML = ex.value[i].content
-    //     document.getElementById("exercise").appendChild(el)
-    //     MathJax.typeset([el])
-    // }
-    // const el = document.createElement("li")
     myexidnew.innerHTML = res.id;
     myexcontnew.innerHTML = res.content;
     myexsolnew.innerHTML = res.solution;
     MathJax.typeset([extablenew]);
-    // document.getElementById("exercise").appendChild(el)
-
-    // ex.value.map((ex) => {
-    //     const el = document.createElement("li")
-    //     el.innerHTML = ex.content
-    //     document.getElementById("exercise").appendChild(el)
-    //     MathJax.typeset([el])
-    // })
-
-    // MathJax.typeset([element])
   };
 
   return (

@@ -1,23 +1,22 @@
 import { h } from "preact";
 import SearchCard from "./SearchCard.jsx";
-import { addToCart } from "../signals/warenkorb";
-const CardListSearch = ({ list }) => {
-  if (!list) {
-    return null; // oder eine alternative UI-Anzeige
-  }
 
+import { Link } from "preact-router";
+const CardListSearch = ({ list }) => {
   return (
     <>
       <div>
-        {list.map((ex, index) => (
-          <SearchCard
-            key={ex.id}
-            id={ex.id}
-            content={ex.content}
-            summary={ex.summary}
-            addToCart={addToCart}
-          />
-        ))}
+        {list &&
+          list.map((ex, index) => (
+            <>
+              <SearchCard
+                key={ex.id}
+                id={ex.id}
+                summary={ex.summary}
+                content={ex.content}
+              ></SearchCard>
+            </>
+          ))}
       </div>
     </>
   );

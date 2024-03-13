@@ -1,8 +1,13 @@
 import { h } from "preact";
-import DelCard from "./WarenCard.jsx";
+
 import { handleDelete } from "../signals/warenkorb.js";
 import WarenCard from "./WarenCard.jsx";
+import { useEffect } from "preact/hooks";
 const CardListWaren = ({ list }) => {
+  useEffect(() => {
+    MathJax.typeset();
+  }, [list]);
+
   return (
     <>
       <div>
@@ -12,7 +17,6 @@ const CardListWaren = ({ list }) => {
             id={ex.id}
             content={ex.content}
             summary={ex.summary}
-            handleDelete={handleDelete}
           />
         ))}
       </div>
