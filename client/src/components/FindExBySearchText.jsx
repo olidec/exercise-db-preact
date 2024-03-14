@@ -1,14 +1,20 @@
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
-import AddCard from "./SearchCard";
-import CardListSearch from "./CardListSearch";
+import SearchKorb from "./SearchKorb";
 
+import { getCartSearch, cartSearch } from "../signals/exercise";
 export default function FindExBySearchText() {
   const [exerciseList, setExerciseList] = useState([]);
   const searchText = signal("");
 
   const [cartItems, setcartItems] = useState([]);
+
+  // // Annahme, dass cartSearch ein signal aus @preact/signals ist
+  useEffect(() => {
+    cartSearch.value = exerciseList; // Aktualisiert cartSearch, wenn exerciseList sich ändert
+  }, [exerciseList]); // Abhängigkeiten, die den Effekt auslösen
+
   const onChange = (e) => {
     e.preventDefault();
     const { value } = e.target;
@@ -29,10 +35,6 @@ export default function FindExBySearchText() {
     }
   };
 
-  useEffect(() => {
-    MathJax.typeset();
-  }, [exerciseList]);
-
   return (
     <>
       <form onSubmit={(e) => getEx(e)}>
@@ -40,10 +42,6 @@ export default function FindExBySearchText() {
         <input id="exid-3" value={searchText} onChange={onChange} />
         <button className="pure-button">Find Exercises containing</button>
       </form>
-
-      <div>
-        <CardListSearch list={exerciseList} />
-      </div>
     </>
   );
 }
