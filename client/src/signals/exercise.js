@@ -9,7 +9,7 @@ const loadEx = async () => {
 };
 
 export function getCartSearch() {
-  return cartSearch.value;
+  return cartSearch.value.length;
 }
 
 export { ex, loadEx, cartSearch };

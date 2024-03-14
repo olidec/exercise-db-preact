@@ -25,15 +25,17 @@ const FindExercise = () => {
 
           <FindExByIdFromServer />
           <hr />
+
           <h2>Aufgaben nach Text finden</h2>
           <FindExBySearchText />
+          <hr />
+
+          <h2>Aufgaben nach Kategorie finden</h2>
+          <FindExByCategory />
           <hr />
           <div>
             <SearchKorb />
           </div>
-          <h2>Aufgaben nach Kategorie finden</h2>
-          <FindExByCategory />
-          <hr />
         </div>
       </div>
     </>

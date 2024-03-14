@@ -10,6 +10,8 @@ const SearchKorb = ({}) => {
   return (
     <>
       <div>
+        <h1>Suchresultate</h1>
+        <p>{getCartSearch()}</p>
         <CardListSearch list={cartSearch.value} />
         <hr />
       </div>

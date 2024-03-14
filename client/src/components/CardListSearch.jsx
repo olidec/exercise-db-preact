@@ -6,11 +6,15 @@ const CardListSearch = ({ list }) => {
   useEffect(() => {
     MathJax.typeset();
   }, [list]);
+  console.log(list);
+
+  const normalizedList = Array.isArray(list) ? list : [list];
+
   return (
     <>
       <div>
-        {list &&
-          list.map((ex, index) => (
+        {normalizedList &&
+          normalizedList.map((ex, index) => (
             <>
               <SearchCard
                 key={ex.id}

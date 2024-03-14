@@ -3,16 +3,15 @@ import { useState, useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
 import SearchKorb from "./SearchKorb";
 
-import { getCartSearch, cartSearch } from "../signals/exercise";
+import { cartSearch } from "../signals/exercise";
 export default function FindExBySearchText() {
   const [exerciseList, setExerciseList] = useState([]);
   const searchText = signal("");
 
-  const [cartItems, setcartItems] = useState([]);
-
   // // Annahme, dass cartSearch ein signal aus @preact/signals ist
   useEffect(() => {
-    cartSearch.value = exerciseList; // Aktualisiert cartSearch, wenn exerciseList sich ändert
+    cartSearch.value = exerciseList;
+    // Aktualisiert cartSearch, wenn exerciseList sich ändert
   }, [exerciseList]); // Abhängigkeiten, die den Effekt auslösen
 
   const onChange = (e) => {

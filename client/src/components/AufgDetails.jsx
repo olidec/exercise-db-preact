@@ -49,29 +49,28 @@ const AufgDetails = ({ id }) => {
           summary={exDetails.summary}
           content={exDetails.content}
         />
-        <div className="warenkorbColumn">
-          {index === -1 ? (
-            <button
-              className="pure-button"
-              onClick={() =>
-                addToKorb({
-                  id: exDetails.id,
-                  content: exDetails.content,
-                  summary: exDetails.summary,
-                })
-              }
-            >
-              Zum Warenkorb
-            </button>
-          ) : (
-            <button
-              className="pure-button"
-              onClick={() => handleDelete({ id: exDetails.id })}
-            >
-              Löschen aus Warenkorb
-            </button>
-          )}
-        </div>
+
+        {index === -1 ? (
+          <button
+            className="pure-button"
+            onClick={() =>
+              addToKorb({
+                id: exDetails.id,
+                content: exDetails.content,
+                summary: exDetails.summary,
+              })
+            }
+          >
+            Zum Warenkorb
+          </button>
+        ) : (
+          <button
+            className="pure-button"
+            onClick={() => handleDelete({ id: exDetails.id })}
+          >
+            Löschen aus Warenkorb
+          </button>
+        )}
       </div>
     </>
   );

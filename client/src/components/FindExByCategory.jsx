@@ -1,11 +1,17 @@
 import { askServer } from "../utils/connector";
 import { signal } from "@preact/signals";
 import { cat, loadCat } from "../signals/categories.js";
-import { useEffect } from "react";
 
+import { cartSearch } from "../signals/exercise";
+import { useState, useEffect } from "preact/hooks";
 export default function FindExBySearchText() {
   const searchCategory = signal("");
-  const exerciseList = signal([]);
+  const [exerciseList, setExerciseList] = useState([]);
+
+  useEffect(() => {
+    cartSearch.value = exerciseList;
+    console.log(exerciseList);
+  }, [exerciseList]);
 
   useEffect(() => {
     loadCat();
@@ -37,29 +43,8 @@ export default function FindExBySearchText() {
       alert("No exercises match the search term.");
       return;
     } else {
-      exerciseList.value = res;
+      setExerciseList(res);
     }
-    // console.log(exerciseList.value)
-    excatlist.innerHTML = "";
-    exerciseList.value.map((ex, key) => {
-      const el = document.createElement("tr");
-      el.setAttribute("key", key);
-      el.innerHTML = `<td>${ex.id}</td><td>${ex.content}</td><td>${ex.solution}</td>`;
-      excatlist.appendChild(el);
-      MathJax.typeset([el]);
-    });
-
-    // console.log(res.content)
-    // res.map((ex) => {
-    //     const el = document.createElement("tr")
-    //     el.innerHTML = `<td>${ex.id}</td><td>${ex.content}</td><td>${ex.solution}</td>`
-    //     textsearchtable.appendChild(el)
-    //     MathJax.typeset([el])
-    // })
-
-    // myexidnew.innerHTML = res.id
-    // myexcontnew.innerHTML = res.content
-    // myexsolnew.innerHTML = res.solution
   };
 
   return (
@@ -71,18 +56,6 @@ export default function FindExBySearchText() {
         </select>
         <button className="pure-button">Find Exercises containing</button>
       </form>
-      <div>
-        <table id="exfromcat" className="pure-table pure-table-bordered">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Content</th>
-              <th>Solution</th>
-            </tr>
-          </thead>
-          <tbody id="excatlist"></tbody>
-        </table>
-      </div>
     </>
   );
 }
