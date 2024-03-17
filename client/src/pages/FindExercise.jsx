@@ -4,10 +4,9 @@ import FindExByIdFromServer from "../components/FindExByIdFromServer.jsx";
 import FindExBySearchText from "../components/FindExBySearchText.jsx";
 import FindExByCategory from "../components/FindExByCategory.jsx";
 import Warenkorb from "../components/Warenkorb.jsx";
-import { cartItems } from "../signals/warenkorb";
+//import { cartItems } from "../signals/warenkorb";
 import SearchKorb from "../components/SearchKorb.jsx";
 const FindExercise = () => {
-  console.log(cartItems.value);
   return (
     <>
       <div

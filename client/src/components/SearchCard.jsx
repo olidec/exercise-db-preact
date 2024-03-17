@@ -1,9 +1,12 @@
 import { h } from "preact";
 import { signal } from "@preact/signals";
 import Card from "./Card";
-
-import { cartItems, addToKorb, handleDelete } from "../signals/warenkorb";
+import { WarenkorbContext } from "../signals/warenkorb.js";
+import { useContext, useState } from "preact/hooks";
+//import { cartItems, addToKorb, handleDelete } from "../signals/warenkorb";
 const SearchCard = ({ key, id, content, summary }) => {
+  const { cartItems, getCartCount, getCart, addToKorb, handleDelete } =
+    useContext(WarenkorbContext);
   let index = cartItems.value.findIndex((item) => item.id === id);
   console.log(index);
   return (

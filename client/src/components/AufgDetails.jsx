@@ -2,17 +2,18 @@ import { h } from "preact";
 import { signal } from "@preact/signals";
 import Card from "./Card";
 import { useParams } from "react-router-dom";
-
-import {
-  addToKorb,
-  handleDelete,
-  cartItems,
-  getIndex,
-} from "../signals/warenkorb";
-
+import { WarenkorbContext } from "../signals/warenkorb.js";
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
+import { useContext } from "preact/hooks";
 const AufgDetails = ({ id }) => {
+  const {
+    cartItems,
+
+    addToKorb,
+    handleDelete,
+    getIndex,
+  } = useContext(WarenkorbContext);
   const [exDetails, setExDetails] = useState(null);
 
   useEffect(() => {

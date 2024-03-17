@@ -1,9 +1,11 @@
 import { h } from "preact";
 import { signal } from "@preact/signals";
-import { handleDelete } from "../signals/warenkorb";
+//import { handleDelete } from "../signals/warenkorb";
 import Card from "./Card";
-
+import { useContext, useState } from "preact/hooks";
+import { WarenkorbContext } from "../signals/warenkorb.js";
 const WarenCard = ({ key, id, content, summary }) => {
+  const { handleDelete } = useContext(WarenkorbContext);
   return (
     <>
       <div key={key} className="kartenContainer">

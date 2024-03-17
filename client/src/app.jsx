@@ -8,26 +8,15 @@ import { h } from "preact";
 import User from "./pages/User.jsx";
 import Warenkorb from "./components/Warenkorb.jsx";
 import AufgDetails from "./components/AufgDetails.jsx";
-import {
-  cartItems,
-  cartCount,
-  getCart,
-  getCartCount,
-} from "./signals/warenkorb";
-
-import { useContext } from "preact/hooks";
-import { createContext } from "preact";
+import { WarenkorbProvider } from "./signals/warenkorb";
 import Menu from "./components/Menu.jsx";
 export function App() {
-  const AppState = createContext();
-  const state = useContext(getCart());
   return (
     <>
       <Menu></Menu>
 
       <Router>
         <User exact path="/exercise-db-preact/" />
-
         <AddExercise exact path="/exercise-db-preact/add" />
 
         <FindExercise exact path="/exercise-db-preact/find" />
