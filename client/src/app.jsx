@@ -8,7 +8,7 @@ import { h } from "preact";
 import User from "./pages/User.jsx";
 import Warenkorb from "./components/Warenkorb.jsx";
 import AufgDetails from "./components/AufgDetails.jsx";
-import { WarenkorbProvider } from "./signals/warenkorb";
+
 import Menu from "./components/Menu.jsx";
 export function App() {
   return (

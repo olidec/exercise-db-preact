@@ -1,4 +1,4 @@
-import { signal, computed } from "@preact/signals";
+import { signal, computed, effect } from "@preact/signals";
 import { askServer } from "../utils/connector";
 
 import { useContext, useState } from "preact/hooks";
@@ -7,16 +7,20 @@ import { createContext } from "preact";
 export const WarenkorbContext = createContext();
 
 export const WarenkorbProvider = ({ children }) => {
-  const cartItems = signal([]);
   //const [cartItems, setCartItems] = useState([]);
-  function addToKorb({ id, summary, content }) {
-    const itemIndex = cartItems.value.findIndex((item) => item.id === id);
 
+  const cartItems = signal(
+    JSON.parse(window.localStorage.getItem("cartItems")) || []
+  );
+  function addToKorb({ id, summary, content }) {
     cartItems.value = [...cartItems.value, { id, summary, content }];
 
     console.log(cartItems.value);
   }
 
+  effect(() => {
+    window.localStorage.setItem("cartItems", JSON.stringify(cartItems.value));
+  });
   function handleDelete({ id }) {
     // Finden des Indexes des Elements mit der entsprechenden id
     const index = cartItems.value.findIndex((item) => item.id === id);

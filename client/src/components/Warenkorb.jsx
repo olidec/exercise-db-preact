@@ -7,11 +7,8 @@ import { useContext } from "preact/hooks";
 import CardListWaren from "./CardListWaren.jsx";
 import { useSignal } from "@preact/signals";
 
-const Warenkorb = ({ items }) => {
+const Warenkorb = ({}) => {
   const { cartItems, getCart, getCartCount } = useContext(WarenkorbContext);
-  useEffect(() => {
-    MathJax.typeset();
-  }, [items]);
 
   return (
     <>
