@@ -3,27 +3,39 @@ import { h } from "preact";
 import FindExByIdFromServer from "../components/FindExByIdFromServer.jsx";
 import FindExBySearchText from "../components/FindExBySearchText.jsx";
 import FindExByCategory from "../components/FindExByCategory.jsx";
-import CardList from "../components/CardList.jsx";
-import Card from "../components/Card.jsx";
-const Aufgaben = () => {
+import Warenkorb from "../components/Warenkorb.jsx";
+//import { cartItems } from "../signals/warenkorb";
+import SearchKorb from "../components/SearchKorb.jsx";
+
+const FindExercise = () => {
   return (
     <>
-      <div>
-        <h1>Aufgaben Finden</h1>
-        <h2>Aufgaben per ID finden</h2>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
 
-        <FindExByIdFromServer />
-        <hr />
-        <h2>Aufgaben nach Text finden</h2>
-        <FindExBySearchText />
-        <hr />
-        <h2>Aufgaben nach Kategorie finden</h2>
-        <FindExByCategory />
-        <hr />
-        <CardList />
+          textAlign: "center",
+        }}
+      >
+        <div>
+          <h2>Aufgaben per ID finden</h2>
+
+          <FindExByIdFromServer />
+          <hr />
+
+          <h2>Aufgaben nach Text finden</h2>
+          <FindExBySearchText />
+          <hr />
+
+          <h2>Aufgaben nach Kategorie finden</h2>
+          <FindExByCategory />
+          <hr />
+        </div>
       </div>
     </>
   );
 };
 
-export default Aufgaben;
+export default FindExercise;

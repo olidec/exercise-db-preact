@@ -1,5 +1,5 @@
 import { h } from "preact";
-import Data from "../components/Data.jsx";
+
 import Button from "../components/Button.jsx";
 import Menu from "../components/Menu.jsx";
 import Form from "../components/Form.jsx";
@@ -10,8 +10,9 @@ const Home = () => {
 
   return (
     <>
+      {/* Andere Routen */}
       <div id="equation"></div>
-      <Data data={data} />
+
       <Button />
       <div id="user-form">
         <Form />

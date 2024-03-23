@@ -1,9 +1,9 @@
 import { useState, useEffect } from "preact/hooks";
-import { askServer } from "../utils/connector";
-import { signal, useSignal } from "@preact/signals";
-import { ex, loadEx } from "../signals/exercise";
 
+import { useContext } from "preact/hooks";
+import { SearchContext } from "../signals/exercise.js";
 export default function Exfind() {
+  const { loadEx, ex } = useContext(SearchContext);
   useEffect(() => {
     loadEx();
   }, []);
