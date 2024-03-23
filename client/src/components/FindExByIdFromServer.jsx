@@ -1,8 +1,12 @@
 import { askServer } from "../utils/connector";
 import { signal } from "@preact/signals";
 import { useState, useEffect } from "preact/hooks";
-import { cartSearch } from "../signals/exercise";
+import { route } from "preact-router";
+
+import { useContext } from "preact/hooks";
+import { SearchContext } from "../signals/exercise.js";
 export default function FindExById() {
+  const { cartSearch } = useContext(SearchContext);
   const myId = signal(1);
   const [exerciseList, setExerciseList] = useState([]);
 
@@ -26,11 +30,12 @@ export default function FindExById() {
     const route = `/api/ex?id=${myId.value}`;
 
     const res = await askServer(route, "GET");
-    if (res.errors || res.length === 0 || res === undefined) {
+    if (res === null || res === undefined || res.errors || res.length === 0) {
       alert("No exercises match the search term.");
       return;
     } else {
       setExerciseList(res);
+      window.location.href = "/exercise-db-preact/search"; // Verwendet `route` von `preact-router` für die Weiterleitung
     }
   };
 

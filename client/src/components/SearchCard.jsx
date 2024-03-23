@@ -12,29 +12,25 @@ const SearchCard = ({ key, id, content, summary }) => {
   return (
     <>
       <div key={key} className="kartenContainer">
-        <div>
-          <Card key={id} id={id} summary={summary} content={content} />
+        <Card key={id} id={id} summary={summary} content={content} />
 
-          <div className="warenkorbColumn">
-            {index === -1 ? (
-              <button
-                className="pure-button"
-                onClick={() => addToKorb({ id, content, summary })}
-                {...(index = cartItems.value.findIndex(
-                  (item) => item.id === id
-                ))}
-              >
-                Zum Warenkorb
-              </button>
-            ) : (
-              <button
-                className="pure-button"
-                onClick={() => handleDelete({ id })}
-              >
-                Löschen aus Warenkorb
-              </button>
-            )}
-          </div>
+        <div className="warenkorbColumn">
+          {index === -1 ? (
+            <button
+              className="pure-button"
+              onClick={() => addToKorb({ id, content, summary })}
+              {...(index = cartItems.value.findIndex((item) => item.id === id))}
+            >
+              Zum Warenkorb
+            </button>
+          ) : (
+            <button
+              className="pure-button"
+              onClick={() => handleDelete({ id })}
+            >
+              Löschen aus Warenkorb
+            </button>
+          )}
         </div>
       </div>
     </>

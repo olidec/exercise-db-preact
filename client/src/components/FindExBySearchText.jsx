@@ -1,10 +1,11 @@
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
-import SearchKorb from "./SearchKorb";
 
-import { cartSearch } from "../signals/exercise";
+import { useContext } from "preact/hooks";
+import { SearchContext } from "../signals/exercise.js";
 export default function FindExBySearchText() {
+  const { cartSearch } = useContext(SearchContext);
   const [exerciseList, setExerciseList] = useState([]);
   const searchText = signal("");
 
@@ -31,6 +32,7 @@ export default function FindExBySearchText() {
       return;
     } else {
       setExerciseList(res);
+      window.location.href = "/exercise-db-preact/search";
     }
   };
 

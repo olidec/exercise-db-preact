@@ -8,7 +8,7 @@ import { h } from "preact";
 import User from "./pages/User.jsx";
 import Warenkorb from "./components/Warenkorb.jsx";
 import AufgDetails from "./components/AufgDetails.jsx";
-
+import SearchKorb from "./components/SearchKorb.jsx";
 import Menu from "./components/Menu.jsx";
 export function App() {
   return (
@@ -24,6 +24,7 @@ export function App() {
         <AufgDetails exact path="/exercise-db-preact/:id" />
 
         <Warenkorb exact path="/exercise-db-preact/warenkorb" />
+        <SearchKorb exact path="/exercise-db-preact/search" />
       </Router>
     </>
   );

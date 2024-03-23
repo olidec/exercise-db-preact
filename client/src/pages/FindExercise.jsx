@@ -6,6 +6,7 @@ import FindExByCategory from "../components/FindExByCategory.jsx";
 import Warenkorb from "../components/Warenkorb.jsx";
 //import { cartItems } from "../signals/warenkorb";
 import SearchKorb from "../components/SearchKorb.jsx";
+
 const FindExercise = () => {
   return (
     <>
@@ -19,7 +20,6 @@ const FindExercise = () => {
         }}
       >
         <div>
-          <Warenkorb />
           <h2>Aufgaben per ID finden</h2>
 
           <FindExByIdFromServer />
@@ -32,9 +32,6 @@ const FindExercise = () => {
           <h2>Aufgaben nach Kategorie finden</h2>
           <FindExByCategory />
           <hr />
-          <div>
-            <SearchKorb />
-          </div>
         </div>
       </div>
     </>

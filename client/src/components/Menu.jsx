@@ -1,7 +1,8 @@
 import { Link } from "preact-router/match";
-
-import { signal } from "@preact/signals";
+import { useContext, useState } from "preact/hooks";
+import { SearchContext } from "../signals/exercise.js";
 export default function Menu() {
+  const { cartSearch, getCartSearch } = useContext(SearchContext);
   return (
     <div className="pure-menu pure-menu-horizontal">
       <ul
@@ -14,7 +15,7 @@ export default function Menu() {
       >
         <li className="pure-menu-item pure-menu-selected">
           <Link href="./" className="pure-menu-link">
-            Home
+            User
           </Link>
         </li>
         <li className="pure-menu-item pure-menu-selected">
@@ -27,7 +28,18 @@ export default function Menu() {
             Aufgaben finden
           </Link>
         </li>
-        <li className="pure-menu-item pure-menu-selected">
+        {cartSearch.value.length !== 0 ? (
+          <li className="pure-menu-item pure-menu-selected">
+            <Link href="./search" className="pure-menu-link">
+              Suchresultate
+            </Link>
+          </li>
+        ) : null}
+
+        <li
+          className="pure-menu-item pure-menu-selected"
+          style={{ marginLeft: "auto" }}
+        >
           <Link href="./warenkorb" className="pure-menu-link">
             Warenkorb
           </Link>

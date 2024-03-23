@@ -1,0 +1,256 @@
+Projektskizze
+1. Projektplanung und Design
+1.1 Anforderungsanalyse
+•	Definiere die Kernfunktionen der Applikation: Aufgaben erstellen, durchsuchen, kommentieren und verwalten.
+•	Erstelle User Stories und Use Cases, um die Anforderungen der Endbenutzer zu verstehen.
+1.2 Datenmodellierung
+•	Entwirf die Datenbank-Schemata für Aufgaben, Kommentare, Benutzer und eventuell Aufgabenkategorien.
+•	Berücksichtige Beziehungen zwischen den Entitäten, wie z.B. Aufgaben zu Kategorien und Aufgaben zu Kommentaren.
+1.3 Architekturdesign
+•	Entscheide dich für eine geeignete Architektur für das Backend (REST API oder GraphQL).
+•	Plane die Struktur des Frontends, einschließlich der Komponentenhierarchie und des Zustandsmanagements.
+1.4 Technologische Auswahl
+•	Bestätige die Wahl von Preact, Express und Prisma und prüfe, ob zusätzliche Bibliotheken oder Tools benötigt werden (z.B. für Authentifizierung).
+2. Backend-Entwicklung
+2.1 Einrichten der Entwicklungsumgebung
+•	Richte Node.js, Express und Prisma ein.
+•	Initialisiere ein neues Prisma-Projekt und verbinde es mit deiner Datenbank.
+2.2 API-Entwicklung
+•	Implementiere CRUD-Operationen (Create, Read, Update, Delete) für Aufgaben und Kommentare.
+•	Implementiere Authentifizierung und Autorisierung für Benutzeraktionen.
+•	Entwickle eine Suchfunktion, um Aufgaben nach Stichworten oder Kategorien zu durchsuchen.
+2.3 Datenbankintegration
+•	Verwende Prisma, um das Datenbankschema zu definieren und zu migrieren.
+•	Teste die Datenbankoperationen über Prisma.
+3. Frontend-Entwicklung
+3.1 Einrichten der Preact-Anwendung
+•	Initialisiere ein neues Preact-Projekt.
+•	Richte Routing für die Navigation in der Anwendung ein.
+3.2 UI-Entwicklung
+•	Entwerfe und implementiere UI-Komponenten für die Anzeige und Verwaltung von Aufgaben und Kommentaren.
+•	Implementiere Formulare für das Erstellen und Bearbeiten von Aufgaben.
+3.3 Integration mit dem Backend
+•	Verwende Fetch API oder Axios, um Anfragen an das Backend zu senden und Daten zu verarbeiten.
+•	Implementiere Zustandsmanagement für das Speichern und Aktualisieren von Daten im Frontend.
+4. Testing und Qualitätssicherung
+4.1 Backend-Tests
+•	Schreibe Unit-Tests für API-Endpunkte und Datenbankoperationen.
+4.2 Frontend-Tests
+•	Implementiere Komponententests und ggf. End-to-End-Tests für die Benutzeroberfläche.
+4.3 Benutzerakzeptanztests
+•	Führe Tests mit realen Nutzern durch, um Feedback zu sammeln und die Usability zu verbessern.
+5. Deployment und Inbetriebnahme
+5.1 Vorbereitung auf das Deployment
+•	Konfiguriere das Projekt für Produktion, einschließlich Umgebungsvariablen und Build-Prozessen.
+5.2 Auswahl einer Hosting-Plattform
+•	Entscheide dich für ein Hosting für das Backend (z.B. Heroku, AWS) und das Frontend (z.B. Vercel, Netlify).
+5.3 Deployment
+•	Führe das Deployment durch und stelle sicher, dass die Anwendung wie erwartet funktioniert.
+6. Dokumentation und Übergabe
+6.1 Erstellung der Dokumentation
+•	Dokumentiere den Code und die Architektur der Anwendung.
+•	Erstelle eine Benutzeranleitung für die Endbenutzer.
+6.2 Abschlusspräsentation
+•	Bereite eine Präsentation deiner Abschlussarbeit vor, die den Entwicklungsprozess zu dokumentieren.
+
+Dokumentation
+1.1.	 Anforderungsanalyse
+Die Kernfunktion der Applikation soll das hinzufügen und suchen von Mathe Aufgaben sein. Anhand eines Warenkorbs sollen Aufgaben ausgesucht werden und in Form eines Aufgabenblattes (in Latex Code) zusammengestellt werden. Mit einer Kommentarfunktion sollen die einzelnen Aufgaben bewertet werden können. Aufgaben sollten verändert und aus der Datenbank gelöscht werden können.
+User Story: 
+Als Mathematiklehrer möchte ich eine Sammlung von Mathematikaufgaben durchsuchen können, damit ich schnell und effizient Aufgabenblätter für meine Klasse zusammenstellen kann.
+Use Case:
+
+Titel: Durchsuchen von Mathematikaufgaben
+Akteure: Mathematiklehrer
+Trigger: Lehrer möchte eine spezifische Aufgabe finden.
+Vorbedingungen: Lehrer ist angemeldet und befindet sich auf der Seite der Aufgabensammlung.
+
+Hauptszenario:
+1.	Lehrer gibt Suchbegriffe in das Suchfeld ein.
+2.	Das System zeigt eine Liste von Aufgaben an, die den Suchkriterien entsprechen.
+3.	Lehrer wählt eine Aufgabe aus der Liste aus, um Details anzusehen.
+4.	Lehrer entscheidet sich für die Aufgabe und tut sie in den Warenkorb
+5.	Lehrer erstellt anhand der Aufgaben im Warenkorb ein Aufgabenblatt 
+Nachbedingungen: Lehrer hat Zugriff auf die Details der ausgewählten Aufgabe.
+
+1.2.	Datenmodellierung
+
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  name      String?
+  password  String?
+  role      String     @default("USER")
+  exercises Exercise[]
+}
+
+model Exercise {
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime?  @updatedAt
+  summary    String?
+  content    String     @unique
+  solution   String
+  author     User       @relation(fields: [authorId], references: [id])
+  authorId   Int        @default(1)
+  categories Category[]
+}
+
+model Category {
+  id          Int           @id @default(autoincrement())
+  name        String
+  exercises   Exercise[]
+  subcategory Subcategory[]
+}
+
+model Subcategory {
+  id             Int              @id @default(autoincrement())
+  name           String
+  category       Category         @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  subsubcategory Subsubcategory[]
+}
+
+model Subsubcategory {
+  id            Int         @id @default(autoincrement())
+  name          String
+  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
+  subcategoryId Int
+}
+
+
+
+Entitäten
+1. Benutzer (Users)
+•	BenutzerID (Primary Key)
+•	Name
+•	Email
+•	Passwort
+•	Rolle
+•	Aufgaben [] 1:n
+•	Kommentare[] 1:n
+
+2. Aufgaben (Tasks)
+•	AufgabenID (Primary Key)
+•	Titel
+•	Inhalt (die eigentliche Aufgabenstellung)
+•	Zusammenfassung
+•	Lösungen
+•	Erstellungs Datum
+•	Update Datum
+•	BenutzerID-> AutorID (Foreign Key von Benutzer) n:1
+•	Autor (Benutzer) n:1
+•	KategorieID (Foreign Key von Kategorien) n:1
+•	Kategorie
+•	Unterkategorie
+3. Kategorien (Categories)
+•	KategorieID (Primary Key)
+•	Name
+•	Beschreibung
+•	Aufgaben [] 1:n
+•	Unterkategorien [] 1:n
+4. Kommentare (Comments)
+•	KommentarID (Primary Key)
+•	Inhalt
+•	Erstellungsdatum
+•	BenutzerID (Foreign Key von Benutzer) n:1
+•	AufgabenID (Foreign Key von Aufgaben) n:1
+Beziehungen:
+•	Benutzer zu Aufgaben: Ein Benutzer kann mehrere Aufgaben erstellen, aber eine Aufgabe bezieht sich nur auf einen Benutzer (1:n-Beziehung).
+•	Benutzer zu Kommentaren: Ein Benutzer kann mehrere Kommentare zu verschiedenen Aufgaben hinterlassen und ein Kommentar bezieht sich nur auf einen Benutzer(1:n-Beziehung).
+•	Aufgaben zu Kategorien: Eine Aufgabe gehört zu genau einer Kategorie, aber eine Kategorie kann mehrere Aufgaben enthalten (1:n-Beziehung).
+•	Aufgaben zu Kommentaren: Eine Aufgabe kann mehrere Kommentare haben, aber jeder Kommentar bezieht sich auf genau eine Aufgabe (1:n-Beziehung).
+
+Benutzer 1----n Aufgaben n----1 Kategorien
+1				1
+    \                |
+     \               |
+      \              |
+       \             n
+        \------n Kommentare
+
+
+1.3 Architekturdesign
+
+Backend-Architektur:
+REST API
+REST (Representational State Transfer) ist ein Architekturstil für die Entwicklung von netzwerkbasierten Anwendungen. Eine REST API verwendet HTTP-Requests, um CRUD-Operationen (Create, Read, Update, Delete) auf Ressourcen auszuführen, wobei jede Ressource durch eine URL identifiziert wird. REST APIs sind einfach zu verstehen und zu implementieren, gut dokumentiert und werden von den meisten modernen Webanwendungen unterstützt.
+Vorteile:
+•	Weit verbreitet und gut verstanden.
+•	Funktioniert gut mit standardbasierten CRUD-Operationen.
+•	Leicht zu konsumieren, insbesondere für standard Web-Operationen.
+Nachteile:
+•	Kann zu Over- oder Underfetching führen, da die Größe und Struktur der Antwort oft fest vorgegeben ist.
+•	Komplexere Anfragen können mehrere Requests erfordern.
+
+Frontend-Architektur
+Die Planung deiner Komponentenhierarchie hilft dabei, die Beziehungen zwischen den Komponenten zu verstehen und wie Daten durch die Anwendung fließen.
+•	Atomare Komponenten: Das sind die grundlegendsten UI-Elemente, wie Buttons, Inputs und Labels.
+•	Molekulare Komponenten: Komplexere Komponenten, die aus atomaren Komponenten zusammengesetzt sind, wie Formulare oder Navigationsmenüs.
+•	Seiten: Komponenten, die ganze Seiten repräsentieren, indem sie molekulare und atomare Komponenten zusammenfügen und mit Daten versorgen.
+Zustandsmanagement
+Das Zustandsmanagement ist entscheidend für die Verwaltung von Daten und UI-Zuständen (wie Benutzereingaben, geladene Daten, UI-Modi). Preact bietet useState und useEffect Hooks für das lokale Zustandsmanagement in Komponenten. Für komplexere Anwendungen, die einen globalen Zustand benötigen (der über viele Komponenten hinweg geteilt wird), kannst du Bibliotheken wie Zustand oder Context API verwenden.
+Zu berücksichtigen:
+•	Lokaler vs. globaler Zustand: Entscheide, welche Daten lokal in einer Komponente gehalten werden können und welche im gesamten App-Kontext verfügbar sein müssen.
+•	Datenfluss: Plane, wie Daten durch die Anwendung fließen, z.B. wie globale Daten geladen, modifiziert und zwischen Komponenten geteilt werden.
+
+Komponenten
+
+Aufgaben:
+-AufgDetails(id) 
+- Card (key(für map), id, summary, content)
+Suchresultate:
+-SearchCard(Card, addToKorb, handleDelete)
+-CardListSearch(SearchCard, map)
+-SearchKorb (CardListSearch list={cartSearch.value})
+Warenkorb:
+-WarenCard(Card, handleDelete)
+-CardListWaren(WarenCard, map)
+-WarenKorb(CardListWaren, list={cartItems.value})
+
+Aufgaben hinzufügen:
+-ExForm   const res = await askServer("/api/ex","POST",ex)
+
+Aufgaben finden
+-FindExByCategory
+-FindExByIdFromServer
+-FindExBySearchText
+
+User hinzufügen
+-Form const res = await askServer("/api/user", "POST", user);
+
+Navigation
+-Menue: 
+./   ->User
+./add ->AddExercise
+./find ->FindExercise
+./warenkorb ->WarenKorb
+./:id   ->AufgDetails
+
+Seiten
+-User  ->Form
+-AddExercise ->ExForm
+-FindExercise  ->-FindExByCategory, FindExByIdFromServer, FindExBySearchText, SearchKorb
+-WarenKorb(CardListWaren, list={cartItems.value})
+
+
+
+
+
+
+
+
+
+
+

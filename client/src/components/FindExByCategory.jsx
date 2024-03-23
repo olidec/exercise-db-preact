@@ -2,9 +2,12 @@ import { askServer } from "../utils/connector";
 import { signal } from "@preact/signals";
 import { cat, loadCat } from "../signals/categories.js";
 
-import { cartSearch } from "../signals/exercise";
+import { useContext } from "preact/hooks";
+import { SearchContext } from "../signals/exercise.js";
 import { useState, useEffect } from "preact/hooks";
 export default function FindExBySearchText() {
+  const { cartSearch } = useContext(SearchContext);
+
   const searchCategory = signal("");
   const [exerciseList, setExerciseList] = useState([]);
 
@@ -44,6 +47,7 @@ export default function FindExBySearchText() {
       return;
     } else {
       setExerciseList(res);
+      window.location.href = "/exercise-db-preact/search";
     }
   };
 

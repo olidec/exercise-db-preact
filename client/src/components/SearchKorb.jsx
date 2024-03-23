@@ -1,19 +1,21 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import Menu from "./Menu.jsx";
-import { cartSearch, getCartSearch } from "../signals/exercise.js";
 
 import CardListSearch from "./CardListSearch.jsx";
-import { useSignal } from "@preact/signals";
 
+import { useContext } from "preact/hooks";
+import { SearchContext } from "../signals/exercise.js";
 const SearchKorb = ({}) => {
+  const { cartSearch, getCartSearch } = useContext(SearchContext);
   return (
     <>
       <div>
-        <h1>Suchresultate</h1>
-        <p>{getCartSearch()}</p>
-        <CardListSearch list={cartSearch.value} />
+        <h1>Suchresultate ({getCartSearch()})</h1>
         <hr />
+      </div>
+      <div>
+        <CardListSearch list={cartSearch.value} />
       </div>
     </>
   );

@@ -5,17 +5,16 @@ import Menu from "./Menu.jsx";
 import { WarenkorbContext } from "../signals/warenkorb.js";
 import { useContext } from "preact/hooks";
 import CardListWaren from "./CardListWaren.jsx";
-import { useSignal } from "@preact/signals";
 
 const Warenkorb = ({}) => {
   const { cartItems, getCart, getCartCount } = useContext(WarenkorbContext);
 
   return (
     <>
-      <h1>Warenkorb</h1>
+      <h1>Warenkorb ({getCartCount()})</h1>
+      <hr />
       <div>
-        <p>{getCartCount()}</p>
-        <CardListWaren list={getCart()} />
+        <CardListWaren list={cartItems.value} />
       </div>
     </>
   );

@@ -1,13 +1,14 @@
 import { h, render } from "preact";
 import { App } from "./app.jsx";
 import "./index.css";
-import { createContext } from "preact";
 
 import { WarenkorbProvider } from "./signals/warenkorb";
-
+import { SearchProvider } from "./signals/exercise";
 render(
   <WarenkorbProvider>
-    <App />
+    <SearchProvider>
+      <App />
+    </SearchProvider>
   </WarenkorbProvider>,
 
   document.getElementById("app")
