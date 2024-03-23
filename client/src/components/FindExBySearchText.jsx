@@ -1,11 +1,19 @@
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
-import Card from "./Card";
-import CardList from "./CardList";
+
+import { useContext } from "preact/hooks";
+import { SearchContext } from "../signals/exercise.js";
 export default function FindExBySearchText() {
-  const searchText = signal("");
+  const { cartSearch } = useContext(SearchContext);
   const [exerciseList, setExerciseList] = useState([]);
+  const searchText = signal("");
+
+  // // Annahme, dass cartSearch ein signal aus @preact/signals ist
+  useEffect(() => {
+    cartSearch.value = exerciseList;
+    // Aktualisiert cartSearch, wenn exerciseList sich ändert
+  }, [exerciseList]); // Abhängigkeiten, die den Effekt auslösen
 
   const onChange = (e) => {
     e.preventDefault();
@@ -24,19 +32,9 @@ export default function FindExBySearchText() {
       return;
     } else {
       setExerciseList(res);
+      window.location.href = "/exercise-db-preact/search";
     }
   };
-
-  const handleDelete = (index) => {
-    const updatedList = [...exerciseList];
-    updatedList.splice(index, 1);
-    setExerciseList(updatedList);
-    MathJax.typeset();
-  };
-
-  useEffect(() => {
-    MathJax.typeset();
-  }, [exerciseList]);
 
   return (
     <>
@@ -45,14 +43,6 @@ export default function FindExBySearchText() {
         <input id="exid-3" value={searchText} onChange={onChange} />
         <button className="pure-button">Find Exercises containing</button>
       </form>
-
-      <div id="exsearchlist">
-        <CardList
-          cards={exerciseList.map((ex, index) => (
-            <Card key={index} content={ex.content} summary={ex.summary} />
-          ))}
-        />
-      </div>
     </>
   );
 }

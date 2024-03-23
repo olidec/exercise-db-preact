@@ -2,11 +2,19 @@ import { useState } from "preact/hooks";
 import { askServer } from "../utils/connector";
 
 export default function Button() {
-  const [users, setUsers] = useState([{ name: "user1", id: 0 }]);
+  const [users, setUsers] = useState([]);
 
   const getAllUsers = async () => {
-    const res = await askServer("/api/users", "GET");
-    setUsers(res);
+    const users = localStorage.getItem("users");
+    if (users) {
+      setUsers(JSON.parse(users));
+      return;
+    }
+    else {
+      const res = await askServer("/api/users", "GET");
+      setUsers(res);
+      localStorage.setItem("users", JSON.stringify(res));
+    }
   };
 
   return (
