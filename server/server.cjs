@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const { query, validationResult } = require("express-validator")
 const PrismaClient = require("@prisma/client")
+const fs = require("fs");
 const prisma = new PrismaClient.PrismaClient()
 
 const app = express()
@@ -155,6 +156,67 @@ router.post("/api/ex", async (req,res) => {
     }
   }
 })
+
+router.get("/api/download", async (req, res) => {
+  try {
+    const exercises = await prisma.exercise.findMany({
+      take: 5,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    const contentAndSolution = exercises.map((exercise) => ({
+      content: exercise.content,
+      solution: exercise.solution,
+    }));
+    console.log(contentAndSolution);
+    fs.writeFile('server/output/output.txt', JSON.stringify(contentAndSolution), (err) => {
+      if (err) {
+        console.error("Error writing to file:", err);
+        res.json({ msg: "Error writing to file", err: err });
+      } else {
+        console.log("Data written to file successfully");
+        res.download("server/output/output.txt", "output.txt");
+      }
+    });
+  } catch (error) {
+    res.json({ msg: "Error in DB request", err: error });
+  }
+});
+
+
+router.post("/api/download", async (req, res) => {
+  
+  const { exerciseIds } = req.body;
+  try {
+    const exercises = await prisma.exercise.findMany({
+      where: {
+        id: {
+          in: exerciseIds,
+        },
+      },
+    });
+    const writeToFile = (exercises) => {
+      const contentAndSolution = exercises.map((exercise) => ({
+        content: exercise.content,
+        solution: exercise.solution,
+      }));
+
+      fs.writeFile("/path/to/output.txt", JSON.stringify(contentAndSolution), (err) => {
+        if (err) {
+          console.error("Error writing to file:", err);
+        } else {
+          console.log("Data written to file successfully");
+        }
+      });
+    };
+
+    writeToFile(exercises);
+    res.json(exercises);
+  } catch (error) {
+    res.json({ msg: "Error in DB request", err: error });
+  }
+});
 
 app.use(cors({ origin: true, credentials: true }))
 app.use(express.json())
