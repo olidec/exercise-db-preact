@@ -1,5 +1,8 @@
 import { useState } from "preact/hooks";
 import { askServer } from "../utils/connector";
+import { cat, loadCat } from "../signals/categories.js";
+import { signal } from "@preact/signals";
+import { useEffect, createSignal } from "preact/hooks";
 
 export default function Form() {
     const [ex, setEx] = useState({
@@ -7,6 +10,14 @@ export default function Form() {
         content:'',
         solution:''
     })
+    
+    useEffect(() => {
+        loadCat();
+      }, []);
+
+    const [subcategories, setSubcategories] = createSignal([]);
+
+
     
     const addNewEx = async (e) => {
         e.preventDefault()
@@ -26,23 +37,55 @@ export default function Form() {
     }
 
     const updateExHandler = (e) => {
-        e.preventDefault()
         const { name, value } = e.target;
         setEx((prevEx) => ({
             ...prevEx,
             [name]: value
         }));
-    }
+    
+        if (name === 'category') {
+            const selectedCategory = cat.value.find(category => category.id === value);
+            setSubcategories(selectedCategory ? selectedCategory.subcategory : []);
+        }
+    };
 
     return (
         <>
         <form className="pure-form pure-form-aligned" onSubmit={(e) => addNewEx(e)}>
             <legend>Add your own Exercise</legend>
             <fieldset>
-                <div className="pure-control-group">
-                    <label htmlFor="summary">Summary: </label>
-                        <textarea rows={2} cols={100} type="text" name="summary" id="summary" value={ex.summary} onChange={updateExHandler} placeholder="Write a short summary of you exercise"/>
-                </div>
+            <div className="pure-control-group">
+                <label htmlFor="category">Category: </label>
+                <select name="category" id="category" value={ex().category} onChange={updateExHandler}>
+                    {cat.value.map((category) => (
+                        <option key={category.id} value={category.id}>
+                            {category.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div className="pure-control-group">
+                <label htmlFor="subcategory">Subcategory: </label>
+                {subcategories().length > 0 ? (
+                    <select name="subcategory" id="subcategory" value={ex().subcategory} onChange={updateExHandler}>
+                        {subcategories().map((subcategory) => (
+                            <option key={subcategory.id} value={subcategory.id}>
+                                {subcategory.name}
+                            </option>
+                        ))}
+                    </select>
+                ) : (
+                    <p>No subcategories available for the selected category.</p>
+                )}
+            </div>
+
+    
+    
+                
+
+                  
+                            
+
             <div className="pure-control-group">
                 <label htmlFor="content">Exercise Text: </label>
                     <textarea rows="5" cols="100" name="content" id="content" value={ex.content} onChange={updateExHandler} placeholder="Enter the exercise text in the LaTeX format"/>
