@@ -4,7 +4,7 @@ import { cat, loadCat } from "../signals/categories.js";
 import { signal } from "@preact/signals";
 import { useEffect, createSignal } from "preact/hooks";
 
-export default function Form() {
+export default function ExForm() {
     const [ex, setEx] = useState({
         summary: '',
         content:'',
