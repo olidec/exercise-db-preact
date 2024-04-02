@@ -2,7 +2,7 @@ import { useState } from "preact/hooks";
 import { askServer } from "../utils/connector";
 import { cat, loadCat } from "../signals/categories.js";
 import { signal } from "@preact/signals";
-import { useEffect, createSignal } from "preact/hooks";
+import { useEffect } from "preact/hooks";
 
 export default function ExForm() {
     const [ex, setEx] = useState({
@@ -15,7 +15,6 @@ export default function ExForm() {
         loadCat();
       }, []);
 
-    const [subcategories, setSubcategories] = createSignal([]);
 
 
     
@@ -54,10 +53,10 @@ export default function ExForm() {
         <form className="pure-form pure-form-aligned" onSubmit={(e) => addNewEx(e)}>
             <legend>Füge deine eigene Aufgabe hinzu</legend>
             <fieldset>
-                {/* <div className="pure-control-group">
+                <div className="pure-control-group">
                     <label htmlFor="summary">Summary: </label>
                         <textarea rows={2} cols={100} type="text" name="summary" id="summary" value={ex.summary} onChange={updateExHandler} placeholder="Write a short summary of you exercise"/>
-                </div> */}
+                </div>
             <div className="pure-control-group">
                 <label htmlFor="content">Exercise Text: </label>
                     <textarea rows="5" cols="100" name="content" id="content" value={ex.content} onChange={updateExHandler} placeholder="Schreibe deine Aufgabe im LaTeX Format"/>
