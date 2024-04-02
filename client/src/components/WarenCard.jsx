@@ -3,7 +3,7 @@ import { signal } from "@preact/signals";
 //import { handleDelete } from "../signals/warenkorb";
 import Card from "./Card";
 import { useContext, useState } from "preact/hooks";
-import { WarenkorbContext } from "../signals/warenkorb.js";
+import { WarenkorbContext } from "../signals/warenkorb.jsx";
 const WarenCard = ({ key, id, content, summary }) => {
   const { handleDelete } = useContext(WarenkorbContext);
   return (

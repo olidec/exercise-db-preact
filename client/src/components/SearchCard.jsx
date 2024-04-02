@@ -1,7 +1,7 @@
 import { h } from "preact";
 import { signal } from "@preact/signals";
 import Card from "./Card";
-import { WarenkorbContext } from "../signals/warenkorb.js";
+import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { useContext, useState } from "preact/hooks";
 //import { cartItems, addToKorb, handleDelete } from "../signals/warenkorb";
 const SearchCard = ({ key, id, content, summary }) => {

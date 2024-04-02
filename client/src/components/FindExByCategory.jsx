@@ -3,7 +3,7 @@ import { signal } from "@preact/signals";
 import { cat, loadCat } from "../signals/categories.js";
 
 import { useContext } from "preact/hooks";
-import { SearchContext } from "../signals/exercise.js";
+import { SearchContext } from "../signals/exercise.jsx";
 import { useState, useEffect } from "preact/hooks";
 export default function FindExBySearchText() {
   const { cartSearch } = useContext(SearchContext);
