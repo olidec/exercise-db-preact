@@ -12,8 +12,9 @@ const WarenCard = ({ key, id, content, summary }) => {
         <Card key={id} id={id} summary={summary} content={content} />
 
         <div className="warenkorbColumn">
-          <label>Aus Warenkorb entfernen</label>
-          <input type="checkbox" onChange={() => handleDelete({ id })} />
+          <button className="pure-button" onClick={() => handleDelete({ id })}>
+            Löschen aus Warenkorb
+          </button>
         </div>
       </div>
     </>

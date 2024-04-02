@@ -1,23 +1,22 @@
-const express = require("express")
-const cors = require("cors")
-const { query, validationResult } = require("express-validator")
-const PrismaClient = require("@prisma/client")
+const express = require("express");
+const cors = require("cors");
+const { query, validationResult } = require("express-validator");
+const PrismaClient = require("@prisma/client");
 const fs = require("fs");
-const prisma = new PrismaClient.PrismaClient()
+const prisma = new PrismaClient.PrismaClient();
 
-const app = express()
-const router = express.Router()
+const app = express();
+const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.json({ msg: "Hello World" })
-})
+  res.json({ msg: "Hello World" });
+});
 
-router.get("/api/users", async (req,res) => {
-  const users = await prisma.user.findMany()
+router.get("/api/users", async (req, res) => {
+  const users = await prisma.user.findMany();
   // console.log(users)
-  res.json(users)
-
-})
+  res.json(users);
+});
 
 router.get("/api/test", (req, res) => {
   res.json({
@@ -26,10 +25,10 @@ router.get("/api/test", (req, res) => {
       name: "Some Name",
       email: "mail@nice.ch",
     },
-  })
-})
+  });
+});
 
-router.post("/api/user", async (req,res) => {
+router.post("/api/user", async (req, res) => {
   const { email, name, password } = req.body;
   try {
     const newUser = await prisma.user.create({
@@ -38,18 +37,17 @@ router.post("/api/user", async (req,res) => {
         name,
         password,
       },
-    })  
-    console.log(newUser)
-    res.json(newUser)
-    
+    });
+    console.log(newUser);
+    res.json(newUser);
   } catch (error) {
-      res.json({msg:"Error in DB request", err: error})
+    res.json({ msg: "Error in DB request", err: error });
   }
-})
+});
 
 router.put("/api/user/", async (req, res) => {
   const { email, name, password } = req.body;
-  
+
   try {
     const updatedUser = await prisma.user.update({
       where: { email },
@@ -59,7 +57,7 @@ router.put("/api/user/", async (req, res) => {
         password,
       },
     });
-    
+
     console.log(updatedUser);
     res.json(updatedUser);
   } catch (error) {
@@ -73,68 +71,66 @@ router.post("/api/secret", checkLogin, (req, res) => {
     data: {
       secret: "Top Secret",
     },
-  })
-})
+  });
+});
 
 function checkLogin(req, res, next) {
-  console.log(req.body)
+  console.log(req.body);
   if (req.body.pw === "password") {
-    return next()
+    return next();
   }
 
   res.json({
     msg: "Not allowed",
     err: "Wrong password",
-  })
+  });
 }
 
 const searchValidation = [
   query("id", "id must be a number").notEmpty().isInt().optional(),
   query("search").isString().notEmpty().optional().escape(),
   query("cat").isString().notEmpty().optional().escape(),
-]
+];
 
-router.get("/api/ex", searchValidation, async (req,res) => {
-  const result = validationResult(req)
+router.get("/api/ex", searchValidation, async (req, res) => {
+  const result = validationResult(req);
   if (result.isEmpty()) {
-    const { id , search , cat } = req.query
+    const { id, search, cat } = req.query;
     if (id) {
-      const ex = await prisma.exercise.findUnique({where: {id: Number(id)}})
-      res.json(ex)
+      const ex = await prisma.exercise.findUnique({
+        where: { id: Number(id) },
+      });
+      res.json(ex);
+    } else if (search) {
+      const exs = await prisma.exercise.findMany({
+        where: { content: { contains: search } },
+      });
+      res.json(exs);
+    } else if (cat) {
+      const exs = await prisma.exercise.findMany({
+        where: { categories: { some: { name: { equals: cat } } } },
+      });
+      res.json(exs);
+    } else {
+      const exs = await prisma.exercise.findMany();
+      res.json(exs);
     }
-    else if (search) {
-      const exs = await prisma.exercise.findMany({where: {content: {contains: search}}})
-      res.json(exs)
-    }
-    else if (cat) {
-      const exs = await prisma.exercise.findMany({where: {categories: {some: {name: {equals: cat}}}}})
-      res.json(exs)
-    }
-    else {
-      const exs = await prisma.exercise.findMany()
-      res.json(exs)
-    }
+  } else {
+    res.json({ errors: result.array() });
   }
-else {
-  res.json({ errors: result.array() });
-}
-})
+});
 
-
-
-router.get("/api/cat", async (req,res) => {
+router.get("/api/cat", async (req, res) => {
   const cat = await prisma.category.findMany({
     include: {
-      subcategory: true
-    }
-  })
-  console.log(cat)
-  res.json(cat)
-})
+      subcategory: true,
+    },
+  });
+  console.log(cat);
+  res.json(cat);
+});
 
-
-
-router.post("/api/ex", async (req,res) => {
+router.post("/api/ex", async (req, res) => {
   const { summary, content, solution } = req.body;
   try {
     const newEx = await prisma.exercise.create({
@@ -143,19 +139,17 @@ router.post("/api/ex", async (req,res) => {
         content,
         solution,
       },
-    })  
-    console.log(newEx)
-    res.json(newEx)
-    
+    });
+    console.log(newEx);
+    res.json(newEx);
   } catch (error) {
-    if (error.code === 'P2002') {
-      res.json({msg:"Exercise already exists", err: error})
-    }
-    else {
-      res.json({msg:"Error in DB request", err: error})
+    if (error.code === "P2002") {
+      res.json({ msg: "Exercise already exists", err: error });
+    } else {
+      res.json({ msg: "Error in DB request", err: error });
     }
   }
-})
+});
 
 router.get("/api/download", async (req, res) => {
   try {
@@ -170,23 +164,25 @@ router.get("/api/download", async (req, res) => {
       solution: exercise.solution,
     }));
     console.log(contentAndSolution);
-    fs.writeFile('server/output/output.txt', JSON.stringify(contentAndSolution), (err) => {
-      if (err) {
-        console.error("Error writing to file:", err);
-        res.json({ msg: "Error writing to file", err: err });
-      } else {
-        console.log("Data written to file successfully");
-        res.download("server/output/output.txt", "output.txt");
+    fs.writeFile(
+      "server/output/output.txt",
+      JSON.stringify(contentAndSolution),
+      (err) => {
+        if (err) {
+          console.error("Error writing to file:", err);
+          res.json({ msg: "Error writing to file", err: err });
+        } else {
+          console.log("Data written to file successfully");
+          res.download("server/output/output.txt", "output.txt");
+        }
       }
-    });
+    );
   } catch (error) {
     res.json({ msg: "Error in DB request", err: error });
   }
 });
 
-
 router.post("/api/download", async (req, res) => {
-  
   const { exerciseIds } = req.body;
   try {
     const exercises = await prisma.exercise.findMany({
@@ -202,13 +198,18 @@ router.post("/api/download", async (req, res) => {
         solution: exercise.solution,
       }));
 
-      fs.writeFile("/path/to/output.txt", JSON.stringify(contentAndSolution), (err) => {
-        if (err) {
-          console.error("Error writing to file:", err);
-        } else {
-          console.log("Data written to file successfully");
+      fs.writeFile(
+        "/path/to/output.txt",
+        JSON.stringify(contentAndSolution),
+        (err) => {
+          if (err) {
+            console.error("Error writing to file:", err);
+          } else {
+            console.log("Data written to file successfully");
+            res.download("/path/to/output.txt", "output.txt");
+          }
         }
-      });
+      );
     };
 
     writeToFile(exercises);
@@ -218,9 +219,9 @@ router.post("/api/download", async (req, res) => {
   }
 });
 
-app.use(cors({ origin: true, credentials: true }))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use("/", router)
+app.use(cors({ origin: true, credentials: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use("/", router);
 
-app.listen(3000, () => console.log("listening on port 3000"))
+app.listen(3000, () => console.log("listening on port 3000"));
