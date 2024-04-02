@@ -4,7 +4,7 @@ import { useState, useEffect } from "preact/hooks";
 import { route } from "preact-router";
 
 import { useContext } from "preact/hooks";
-import { SearchContext } from "../signals/exercise.js";
+import { SearchContext } from "../signals/exercise.jsx";
 export default function FindExById() {
   const { cartSearch } = useContext(SearchContext);
   const myId = signal(1);
