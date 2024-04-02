@@ -1,8 +1,7 @@
-import { useState } from "preact/hooks";
+import { h } from "preact";
+import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
 import { cat, loadCat } from "../signals/categories.js";
-import { signal } from "@preact/signals";
-import { useEffect } from "preact/hooks";
 
 export default function ExForm() {
     const [ex, setEx] = useState({
@@ -10,10 +9,37 @@ export default function ExForm() {
         content:'',
         solution:''
     })
+    const categories = []
+    const subcategories = [] 
+
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
     
     useEffect(() => {
-        loadCat();
-      }, []);
+        const fetchCat = async () => {
+            await loadCat();
+            cat.value.map((c) => {
+                categories.push(c.name)
+            })
+            cat.value.map((c) => {
+            const temp = []
+            c.subcategory.map((s) => {
+                temp.push(s.name)
+            })
+            subcategories.push(temp)
+            })
+            setSelectedCategory(categories[0]);
+            setSelectedSubcategory(subcategories[0][0]);
+        
+            // console.log(cat.value)
+            // console.log(categories)
+            // console.log(subcategories)
+
+        }
+        fetchCat();
+    }, []);
+
+            
 
 
 
