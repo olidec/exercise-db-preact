@@ -12,24 +12,26 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  email     String     @unique
-  name      String?
-  password  String?
-  role      String     @default("USER")
-  exercises Exercise[]
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  name       String?
+  password   String?
+  role       String       @default("USER")
+  exercises  Exercise[]
+  commentary Commentary[]
 }
 
 model Exercise {
-  id         Int        @id @default(autoincrement())
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime?  @updatedAt
+  id         Int          @id @default(autoincrement())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime?    @updatedAt
   summary    String?
-  content    String     @unique
+  content    String       @unique
   solution   String
-  author     User       @relation(fields: [authorId], references: [id])
-  authorId   Int        @default(1)
+  author     User         @relation(fields: [authorId], references: [id])
+  authorId   Int          @default(1)
   categories Category[]
+  commentary Commentary[]
 }
 
 model Category {
@@ -54,3 +56,12 @@ model Subsubcategory {
   subcategoryId Int
 }
 
+model Commentary {
+  id        Int        @id @default(autoincrement())
+  author    User       @relation(fields: [authorId], references: [id])
+  authorId  Int        @default(1)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?  @updatedAt
+  content   String     @unique
+  exercises Exercise[]
+}

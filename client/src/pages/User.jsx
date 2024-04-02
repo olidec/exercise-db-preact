@@ -11,7 +11,6 @@ const Home = () => {
   return (
     <>
       {/* Andere Routen */}
-      <div id="equation"></div>
 
       <Button />
       <div id="user-form">
