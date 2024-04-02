@@ -3,7 +3,7 @@ import { useState, useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
 
 import { useContext } from "preact/hooks";
-import { SearchContext } from "../signals/exercise.js";
+import { SearchContext } from "../signals/exercise.jsx";
 export default function FindExBySearchText() {
   const { cartSearch } = useContext(SearchContext);
   const [exerciseList, setExerciseList] = useState([]);

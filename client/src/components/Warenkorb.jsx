@@ -2,7 +2,7 @@ import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import Menu from "./Menu.jsx";
 
-import { WarenkorbContext } from "../signals/warenkorb.js";
+import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { useContext } from "preact/hooks";
 import CardListWaren from "./CardListWaren.jsx";
 

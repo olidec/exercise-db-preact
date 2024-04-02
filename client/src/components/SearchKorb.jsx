@@ -5,7 +5,7 @@ import Menu from "./Menu.jsx";
 import CardListSearch from "./CardListSearch.jsx";
 
 import { useContext } from "preact/hooks";
-import { SearchContext } from "../signals/exercise.js";
+import { SearchContext } from "../signals/exercise.jsx";
 const SearchKorb = ({}) => {
   const { cartSearch, getCartSearch } = useContext(SearchContext);
   return (
