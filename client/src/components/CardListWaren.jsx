@@ -1,6 +1,6 @@
 import { h } from "preact";
 
-//import { handleDelete } from "../signals/warenkorb.js";
+//import { handleDelete } from "../signals/warenkorb.jsx";
 import WarenCard from "./WarenCard.jsx";
 import { useEffect } from "preact/hooks";
 

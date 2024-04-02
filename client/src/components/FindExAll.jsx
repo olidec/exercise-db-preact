@@ -1,7 +1,7 @@
 import { useState, useEffect } from "preact/hooks";
 
 import { useContext } from "preact/hooks";
-import { SearchContext } from "../signals/exercise.js";
+import { SearchContext } from "../signals/exercise.jsx";
 export default function Exfind() {
   const { loadEx, ex } = useContext(SearchContext);
   useEffect(() => {
