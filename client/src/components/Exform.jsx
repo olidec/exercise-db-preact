@@ -1,12 +1,23 @@
 import { useState } from "preact/hooks";
 import { askServer } from "../utils/connector";
+import { cat, loadCat } from "../signals/categories.js";
+import { signal } from "@preact/signals";
+import { useEffect, createSignal } from "preact/hooks";
 
-export default function Form() {
+export default function ExForm() {
     const [ex, setEx] = useState({
         summary: '',
         content:'',
         solution:''
     })
+    
+    useEffect(() => {
+        loadCat();
+      }, []);
+
+    const [subcategories, setSubcategories] = createSignal([]);
+
+
     
     const addNewEx = async (e) => {
         e.preventDefault()
@@ -26,13 +37,17 @@ export default function Form() {
     }
 
     const updateExHandler = (e) => {
-        e.preventDefault()
         const { name, value } = e.target;
         setEx((prevEx) => ({
             ...prevEx,
             [name]: value
         }));
-    }
+    
+        if (name === 'category') {
+            const selectedCategory = cat.value.find(category => category.id === value);
+            setSubcategories(selectedCategory ? selectedCategory.subcategory : []);
+        }
+    };
 
     return (
         <>
