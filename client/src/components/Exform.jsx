@@ -2,7 +2,7 @@ import { useState } from "preact/hooks";
 import { askServer } from "../utils/connector";
 import { cat, loadCat } from "../signals/categories.js";
 import { signal } from "@preact/signals";
-import { useEffect, createSignal } from "preact/hooks";
+import { useEffect } from "preact/hooks";
 
 export default function ExForm() {
     const [ex, setEx] = useState({
@@ -15,7 +15,6 @@ export default function ExForm() {
         loadCat();
       }, []);
 
-    const [subcategories, setSubcategories] = createSignal([]);
 
 
     
