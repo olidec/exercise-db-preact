@@ -10,16 +10,8 @@ import SearchKorb from "../components/SearchKorb.jsx";
 const FindExercise = () => {
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
 
-          textAlign: "center",
-        }}
-      >
-        <div>
+        <div className="inhalt">
           <h2>Aufgaben per ID finden</h2>
 
           <FindExByIdFromServer />
@@ -33,7 +25,6 @@ const FindExercise = () => {
           <FindExByCategory />
           <hr />
         </div>
-      </div>
     </>
   );
 };

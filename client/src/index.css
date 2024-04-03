@@ -1,17 +1,17 @@
 .pure-menu-horizontal {
-  background-color: rgb(85, 197, 154);
+  background-color: #438DE5;
 }
 
 .pure-menu-link {
-  color: rgb(215, 17, 17);
+  color: #3738E6
 }
 
 .pure-menu-link:hover {
-  background-color: rgb(30, 161, 213);
+  background-color: #73AEE5;
 }
 
 .pure-menu-item:hover {
-  background-color: rgb(213, 146, 30);
+  background-color: #73AEE5;
 }
 
 .kartenContainer {

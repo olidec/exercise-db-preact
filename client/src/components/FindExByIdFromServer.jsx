@@ -41,10 +41,12 @@ export default function FindExById() {
 
   return (
     <>
-      <form onSubmit={(e) => getEx(e)}>
+      <form className="pure-form pure-form-aligned" onSubmit={(e) => getEx(e)}>
+        <div className="pure-control-group">
         <label htmlFor="exid-2">Select Exercise via ID</label>
         <input id="exid-2" type="number" value={myId} onChange={onChange} />
         <button className="pure-button">Get Exercise by ID</button>
+        </div>
       </form>
     </>
   );

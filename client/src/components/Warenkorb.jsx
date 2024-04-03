@@ -11,10 +11,12 @@ const Warenkorb = ({}) => {
 
   return (
     <>
+      <div className="inhalt">
       <h1>Warenkorb ({getCartCount()})</h1>
       <hr />
       <div>
         <CardListWaren list={cartItems.value} />
+      </div>
       </div>
     </>
   );

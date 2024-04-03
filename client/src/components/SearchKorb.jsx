@@ -10,7 +10,7 @@ const SearchKorb = ({}) => {
   const { cartSearch, getCartSearch } = useContext(SearchContext);
   return (
     <>
-      <div>
+      <div className="inhalt">
         <h1>Suchresultate ({getCartSearch()})</h1>
         <hr />
       </div>

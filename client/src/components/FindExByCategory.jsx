@@ -53,12 +53,14 @@ export default function FindExBySearchText() {
 
   return (
     <>
-      <form onSubmit={(e) => getEx(e)}>
-        <label htmlFor="exid-4">Search Exercises for contents</label>
+      <form className="pure-form pure-form-aligned" onSubmit={(e) => getEx(e)}>
+        <div className="pure-control-group">
+        <label htmlFor="exid-4">Search Exercises by Category</label>
         <select id="exid-4" onChange={onChange}>
           <option value=""> -- Kategorie auswählen -- </option>
         </select>
-        <button className="pure-button">Find Exercises containing</button>
+        <button className="pure-button">Find Category</button>
+        </div>
       </form>
     </>
   );
