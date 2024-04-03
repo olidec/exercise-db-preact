@@ -27,6 +27,8 @@ model Exercise {
   summary    String?
   content    String     @unique
   solution   String
+  language String   @default("Deutsch")
+  difficulty Int    @default(1)
   author     User       @relation(fields: [authorId], references: [id])
   authorId   Int        @default(1)
   categories Category[]
