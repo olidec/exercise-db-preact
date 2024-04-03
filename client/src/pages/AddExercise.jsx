@@ -4,7 +4,6 @@ import Exform from "../components/Exform.jsx";
 import FindExAll from "../components/FindExAll.jsx";
 
 import FindExByIdFromServer from "../components/FindExByIdFromServer.jsx";
-import NewExForm from "../components/NewExForm.jsx";
 const AddExercise = () => {
   return (
     <>
@@ -22,7 +21,6 @@ const AddExercise = () => {
           {/* Hier kannst du den Inhalt der Aufgaben-Seite hinzufügen */}
           <div id="ex-form">
             <Exform />
-            <NewExForm />
           </div>
           <hr />
         </div>
