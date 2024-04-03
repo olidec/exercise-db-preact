@@ -53,38 +53,10 @@ export default function ExForm() {
         <form className="pure-form pure-form-aligned" onSubmit={(e) => addNewEx(e)}>
             <legend>Füge deine eigene Aufgabe hinzu</legend>
             <fieldset>
-            <div className="pure-control-group">
-                <label htmlFor="category">Category: </label>
-                <select name="category" id="category" value={ex().category} onChange={updateExHandler}>
-                    {cat.value.map((category) => (
-                        <option key={category.id} value={category.id}>
-                            {category.name}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div className="pure-control-group">
-                <label htmlFor="subcategory">Subcategory: </label>
-                {subcategories().length > 0 ? (
-                    <select name="subcategory" id="subcategory" value={ex().subcategory} onChange={updateExHandler}>
-                        {subcategories().map((subcategory) => (
-                            <option key={subcategory.id} value={subcategory.id}>
-                                {subcategory.name}
-                            </option>
-                        ))}
-                    </select>
-                ) : (
-                    <p>No subcategories available for the selected category.</p>
-                )}
-            </div>
-
-    
-    
-                
-
-                  
-                            
-
+                {/* <div className="pure-control-group">
+                    <label htmlFor="summary">Summary: </label>
+                        <textarea rows={2} cols={100} type="text" name="summary" id="summary" value={ex.summary} onChange={updateExHandler} placeholder="Write a short summary of you exercise"/>
+                </div> */}
             <div className="pure-control-group">
                 <label htmlFor="content">Exercise Text: </label>
                     <textarea rows="5" cols="100" name="content" id="content" value={ex.content} onChange={updateExHandler} placeholder="Schreibe deine Aufgabe im LaTeX Format"/>
