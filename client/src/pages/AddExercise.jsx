@@ -9,17 +9,15 @@ const AddExercise = () => {
     <>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          textAlign: "center",
+          marginLeft : "5%",
+          marginRight: "5%",
+          paddingTop: "3%"
         }}
       >
         <div>
           <h1>Aufgaben hinzufügen</h1>
           {/* Hier kannst du den Inhalt der Aufgaben-Seite hinzufügen */}
-          <div id="ex-form">
+          <div>
             <Exform />
           </div>
           <hr />

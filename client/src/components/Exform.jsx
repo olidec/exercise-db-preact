@@ -73,36 +73,66 @@ export default function ExForm() {
         }));
     };
 
+    const onChange = (e) => {
+        setSelectedCategory(e.target.value)
+    }
+
+
     return (
         <>
-        <form className="pure-form pure-form-aligned" onSubmit={(e) => addNewEx(e)}>
+        <div className="pure-g">
+        <form className="pure-form pure-form-aligned pure-u-4-5" onSubmit={(e) => addNewEx(e)}>
             <legend>Füge deine eigene Aufgabe hinzu</legend>
             <fieldset>
             <div className="pure-control-group">
+                <label htmlFor="language"> Sprache:                </label>
+                <select required id="language" name="language">
+                    <option selected> Deutsch </option>
+                    <option> English </option>
+                </select>
+            </div>
+            <div className="pure-control-group">
                 <label htmlFor="category">Kategorie: </label>
-            <select name="category" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-            {categories.map((category, index) => <option key={index} value={category}>{category}</option>)}
+            <select required id="category" name="category" value={selectedCategory} onChange={onChange}>
+            {categories.map((category, index) => {
+                if (index === 0) {
+                    return (<option disabled selected key={index}>  </option>)
+                }
+                else {
+                    return (<option key={index} value={category}> {category} </option>)
+                }
+            } 
+            )}
             </select>
             </div>
             <div className="pure-control-group">
             <label htmlFor="subcategory">Unterkategorie: </label>
-            <select name="subcategory" value={selectedSubcategory} onChange={(e) => setSelectedSubcategory(e.target.value)}>
-                {subcategories[categories.indexOf(selectedCategory)].map((subcategory, index) => <option key={index} value={subcategory}>{subcategory}</option>)}
+            <select required id="subcategory" name="subcategory" value={selectedSubcategory} onChange={(e) => setSelectedSubcategory(e.target.value)}>
+                {subcategories[categories.indexOf(selectedCategory)].map((subcategory, index) => {
+                    if (index === 0) {
+                        return <option disabled selected key={index}>  </option>
+                    }
+                    else {
+                        return <option key={index} value={subcategory}>{subcategory}</option>
+                    }
+                }
+                )}
             </select>
             </div>
             <div className="pure-control-group">
                 <label htmlFor="content">Aufgabentext: </label>
-                    <textarea rows="5" cols="100" name="content" id="content" value={ex.content} onChange={updateExHandler} placeholder="Schreibe deine Aufgabe im LaTeX Format"/>
+                    <textarea required rows="5" cols="100" name="content" id="content" value={ex.content} onChange={updateExHandler} placeholder="Schreibe deine Aufgabe im LaTeX Format"/>
             </div>
             <div className="pure-control-group">
             <label htmlFor="solution">Lösung: </label>
-                <textarea rows="5" cols="100" name="solution" id="solution" value={ex.solution} onChange={updateExHandler} placeholder="Schreibe deine Lösung im LaTeX Format"/>
+                <textarea required rows="5" cols="100" name="solution" id="solution" value={ex.solution} onChange={updateExHandler} placeholder="Schreibe deine Lösung im LaTeX Format"/>
             </div>
             <div className="pure-controls">
                 <button type="submit" className="pure-button pure-button-primary">Add new exercise</button>
             </div>
             </fieldset>
         </form>
+        </div>
         </>
     )
 
