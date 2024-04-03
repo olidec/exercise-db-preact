@@ -29,9 +29,11 @@ export default function Menu() {
           </Link>
         </li>
         {cartSearch.value.length !== 0 ? (
-          <li className="pure-menu-item pure-menu-selected">
-            <Link href="./search" className="pure-menu-link">
-              Suchresultate
+          <li className="pure-menu-item pure-menu-selected"
+          
+          >
+            <Link href="./search" className="pure-menu-link" style={{ color: "purple" }}>
+              Letzte Suchresultate
             </Link>
           </li>
         ) : null}
@@ -46,7 +48,7 @@ export default function Menu() {
         </li>
         <li
           className="pure-menu-item pure-menu-has-children pure-menu-allow-hover"
-          style={{ marginLeft: "auto" }}
+          style={{ marginLeft: "auto", display: "none"}}
         >
           <Link href="./contact" id="menuLink1" className="pure-menu-link">
             Contact
