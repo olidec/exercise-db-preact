@@ -92,6 +92,14 @@ export default function ExForm() {
                 </select>
             </div>
             <div className="pure-control-group">
+                <label htmlFor="difficulty"> Schwierigkeitsgrad: </label>
+                <select required id="difficulty" name="difficulty">
+                    <option selected> Leicht </option>
+                    <option> Mittel </option>
+                    <option> Schwer </option>
+                </select>
+            </div>
+            <div className="pure-control-group">
                 <label htmlFor="category">Kategorie: </label>
             <select required id="category" name="category" value={selectedCategory} onChange={onChange}>
             {categories.map((category, index) => {
@@ -121,7 +129,7 @@ export default function ExForm() {
             </div>
             <div className="pure-control-group">
                 <label htmlFor="content">Aufgabentext: </label>
-                    <textarea required rows="5" cols="100" name="content" id="content" value={ex.content} onChange={updateExHandler} placeholder="Schreibe deine Aufgabe im LaTeX Format"/>
+                    <textarea required rows="10" cols="100" name="content" id="content" value={ex.content} onChange={updateExHandler} placeholder="Schreibe deine Aufgabe im LaTeX Format"/>
             </div>
             <div className="pure-control-group">
             <label htmlFor="solution">Lösung: </label>
