@@ -1,0 +1,169 @@
+% Im header stehen die Grundeinstellungen des Dokuments
+\documentclass[12pt,a4paper]{article} % 12 Punkte Schrift, A4 Papier
+\usepackage[utf8]{inputenc} 
+\usepackage[ngerman]{babel} % Passt alle automatischen Texte an. 
+%\usepackage[english]{babel} % Diese Variante verwenden, fall man eine Arbeit auf Englisch schreibt.
+
+\parindent=0cm
+\parskip=0.3cm
+\linespread{1.5}
+
+
+
+
+% Ein paar standard Pakete. Man muss genau wissen, wofür alle gebraucht werden...
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+
+
+
+
+% Informationen für die Titelseite
+\title{Beispiel für eine Maturarbeit}
+\date{1.1.2016}
+\author{Susy Muster}
+
+
+
+
+% Der Anfang des Dokuments
+\begin{document}
+
+
+
+\maketitle % Hier wird die Titelseite mit den obigen Informationen eingefügt. Falls man eine "kunstvollere" Titelseite mit einem anderen Programm erstellen möchte, kann man sie hier einfügen. Dafür muss man die Titelseite im gleichen Verzeichnis (z.B. mit dem Namen TitelseiteMA2016.pdf) im pdf Format ablegen und mit dem Befehl
+% \includepdf{TitelseiteMA2016}
+% wird sie dann eingefügt.
+
+
+
+
+
+
+
+
+
+
+
+\newpage % Eine neue Seite wird begonnen...
+\tableofcontents % Hier wird automatisch das Inhaltsverzeichnis eingefügt. Achtung: Änderungen werden erst nach dem zweiten kompilieren sichtbar.
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+
+% Die Grundstruktur einer Arbeit:
+\section{Einleitung}
+Hier steht text\ldots 
+
+% Mit einer Leerzeile wird ein neuer Abschnitt beognnen
+Wenn man auf eine Quelle verweisen möchte, verwendet man den \texttt{cite} Befehl \cite{buch1}. Man kann dann auch eine zweite Quelle zitieren: ``Life is a sexually transmitted terminal disease" \cite{buch2}.
+
+\newpage
+
+
+
+\section{Hauptteil}
+
+Hier könnte bespielsweise eine Graphik eingefügt werden:
+
+\begin{figure}[h] % Die "figure" Umgebung 
+\centering % Damit wird das Bild zentriert
+\includegraphics[width=0.5\textwidth]{star_wars.jpeg} % Hier wird ein Bild eingefügt, das im selben Verzeichnis abgelegt wurde. Es wird so vergrössert/verkleinert, dass es auf die halbe Textbreite passt.
+\caption{Ein erstes Bild \cite{sw16}}
+\end{figure}
+
+
+
+\newpage
+
+
+
+
+\section{Schlussfolgerungen}
+\newpage
+
+
+
+
+% Hier beginnt der Anhang
+\appendix
+\section{Anhang}
+\newpage
+
+
+
+
+
+\section{Bilderverzeichnis}
+\listoffigures
+
+
+
+\newpage
+\section{Literaturverzeichnis}
+
+\begin{thebibliography}{1} % Hier werden die einzelnen Quellen abgelegt. Die Quellen werden mit dem Befehl \bibitem kreiert. Der Ausdruck in geschweiften Klammern ist die interne Bezeichnung, die man verwendet, um daraus im Text zu zitieren
+
+
+\bibitem{buch1} Nachname, Vorname {\em Titel eines ersten Buchs} Jahr: Verlag.
+
+\bibitem{buch2} Nachname, Vorname {\em Titel eines zweiten Buchs} Jahr: Verlag.
+
+\bibitem{sw16} Webseite: \url{{http://img.lum.dolimg.com/v1/images/tfa_poster_wide_header_adb92fa0.jpeg?region=61%2C271%2C1937%2C1089&width=600}} 
+\\(zuletzt kontrolliert am 4.1.2016)
+% Diese Quelle wird im Text zitiert, wenn man den Befehl \cite{sw16} eingibt.
+
+
+\end{thebibliography}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
