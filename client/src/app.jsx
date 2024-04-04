@@ -10,13 +10,14 @@ import Warenkorb from "./components/Warenkorb.jsx";
 import AufgDetails from "./components/AufgDetails.jsx";
 import SearchKorb from "./components/SearchKorb.jsx";
 import Menu from "./components/Menu.jsx";
+import EditExercise from "./components/EditExercise.jsx";
 export function App() {
   return (
     <>
       <Menu></Menu>
 
       <Router>
-        <User exact path="/exercise-db-preact/" />
+        <User exact path="/exercise-db-preact/user" />
         <AddExercise exact path="/exercise-db-preact/add" />
 
         <FindExercise exact path="/exercise-db-preact/find" />
@@ -25,6 +26,8 @@ export function App() {
 
         <Warenkorb exact path="/exercise-db-preact/warenkorb" />
         <SearchKorb exact path="/exercise-db-preact/search" />
+
+        <EditExercise exact path="/exercise-db-preact/edit/:id" />
       </Router>
     </>
   );

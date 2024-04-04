@@ -151,6 +151,24 @@ router.post("/api/ex", async (req, res) => {
   }
 });
 
+router.put("/api/edit", async (req, res) => {
+  const { id, summary, content, solution } = req.body;
+  try {
+    const updatedEx = await prisma.exercise.update({
+      where: { id },
+      data: {
+        summary,
+        content,
+        solution,
+      },
+    });
+    console.log(updatedEx);
+    res.json(updatedEx);
+  } catch (error) {
+    res.json({ msg: "Error in DB request", err: error });
+  }
+});
+
 router.get("/api/download", async (req, res) => {
   try {
     const exercises = await prisma.exercise.findMany({

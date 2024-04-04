@@ -39,39 +39,52 @@ const AufgDetails = ({ id }) => {
     return <div>Lädt...</div>;
   }
 
+  function edit({ id }) {
+    window.location.href = `/exercise-db-preact/edit/${id}`;
+  }
+
   return (
     <>
-      <h1>Aufgabe Details mit ID {id}</h1>
+      <div className="inhalt">
+        <h1>Aufgabe Details mit ID {id}</h1>
 
-      <div>
-        <Card
-          key={exDetails.id}
-          id={exDetails.id}
-          summary={exDetails.summary}
-          content={exDetails.content}
-        />
+        <div>
+          <Card
+            key={exDetails.id}
+            id={exDetails.id}
+            summary={exDetails.summary}
+            content={exDetails.content}
+          />
 
-        {index === -1 ? (
+          {index === -1 ? (
+            <button
+              className="pure-button"
+              onClick={() =>
+                addToKorb({
+                  id: exDetails.id,
+                  content: exDetails.content,
+                  summary: exDetails.summary,
+                })
+              }
+            >
+              Zum Warenkorb
+            </button>
+          ) : (
+            <button
+              className="pure-button"
+              onClick={() => handleDelete({ id: exDetails.id })}
+            >
+              Löschen aus Warenkorb
+            </button>
+          )}
+
           <button
             className="pure-button"
-            onClick={() =>
-              addToKorb({
-                id: exDetails.id,
-                content: exDetails.content,
-                summary: exDetails.summary,
-              })
-            }
+            onClick={() => edit({ id: exDetails.id })}
           >
-            Zum Warenkorb
+            Edit Aufgabe
           </button>
-        ) : (
-          <button
-            className="pure-button"
-            onClick={() => handleDelete({ id: exDetails.id })}
-          >
-            Löschen aus Warenkorb
-          </button>
-        )}
+        </div>
       </div>
     </>
   );
