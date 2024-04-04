@@ -69,7 +69,8 @@
 \subsection{Projektplanung und Design}
 \subsubsection*{Anforderungsanalyse}
 
-•	Kernfunktionen: Die Applikation ermöglicht es Benutzern, Mathe-Aufgaben zu erstellen, durchsuchen, kommentieren und zu verwalten. Ein Warenkorb-System ermöglicht das Sammeln und Erstellen von Aufgabenblättern.
+•	Kernfunktionen: Die Applikation ermöglicht es Benutzern, Mathe-Aufgaben zu erstellen, durchsuchen, kommentieren und zu verwalten. 
+Ein Warenkorb-System ermöglicht das Sammeln und Erstellen von Aufgabenblättern.
 
 •	User Stories und Use Cases: Diese helfen, die Bedürfnisse und Erwartungen der Endbenutzer zu identifizieren. Sie dienen als Grundlage für das Design und die Entwicklung der Applikation.
 
@@ -82,7 +83,8 @@
 
 •	Backend-Architektur: Entscheidung zwischen REST API oder GraphQL basierend auf den Anforderungen und Vorzügen beider Technologien.
 
-•	Frontend-Architektur: Planung der Komponentenhierarchie und des Zustandsmanagements, um eine effiziente und wartbare Codebasis zu gewährleisten.
+•	Frontend-Architektur: Planung der Komponentenhierarchie und des Zustandsmanagements, um eine effiziente und wartbare Codebasis zu 
+gewährleisten.
 
 \subsubsection*{Technologische Auswahl}
 
@@ -92,7 +94,8 @@
 
 \subsubsection*{Einrichten der Entwicklungsumgebung}
 
-•	Einrichtung von Node.js, Express und Prisma: Konfiguration der grundlegenden Entwicklungsumgebung, um mit der Entwicklung beginnen zu können.
+•	Einrichtung von Node.js, Express und Prisma: Konfiguration der grundlegenden Entwicklungsumgebung, um mit der Entwicklung beginnen 
+zu können.
 
 \subsubsection*{ API-Entwicklung}
 
@@ -150,7 +153,8 @@
 
 \subsection{Anforderungsanalyse}
 
-Die Applikation zielt darauf ab, Mathematiklehrern eine effiziente Möglichkeit zu bieten, Aufgaben für Unterrichtsblätter zu finden, auszuwählen und zu organisieren. Kernfunktionen umfassen:
+Die Applikation zielt darauf ab, Mathematiklehrern eine effiziente Möglichkeit zu bieten, Aufgaben für Unterrichtsblätter zu finden, 
+sowie eine umfassende Sammlung von Aufgaben auszuwählen und zu organisieren. Kernfunktionen umfassen:
 
 •	   Aufgaben erstellen: Lehrer können neue Mathematikaufgaben zur Datenbank hinzufügen.
 
@@ -260,7 +264,9 @@ Zu berücksichtigen:
 
 •	Warenkorb (Warenkorb): Beinhaltet Komponenten zum Verwalten der ausgewählten Aufgaben, wie WarenCard für einzelne Aufgaben im Warenkorb und CardListWaren für die Gesamtansicht des Warenkorbs. Der WarenKorb selbst ist die Hauptkomponente, die den Nutzern die Interaktion mit dem Warenkorb ermöglicht, einschließlich der Überprüfung und Finalisierung ihrer Auswahl.
 
-•	Aufgaben hinzufügen (Add Exercises): Die ExForm Komponente ermöglicht das Erstellen neuer Aufgaben. Sie umfasst Formularfelder für die Eingabe von Titel, Inhalt, Lösung und optionalen Kategorien. Über eine API-Anfrage (askServer("/api/ex", "POST", ex)) werden die Daten an das Backend gesendet und die Aufgabe wird der Datenbank hinzugefügt.
+•	Aufgaben hinzufügen (Add Exercises): Die ExForm Komponente ermöglicht das Erstellen neuer Aufgaben. 
+Sie umfasst Formularfelder für die Eingabe von Titel, Inhalt, Lösung und optionalen Kategorien. Über eine API-Anfrage 
+(askServer("/api/ex", "POST", ex)) werden die Daten an das Backend gesendet und die Aufgabe wird der Datenbank hinzugefügt.
 
 •	Aufgaben finden (Find Exercises): Dieser Bereich umfasst mehrere Komponenten, die unterschiedliche Methoden zur Aufgabensuche anbieten, darunter FindExByCategory für kategoriebasierte Suche, FindExByIdFromServer für die direkte Abfrage einer Aufgabe über ihre ID und FindExBySearchText für textbasierte Suchanfragen.
 
@@ -276,13 +282,57 @@ Zu berücksichtigen:
 
 \subsection{Technologische Auswahl}
 
+ 
+\subsection{Backend-Entwicklung}
+\subsubsection{CRUD- und HTTP-Operationen}
 
-\section{Schlussfolgerungen}
+CRUD steht für Create, Read, Update, Delete und bezieht sich auf die vier grundlegenden Operationen, die in vielen Anwendungen zur Interaktion mit Datenbanken oder Datenspeichern verwendet werden. Die Implementierung von CRUD-Operationen ermöglicht es Benutzern (oder Systemen), Daten zu erstellen, abzurufen (lesen), zu aktualisieren und zu löschen.
+
+In einer Webanwendung werden CRUD-Operationen typischerweise über das Backend realisiert, wobei das Frontend (die Benutzeroberfläche) Anfragen an das Backend sendet, um Daten zu erstellen, abzurufen, zu aktualisieren oder zu löschen. Das Backend interagiert dann mit der Datenbank, um die angeforderten Aktionen durchzuführen und das Ergebnis (z.B. die abgerufenen Daten oder eine Bestätigung der Aktion) an das Frontend zurückzusenden, wo es dem Benutzer angezeigt wird.
+
+Für das Backend, das oft eine API bereitstellt, können diese Operationen spezifischen Endpunkten entsprechen, z.B.:
+
+•	    GET /api/users für das Abrufen von Benutzern (Read)
+
+•	    POST /api/user für das Erstellen eines neuen Benutzers (Create)
+
+•	   PUT /api/user/ für das Aktualisieren eines spezifischen Benutzers (Update)
+
+•	   POST /api/ex für das Erstellen einer neuen Aufgabe (Create)
+
+•	    GET /api/ex für das Abrufen von Aufgaben (Read)
+
+•	    PUT /api/ex/:id für das Aktualisieren einer spezifischen Aufgabe (Update)
+
+•	   DELETE /api/ex/:id für das Löschen einer Aufgabe (Delete)
+
+•	    GET /api/ex/search/:searchText für das Abrufen von Aufgaben nach Suchbegriffen (Read)
+
+•	    GET /api/ex/category/:category für das Abrufen von Aufgaben nach Kategorien (Read)
+
+•	    GET /api/ex/:id für das Abrufen einer spezifischen Aufgabe (Read)
+
+•	    POST /api/download/ für das Herunterladen der spezifischen Aufgabe im Warenkorb (Download)
+
+
+
+
+
+
+\subsubsection{Authentifizierung und Autorisierung}
+\textbf{Argon2:}
+
+Argon2 nimmt als Eingabe das Passwort des Benutzers, einen Salz (eine zufällig generierte Zeichenfolge, die jedem Passwort-Hash hinzugefügt wird, um die Einzigartigkeit zu gewährleisten), und mehrere Parameter, die die Komplexität des Hashing-Vorgangs steuern (wie Speicherbedarf, Rechenzeit und Parallelität).
+
+Basierend auf diesen Eingaben führt Argon2 eine Reihe von komplexen, rechenintensiven Operationen durch. Diese Operationen sind so gestaltet, dass sie sowohl eine hohe Menge an CPU-Ressourcen als auch Speicher benötigen. Dies macht es sehr schwierig für Angreifer, Passwörter zu erraten oder Brute-Force-Angriffe durchzuführen, selbst wenn sie über leistungsfähige Hardware verfügen.
+
+Das Ergebnis des Prozesses ist ein Passwort-Hash, der in der Datenbank gespeichert wird. Da der gleiche Prozess (mit dem gleichen Salz und denselben Parametern) immer denselben Hash erzeugt, kann das System das vom Benutzer bei der Anmeldung eingegebene Passwort überprüfen, ohne das eigentliche Passwort kennen oder speichern zu müssen.
+
+Sicherheit gegen Brute-Force-Angriffe: Die rechen- und speicherintensive Natur von Argon2 macht es teuer und zeitaufwändig, Hashes zu knacken. Dies schützt gegen Angriffe, die darauf abzielen, Passwörter durch Ausprobieren vieler möglicher Kombinationen (Brute-Force) zu erraten.
+
 \newpage
-
-
-
-
+   
+  
 % Hier beginnt der Anhang
 \appendix
 \section{Anhang}
