@@ -157,6 +157,7 @@ router.put("/api/edit", async (req, res) => {
     const updatedEx = await prisma.exercise.update({
       where: { id },
       data: {
+        id,
         summary,
         content,
         solution,
