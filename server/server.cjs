@@ -157,12 +157,9 @@ router.put("/api/ex", async (req, res) => {
     const updatedEx = await prisma.exercise.update({
       where: { id },
       data: {
-        id,
         summary,
         content,
         solution,
-        category,
-        subcategory,
       },
     });
     console.log(updatedEx);

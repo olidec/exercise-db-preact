@@ -4,12 +4,10 @@ import { askServer } from "../utils/connector";
 
 export default function EditForm({ id }) {
   const [ex, setEx] = useState({
-    id: id,
+    id: { id },
     summary: "",
     content: "",
     solution: "",
-    category: "",
-    subcategory: "",
   });
   let categories = [
     "-- Wähle bitte eine Kategorie --",
@@ -88,10 +86,7 @@ export default function EditForm({ id }) {
 
     e.preventDefault();
     const exWithCategory = {
-      id: parseInt({ id }), // Stelle sicher, dass die id hier eingefügt wird
-      summary: ex.summary,
-      content: ex.content,
-      solution: ex.solution,
+      ...ex,
       category: selectedCategory,
       subcategory: selectedSubcategory,
     };
