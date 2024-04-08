@@ -151,7 +151,7 @@ router.post("/api/ex", async (req, res) => {
   }
 });
 
-router.put("/api/edit", async (req, res) => {
+router.put("/api/ex", async (req, res) => {
   const { id, summary, content, solution } = req.body;
   try {
     const updatedEx = await prisma.exercise.update({

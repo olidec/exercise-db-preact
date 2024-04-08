@@ -5,8 +5,8 @@ export async function askServer(
   content = "application/json;charset=utf-8"
 ) {
   // return new Promise(() => mock(route))
-  const baseUrl = "http://139.162.166.227:3000";
-  // const baseUrl = "http://localhost:3000"
+  //const baseUrl = "http://139.162.166.227:3000";
+  const baseUrl = "http://localhost:3000";
   const data = {
     headers: {
       "Content-Type": content,

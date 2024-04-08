@@ -87,7 +87,7 @@ export default function EditForm({ id }) {
       category: selectedCategory,
       subcategory: selectedSubcategory,
     };
-    const res = await askServer("/api/edit", "PUT", exWithCategory);
+    const res = await askServer("/api/ex", "PUT", exWithCategory);
     if (res.err) {
       console.log(res.err);
     } else {
