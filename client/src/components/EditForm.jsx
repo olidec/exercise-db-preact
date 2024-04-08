@@ -8,8 +8,9 @@ export default function EditForm({ id }) {
     summary: "",
     content: "",
     solution: "",
+    category: "",
+    subcategory: "",
   });
-
   let categories = [
     "-- Wähle bitte eine Kategorie --",
     "Zahlen",
@@ -80,24 +81,28 @@ export default function EditForm({ id }) {
   }, [selectedCategory]);
 
   const updateEx = async (e) => {
+    if (!ex.id || !ex.summary || !ex.content || !ex.solution) {
+      console.log("Validation error: Some required fields are missing");
+      return;
+    }
+
     e.preventDefault();
     const exWithCategory = {
-      ...ex,
-      id: id, // Stelle sicher, dass die id hier eingefügt wird
+      id: parseInt({ id }), // Stelle sicher, dass die id hier eingefügt wird
+      summary: ex.summary,
+      content: ex.content,
+      solution: ex.solution,
       category: selectedCategory,
       subcategory: selectedSubcategory,
     };
-    const res = await askServer("/api/ex", "PUT", exWithCategory);
-    if (res.err) {
-      console.log(res.err);
-    } else {
-      setEx({
-        id: "",
-        summary: "",
-        content: "",
-        solution: "",
-      });
-      console.log("exercise updated"); // Ändere die Bestätigungsnachricht
+    try {
+      const res = await askServer("/api/ex", "PUT", exWithCategory);
+
+      console.log(res);
+
+      console.log(res.error);
+    } catch (error) {
+      console.error("Error updating exercise:", error); // Ändere die Bestätigungsnachricht
     }
   };
 
@@ -118,9 +123,12 @@ export default function EditForm({ id }) {
       const exDetails = await askServer(`/api/ex?id=${id}`, "GET");
       if (exDetails) {
         setEx({
+          id: exDetails.id,
           summary: exDetails.summary,
           content: exDetails.content,
           solution: exDetails.solution,
+          category: exDetails.category,
+          subcategory: exDetails.subcategory,
           // Füge weitere Felder hinzu, falls vorhanden
         });
       }
