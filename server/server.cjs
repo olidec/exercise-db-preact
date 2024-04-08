@@ -161,12 +161,14 @@ router.put("/api/ex", async (req, res) => {
         summary,
         content,
         solution,
+        category,
+        subcategory,
       },
     });
     console.log(updatedEx);
     res.json(updatedEx);
   } catch (error) {
-    res.json({ msg: "Error in DB request", err: error });
+    res.json({ msg: "Errorrrrr in DB request", err: error });
   }
 });
 
