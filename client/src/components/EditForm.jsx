@@ -94,8 +94,8 @@ export default function EditForm({ id }) {
       const res = await askServer("/api/ex", "PUT", exWithCategory);
 
       console.log(res);
-
-      console.log(res.error);
+      alert("Exercise updated successfully");
+      window.location.href = `/exercise-db-preact/${id}`;
     } catch (error) {
       console.error("Error updating exercise:", error); // Ändere die Bestätigungsnachricht
     }
