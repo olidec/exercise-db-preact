@@ -7,7 +7,6 @@ export default function EditForm({ id }) {
   const { showNotification } = useContext(SearchContext);
   const [ex, setEx] = useState({
     id: { id },
-    summary: "",
     content: "",
     solution: "",
     language: "Deutsch",
@@ -88,7 +87,6 @@ export default function EditForm({ id }) {
   const updateEx = async (e) => {
     if (
       !ex.id ||
-      !ex.summary ||
       !ex.content ||
       !ex.solution ||
       !ex.language ||
@@ -143,7 +141,6 @@ export default function EditForm({ id }) {
       if (exDetails) {
         setEx({
           id: exDetails.id,
-          summary: exDetails.summary,
           content: exDetails.content,
           solution: exDetails.solution,
           language: exDetails.language,

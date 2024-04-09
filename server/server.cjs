@@ -154,12 +154,11 @@ router.post("/api/ex", async (req, res) => {
 });
 
 router.put("/api/ex", async (req, res) => {
-  const { id, summary, content, solution, language, difficulty } = req.body;
+  const { id, content, solution, language, difficulty } = req.body;
   try {
     const updatedEx = await prisma.exercise.update({
       where: { id },
       data: {
-        summary,
         content,
         solution,
         language,
