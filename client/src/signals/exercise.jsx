@@ -26,21 +26,58 @@ export const SearchProvider = ({ children }) => {
     return cartSearch.value.length;
   }
 
+  const showNotification = (message, color) => {
+    // Finde den Container für die Benachrichtigungen
+    const container = document.getElementById("notification-container");
+
+    // Erstelle das Benachrichtigungselement
+    const notification = document.createElement("div");
+    notification.textContent = message;
+    notification.style.position = "fixed";
+    notification.style.top = "20px"; // Positioniere die Benachrichtigung am oberen Rand
+    notification.style.left = "50%"; // Zentriere die Benachrichtigung horizontal
+    notification.style.transform = "translateX(-50%)"; // Stelle sicher, dass sie genau zentriert ist
+    notification.style.backgroundColor = color;
+    notification.style.color = "white";
+    notification.style.padding = "20px"; // Größere Padding-Werte für ein größeres Fenster
+    notification.style.minWidth = "300px"; // Stelle eine Mindestbreite ein
+    notification.style.textAlign = "center"; // Zentriere den Text innerhalb der Benachrichtigung
+    notification.style.borderRadius = "5px";
+    notification.style.zIndex = "1000";
+    notification.style.fontSize = "18px"; // Vergrößere die Schriftgröße
+
+    // Füge die Benachrichtigung zum Container hinzu
+    container.appendChild(notification);
+
+    // Entferne die Benachrichtigung nach 3 Sekunden
+    setTimeout(() => {
+      if (container.contains(notification)) {
+        container.removeChild(notification);
+      }
+    }, 2500);
+  };
+
   const deleteCart = async ({ id }) => {
-    // Stelle sicher, dass der ID-Wert korrekt im URL-Pfad enthalten ist
-    const route = `/api/ex/${id}`;
+    const isConfirmed = window.confirm(
+      "Möchtest du diese Aufgabe wirklich löschen?"
+    );
+    if (isConfirmed) {
+      const route = `/api/ex/${id}`;
+      const deleteEx = await askServer(route, "DELETE");
 
-    // Da der `DELETE` Request keinen Body erwartet, übergebe ein leeres Objekt oder lasse den Parameter weg
-    const deleteEx = await askServer(route, "DELETE");
+      if (deleteEx) {
+        console.log("Aufgabe erfolgreich gelöscht:", deleteEx);
+        showNotification("Aufgabe erfolgreich gelöscht.", "red");
 
-    // Verarbeite die Antwort entsprechend (z.B. Aktualisiere den Zustand oder informiere den Benutzer)
-    if (deleteEx) {
-      console.log("Aufgabe erfolgreich gelöscht:", deleteEx);
-      alert("Aufgabe erfolgreich gelöscht.");
-      // Führe hier weitere Aktionen durch, z.B. Zustand aktualisieren oder Seite neu laden
+        setTimeout(() => {
+          window.location.href = `/exercise-db-preact/add`;
+        }, 1000);
+      } else {
+        console.error("Fehler beim Löschen der Aufgabe");
+        showNotification("Fehler beim Löschen der Aufgabe.", "red");
+      }
     } else {
-      console.error("Fehler beim Löschen der Aufgabe");
-      alert("Fehler beim Löschen der Aufgabe.");
+      console.log("Löschen abgebrochen");
     }
   };
 
@@ -49,7 +86,14 @@ export const SearchProvider = ({ children }) => {
   });
   return (
     <SearchContext.Provider
-      value={{ ex, loadEx, cartSearch, getCartSearch, deleteCart }}
+      value={{
+        ex,
+        loadEx,
+        cartSearch,
+        getCartSearch,
+        deleteCart,
+        showNotification,
+      }}
     >
       {children}
     </SearchContext.Provider>

@@ -1,8 +1,10 @@
 import { h } from "preact";
 import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
-
+import { useContext } from "preact/hooks";
+import { SearchContext } from "../signals/exercise.jsx";
 export default function EditForm({ id }) {
+  const { showNotification } = useContext(SearchContext);
   const [ex, setEx] = useState({
     id: { id },
     summary: "",
@@ -107,11 +109,14 @@ export default function EditForm({ id }) {
       const res = await askServer("/api/ex", "PUT", exWithCategory);
       if (!res.err) {
         console.log(res);
-        alert("Exercise updated successfully");
-        window.location.href = `/exercise-db-preact/${id}`;
+        showNotification("Exercise updated successfully", "green");
+
+        setTimeout(() => {
+          window.location.href = `/exercise-db-preact/${id}`;
+        }, 1000); // Warte 1 Sekunde (1000 Millisekunden)
       } else {
         console.log(res.err);
-        alert("Fehler beim Aktualisieren der Aufgabe.");
+        showNotification("Fehler beim Aktualisieren", "red");
       }
     } catch (error) {
       console.error("Error updating exercise:", error); // Ändere die Bestätigungsnachricht

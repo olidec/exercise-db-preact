@@ -13,26 +13,49 @@ export const WarenkorbProvider = ({ children }) => {
     JSON.parse(window.localStorage.getItem("cartItems")) || []
   );
   function addToKorb({ id, summary, content }) {
-    cartItems.value = [...cartItems.value, { id, summary, content }];
+    setTimeout(() => {
+      cartItems.value = [...cartItems.value, { id, summary, content }];
 
-    console.log(cartItems.value);
+      console.log(cartItems.value);
+      // Zeige das Häkchen an
+      const checkmark = document.getElementById("checkmark");
+      checkmark.innerHTML = "✔"; // Setze das Häkchen-Symbol
+      checkmark.style.color = "green"; // Setze die Farbe auf Grün
+      checkmark.style.display = "block";
+
+      // Verberge das Häkchen nach 1 Sekunde
+      setTimeout(() => {
+        checkmark.style.display = "none";
+      }, 700);
+    }, 400);
   }
 
   effect(() => {
     window.localStorage.setItem("cartItems", JSON.stringify(cartItems.value));
   });
   function handleDelete({ id }) {
-    // Finden des Indexes des Elements mit der entsprechenden id
-    const index = cartItems.value.findIndex((item) => item.id === id);
+    setTimeout(() => {
+      // Finden des Indexes des Elements mit der entsprechenden id
+      const index = cartItems.value.findIndex((item) => item.id === id);
 
-    // Entfernen des Elements an dem gefundenen Index
-    const updatedList = cartItems.value.filter(
-      (item, itemIndex) => itemIndex !== index
-    );
-    cartItems.value = updatedList; // Setzen eines neuen Arrays
+      // Entfernen des Elements an dem gefundenen Index
+      const updatedList = cartItems.value.filter(
+        (item, itemIndex) => itemIndex !== index
+      );
+      cartItems.value = updatedList; // Setzen eines neuen Arrays
 
-    console.log(index);
-    console.log(cartItems.value);
+      const checkmark = document.getElementById("checkmark");
+      checkmark.innerHTML = "✖"; // Setze das Kreuz-Symbol
+      checkmark.style.color = "red"; // Setze die Farbe auf Rot
+      checkmark.style.display = "block";
+
+      setTimeout(() => {
+        checkmark.style.display = "none";
+      }, 700);
+
+      console.log(index);
+      console.log(cartItems.value);
+    }, 400);
   }
 
   function getCartCount() {

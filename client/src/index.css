@@ -1,17 +1,17 @@
 .pure-menu-horizontal {
-  background-color: #438DE5;
+  background-color: #438de5;
 }
 
 .pure-menu-link {
-  color: #3738E6
+  color: #3738e6;
 }
 
 .pure-menu-link:hover {
-  background-color: #73AEE5;
+  background-color: #73aee5;
 }
 
 .pure-menu-item:hover {
-  background-color: #73AEE5;
+  background-color: #73aee5;
 }
 
 .kartenContainer {
@@ -70,4 +70,15 @@
   align-items: "center";
 
   text-align: "center";
+}
+
+#checkmark {
+  position: fixed;
+  top: 6%;
+  left: 96%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+
+  z-index: 1000;
+  display: none; /* Versteckt das Element standardmäßig */
 }

@@ -47,7 +47,7 @@ const AufgDetails = ({ id }) => {
     return <div>Lädt...</div>;
   }
   if (!exDetails) {
-    return <h2>Aufgabe mit ID {id} existiert nicht.</h2>;
+    return <h2>Aufgabe mit ID {id} existiert nicht mehr in Datenbank</h2>;
   }
   function edit({ id }) {
     window.location.href = `/exercise-db-preact/edit/${id}`;

@@ -6,7 +6,7 @@ import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 import { useState, useEffect } from "preact/hooks";
 export default function FindExBySearchText() {
-  const { cartSearch } = useContext(SearchContext);
+  const { cartSearch, showNotification } = useContext(SearchContext);
 
   const searchCategory = signal("");
   const [exerciseList, setExerciseList] = useState([]);
@@ -43,7 +43,7 @@ export default function FindExBySearchText() {
     const res = await askServer(route, "GET");
     // console.log(res)
     if (res.errors || res.length === 0) {
-      alert("No exercises match the search term.");
+      showNotification("No exercise matches the search term.", "red");
       return;
     } else {
       setExerciseList(res);
@@ -55,11 +55,11 @@ export default function FindExBySearchText() {
     <>
       <form className="pure-form pure-form-aligned" onSubmit={(e) => getEx(e)}>
         <div className="pure-control-group">
-        <label htmlFor="exid-4">Search Exercises by Category</label>
-        <select id="exid-4" onChange={onChange}>
-          <option value=""> -- Kategorie auswählen -- </option>
-        </select>
-        <button className="pure-button">Find Category</button>
+          <label htmlFor="exid-4">Search Exercises by Category</label>
+          <select id="exid-4" onChange={onChange}>
+            <option value=""> -- Kategorie auswählen -- </option>
+          </select>
+          <button className="pure-button">Find Category</button>
         </div>
       </form>
     </>

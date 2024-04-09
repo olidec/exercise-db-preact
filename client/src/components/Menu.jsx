@@ -44,6 +44,9 @@ export default function Menu() {
           className="pure-menu-item pure-menu-selected"
           style={{ marginLeft: "auto" }}
         >
+          <div id="notification-container"></div>
+          <div id="checkmark">✔</div>
+
           <Link href="/exercise-db-preact/warenkorb" className="pure-menu-link">
             Warenkorb
           </Link>

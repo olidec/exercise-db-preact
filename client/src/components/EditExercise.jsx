@@ -9,7 +9,9 @@ const EditExercise = ({ id }) => {
     <>
       <div className="inhalt">
         <h1>Edit Exercise mit ID {id} </h1>
+
         <EditForm id={id} />
+
         <hr />
 
         <hr />

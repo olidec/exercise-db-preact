@@ -1,8 +1,10 @@
 import { h } from "preact";
 import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
-
+import { useContext } from "preact/hooks";
+import { SearchContext } from "../signals/exercise.jsx";
 export default function ExForm() {
+  const { showNotification } = useContext(SearchContext);
   const [ex, setEx] = useState({
     summary: "",
     content: "",
@@ -74,12 +76,6 @@ export default function ExForm() {
     subcategories[0][0]
   );
 
-  // selectedCategory.value = categories[0];
-  // selectedSubcategory.value =  subcategories[0][0];
-
-  // console.log(selectedCategory)
-  // console.log(selectedSubcategory.value)
-
   useEffect(() => {
     setSelectedSubcategory(
       subcategories[categories.indexOf(selectedCategory)][0]
@@ -90,6 +86,7 @@ export default function ExForm() {
     e.preventDefault();
     const exWithCategory = {
       ...ex,
+      difficulty: parseInt(ex.difficulty),
       category: selectedCategory,
       subcategory: selectedSubcategory,
     };
@@ -105,7 +102,7 @@ export default function ExForm() {
         language: "",
         difficulty: 1,
       });
-      console.log("exercise added");
+      showNotification("Exercise added successfully", "green");
     }
   };
 
