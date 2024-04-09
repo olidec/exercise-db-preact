@@ -11,8 +11,11 @@ const EditExercise = ({ id }) => {
         <h1>Edit Exercise mit ID {id} </h1>
         <EditForm id={id} />
         <hr />
+
+        <hr />
+
         <button
-          className="pure-button pure-button-primary"
+          className=" pure-button pure-button-third"
           onClick={() => deleteCart({ id })}
         >
           Delete aus DB

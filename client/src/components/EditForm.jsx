@@ -99,6 +99,7 @@ export default function EditForm({ id }) {
     e.preventDefault();
     const exWithCategory = {
       ...ex,
+      difficulty: parseInt(ex.difficulty),
       category: selectedCategory,
       subcategory: selectedSubcategory,
     };
