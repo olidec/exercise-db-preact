@@ -5,6 +5,7 @@ const Card = ({ key, id, summary, content }) => {
   return (
     <>
       <div className="karte">
+        <h2>ID: {id}</h2>
         <h3>Summary</h3>
 
         <hr />

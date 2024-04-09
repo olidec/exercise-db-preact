@@ -5,8 +5,7 @@ import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { useContext, useState } from "preact/hooks";
 //import { cartItems, addToKorb, handleDelete } from "../signals/warenkorb";
 const SearchCard = ({ key, id, content, summary }) => {
-  const { cartItems, getCartCount, getCart, addToKorb, handleDelete } =
-    useContext(WarenkorbContext);
+  const { cartItems, addToKorb, handleDelete } = useContext(WarenkorbContext);
   let index = cartItems.value.findIndex((item) => item.id === id);
   console.log(index);
   return (

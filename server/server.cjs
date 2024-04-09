@@ -131,13 +131,15 @@ router.get("/api/cat", async (req, res) => {
 });
 
 router.post("/api/ex", async (req, res) => {
-  const { summary, content, solution } = req.body;
+  const { summary, content, solution, language, difficulty } = req.body;
   try {
     const newEx = await prisma.exercise.create({
       data: {
         summary,
         content,
         solution,
+        language,
+        difficulty,
       },
     });
     console.log(newEx);
@@ -152,7 +154,7 @@ router.post("/api/ex", async (req, res) => {
 });
 
 router.put("/api/ex", async (req, res) => {
-  const { id, summary, content, solution } = req.body;
+  const { id, summary, content, solution, language, difficulty } = req.body;
   try {
     const updatedEx = await prisma.exercise.update({
       where: { id },
@@ -160,12 +162,27 @@ router.put("/api/ex", async (req, res) => {
         summary,
         content,
         solution,
+        language,
+        difficulty,
       },
     });
     console.log(updatedEx);
     res.json(updatedEx);
   } catch (error) {
     res.json({ msg: "Errorrrrr in DB request", err: error });
+  }
+});
+
+router.delete("/api/ex/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedEx = await prisma.exercise.delete({
+      where: { id: Number(id) },
+    });
+    console.log(deletedEx);
+    res.json(deletedEx);
+  } catch (error) {
+    res.json({ msg: "Error in DB request", err: error });
   }
 });
 
