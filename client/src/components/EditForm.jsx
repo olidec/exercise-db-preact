@@ -3,6 +3,7 @@ import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
+
 export default function EditForm({ id }) {
   const { showNotification } = useContext(SearchContext);
   const [ex, setEx] = useState({

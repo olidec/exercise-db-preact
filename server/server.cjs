@@ -131,15 +131,15 @@ router.get("/api/cat", async (req, res) => {
 });
 
 router.post("/api/ex", async (req, res) => {
-  const { summary, content, solution, language, difficulty } = req.body;
+  const { content, solution, language, difficulty, categories } = req.body;
   try {
     const newEx = await prisma.exercise.create({
       data: {
-        summary,
         content,
         solution,
         language,
         difficulty,
+        categories: { connect: categories },
       },
     });
     console.log(newEx);

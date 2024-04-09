@@ -6,7 +6,6 @@ import { SearchContext } from "../signals/exercise.jsx";
 export default function ExForm() {
   const { showNotification } = useContext(SearchContext);
   const [ex, setEx] = useState({
-    summary: "",
     content: "",
     solution: "",
     language: "Deutsch",
@@ -96,7 +95,6 @@ export default function ExForm() {
       console.log(res.err);
     } else {
       setEx({
-        summary: "",
         content: "",
         solution: "",
         language: "",

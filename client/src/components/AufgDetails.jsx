@@ -64,6 +64,7 @@ const AufgDetails = ({ id }) => {
             id={exDetails.id}
             summary={exDetails.summary}
             content={exDetails.content}
+            currentPath={window.location.pathname}
           />
 
           {index === -1 ? (
