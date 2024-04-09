@@ -8,7 +8,12 @@ export default function EditForm({ id }) {
     summary: "",
     content: "",
     solution: "",
+    language: "Deutsch",
+    difficulty: 1,
   });
+
+  const [languages, setLanguages] = useState([]);
+  const [difficulty, setDifficulty] = useState([]);
   let categories = [
     "-- Wähle bitte eine Kategorie --",
     "Zahlen",
@@ -79,7 +84,14 @@ export default function EditForm({ id }) {
   }, [selectedCategory]);
 
   const updateEx = async (e) => {
-    if (!ex.id || !ex.summary || !ex.content || !ex.solution) {
+    if (
+      !ex.id ||
+      !ex.summary ||
+      !ex.content ||
+      !ex.solution ||
+      !ex.language ||
+      !ex.difficulty
+    ) {
       console.log("Validation error: Some required fields are missing");
       return;
     }
@@ -92,10 +104,14 @@ export default function EditForm({ id }) {
     };
     try {
       const res = await askServer("/api/ex", "PUT", exWithCategory);
-
-      console.log(res);
-      alert("Exercise updated successfully");
-      window.location.href = `/exercise-db-preact/${id}`;
+      if (!res.err) {
+        console.log(res);
+        alert("Exercise updated successfully");
+        window.location.href = `/exercise-db-preact/${id}`;
+      } else {
+        console.log(res.err);
+        alert("Fehler beim Aktualisieren der Aufgabe.");
+      }
     } catch (error) {
       console.error("Error updating exercise:", error); // Ändere die Bestätigungsnachricht
     }
@@ -111,6 +127,8 @@ export default function EditForm({ id }) {
 
   const onChange = (e) => {
     setSelectedCategory(e.target.value);
+    //setLanguages(e.target.value);
+    // setDifficulty(e.target.value);
   };
 
   useEffect(() => {
@@ -122,6 +140,8 @@ export default function EditForm({ id }) {
           summary: exDetails.summary,
           content: exDetails.content,
           solution: exDetails.solution,
+          language: exDetails.language,
+          difficulty: exDetails.difficulty,
           category: exDetails.category,
           subcategory: exDetails.subcategory,
           // Füge weitere Felder hinzu, falls vorhanden
@@ -145,17 +165,29 @@ export default function EditForm({ id }) {
           <fieldset>
             <div className="pure-control-group">
               <label htmlFor="language"> Sprache: </label>
-              <select required id="language" name="language">
-                <option selected> Deutsch </option>
-                <option> English </option>
+              <select
+                required
+                id="language"
+                name="language"
+                value={ex.language}
+                onChange={(e) => setEx({ ...ex, language: e.target.value })}
+              >
+                <option value={"Deutsch"}> Deutsch </option>
+                <option value={"English"}> English </option>
               </select>
             </div>
             <div className="pure-control-group">
               <label htmlFor="difficulty"> Schwierigkeitsgrad: </label>
-              <select required id="difficulty" name="difficulty">
-                <option selected> Leicht </option>
-                <option> Mittel </option>
-                <option> Schwer </option>
+              <select
+                required
+                id="difficulty"
+                name="difficulty"
+                value={ex.difficulty}
+                onChange={(e) => setEx({ ...ex, difficulty: e.target.value })}
+              >
+                <option value={1}> Leicht </option>
+                <option value={2}> Mittel </option>
+                <option value={3}> Schwer </option>
               </select>
             </div>
             <div className="pure-control-group">
