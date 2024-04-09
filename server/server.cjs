@@ -159,10 +159,12 @@ router.get("/api/download", async (req, res) => {
         createdAt: "desc",
       },
     });
+
     const contentAndSolution = exercises.map((exercise) => ({
       content: exercise.content,
       solution: exercise.solution,
     }));
+
     console.log(contentAndSolution);
     fs.writeFile(
       "server/output/output.txt",
@@ -183,7 +185,7 @@ router.get("/api/download", async (req, res) => {
 });
 
 router.post("/api/download", async (req, res) => {
-  const { exerciseIds } = req.body;
+  const exerciseIds = req.body.exerciseIds;
   try {
     const exercises = await prisma.exercise.findMany({
       where: {
@@ -192,28 +194,31 @@ router.post("/api/download", async (req, res) => {
         },
       },
     });
-    const writeToFile = (exercises) => {
-      const contentAndSolution = exercises.map((exercise) => ({
-        content: exercise.content,
-        solution: exercise.solution,
-      }));
 
-      fs.writeFile(
-        "/path/to/output.txt",
-        JSON.stringify(contentAndSolution),
-        (err) => {
-          if (err) {
-            console.error("Error writing to file:", err);
-          } else {
-            console.log("Data written to file successfully");
-            res.download("/path/to/output.txt", "output.txt");
-          }
+    const contentAndSolution = exercises.map((exercise) => ({
+      content: exercise.content,
+      solution: exercise.solution,
+    }));
+
+    fs.writeFile(
+      "server/output/output.txt",
+      JSON.stringify(contentAndSolution),
+      (err) => {
+        if (err) {
+          console.error("Error writing to file:", err);
+        } else {
+          console.log("Data written to file successfully");
+          // res.download("server/output/output.txt", "output.txt");
+          // res.sendFile(path.resolve("server", "output/output.txt"));
+          res.json({
+            msg: "Download successful",
+            data: contentAndSolution,
+          });
         }
-      );
-    };
+      }
+    );
 
-    writeToFile(exercises);
-    res.json(exercises);
+    // res.json(exercises);
   } catch (error) {
     res.json({ msg: "Error in DB request", err: error });
   }

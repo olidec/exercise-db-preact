@@ -12,6 +12,7 @@ export const WarenkorbProvider = ({ children }) => {
   const cartItems = signal(
     JSON.parse(window.localStorage.getItem("cartItems")) || []
   );
+
   function addToKorb({ id, summary, content }) {
     cartItems.value = [...cartItems.value, { id, summary, content }];
 
@@ -50,6 +51,9 @@ export const WarenkorbProvider = ({ children }) => {
   //export const cartCount = computed(() => cartItems.value.length);
   const cartCount = computed(() => cartItems.value.length);
 
+  const arrayIDs = cartItems.value.map((obj) => obj.id);
+  console.log(arrayIDs);
+
   return (
     <WarenkorbContext.Provider
       value={{
@@ -60,6 +64,7 @@ export const WarenkorbProvider = ({ children }) => {
         handleDelete,
         addToKorb,
         getIndex,
+        arrayIDs,
       }}
     >
       {children}
