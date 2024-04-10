@@ -115,7 +115,10 @@ export default function EditForm({ id }) {
         }, 1000); // Warte 1 Sekunde (1000 Millisekunden)
       } else {
         console.log(res.err);
-        showNotification("Fehler beim Aktualisieren", "red");
+        showNotification(
+          "Fehler beim Aktualisieren, Aufgabe existiert schon in DB",
+          "red"
+        );
       }
     } catch (error) {
       console.error("Error updating exercise:", error); // Ändere die Bestätigungsnachricht

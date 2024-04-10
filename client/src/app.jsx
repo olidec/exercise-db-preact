@@ -15,20 +15,21 @@ export function App() {
   return (
     <>
       <Menu></Menu>
+      <div className="inhalt">
+        <Router>
+          <User exact path="/exercise-db-preact/user" />
+          <AddExercise exact path="/exercise-db-preact/add" />
 
-      <Router>
-        <User exact path="/exercise-db-preact/user" />
-        <AddExercise exact path="/exercise-db-preact/add" />
+          <FindExercise exact path="/exercise-db-preact/find" />
 
-        <FindExercise exact path="/exercise-db-preact/find" />
+          <AufgDetails exact path="/exercise-db-preact/:id" />
 
-        <AufgDetails exact path="/exercise-db-preact/:id" />
+          <Warenkorb exact path="/exercise-db-preact/warenkorb" />
+          <SearchKorb exact path="/exercise-db-preact/search" />
 
-        <Warenkorb exact path="/exercise-db-preact/warenkorb" />
-        <SearchKorb exact path="/exercise-db-preact/search" />
-
-        <EditExercise exact path="/exercise-db-preact/edit/:id" />
-      </Router>
+          <EditExercise exact path="/exercise-db-preact/edit/:id" />
+        </Router>
+      </div>
     </>
   );
 }

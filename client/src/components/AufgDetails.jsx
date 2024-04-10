@@ -64,6 +64,9 @@ const AufgDetails = ({ id }) => {
             id={exDetails.id}
             summary={exDetails.summary}
             content={exDetails.content}
+            solution={exDetails.solution}
+            difficulty={exDetails.difficulty}
+            author={exDetails.authorId}
             currentPath={window.location.pathname}
           />
 

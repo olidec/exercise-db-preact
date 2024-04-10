@@ -1,12 +1,29 @@
 import { h } from "preact";
 import { signal } from "@preact/signals";
 import { Link } from "preact-router/match";
-const Card = ({ id, summary, content, currentPath }) => {
+import { useState } from "react";
+const Card = ({
+  id,
+  summary,
+  content,
+  solution,
+  difficulty,
+  author,
+  currentPath,
+}) => {
   const detailPath = `/exercise-db-preact/${id}`;
 
+  const difficultyMapping = {
+    1: "Leicht",
+    2: "Mittel",
+    3: "Schwer",
+  };
+
+  const schwierigkeitText = difficultyMapping[difficulty];
   return (
     <div className="karte">
-      <h2>ID: {id}</h2>
+      {currentPath === detailPath ? "" : <h2>ID: {id}</h2>}
+
       <h3>Summary</h3>
       <hr />
       <div className="summary">{summary}</div>
@@ -22,6 +39,18 @@ const Card = ({ id, summary, content, currentPath }) => {
       <hr />
       <div className="content">{content}</div>
       <hr />
+
+      {currentPath === detailPath ? (
+        <>
+          <h3>Lösung:</h3>
+          <div className="solution">{solution}</div>
+          <hr />
+          <h5>Schwierigkeit: {schwierigkeitText}</h5>
+          <h5>Autor: {author}</h5>
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

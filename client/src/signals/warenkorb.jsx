@@ -20,7 +20,7 @@ export const WarenkorbProvider = ({ children }) => {
       // Zeige das Häkchen an
       const checkmark = document.getElementById("checkmark");
       checkmark.innerHTML = "✔"; // Setze das Häkchen-Symbol
-      checkmark.style.color = "green"; // Setze die Farbe auf Grün
+      checkmark.style.color = "lightgreen"; // Setze die Farbe auf Grün
       checkmark.style.display = "block";
 
       // Verberge das Häkchen nach 1 Sekunde
@@ -43,15 +43,6 @@ export const WarenkorbProvider = ({ children }) => {
         (item, itemIndex) => itemIndex !== index
       );
       cartItems.value = updatedList; // Setzen eines neuen Arrays
-
-      const checkmark = document.getElementById("checkmark");
-      checkmark.innerHTML = "✖"; // Setze das Kreuz-Symbol
-      checkmark.style.color = "red"; // Setze die Farbe auf Rot
-      checkmark.style.display = "block";
-
-      setTimeout(() => {
-        checkmark.style.display = "none";
-      }, 700);
 
       console.log(index);
       console.log(cartItems.value);

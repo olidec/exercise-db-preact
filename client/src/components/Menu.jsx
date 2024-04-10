@@ -4,7 +4,16 @@ import { SearchContext } from "../signals/exercise.jsx";
 export default function Menu() {
   const { cartSearch, getCartSearch } = useContext(SearchContext);
   return (
-    <div className="pure-menu pure-menu-horizontal">
+    <div
+      className="pure-menu pure-menu-horizontal"
+      style={{
+        position: "fixed",
+        top: "0",
+        width: "100%",
+        fontSize: "18px",
+        fontWeight: "bold",
+      }}
+    >
       <ul
         className="pure-menu-list"
         style={{
