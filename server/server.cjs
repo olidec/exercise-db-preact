@@ -127,6 +127,7 @@ router.get("/api/cat", async (req, res) => {
     },
   });
   console.log(cat);
+
   res.json(cat);
 });
 
@@ -141,6 +142,9 @@ router.post("/api/ex", async (req, res) => {
         difficulty,
         categories: { connect: categories },
       },
+      include: {
+        categories: true, // oder ein spezifischeres Select/Include
+      },
     });
     console.log(newEx);
     res.json(newEx);
@@ -154,7 +158,7 @@ router.post("/api/ex", async (req, res) => {
 });
 
 router.put("/api/ex", async (req, res) => {
-  const { id, content, solution, language, difficulty } = req.body;
+  const { id, content, solution, language, difficulty, categories } = req.body;
   try {
     const updatedEx = await prisma.exercise.update({
       where: { id },
@@ -163,6 +167,7 @@ router.put("/api/ex", async (req, res) => {
         solution,
         language,
         difficulty,
+        categories: { connect: categories },
       },
     });
     console.log(updatedEx);

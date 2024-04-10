@@ -21,6 +21,7 @@ export default function FindExBySearchText() {
   }, []);
 
   console.log(cat.value);
+
   const element = document.getElementById("exid-4");
   if (element) {
     cat.value.map((c) => {

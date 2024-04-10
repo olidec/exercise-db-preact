@@ -3,6 +3,7 @@ import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
+import { cat, loadCat } from "../signals/categories.js";
 export default function ExForm() {
   const { showNotification } = useContext(SearchContext);
   const [ex, setEx] = useState({
@@ -81,13 +82,18 @@ export default function ExForm() {
     );
   }, [selectedCategory]);
 
+  useEffect(() => {
+    loadCat();
+  }, []);
+
   const addNewEx = async (e) => {
     e.preventDefault();
     const exWithCategory = {
       ...ex,
       difficulty: parseInt(ex.difficulty),
-      category: selectedCategory,
-      subcategory: selectedSubcategory,
+      categories: [
+        { id: cat.value.find((c) => c.name === selectedCategory).id },
+      ],
     };
     const res = await askServer("/api/ex", "POST", exWithCategory);
     console.log(res);

@@ -3,7 +3,7 @@ import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
-
+import { cat, loadCat } from "../signals/categories.js";
 export default function EditForm({ id }) {
   const { showNotification } = useContext(SearchContext);
   const [ex, setEx] = useState({
@@ -13,9 +13,10 @@ export default function EditForm({ id }) {
     language: "Deutsch",
     difficulty: 1,
   });
+  useEffect(() => {
+    loadCat();
+  }, []);
 
-  const [languages, setLanguages] = useState([]);
-  const [difficulty, setDifficulty] = useState([]);
   let categories = [
     "-- Wähle bitte eine Kategorie --",
     "Zahlen",
@@ -101,8 +102,9 @@ export default function EditForm({ id }) {
     const exWithCategory = {
       ...ex,
       difficulty: parseInt(ex.difficulty),
-      category: selectedCategory,
-      subcategory: selectedSubcategory,
+      categories: [
+        { id: cat.value.find((c) => c.name === selectedCategory).id },
+      ],
     };
     try {
       const res = await askServer("/api/ex", "PUT", exWithCategory);
@@ -135,8 +137,6 @@ export default function EditForm({ id }) {
 
   const onChange = (e) => {
     setSelectedCategory(e.target.value);
-    //setLanguages(e.target.value);
-    // setDifficulty(e.target.value);
   };
 
   useEffect(() => {
