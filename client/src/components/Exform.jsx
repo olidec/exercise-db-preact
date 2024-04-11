@@ -86,19 +86,46 @@ export default function ExForm() {
     loadCat();
   }, []);
 
+  if (cat.value && cat.value.length > 0) {
+    console.log(cat.value[0].subcategory[1].id);
+    // Zugriff auf cat.value hier
+  }
+
   const addNewEx = async (e) => {
     e.preventDefault();
+
+    const selectedCategoryObj = cat.value.find(
+      (c) => c.name === selectedCategory
+    );
+
+    // Da jede Kategorie ein Array von Unterkategorien hat, findest du die Unterkategorie ähnlich
+    const selectedSubcategoryObj = selectedCategoryObj.subcategory.find(
+      (sub) => sub.name === selectedSubcategory
+    );
+
+    // Stelle sicher, dass die IDs korrekt gesetzt sind
+    const categoryId = selectedCategoryObj ? selectedCategoryObj.id : null;
+    const subcategoryId = selectedSubcategoryObj
+      ? selectedSubcategoryObj.id
+      : null;
+
+    if (!categoryId || !subcategoryId) {
+      console.error("Kategorie oder Unterkategorie nicht gefunden");
+      return;
+    }
     const exWithCategory = {
       ...ex,
       difficulty: parseInt(ex.difficulty),
-      categories: [
-        { id: cat.value.find((c) => c.name === selectedCategory).id },
-      ],
+      categories: [{ id: categoryId }],
+      // Angenommen, du hast eine ähnliche Verbindung in deinem Modell
     };
+
     const res = await askServer("/api/ex", "POST", exWithCategory);
     console.log(res);
+    console.log(subcategoryId);
+
     if (res.err) {
-      console.log(res.err);
+      console.log("Error: ", res.err);
     } else {
       setEx({
         content: "",

@@ -143,9 +143,11 @@ router.post("/api/ex", async (req, res) => {
         categories: { connect: categories },
       },
       include: {
-        categories: true, // oder ein spezifischeres Select/Include
+        categories: true,
+        // oder ein spezifischeres Select/Include
       },
     });
+
     console.log(newEx);
     res.json(newEx);
   } catch (error) {
@@ -168,6 +170,9 @@ router.put("/api/ex", async (req, res) => {
         language,
         difficulty,
         categories: { connect: categories },
+      },
+      include: {
+        categories: true, // oder ein spezifischeres Select/Include
       },
     });
     console.log(updatedEx);
