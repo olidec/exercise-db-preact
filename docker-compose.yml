@@ -1,0 +1,67 @@
+version: "3"
+services:
+  create-certs:
+    build: ./ssl-scripts
+    volumes:
+      - ./ssl-scripts/:/scripts/:ro
+      - nginx-selfsigned:/etc/ssl/:rw
+    networks:
+      - outside
+    container_name: certs
+
+  proxy:
+    image: nginx # TODO: use stable version
+    ports:
+      # Damit wir port in diesem Bereich exposen können, brauchen wir den
+      # folgenden Befehl auf dem Host auszuführen:
+      # sysctl net.ipv4.ip_unprivileged_port_start=80
+      - "80:80" # TODO: Add https port
+      - "443:443"
+    networks:
+      - outside
+      - inside
+    volumes:
+      - ./nginx/:/etc/nginx/
+      - nginx-selfsigned:/etc/ssl/:ro
+    container_name: proxy
+
+  client:
+    build: ./client
+    # ports:
+    #   - "8080:8080"
+    networks:
+      - inside
+    container_name: client
+
+  server:
+    build: ./server
+    # ports:
+    #   - "8000:8000"
+    networks:
+      - inside
+    volumes:
+      - prisma:/db/:rw
+    container_name: server
+
+  db:
+    image: postgres:14-alpine
+    volumes:
+      - db-postgres:/var/lib/postgresql/data:rw
+    environment:
+      - POSTGRES_PASSWORD=gymmu2024
+      - POSTGRES_USER=db-admin
+      - POSTGRES_DB=db-dev
+    networks:
+      - inside
+    container_name: db
+
+networks:
+  outside:
+    driver: bridge
+  inside:
+    driver: bridge
+
+volumes:
+  nginx-selfsigned:
+  prisma:
+  db-postgres:
