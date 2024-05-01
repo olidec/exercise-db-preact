@@ -140,10 +140,13 @@ router.post("/api/ex", async (req, res) => {
         solution,
         language,
         difficulty,
-        categories: { connect: categories },
+        categories: {
+          connect: categories,
+        },
       },
       include: {
         categories: true,
+
         // oder ein spezifischeres Select/Include
       },
     });

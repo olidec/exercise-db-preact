@@ -86,11 +86,6 @@ export default function ExForm() {
     loadCat();
   }, []);
 
-  if (cat.value && cat.value.length > 0) {
-    console.log(cat.value[0].subcategory[1].id);
-    // Zugriff auf cat.value hier
-  }
-
   const addNewEx = async (e) => {
     e.preventDefault();
 

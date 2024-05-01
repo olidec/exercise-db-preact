@@ -8,6 +8,20 @@ const SearchCard = ({ key, id, content, summary }) => {
   const { cartItems, addToKorb, handleDelete } = useContext(WarenkorbContext);
   let index = cartItems.value.findIndex((item) => item.id === id);
   console.log(index);
+
+  const handleRemoveClick = ({ id }) => {
+    handleDelete({ id });
+
+    const checkmark = document.getElementById("checkmark");
+    checkmark.innerHTML = "-1"; // Setze das Häkchen-Symbol
+    checkmark.style.color = "red"; // Setze die Farbe auf Grün
+    checkmark.style.display = "block";
+
+    setTimeout(() => {
+      checkmark.style.display = "none";
+    }, 700);
+  };
+
   return (
     <>
       <div key={key} className="kartenContainer">
@@ -25,7 +39,7 @@ const SearchCard = ({ key, id, content, summary }) => {
           ) : (
             <button
               className="pure-button"
-              onClick={() => handleDelete({ id })}
+              onClick={() => handleRemoveClick({ id })}
             >
               Löschen aus Warenkorb
             </button>

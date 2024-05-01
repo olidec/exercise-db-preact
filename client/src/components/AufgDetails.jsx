@@ -52,7 +52,7 @@ const AufgDetails = ({ id }) => {
   function edit({ id }) {
     window.location.href = `/exercise-db-preact/edit/${id}`;
   }
-
+  console.log(exDetails);
   return (
     <>
       <div className="inhalt">
@@ -67,6 +67,7 @@ const AufgDetails = ({ id }) => {
             solution={exDetails.solution}
             difficulty={exDetails.difficulty}
             author={exDetails.authorId}
+            //categories={exDetails.categories.map((cat) => cat.name)}
             currentPath={window.location.pathname}
           />
 

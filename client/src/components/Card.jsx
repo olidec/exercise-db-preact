@@ -9,6 +9,7 @@ const Card = ({
   solution,
   difficulty,
   author,
+  categories,
   currentPath,
 }) => {
   const detailPath = `/exercise-db-preact/${id}`;
@@ -45,6 +46,7 @@ const Card = ({
           <h3>Lösung:</h3>
           <div className="solution">{solution}</div>
           <hr />
+          <h5>Kategorien: {categories}</h5>
           <h5>Schwierigkeit: {schwierigkeitText}</h5>
           <h5>Autor: {author}</h5>
         </>
