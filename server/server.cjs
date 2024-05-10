@@ -11,7 +11,7 @@ const prisma = new PrismaClient.PrismaClient();
 const app = express();
 const router = express.Router();
 const argon2 = require("argon2");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 
 // Source: https://medium.com/@prashantramnyc/node-js-with-passport-authentication-simplified-76ca65ee91e5
 app.use(
@@ -123,6 +123,13 @@ app.get("/dashboard", checkAuthenticated, (req, res) => {
   return res.json({
     title: "Dashboard",
     page: "user-dashboard",
+  });
+});
+
+app.get("/login", checkLoggedIn, (req, res) => {
+  return res.json({
+    title: "Login",
+    page: "login",
   });
 });
 
