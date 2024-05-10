@@ -80,7 +80,6 @@ export default function ExForm() {
 
   const addNewEx = async (e) => {
     e.preventDefault();
-    console.log(selectedCategory);
 
     const categoryObject = cat.value.find((c) => c.name === selectedCategory);
     const subcategoryObject = selectedSubcategory
@@ -104,12 +103,9 @@ export default function ExForm() {
       categories: { id: categoryId },
       subcategories: { id: subcategoryId },
     };
-    console.log(exWithCategory);
 
     const res = await askServer("/api/ex", "POST", exWithCategory);
     console.log(res);
-    console.log(categoryId);
-    console.log(subcategoryId);
 
     if (res.err) {
       console.log("Error: ", res.err);

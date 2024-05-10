@@ -6,31 +6,43 @@ import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
 import { useContext } from "preact/hooks";
+import { cat, loadCat } from "../signals/categories.js";
 const AufgDetails = ({ id }) => {
-  const {
-    cartItems,
-
-    addToKorb,
-    handleDelete,
-    getIndex,
-  } = useContext(WarenkorbContext);
+  const { addToKorb, handleDelete, getIndex } = useContext(WarenkorbContext);
 
   const [exDetails, setExDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [categoryName, setCategoryName] = useState("");
+  const [subcategoryName, setSubCategoryName] = useState("");
 
   useEffect(() => {
-    // Definiert eine IIFE (Immediately Invoked Function Expression), um die asynchrone Logik auszuführen
-    (async () => {
-      const route = `/api/ex?id=${id}`;
-      const exDetails = await askServer(route, "GET");
-      if (exDetails) {
+    loadCat().then((c) => {
+      // Definiert eine IIFE (Immediately Invoked Function Expression), um die asynchrone Logik auszuführen
+      (async () => {
+        const route = `/api/ex?id=${id}`;
+        const exDetails = await askServer(route, "GET");
+        if (exDetails) {
+          setExDetails(exDetails);
+
+          const categ = cat.value.find((c) => c.id === exDetails.categoryId);
+          if (categ) {
+            setCategoryName(categ.name); // Speichern des Kategorienamens
+          }
+          console.log(categ.name);
+
+          const subcateg = categ.subcategories.find(
+            (sub) => sub.id === exDetails.subcategoryId
+          );
+          if (subcateg) {
+            setSubCategoryName(subcateg.name); // Speichern des Kategorienamens
+          }
+          console.log(subcateg.name);
+        }
+        setLoading(false);
+
         setExDetails(exDetails);
-      }
-      setLoading(false);
-      //console.log(exDetails);
-      //console.log(cartItems.value);
-      setExDetails(exDetails);
-    })();
+      })();
+    });
   }, [id]); // Stellt sicher, dass dieser Effekt erneut ausgeführt wird, wenn sich `id` ändert
 
   useEffect(() => {
@@ -40,8 +52,7 @@ const AufgDetails = ({ id }) => {
   }, [exDetails]);
 
   const index = getIndex({ id: exDetails?.id });
-  console.log(index);
-  console.log(cartItems.value);
+
   // Überprüfen, ob die Daten noch geladen werden
   if (loading) {
     return <div>Lädt...</div>;
@@ -53,6 +64,7 @@ const AufgDetails = ({ id }) => {
     window.location.href = `/exercise-db-preact/edit/${id}`;
   }
   console.log(exDetails);
+
   return (
     <>
       <div className="inhalt">
@@ -67,7 +79,8 @@ const AufgDetails = ({ id }) => {
             solution={exDetails.solution}
             difficulty={exDetails.difficulty}
             author={exDetails.authorId}
-            //categories={exDetails.categories.map((cat) => cat.name)}
+            categories={categoryName}
+            subcategories={subcategoryName}
             currentPath={window.location.pathname}
           />
 

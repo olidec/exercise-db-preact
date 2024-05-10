@@ -108,7 +108,10 @@ router.get("/api/ex", searchValidation, async (req, res) => {
       res.json(exs);
     } else if (cat) {
       const exs = await prisma.exercise.findMany({
-        where: { categories: { some: { name: { equals: cat } } } },
+        where: { categories: { name: cat } },
+        include: {
+          categories: true,
+        },
       });
       res.json(exs);
     } else {
@@ -149,8 +152,8 @@ router.post("/api/ex", async (req, res) => {
       data: {
         content,
         solution,
-        // language: "Deutsch",
-        // difficulty: 1,
+        language,
+        difficulty,
         author: {
           connect: author,
         },
@@ -181,7 +184,16 @@ router.post("/api/ex", async (req, res) => {
 });
 
 router.put("/api/ex", async (req, res) => {
-  const { id, content, solution, language, difficulty, categories } = req.body;
+  const {
+    id,
+    content,
+    solution,
+    language,
+    difficulty,
+    author,
+    categories,
+    subcategories,
+  } = req.body;
   try {
     const updatedEx = await prisma.exercise.update({
       where: { id },
@@ -190,10 +202,14 @@ router.put("/api/ex", async (req, res) => {
         solution,
         language,
         difficulty,
+        author: { connect: author },
         categories: { connect: categories },
+        subcategories: { connect: subcategories },
       },
       include: {
-        categories: true, // oder ein spezifischeres Select/Include
+        author: true,
+        categories: true,
+        subcategories: true, // oder ein spezifischeres Select/Include
       },
     });
     console.log(updatedEx);

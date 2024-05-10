@@ -46,6 +46,15 @@ export const WarenkorbProvider = ({ children }) => {
 
       console.log(index);
       console.log(cartItems.value);
+
+      const checkmark = document.getElementById("checkmark");
+      checkmark.innerHTML = "-1"; // Setze das Häkchen-Symbol
+      checkmark.style.color = "red"; // Setze die Farbe auf Grün
+      checkmark.style.display = "block";
+
+      setTimeout(() => {
+        checkmark.style.display = "none";
+      }, 700);
     }, 400);
   }
 

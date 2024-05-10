@@ -7,7 +7,6 @@ import { cat, loadCat } from "../signals/categories.js";
 export default function EditForm({ id }) {
   const { showNotification } = useContext(SearchContext);
   const [ex, setEx] = useState({
-    id: { id },
     content: "",
     solution: "",
     language: "Deutsch",
@@ -99,12 +98,26 @@ export default function EditForm({ id }) {
     }
 
     e.preventDefault();
+
+    const categoryObject = cat.value.find((c) => c.name === selectedCategory);
+    const subcategoryObject = selectedSubcategory
+      ? categoryObject.subcategories.find(
+          (sub) => sub.name === selectedSubcategory
+        )
+      : null;
+
+    // console.log(subcategoryObject.id);
+
+    const categoryId = categoryObject ? categoryObject.id : null;
+    const subcategoryId = subcategoryObject ? subcategoryObject.id : null;
+
     const exWithCategory = {
       ...ex,
       difficulty: parseInt(ex.difficulty),
-      categories: [
-        { id: cat.value.find((c) => c.name === selectedCategory).id },
-      ],
+      categories: { id: categoryId },
+      subcategories: {
+        id: subcategoryId,
+      },
     };
     try {
       const res = await askServer("/api/ex", "PUT", exWithCategory);
@@ -149,8 +162,8 @@ export default function EditForm({ id }) {
           solution: exDetails.solution,
           language: exDetails.language,
           difficulty: exDetails.difficulty,
-          category: exDetails.category,
-          subcategory: exDetails.subcategory,
+          category: exDetails.categories,
+          subcategory: exDetails.subcategories,
           // Füge weitere Felder hinzu, falls vorhanden
         });
       }
