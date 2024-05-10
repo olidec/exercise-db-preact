@@ -123,7 +123,7 @@ router.get("/api/ex", searchValidation, async (req, res) => {
 router.get("/api/cat", async (req, res) => {
   const cat = await prisma.category.findMany({
     include: {
-      subcategory: true,
+      subcategories: true,
     },
   });
   console.log(cat);
@@ -132,25 +132,43 @@ router.get("/api/cat", async (req, res) => {
 });
 
 router.post("/api/ex", async (req, res) => {
-  const { content, solution, language, difficulty, categories } = req.body;
+  console.log(req.body);
+  const {
+    content,
+    solution,
+    language,
+    difficulty,
+    author,
+    categories,
+    subcategories,
+  } = req.body;
+
   try {
+    const author = { id: 1 };
     const newEx = await prisma.exercise.create({
       data: {
         content,
         solution,
-        language,
-        difficulty,
+        // language: "Deutsch",
+        // difficulty: 1,
+        author: {
+          connect: author,
+        },
         categories: {
           connect: categories,
         },
+        subcategories: {
+          connect: subcategories,
+        },
       },
       include: {
+        author: true,
         categories: true,
+        subcategories: true,
 
         // oder ein spezifischeres Select/Include
       },
     });
-
     console.log(newEx);
     res.json(newEx);
   } catch (error) {

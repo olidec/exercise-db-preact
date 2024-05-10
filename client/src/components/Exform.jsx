@@ -71,16 +71,8 @@ export default function ExForm() {
     ],
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(
-    subcategories[0][0]
-  );
-
-  useEffect(() => {
-    setSelectedSubcategory(
-      subcategories[categories.indexOf(selectedCategory)][0]
-    );
-  }, [selectedCategory]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
   useEffect(() => {
     loadCat();
@@ -88,21 +80,19 @@ export default function ExForm() {
 
   const addNewEx = async (e) => {
     e.preventDefault();
+    console.log(selectedCategory);
 
-    const selectedCategoryObj = cat.value.find(
-      (c) => c.name === selectedCategory
-    );
-
-    // Da jede Kategorie ein Array von Unterkategorien hat, findest du die Unterkategorie ähnlich
-    const selectedSubcategoryObj = selectedCategoryObj.subcategory.find(
-      (sub) => sub.name === selectedSubcategory
-    );
-
-    // Stelle sicher, dass die IDs korrekt gesetzt sind
-    const categoryId = selectedCategoryObj ? selectedCategoryObj.id : null;
-    const subcategoryId = selectedSubcategoryObj
-      ? selectedSubcategoryObj.id
+    const categoryObject = cat.value.find((c) => c.name === selectedCategory);
+    const subcategoryObject = selectedSubcategory
+      ? categoryObject.subcategories.find(
+          (sub) => sub.name === selectedSubcategory
+        )
       : null;
+
+    // console.log(subcategoryObject.id);
+
+    const categoryId = categoryObject ? categoryObject.id : null;
+    const subcategoryId = subcategoryObject ? subcategoryObject.id : null;
 
     if (!categoryId || !subcategoryId) {
       console.error("Kategorie oder Unterkategorie nicht gefunden");
@@ -111,12 +101,14 @@ export default function ExForm() {
     const exWithCategory = {
       ...ex,
       difficulty: parseInt(ex.difficulty),
-      categories: [{ id: categoryId }],
-      // Angenommen, du hast eine ähnliche Verbindung in deinem Modell
+      categories: { id: categoryId },
+      subcategories: { id: subcategoryId },
     };
+    console.log(exWithCategory);
 
     const res = await askServer("/api/ex", "POST", exWithCategory);
     console.log(res);
+    console.log(categoryId);
     console.log(subcategoryId);
 
     if (res.err) {
@@ -192,7 +184,7 @@ export default function ExForm() {
                 {categories.map((category, index) => {
                   if (index === 0) {
                     return (
-                      <option disabled selected key={index}>
+                      <option disabled selected key={index} value={category}>
                         {" "}
                       </option>
                     );
@@ -216,22 +208,23 @@ export default function ExForm() {
                 value={selectedSubcategory}
                 onChange={(e) => setSelectedSubcategory(e.target.value)}
               >
-                {subcategories[categories.indexOf(selectedCategory)].map(
-                  (subcategory, index) => {
-                    if (index === 0) {
-                      return (
-                        <option disabled selected key={index}>
-                          {" "}
-                        </option>
-                      );
-                    } else {
-                      return (
-                        <option key={index} value={subcategory}>
-                          {subcategory}
-                        </option>
-                      );
-                    }
-                  }
+                {selectedCategory &&
+                categories.indexOf(selectedCategory) > 0 ? (
+                  subcategories[categories.indexOf(selectedCategory)].map(
+                    (subcategory, index) => (
+                      <option
+                        key={index}
+                        value={subcategory}
+                        disabled={index === 0}
+                      >
+                        {subcategory}
+                      </option>
+                    )
+                  )
+                ) : (
+                  <option disabled>
+                    -- Wähle bitte zuerst eine Kategorie --
+                  </option>
                 )}
               </select>
             </div>
