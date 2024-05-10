@@ -1,5 +1,10 @@
+const authMiddleware = require("./authMiddleware.cjs");
+
 const express = require("express");
 const cors = require("cors");
+const passport = require("passport");
+const session = require("express-session");
+const LocalStrategy = require("passport-local").Strategy;
 const { query, validationResult } = require("express-validator");
 const PrismaClient = require("@prisma/client");
 const fs = require("fs");
@@ -7,84 +12,399 @@ const prisma = new PrismaClient.PrismaClient();
 
 const app = express();
 const router = express.Router();
+const argon2 = require("argon2");
+const jwt = require("jsonwebtoken");
 
-router.get("/", (req, res) => {
-  res.json({ msg: "Hello World" });
-});
+// Source: https://medium.com/@prashantramnyc/node-js-with-passport-authentication-simplified-76ca65ee91e5
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
-router.get("/api/users", async (req, res) => {
-  const users = await prisma.user.findMany();
-  // console.log(users)
-  res.json(users);
-});
+app.use(passport.initialize());
+// init passport on every route call.
 
-router.get("/api/test", (req, res) => {
-  res.json({
-    msg: "Hello",
-    data: {
-      name: "Some Name",
-      email: "mail@nice.ch",
-    },
-  });
-});
+app.use(passport.session());
+// allow passport to use "express-session".
 
-router.post("/api/user", async (req, res) => {
-  const { email, name, password } = req.body;
+// This is the basic express session({..}) initialization.
+
+// const verify = async (req, res, next) => {
+//   try {
+//     if (!(await jwt.verify(req.cookies.accessToken, "process.env.jwtSecret")))
+//       res.redirect("403");
+//     next();
+//   } catch (err) {
+//     res.redirect(403, "/login");
+//   }
+// };
+
+const authUser = async (user, password, done) => {
   try {
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        name,
-        password,
+    const userFromDb = await prisma.user.findUnique({
+      where: { username: user },
+      select: {
+        id: true,
+        email: true,
+        password: true,
+        retry: true,
+        retryExp: true,
       },
     });
-    console.log(newUser);
-    res.json(newUser);
+    if (!userFromDb) {
+      res.json({ msg: "User or password does not match" });
+      return;
+    }
+    const pass = await argon2.verify(userFromDb.password, password);
+    if (!pass) {
+      if (userFromDb.retry >= 3) {
+        if (userFromDb.retryExp > new Date()) {
+          res.json({ msg: "User is locked out" });
+          return;
+        }
+      }
+      await prisma.user.update({
+        where: {
+          username: user,
+        },
+        data: {
+          retry: userFromDb.retry + 1,
+          retryExp: new Date(Date.now() + 1000 * 60 * 60),
+        },
+      });
+      res.json({ msg: "User or password does not match" });
+      return;
+    }
+
+    await prisma.user.update({
+      where: {
+        username: user,
+      },
+      data: {
+        retry: 0,
+        retryExp: null,
+      },
+    });
+    console.log("User retries updated successfully");
   } catch (error) {
     res.json({ msg: "Error in DB request", err: error });
   }
+  //Let's assume that a search within your DB returned the username and password match for "Kyle".
+  let authenticated_user = { id: userFromDb.id, name: userFromDb.username };
+  return done(null, authenticated_user);
+};
+
+passport.use(new LocalStrategy(authUser));
+
+passport.serializeUser((userObj, done) => {
+  done(null, userObj);
 });
 
-router.put("/api/user/", async (req, res) => {
-  const { email, name, password } = req.body;
-
-  try {
-    const updatedUser = await prisma.user.update({
-      where: { email },
-      data: {
-        email,
-        name,
-        password,
-      },
-    });
-
-    console.log(updatedUser);
-    res.json(updatedUser);
-  } catch (error) {
-    res.json({ msg: "Error in DB request", err: error });
-  }
+passport.deserializeUser((userObj, done) => {
+  done(null, userObj);
 });
 
-router.post("/api/secret", checkLogin, (req, res) => {
-  res.json({
-    msg: "Very secure",
-    data: {
-      secret: "Top Secret",
-    },
-  });
-});
-
-function checkLogin(req, res, next) {
-  console.log(req.body);
-  if (req.body.pw === "password") {
+checkAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
     return next();
   }
+  res.redirect("/login");
+};
 
-  res.json({
-    msg: "Not allowed",
-    err: "Wrong password",
+checkLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/dashboard");
+  }
+  next();
+};
+
+app.get("/dashboard", checkAuthenticated, (req, res) => {
+  return res.json({
+    title: "Dashboard",
+    page: "user-dashboard",
   });
-}
+});
+
+app.post(
+  "/login",
+  checkLoggedIn,
+  passport.authenticate("local", {
+    successRedirect: "/dashboard",
+    failureRedirect: "/login",
+  })
+);
+
+app.delete("/logout", (req, res) => {
+  req.logOut();
+  res.redirect("/login");
+  console.log(`-------> User Logged out`);
+});
+
+// app.use(express.json());
+// router.get("/", cors(), (req, res) => {});
+
+// const sign = async () => {
+//   const signed = await jwt.sign(
+//     {
+//       role: "USER",
+//     },
+//     "process.env.jwtSecret",
+//     {
+//       expiresIn: "30s",
+//     }
+//   );
+//   return signed;
+// };
+
+// router.post("/login", async (req, res) => {
+//   const { email, password } = req.body;
+
+// try {
+//   const user = await prisma.user.findUnique({
+//     where: { email },
+//     select: {
+//       id: true,
+//       email: true,
+//       password: true,
+//       retry: true,
+//       retryExp: true,
+//     },
+//   });
+//   if (!user) {
+//     res.json({ msg: "User or password does not match" });
+//     return;
+//   }
+//   const pass = await argon2.verify(user.password, password);
+//   if (!pass) {
+//     if (user.retry >= 3) {
+//       if (user.retryExp > new Date()) {
+//         res.json({ msg: "User is locked out" });
+//         return;
+//       }
+//     }
+//     await prisma.user.update({
+//       where: {
+//         email,
+//       },
+//       data: {
+//         retry: user.retry + 1,
+//         retryExp: new Date(Date.now() + 1000 * 60 * 60),
+//       },
+//     });
+//     res.json({ msg: "User or password does not match" });
+//     return;
+//   }
+
+//   console.log(pass);
+//   console.log(user.retry);
+
+//   // if (!pass) {
+//   //   await prisma.user.update({
+//   //     where: {
+//   //       email,
+//   //     },
+//   //     data: {
+//   //       retry: user.retry + 1,
+//   //     },
+//   //   });
+//   //   console.log("User retries updated successfully");
+//   // } else {
+//   // const signedToken = await sign();
+//   // console.log(signedToken);
+
+//   await prisma.user.update({
+//     where: {
+//       email,
+//     },
+//     data: {
+//       retry: 0,
+//       retryExp: null,
+//     },
+//   });
+//   console.log("User retries updated successfully");
+
+//   const token = jwt.sign({ id: user.id }, "process.env.JWT_SECRET", {
+//     expiresIn: "30s",
+//   });
+//   res.json({
+//     msg: "User logged in successfully",
+//     id: user.id,
+//     email: user.email,
+//     token,
+//   });
+
+//   // res.cookie("accessToken", signedToken, {
+//   //   httpOnly: true,
+//   //   expires: new Date(Date.now() + 8 * 3600000),
+//   //   path: "/dashboard",
+//   // });
+//   // return res.json({
+//   //   msg: pass,
+//   // });
+//   // }
+
+//   // if (pass && user.retry <= 3) {
+//   //   const signedToken = await sign();
+
+//   //   await prisma.user.update({
+//   //     where: { email },
+//   //     data: {
+//   //       retry: 0,
+//   //       retryExp: null,
+//   //     },
+//   //   });
+//   //   await res.cookie("token", signedToken, {
+//   //     httpOnly: true,
+//   //     expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+//   //     path: "/find",
+//   //   });
+//   //   // res.redirect("/find");
+//   //   // next;
+//   // }
+
+//   //   console.log(user);
+//   //   if (await argon2.verify(user.password, password)) {
+//   //     res.json(user);
+//   //     console.log("user logged in successfully");
+//   //   } else {
+//   //     res.json({ msg: "Wrong password" });
+//   //     console.log("Wrong password");
+//   //   }
+//   // } catch (error) {
+//   //   // if (user) {
+//   //   //   if (user && (await argon2.verify(user.password, password))) {
+//   //   //     const accessToken = jwt.sign({
+//   //   //       user: {
+//   //   //         email: user.email,
+//   //   //         name: user.name,
+//   //   //       },
+//   //   //     });
+//   //   // console.log(accessToken);
+//   //   //     res.send("user logged in successfully");
+//   //   //     res.json(user);
+//   //   //   } else {
+//   //   //     res.json({ msg: "Wrong password" });
+//   //   //   }
+//   //   // } else {
+//   //   //   res.json({ msg: "User not found" });
+//   //   // }
+//   //   res.json({ msg: "Error in DB request", err: error });
+//   // }
+// } catch (error) {
+//   // res.status(301).redirect("http://localhost:5173/exercise-db-preact/login");
+//   // next;
+//   res.json({ msg: "Error in DB request", err: error });
+// }
+// });
+
+router.post("/register", async (req, res) => {
+  const { email, name, password } = req.body;
+  const hashedPassword = await argon2.hash(password);
+  try {
+    const check = await prisma.user.findUnique({
+      where: { email },
+    });
+    if (check) {
+      res.json({ msg: "User already exists", err: "User already exists" });
+      return;
+    } else {
+      const newUser = await prisma.user.create({
+        data: {
+          email,
+          name,
+          password: hashedPassword,
+        },
+      });
+      console.log(newUser);
+      res.json({
+        msg: "User created successfully",
+        data: {
+          email: newUser.email,
+          name: newUser.name,
+        },
+      });
+    }
+  } catch (error) {
+    res.json({ msg: "Error in DB request", err: error });
+  }
+});
+
+// router.get("/api/users", async (req, res) => {
+//   const users = await prisma.user.findMany();
+//   // console.log(users)
+//   res.json(users);
+// });
+
+// router.get("/api/test", (req, res) => {
+//   res.json({
+//     msg: "Hello",
+//     data: {
+//       name: "Some Name",
+//       email: "mail@nice.ch",
+//     },
+//   });
+// });
+
+// router.post("/api/user", async (req, res) => {
+//   const { email, name, password } = req.body;
+//   try {
+//     const newUser = await prisma.user.create({
+//       data: {
+//         email,
+//         name,
+//         password,
+//       },
+//     });
+//     // console.log(newUser);
+//     res.json(newUser);
+//   } catch (error) {
+//     res.json({ msg: "Error in DB request", err: error });
+//   }
+// });
+
+// router.put("/api/user/", async (req, res) => {
+//   const { email, name, password } = req.body;
+
+//   try {
+//     const updatedUser = await prisma.user.update({
+//       where: { email },
+//       data: {
+//         email,
+//         name,
+//         password,
+//       },
+//     });
+
+//     console.log(updatedUser);
+//     res.json(updatedUser);
+//   } catch (error) {
+//     res.json({ msg: "Error in DB request", err: error });
+//   }
+// });
+
+// router.post("/api/secret", checkLogin, (req, res) => {
+//   res.json({
+//     msg: "Very secure",
+//     data: {
+//       secret: "Top Secret",
+//     },
+//   });
+// });
+
+// function checkLogin(req, res, next) {
+//   console.log(req.body);
+//   if (req.body.pw === "password") {
+//     return next();
+//   }
+
+//   res.json({
+//     msg: "Not allowed",
+//     err: "Wrong password",
+//   });
+// }
 
 const searchValidation = [
   query("id", "id must be a number").notEmpty().isInt().optional(),
@@ -120,16 +440,6 @@ router.get("/api/ex", searchValidation, async (req, res) => {
   }
 });
 
-router.get("/api/cat", async (req, res) => {
-  const cat = await prisma.category.findMany({
-    include: {
-      subcategory: true,
-    },
-  });
-  console.log(cat);
-  res.json(cat);
-});
-
 router.post("/api/ex", async (req, res) => {
   const { summary, content, solution } = req.body;
   try {
@@ -151,6 +461,16 @@ router.post("/api/ex", async (req, res) => {
   }
 });
 
+router.get("/api/cat", async (req, res) => {
+  const cat = await prisma.category.findMany({
+    include: {
+      subcategory: true,
+    },
+  });
+  console.log(cat);
+  res.json(cat);
+});
+
 router.get("/api/download", async (req, res) => {
   try {
     const exercises = await prisma.exercise.findMany({
@@ -159,12 +479,10 @@ router.get("/api/download", async (req, res) => {
         createdAt: "desc",
       },
     });
-
     const contentAndSolution = exercises.map((exercise) => ({
       content: exercise.content,
       solution: exercise.solution,
     }));
-
     console.log(contentAndSolution);
     fs.writeFile(
       "server/output/output.txt",
@@ -185,7 +503,8 @@ router.get("/api/download", async (req, res) => {
 });
 
 router.post("/api/download", async (req, res) => {
-  const exerciseIds = req.body.exerciseIds;
+  const { exerciseIds } = req.body;
+  console.log(exerciseIds);
   try {
     const exercises = await prisma.exercise.findMany({
       where: {
@@ -195,36 +514,43 @@ router.post("/api/download", async (req, res) => {
       },
     });
 
-    const contentAndSolution = exercises.map((exercise) => ({
-      content: exercise.content,
-      solution: exercise.solution,
-    }));
-
-    fs.writeFile(
-      "server/output/output.txt",
-      JSON.stringify(contentAndSolution),
-      (err) => {
-        if (err) {
-          console.error("Error writing to file:", err);
-        } else {
-          console.log("Data written to file successfully");
-          // res.download("server/output/output.txt", "output.txt");
-          // res.sendFile(path.resolve("server", "output/output.txt"));
-          res.json({
-            msg: "Download successful",
-            data: contentAndSolution,
-          });
+    const writeToFile = (exercises) => {
+      const contentAndSolution = exercises.map((exercise) => ({
+        content: exercise.content,
+        solution: exercise.solution,
+      }));
+      console.log(contentAndSolution);
+      fs.writeFile(
+        "server/output/output.txt",
+        JSON.stringify(contentAndSolution, null, 2),
+        (err) => {
+          if (err) {
+            console.error("Error writing to file:", err);
+            res.status(500).send("Error writing to file");
+          } else {
+            console.log("Data written to file successfully");
+            res.download("server/output/output.txt", "output.txt");
+            console.log(exercises);
+          }
         }
-      }
-    );
+      );
+    };
 
-    // res.json(exercises);
+    //res.json(exercises);
+    writeToFile(exercises);
   } catch (error) {
-    res.json({ msg: "Error in DB request", err: error });
+    console.error("Error in DB request", error);
+    res.status(500).json({ msg: "Error in DB request", err: error });
   }
 });
 
-app.use(cors({ origin: true, credentials: true }));
+app.use(
+  cors({
+    origin: true,
+    // origin: ["http://localhost:5173/", "http://localhost:3000/"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/", router);
