@@ -1,34 +1,30 @@
 import { useState } from "preact/hooks";
 import { askServer } from "../utils/connector";
 
-export default function Form() {
-  const [user, setUser] = useState({
-    email: "",
+export default function Login() {
+  const [log, setLog] = useState({
     username: "",
     password: "",
   });
 
-  const addNewUser = async (e) => {
+  const doLogin = async (e) => {
     e.preventDefault();
-    console.log("hallo");
-    const res = await askServer("/register", "POST", user);
+    const res = await askServer("/login", "POST", log);
     console.log(res);
     if (res.err) {
       console.log(res.err);
     } else {
-      setUser({
-        email: "",
+      setLog({
         username: "",
         password: "",
       });
-      console.log("user added");
     }
   };
 
   const updateUserHandler = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-    setUser((prevUser) => ({
+    setLog((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));
@@ -38,46 +34,30 @@ export default function Form() {
     <>
       <form
         className="pure-form pure-form-aligned"
-        onSubmit={(e) => addNewUser(e)}
+        onSubmit={(e) => doLogin(e)}
       >
-        <legend>Add a new User</legend>
+        <legend>Login</legend>
         <fieldset>
           <div class="pure-control-group">
-            <label for="aligned-email">Email </label>
-
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={user.email}
-              onChange={updateUserHandler}
-              placeholder="E-Mail"
-            />
-            <span class="pure-form-message-inline">
-              This is a required field.
-            </span>
-          </div>
-
-          <div class="pure-control-group">
-            <label for="aligned-name">Username </label>
+            <label for="username">Username </label>
             <input
               type="text"
               name="username"
               id="username"
-              value={user.username}
+              value={log.username}
               onChange={updateUserHandler}
               placeholder="Username"
             />
           </div>
 
           <div class="pure-control-group">
-            <label for="aligned-password">Password </label>
+            <label for="password">Password </label>
 
             <input
               type="password"
               name="password"
               id="password"
-              value={user.password}
+              value={log.password}
               onChange={updateUserHandler}
               placeholder="Password"
             />
@@ -85,7 +65,7 @@ export default function Form() {
 
           <div class="pure-controls">
             <button className="pure-button pure-button-primary" type="submit">
-              Add new user
+              Login
             </button>
           </div>
         </fieldset>

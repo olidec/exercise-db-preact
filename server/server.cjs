@@ -13,6 +13,16 @@ const router = express.Router();
 const argon2 = require("argon2");
 // const jwt = require("jsonwebtoken");
 
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 // Source: https://medium.com/@prashantramnyc/node-js-with-passport-authentication-simplified-76ca65ee91e5
 app.use(
   session({
@@ -41,12 +51,14 @@ app.use(passport.session());
 // };
 
 const authUser = async (user, password, done) => {
+  console.log("Authenticating user");
   try {
     const userFromDb = await prisma.user.findUnique({
       where: { username: user },
       select: {
         id: true,
         email: true,
+        username: true,
         password: true,
         retry: true,
         retryExp: true,
@@ -56,6 +68,7 @@ const authUser = async (user, password, done) => {
       res.json({ msg: "User or password does not match" });
       return;
     }
+    console.log(userFromDb);
     const pass = await argon2.verify(userFromDb.password, password);
     if (!pass) {
       if (userFromDb.retry >= 3) {
@@ -87,12 +100,14 @@ const authUser = async (user, password, done) => {
       },
     });
     console.log("User retries updated successfully");
+    //Let's assume that a search within your DB returned the username and password match for "Kyle".
+    let authenticated_user = { id: userFromDb.id, name: userFromDb.username };
+    console.log("User authenticated successfully", authenticated_user);
+    return done(null, authenticated_user);
   } catch (error) {
-    res.json({ msg: "Error in DB request", err: error });
+    // res.json({ msg: "Error in DB request", err: error });
+    console.log("Error in DB request");
   }
-  //Let's assume that a search within your DB returned the username and password match for "Kyle".
-  let authenticated_user = { id: userFromDb.id, name: userFromDb.username };
-  return done(null, authenticated_user);
 };
 
 passport.use(new LocalStrategy(authUser));
@@ -141,6 +156,13 @@ app.post(
     failureRedirect: "/login",
   })
 );
+
+// app.post("/login", (req, res) => {
+//   console.log(req.body);
+//   res.json({
+//     msg: "User logged in successfully",
+//   });
+// });
 
 app.delete("/logout", (req, res) => {
   req.logOut();
@@ -306,12 +328,17 @@ app.delete("/logout", (req, res) => {
 // });
 
 router.post("/register", async (req, res) => {
-  const { email, name, password } = req.body;
+  console.log(req.body);
+  const { email, username, password } = req.body;
   const hashedPassword = await argon2.hash(password);
   try {
-    const check = await prisma.user.findUnique({
-      where: { email },
-    });
+    const check =
+      (await prisma.user.findUnique({
+        where: { email },
+      })) ||
+      (await prisma.user.findUnique({
+        where: { username },
+      }));
     if (check) {
       res.json({ msg: "User already exists", err: "User already exists" });
       return;
@@ -319,7 +346,7 @@ router.post("/register", async (req, res) => {
       const newUser = await prisma.user.create({
         data: {
           email,
-          name,
+          username,
           password: hashedPassword,
         },
       });
@@ -327,8 +354,7 @@ router.post("/register", async (req, res) => {
       res.json({
         msg: "User created successfully",
         data: {
-          email: newUser.email,
-          name: newUser.name,
+          name: newUser.username,
         },
       });
     }

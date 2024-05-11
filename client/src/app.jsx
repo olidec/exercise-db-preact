@@ -10,12 +10,14 @@ import Warenkorb from "./components/Warenkorb.jsx";
 import AufgDetails from "./components/AufgDetails.jsx";
 import SearchKorb from "./components/SearchKorb.jsx";
 import Menu from "./components/Menu.jsx";
+import Login from "./components/Login.jsx";
 export function App() {
   return (
     <>
       <Menu></Menu>
 
       <Router>
+        <Login exact path="/exercise-db-preact/login" />
         <User exact path="/exercise-db-preact/" />
         <AddExercise exact path="/exercise-db-preact/add" />
 

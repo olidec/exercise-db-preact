@@ -11,10 +11,12 @@ datasource db {
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
-  name      String?
+  username  String     @unique
   password  String?
   role      String     @default("USER")
   exercises Exercise[]
+  retry     Int        @default(0)
+  retryExp  DateTime?  
 }
 
 model Exercise {

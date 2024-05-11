@@ -14,6 +14,11 @@ export default function Menu() {
         }}
       >
         <li className="pure-menu-item pure-menu-selected">
+          <Link href="./login" className="pure-menu-link">
+            Login
+          </Link>
+        </li>
+        <li className="pure-menu-item pure-menu-selected">
           <Link href="./" className="pure-menu-link">
             User
           </Link>
@@ -29,10 +34,12 @@ export default function Menu() {
           </Link>
         </li>
         {cartSearch.value.length !== 0 ? (
-          <li className="pure-menu-item pure-menu-selected"
-          
-          >
-            <Link href="./search" className="pure-menu-link" style={{ color: "purple" }}>
+          <li className="pure-menu-item pure-menu-selected">
+            <Link
+              href="./search"
+              className="pure-menu-link"
+              style={{ color: "purple" }}
+            >
               Letzte Suchresultate
             </Link>
           </li>
@@ -48,7 +55,7 @@ export default function Menu() {
         </li>
         <li
           className="pure-menu-item pure-menu-has-children pure-menu-allow-hover"
-          style={{ marginLeft: "auto", display: "none"}}
+          style={{ marginLeft: "auto", display: "none" }}
         >
           <Link href="./contact" id="menuLink1" className="pure-menu-link">
             Contact
