@@ -1,8 +1,18 @@
 import { Link } from "preact-router/match";
 import { useContext, useState } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
+import { askServer } from "../utils/connector.js";
 export default function Menu() {
   const { cartSearch, getCartSearch } = useContext(SearchContext);
+
+const logout = async () => {
+  const res = await askServer("/logout", "DELETE");
+  // window.location.href = "/login";
+  console.log(res);
+}
+
+
+
   return (
     <div className="pure-menu pure-menu-horizontal">
       <ul
@@ -44,6 +54,14 @@ export default function Menu() {
             </Link>
           </li>
         ) : null}
+
+        <li className="pure-menu-item pure-menu-selected">
+        <div class="pure-controls">
+            <button className="pure-button pure-button-primary" type="submit" onClick={logout}>
+              Logout
+            </button>
+          </div>
+        </li>
 
         <li
           className="pure-menu-item pure-menu-selected"

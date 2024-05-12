@@ -2,6 +2,6 @@ POST http://localhost:3000/login
 content-type: application/json
 
 {
-    "username": "f",
-    "password": "s"
+    "username": "w",
+    "password": "w"
 }

@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
@@ -5,16 +8,26 @@ const session = require("express-session");
 const LocalStrategy = require("passport-local").Strategy;
 const { query, validationResult } = require("express-validator");
 const PrismaClient = require("@prisma/client");
-const fs = require("fs");
 const prisma = new PrismaClient.PrismaClient();
+const fs = require("fs");
+const flash = require("express-flash");
 
 const app = express();
 const router = express.Router();
 const argon2 = require("argon2");
 // const jwt = require("jsonwebtoken");
 
+const initializePassport = require("./passport-config.cjs");
+initializePassport(passport, username => {
+  return prisma.user.findUnique({
+    where: { username },
+  });
+}
+);
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(flash());
 
 app.use(
   cors({
@@ -26,14 +39,14 @@ app.use(
 // Source: https://medium.com/@prashantramnyc/node-js-with-passport-authentication-simplified-76ca65ee91e5
 app.use(
   session({
-    secret: "secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 
 app.use(passport.initialize());
-// init passport on every route call.
+// // init passport on every route call.
 
 app.use(passport.session());
 // allow passport to use "express-session".
@@ -50,110 +63,108 @@ app.use(passport.session());
 //   }
 // };
 
-const authUser = async (user, password, done) => {
-  console.log("Authenticating user");
-  try {
-    const userFromDb = await prisma.user.findUnique({
-      where: { username: user },
-      select: {
-        id: true,
-        email: true,
-        username: true,
-        password: true,
-        retry: true,
-        retryExp: true,
-      },
-    });
-    if (!userFromDb) {
-      res.json({ msg: "User or password does not match" });
-      return;
-    }
-    console.log(userFromDb);
-    const pass = await argon2.verify(userFromDb.password, password);
-    if (!pass) {
-      if (userFromDb.retry >= 3) {
-        if (userFromDb.retryExp > new Date()) {
-          res.json({ msg: "User is locked out" });
-          return;
-        }
-      }
-      await prisma.user.update({
-        where: {
-          username: user,
-        },
-        data: {
-          retry: userFromDb.retry + 1,
-          retryExp: new Date(Date.now() + 1000 * 60 * 60),
-        },
-      });
-      res.json({ msg: "User or password does not match" });
-      return;
-    }
+// const authUser = async (user, password, done) => {
+//   console.log("Authenticating user");
+//   try {
+//     const userFromDb = await prisma.user.findUnique({
+//       where: { username: user },
+//       select: {
+//         id: true,
+//         email: true,
+//         username: true,
+//         password: true,
+//         retry: true,
+//         retryExp: true,
+//       },
+//     });
+//     if (!userFromDb) {
+//       res.json({ msg: "User or password does not match" });
+//       return;
+//     }
+//     console.log(userFromDb);
+//     const pass = await argon2.verify(userFromDb.password, password);
+//     if (!pass) {
+//       if (userFromDb.retry >= 3) {
+//         if (userFromDb.retryExp > new Date()) {
+//           res.json({ msg: "User is locked out" });
+//           return;
+//         }
+//       }
+//       await prisma.user.update({
+//         where: {
+//           username: user,
+//         },
+//         data: {
+//           retry: userFromDb.retry + 1,
+//           retryExp: new Date(Date.now() + 1000 * 60 * 60),
+//         },
+//       });
+//       res.json({ msg: "User or password does not match" });
+//       return;
+//     }
 
-    await prisma.user.update({
-      where: {
-        username: user,
-      },
-      data: {
-        retry: 0,
-        retryExp: null,
-      },
-    });
-    console.log("User retries updated successfully");
-    //Let's assume that a search within your DB returned the username and password match for "Kyle".
-    let authenticated_user = { id: userFromDb.id, name: userFromDb.username };
-    console.log("User authenticated successfully", authenticated_user);
-    return done(null, authenticated_user);
-  } catch (error) {
-    // res.json({ msg: "Error in DB request", err: error });
-    console.log("Error in DB request");
-  }
-};
+//     await prisma.user.update({
+//       where: {
+//         username: user,
+//       },
+//       data: {
+//         retry: 0,
+//         retryExp: null,
+//       },
+//     });
+//     console.log("User retries updated successfully");
+//     //Let's assume that a search within your DB returned the username and password match for "Kyle".
+//     let authenticated_user = { id: userFromDb.id, name: userFromDb.username };
+//     console.log("User authenticated successfully", authenticated_user);
+//     return done(null, authenticated_user);
+//   } catch (error) {
+//     // res.json({ msg: "Error in DB request", err: error });
+//     console.log("Error in DB request");
+//   }
+// };
 
-passport.use(new LocalStrategy(authUser));
+// passport.use(new LocalStrategy(authUser));
 
-passport.serializeUser((userObj, done) => {
-  done(null, userObj);
-});
+// passport.serializeUser((userObj, done) => {
+//   done(null, userObj);
+// });
 
-passport.deserializeUser((userObj, done) => {
-  done(null, userObj);
-});
+// passport.deserializeUser((userObj, done) => {
+//   done(null, userObj);
+// });
 
-checkAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-};
+// checkAuthenticated = (req, res, next) => {
+//   if (req.isAuthenticated()) {
+//     return next();
+//   }
+//   res.redirect("/login");
+// };
 
-checkLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return res.redirect("/dashboard");
-  }
-  next();
-};
+// checkLoggedIn = (req, res, next) => {
+//   if (req.isAuthenticated()) {
+//     return res.redirect("/dashboard");
+//   }
+//   next();
+// };
 
-app.get("/dashboard", checkAuthenticated, (req, res) => {
+app.get("/dashboard", (req, res) => {
+  console.log(req.isAuthenticated());
   return res.json({
     title: "Dashboard",
     page: "user-dashboard",
   });
 });
 
-app.get("/login", checkLoggedIn, (req, res) => {
-  return res.json({
-    title: "Login",
-    page: "login",
-  });
+app.get("/login", (req, res) => {
+  return res.redirect("http://localhost:5173/exercise-db-preact/login");
 });
 
 app.post(
   "/login",
-  checkLoggedIn,
   passport.authenticate("local", {
     successRedirect: "/dashboard",
     failureRedirect: "/login",
+    failureFlash: true,
   })
 );
 
