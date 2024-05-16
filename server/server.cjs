@@ -17,13 +17,12 @@ const router = express.Router();
 const argon2 = require("argon2");
 // const jwt = require("jsonwebtoken");
 
-const initializePassport = require("./passport-config.cjs");
-initializePassport(passport, username => {
+const { initializePassport } = require("./passport-config.cjs");
+initializePassport(passport, (username) => {
   return prisma.user.findUnique({
     where: { username },
   });
-}
-);
+});
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -164,8 +163,15 @@ app.post(
   passport.authenticate("local", {
     successRedirect: "/dashboard",
     failureRedirect: "/login",
-    failureFlash: true,
+    failureMessage: true,
   })
+  // (req, res) => {
+  //   console.log(req.isAuthenticated());
+  //   res.json({
+  //     title: "Dashboard",
+  //     page: "user-dashboard",
+  //   });
+  // }
 );
 
 // app.post("/login", (req, res) => {
