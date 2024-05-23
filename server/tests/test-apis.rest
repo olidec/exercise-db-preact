@@ -1,4 +1,4 @@
-POST http://localhost:3000/login
+DELETE http://localhost:3000/logout
 content-type: application/json
 
 {

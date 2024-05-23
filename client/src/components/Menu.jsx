@@ -5,13 +5,11 @@ import { askServer } from "../utils/connector.js";
 export default function Menu() {
   const { cartSearch, getCartSearch } = useContext(SearchContext);
 
-const logout = async () => {
-  const res = await askServer("/logout", "DELETE");
-  // window.location.href = "/login";
-  console.log(res);
-}
-
-
+  const logout = async () => {
+    const res = await askServer("/logout", "DELETE");
+    // window.location.href = "/login";
+    console.log(res);
+  };
 
   return (
     <div className="pure-menu pure-menu-horizontal">
@@ -56,10 +54,17 @@ const logout = async () => {
         ) : null}
 
         <li className="pure-menu-item pure-menu-selected">
-        <div class="pure-controls">
-            <button className="pure-button pure-button-primary" type="submit" onClick={logout}>
+          <div class="pure-controls">
+            <button
+              className="pure-button pure-button-primary"
+              type="submit"
+              onClick={logout}
+            >
               Logout
             </button>
+            {/* <form action="/logout?_method=DELETE" method="POST">
+              <button type="submit">Log Out</button>
+            </form> */}
           </div>
         </li>
 

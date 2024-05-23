@@ -11,6 +11,7 @@ const PrismaClient = require("@prisma/client");
 const prisma = new PrismaClient.PrismaClient();
 const fs = require("fs");
 const flash = require("express-flash");
+const methodOverride = require("method-override");
 
 const app = express();
 const router = express.Router();
@@ -49,6 +50,8 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 // allow passport to use "express-session".
+
+app.use(methodOverride("_method"));
 
 // This is the basic express session({..}) initialization.
 
@@ -182,8 +185,13 @@ app.post(
 // });
 
 app.delete("/logout", (req, res) => {
-  req.logOut();
-  res.redirect("/login");
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("http://localhost:5173/exercise-db-preact/login");
+  });
+  // res.redirect("/login");
   console.log(`-------> User Logged out`);
 });
 
