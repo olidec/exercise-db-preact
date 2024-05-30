@@ -1,20 +1,21 @@
 import { signal, effect } from "@preact/signals";
 import { askServer } from "../utils/connector";
 import { createContext } from "preact";
-import exerciseList from "../components/FindExByIdFromServer";
+
 export const SearchContext = createContext();
 
 export const SearchProvider = ({ children }) => {
   const ex = signal([]);
-  //const cartSearch = signal([]);
+
+  const cartSearch = signal(
+    JSON.parse(window.localStorage.getItem("cartSearch")) || []
+  );
+
   const loadEx = async () => {
     const res = await askServer("/api/ex/", "GET");
     ex.value = res;
   };
 
-  const cartSearch = signal(
-    JSON.parse(window.localStorage.getItem("cartSearch")) || []
-  );
   function getCartSearch() {
     if (cartSearch.value.length === 0) {
       return "Keine Suchergebnisse gefunden";

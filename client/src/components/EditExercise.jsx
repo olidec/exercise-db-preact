@@ -22,14 +22,13 @@ const EditExercise = ({ id }) => {
 
         <hr />
 
-        <hr />
-
         <button
-          className=" pure-button pure-button-third"
+          className="button-error pure-button"
           onClick={() => deleteCart({ id })}
         >
           Delete aus DB
         </button>
+        <hr />
       </div>
     </>
   );

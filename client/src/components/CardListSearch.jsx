@@ -1,7 +1,6 @@
-import { h } from "preact";
 import SearchCard from "./SearchCard.jsx";
 import { useEffect } from "preact/hooks";
-import { Link } from "preact-router";
+
 const CardListSearch = ({ list }) => {
   useEffect(() => {
     MathJax.typeset();
@@ -21,6 +20,8 @@ const CardListSearch = ({ list }) => {
                 id={ex.id}
                 summary={ex.summary}
                 content={ex.content}
+                categoryId={ex.categoryId}
+                difficulty={ex.difficulty}
               ></SearchCard>
             </>
           ))}

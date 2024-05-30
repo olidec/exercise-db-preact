@@ -1,18 +1,26 @@
-import { h } from "preact";
-import { signal } from "@preact/signals";
 import Card from "./Card";
 import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { useContext, useState } from "preact/hooks";
-//import { cartItems, addToKorb, handleDelete } from "../signals/warenkorb";
-const SearchCard = ({ key, id, content, summary }) => {
+
+const SearchCard = ({ key, id, content, summary, categoryId, difficulty }) => {
   const { cartItems, addToKorb, handleDelete } = useContext(WarenkorbContext);
   let index = cartItems.value.findIndex((item) => item.id === id);
   console.log(index);
 
+  const currentPath = window.location.pathname;
+  const detailPath = `/exercise-db-preact/${id}`;
+
   return (
     <>
       <div key={key} className="kartenContainer">
-        <Card key={id} id={id} summary={summary} content={content} />
+        <Card
+          key={id}
+          id={id}
+          summary={summary}
+          content={content}
+          categories={categoryId}
+          difficulty={difficulty}
+        />
 
         <div className="warenkorbColumn">
           {index === -1 ? (
@@ -29,6 +37,17 @@ const SearchCard = ({ key, id, content, summary }) => {
               onClick={() => handleDelete({ id })}
             >
               Löschen aus Warenkorb
+            </button>
+          )}
+
+          {currentPath === detailPath ? (
+            ""
+          ) : (
+            <button
+              className="pure-button"
+              onClick={() => (window.location.href = detailPath)}
+            >
+              Details/ Edit Aufgabe
             </button>
           )}
         </div>

@@ -9,12 +9,15 @@ export default function ExForm() {
   const [ex, setEx] = useState({
     content: "",
     solution: "",
-    language: "Deutsch",
-    difficulty: 1,
+    language: "",
+    difficulty: "",
   });
 
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("");
+
   let categories = [
-    "-- Wähle bitte eine Kategorie --",
+    "-- Bitte wähle eine Kategorie --",
     "Zahlen",
     "Arithmetik und Algebra",
     "Geometrie",
@@ -71,12 +74,16 @@ export default function ExForm() {
     ],
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSubcategory, setSelectedSubcategory] = useState("");
-
   useEffect(() => {
     loadCat();
   }, []);
+
+  // Effekt, der die ausgewählte Unterkategorie zurücksetzt, wenn die Kategorie sich ändert
+  useEffect(() => {
+    if (selectedCategory && categories.indexOf(selectedCategory) > 0) {
+      setSelectedSubcategory("-- Wähle bitte eine Unterkategorie --");
+    }
+  }, [selectedCategory]);
 
   const addNewEx = async (e) => {
     e.preventDefault();
@@ -114,8 +121,11 @@ export default function ExForm() {
         content: "",
         solution: "",
         language: "",
-        difficulty: 1,
+        difficulty: "",
       });
+
+      setSelectedCategory(""); // Zeile 91: Zurücksetzen der Kategorie
+      setSelectedSubcategory(""); // Zeile 92: Zurücksetzen der Unterkategorie
       showNotification("Exercise added successfully", "green");
     }
   };
@@ -150,6 +160,9 @@ export default function ExForm() {
                 value={ex.language}
                 onChange={updateExHandler}
               >
+                <option value="" disabled selected>
+                  -- Bitte wählen --
+                </option>
                 <option value={"Deutsch"}> Deutsch </option>
                 <option value={"English"}> English </option>
               </select>
@@ -163,6 +176,9 @@ export default function ExForm() {
                 value={ex.difficulty}
                 onChange={updateExHandler}
               >
+                <option value="" disabled selected>
+                  -- Bitte wählen --
+                </option>
                 <option value={1}> Leicht </option>
                 <option value={2}> Mittel </option>
                 <option value={3}> Schwer </option>
@@ -180,15 +196,14 @@ export default function ExForm() {
                 {categories.map((category, index) => {
                   if (index === 0) {
                     return (
-                      <option disabled selected key={index} value={category}>
-                        {" "}
+                      <option disabled key={index} value="">
+                        {category}
                       </option>
                     );
                   } else {
                     return (
                       <option key={index} value={category}>
-                        {" "}
-                        {category}{" "}
+                        {category}
                       </option>
                     );
                   }

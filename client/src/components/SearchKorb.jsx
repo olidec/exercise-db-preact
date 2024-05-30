@@ -1,7 +1,3 @@
-import { h } from "preact";
-import { useEffect, useState } from "preact/hooks";
-import Menu from "./Menu.jsx";
-
 import CardListSearch from "./CardListSearch.jsx";
 
 import { useContext } from "preact/hooks";

@@ -1,14 +1,10 @@
 import { signal, computed, effect } from "@preact/signals";
-import { askServer } from "../utils/connector";
 
-import { useContext, useState } from "preact/hooks";
 import { createContext } from "preact";
 
 export const WarenkorbContext = createContext();
 
 export const WarenkorbProvider = ({ children }) => {
-  //const [cartItems, setCartItems] = useState([]);
-
   const cartItems = signal(
     JSON.parse(window.localStorage.getItem("cartItems")) || []
   );
@@ -70,7 +66,6 @@ export const WarenkorbProvider = ({ children }) => {
     return index;
   }
 
-  //export const cartCount = computed(() => cartItems.value.length);
   const cartCount = computed(() => cartItems.value.length);
 
   return (

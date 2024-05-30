@@ -13,7 +13,6 @@ export default function FindExBySearchText() {
 
   useEffect(() => {
     cartSearch.value = exerciseList;
-    console.log(exerciseList);
   }, [exerciseList]);
 
   useEffect(() => {
@@ -22,7 +21,7 @@ export default function FindExBySearchText() {
 
   console.log(cat.value);
 
-  const element = document.getElementById("exid-4");
+  const element = document.getElementById("exCat");
   if (element) {
     cat.value.map((c) => {
       const el = document.createElement("option");
@@ -56,8 +55,8 @@ export default function FindExBySearchText() {
     <>
       <form className="pure-form pure-form-aligned" onSubmit={(e) => getEx(e)}>
         <div className="pure-control-group">
-          <label htmlFor="exid-4">Search Exercises by Category</label>
-          <select id="exid-4" onChange={onChange}>
+          <label htmlFor="exCat">Search Exercises by Category</label>
+          <select id="exCat" onChange={onChange}>
             <option value=""> -- Kategorie auswählen -- </option>
           </select>
           <button className="pure-button">Find Category</button>

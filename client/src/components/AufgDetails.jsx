@@ -28,7 +28,6 @@ const AufgDetails = ({ id }) => {
           if (categ) {
             setCategoryName(categ.name); // Speichern des Kategorienamens
           }
-          console.log(categ.name);
 
           const subcateg = categ.subcategories.find(
             (sub) => sub.id === exDetails.subcategoryId
@@ -36,7 +35,6 @@ const AufgDetails = ({ id }) => {
           if (subcateg) {
             setSubCategoryName(subcateg.name); // Speichern des Kategorienamens
           }
-          console.log(subcateg.name);
         }
         setLoading(false);
 
@@ -68,7 +66,7 @@ const AufgDetails = ({ id }) => {
   return (
     <>
       <div className="inhalt">
-        <h1>Aufgabe Details mit ID {id}</h1>
+        <h1>Details der Aufgabe mit ID {id}</h1>
 
         <div>
           <Card

@@ -6,11 +6,17 @@ import { SearchContext } from "../signals/exercise.jsx";
 import { cat, loadCat } from "../signals/categories.js";
 export default function EditForm({ id }) {
   const { showNotification } = useContext(SearchContext);
+
+  const [categoryName, setCategoryName] = useState("");
+  const [subcategoryName, setSubCategoryName] = useState("");
+
   const [ex, setEx] = useState({
     content: "",
     solution: "",
     language: "Deutsch",
     difficulty: 1,
+    category: "",
+    subcategory: "",
   });
   useEffect(() => {
     loadCat();
@@ -106,8 +112,6 @@ export default function EditForm({ id }) {
         )
       : null;
 
-    // console.log(subcategoryObject.id);
-
     const categoryId = categoryObject ? categoryObject.id : null;
     const subcategoryId = subcategoryObject ? subcategoryObject.id : null;
 
@@ -115,9 +119,7 @@ export default function EditForm({ id }) {
       ...ex,
       difficulty: parseInt(ex.difficulty),
       categories: { id: categoryId },
-      subcategories: {
-        id: subcategoryId,
-      },
+      subcategories: { id: subcategoryId },
     };
     try {
       const res = await askServer("/api/ex", "PUT", exWithCategory);
@@ -153,25 +155,41 @@ export default function EditForm({ id }) {
   };
 
   useEffect(() => {
-    const fetchExDetails = async () => {
-      const exDetails = await askServer(`/api/ex?id=${id}`, "GET");
-      if (exDetails) {
-        setEx({
-          id: exDetails.id,
-          content: exDetails.content,
-          solution: exDetails.solution,
-          language: exDetails.language,
-          difficulty: exDetails.difficulty,
-          category: exDetails.categories,
-          subcategory: exDetails.subcategories,
-          // Füge weitere Felder hinzu, falls vorhanden
-        });
-      }
-    };
+    loadCat().then((c) => {
+      const fetchExDetails = async () => {
+        const exDetails = await askServer(`/api/ex?id=${id}`, "GET");
+        if (exDetails) {
+          console.log(exDetails);
+          const categ = cat.value.find((c) => c.id === exDetails.categoryId);
+          if (categ) {
+            setCategoryName(categ.name);
+            setSelectedCategory(categ.name); // Speichern des Kategorienamens
+          }
 
-    if (id) {
-      fetchExDetails();
-    }
+          const subcateg = categ.subcategories.find(
+            (sub) => sub.id === exDetails.subcategoryId
+          );
+          if (subcateg) {
+            setSubCategoryName(subcateg.name);
+            setSelectedSubcategory(subcateg.name); // Speichern des Kategorienamens
+          }
+          setEx({
+            id: exDetails.id,
+            content: exDetails.content,
+            solution: exDetails.solution,
+            language: exDetails.language,
+            difficulty: exDetails.difficulty,
+            category: categ ? categoryName : "",
+            subcategory: subcateg ? subcategoryName : "",
+            // Füge weitere Felder hinzu, falls vorhanden
+          });
+        }
+      };
+
+      if (id) {
+        fetchExDetails();
+      }
+    });
   }, [id]); // Führe den Effekt aus, wenn sich die ID ändert
 
   return (
