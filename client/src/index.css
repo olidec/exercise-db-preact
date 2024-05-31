@@ -80,14 +80,13 @@
 }
 
 #checkmark {
-  position: fixed;
-  top: 5%;
-  left: 96%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 42px;
-
   z-index: 1000;
-  display: none; /* Versteckt das Element standardmäßig */
+  display: none; /* Zeigt das Element standardmäßig an */
   text-shadow:
     -1px -1px 0 #000,
     1px -1px 0 #000,

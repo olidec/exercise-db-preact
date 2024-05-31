@@ -89,7 +89,7 @@ export default function Menu() {
           className={`pure-menu-item ${
             selectedMenu === "warenkorb" ? "pure-menu-selected" : ""
           }`}
-          style={{ marginLeft: "auto" }}
+          style={{ position: "relative", marginLeft: "auto" }}
         >
           <div id="notification-container"></div>
           <div id="checkmark">✔</div>
@@ -102,24 +102,25 @@ export default function Menu() {
             Warenkorb ({getCartCount()})
           </Link>
         </li>
+
         <li
           className={`pure-menu-item pure-menu-has-children pure-menu-allow-hover ${
             selectedMenu === "contact" ? "pure-menu-selected" : ""
           }`}
-          style={{ marginLeft: "auto", display: "none" }}
+          style={{ marginLeft: "auto" }}
         >
           <Link
-            href="/exercise-db-preact/contact"
+            href="/exercise-db-preact/"
             id="menuLink1"
             className="pure-menu-link"
             onClick={() => handleMenuClick("contact")}
           >
-            Contact
+            Profil/Logout
           </Link>
           <ul className="pure-menu-children">
             <li className="pure-menu-item">
               <Link
-                href="/exercise-db-preact/contact"
+                href="/exercise-db-preact/"
                 className="pure-menu-link"
                 onClick={() => handleMenuClick("contact")}
               >
@@ -128,20 +129,20 @@ export default function Menu() {
             </li>
             <li className="pure-menu-item">
               <Link
-                href="/exercise-db-preact/contact"
+                href="/exercise-db-preact/"
                 className="pure-menu-link"
                 onClick={() => handleMenuClick("contact")}
               >
-                Twitter
+                Profil
               </Link>
             </li>
             <li className="pure-menu-item">
               <Link
-                href="/exercise-db-preact/contact"
+                href="/exercise-db-preact/"
                 className="pure-menu-link"
                 onClick={() => handleMenuClick("contact")}
               >
-                Tumblr Blog
+                Logout
               </Link>
             </li>
           </ul>
