@@ -1,4 +1,3 @@
-import { h } from "preact";
 import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
 import { useContext } from "preact/hooks";
@@ -86,9 +85,9 @@ export default function EditForm({ id }) {
   );
 
   useEffect(() => {
-    setSelectedSubcategory(
-      subcategories[categories.indexOf(selectedCategory)][0]
-    );
+    if (selectedCategory !== categoryName) {
+      setSelectedSubcategory("-- Wähle bitte eine Unterkategorie --");
+    }
   }, [selectedCategory]);
 
   const updateEx = async (e) => {
@@ -150,8 +149,12 @@ export default function EditForm({ id }) {
     }));
   };
 
-  const onChange = (e) => {
+  const onChangeCategory = (e) => {
     setSelectedCategory(e.target.value);
+  };
+
+  const onChangeSubcategory = (e) => {
+    setSelectedSubcategory(e.target.value);
   };
 
   useEffect(() => {
@@ -165,7 +168,6 @@ export default function EditForm({ id }) {
             setCategoryName(categ.name);
             setSelectedCategory(categ.name); // Speichern des Kategorienamens
           }
-
           const subcateg = categ.subcategories.find(
             (sub) => sub.id === exDetails.subcategoryId
           );
@@ -173,6 +175,7 @@ export default function EditForm({ id }) {
             setSubCategoryName(subcateg.name);
             setSelectedSubcategory(subcateg.name); // Speichern des Kategorienamens
           }
+
           setEx({
             id: exDetails.id,
             content: exDetails.content,
@@ -235,24 +238,13 @@ export default function EditForm({ id }) {
                 id="category"
                 name="category"
                 value={selectedCategory}
-                onChange={onChange}
+                onChange={onChangeCategory}
               >
-                {categories.map((category, index) => {
-                  if (index === 0) {
-                    return (
-                      <option disabled selected key={index}>
-                        {" "}
-                      </option>
-                    );
-                  } else {
-                    return (
-                      <option key={index} value={category}>
-                        {" "}
-                        {category}{" "}
-                      </option>
-                    );
-                  }
-                })}
+                {categories.map((category, index) => (
+                  <option key={index} value={category} disabled={index === 0}>
+                    {category}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="pure-control-group">
@@ -262,24 +254,14 @@ export default function EditForm({ id }) {
                 id="subcategory"
                 name="subcategory"
                 value={selectedSubcategory}
-                onChange={(e) => setSelectedSubcategory(e.target.value)}
+                onChange={onChangeSubcategory}
               >
                 {subcategories[categories.indexOf(selectedCategory)].map(
-                  (subcategory, index) => {
-                    if (index === 0) {
-                      return (
-                        <option disabled selected key={index}>
-                          {" "}
-                        </option>
-                      );
-                    } else {
-                      return (
-                        <option key={index} value={subcategory}>
-                          {subcategory}
-                        </option>
-                      );
-                    }
-                  }
+                  (subcategory, index) => (
+                    <option key={index} value={subcategory}>
+                      {subcategory}
+                    </option>
+                  )
                 )}
               </select>
             </div>
