@@ -2,11 +2,11 @@
   padding-top: 25px;
 }
 .pure-menu-horizontal {
-  background-color: #438de5;
+  background-color: #78a2d6;
 }
 
 .pure-menu-link {
-  color: #3738e6;
+  color: #1d1dea;
 }
 
 .pure-menu-link:hover {
@@ -15,6 +15,10 @@
 
 .pure-menu-item:hover {
   background-color: #73aee5;
+}
+
+.pure-menu-selected {
+  background-color: #fafbfc;
 }
 
 .kartenContainer {
