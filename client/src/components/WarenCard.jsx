@@ -12,6 +12,7 @@ const WarenCard = ({ key, id, content, summary }) => {
     setIsFadingOut(true); // Startet den Ausblendeffekt
     setTimeout(() => handleDelete({ id }), 600); // Wartet, bis die Animation abgeschlossen ist, um zu löschen
   };
+  const detailPath = `/exercise-db-preact/${id}`;
   return (
     <>
       <div
@@ -22,6 +23,13 @@ const WarenCard = ({ key, id, content, summary }) => {
         <div className="warenkorbColumn">
           <button className="pure-button" onClick={handleFadeOutAndDelete}>
             Löschen aus Warenkorb
+          </button>
+
+          <button
+            className="pure-button"
+            onClick={() => (window.location.href = detailPath)}
+          >
+            Details/ Edit Aufgabe
           </button>
         </div>
       </div>
