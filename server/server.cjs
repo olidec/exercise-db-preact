@@ -134,6 +134,17 @@ router.get("/api/cat", async (req, res) => {
   res.json(cat);
 });
 
+router.get("/api/subcat", async (req, res) => {
+  const subcat = await prisma.subcategory.findMany({
+    include: {
+      exercises: true,
+    },
+  });
+  console.log(subcat);
+
+  res.json(subcat);
+});
+
 router.post("/api/ex", async (req, res) => {
   console.log(req.body);
   const {
