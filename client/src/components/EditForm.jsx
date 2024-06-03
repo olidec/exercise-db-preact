@@ -17,76 +17,26 @@ export default function EditForm({ id }) {
     category: "",
     subcategory: "",
   });
+
   useEffect(() => {
-    loadCat();
+    // Lade die Kategorien beim Initialisieren der Komponente
+    loadCat().then(() => {
+      setCategories(cat.value);
+    });
   }, []);
 
-  let categories = [
-    "-- Wähle bitte eine Kategorie --",
-    "Zahlen",
-    "Arithmetik und Algebra",
-    "Geometrie",
-    "Analysis",
-    "Stochastik",
-    "Vertiefende Themen",
-  ];
-  const subcategories = [
-    ["-- Wähle bitte zuerst eine Kategorie --"],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Zahlensysteme",
-      "Spezielle Zahlen",
-      "Zahlenmengen",
-      "Sonstiges",
-    ],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Rechenarten",
-      "Gleichungen und Ungleichungen",
-      "Funktionen",
-      "Sonstiges",
-    ],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Allgemeine Geometrie der Ebene",
-      "Trigonometrie",
-      "Allgemeine Geometrie des Raums",
-      "Vektorgeometrie",
-      "Sonstiges",
-    ],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Grundlagen",
-      "Differentialrechnung",
-      "Integralrechnung",
-      "Sonstiges",
-    ],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Wahrscheinlichkeitstheorie",
-      "Kombinatorik",
-      "Statistik",
-      "Sonstiges",
-    ],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Komplexe Zahlen",
-      "Kegelschnitte",
-      "Differentialgleichungen",
-      "Lineare Abbildungen und Matrizen",
-      "Graphentheorie",
-      "Sonstiges",
-    ],
-  ];
-
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(
-    subcategories[0][0]
-  );
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
   useEffect(() => {
-    if (selectedCategory !== categoryName) {
-      setSelectedSubcategory("-- Wähle bitte eine Unterkategorie --");
+    if (selectedCategory) {
+      const categoryObject = categories.find(
+        (c) => c.name === selectedCategory
+      );
+      setSubcategories(categoryObject ? categoryObject.subcategories : []);
+      setSelectedSubcategory("");
     }
   }, [selectedCategory]);
 
@@ -158,42 +108,44 @@ export default function EditForm({ id }) {
   };
 
   useEffect(() => {
-    loadCat().then((c) => {
-      const fetchExDetails = async () => {
-        const exDetails = await askServer(`/api/ex?id=${id}`, "GET");
-        if (exDetails) {
-          console.log(exDetails);
-          const categ = cat.value.find((c) => c.id === exDetails.categoryId);
-          if (categ) {
-            setCategoryName(categ.name);
-            setSelectedCategory(categ.name); // Speichern des Kategorienamens
-          }
-          const subcateg = categ.subcategories.find(
-            (sub) => sub.id === exDetails.subcategoryId
-          );
-          if (subcateg) {
-            setSubCategoryName(subcateg.name);
-            setSelectedSubcategory(subcateg.name); // Speichern des Kategorienamens
-          }
+    const fetchExDetails = async () => {
+      const exDetails = await askServer(`/api/ex?id=${id}`, "GET");
+      if (exDetails) {
+        console.log(exDetails);
+        const categ = cat.value.find((c) => c.id === exDetails.categoryId);
+        if (categ) {
+          setCategoryName(categ.name);
+          setSelectedCategory(categ.name); // Speichern des Kategorienamens
 
-          setEx({
-            id: exDetails.id,
-            content: exDetails.content,
-            solution: exDetails.solution,
-            language: exDetails.language,
-            difficulty: exDetails.difficulty,
-            category: categ ? categoryName : "",
-            subcategory: subcateg ? subcategoryName : "",
-            // Füge weitere Felder hinzu, falls vorhanden
-          });
+          console.log(categ.name);
         }
-      };
+        const subcateg = categ.subcategories.find(
+          (sub) => sub.id === exDetails.subcategoryId
+        );
+        if (subcateg) {
+          setSubCategoryName(subcateg.name);
+          setSelectedSubcategory(subcateg.name); // Speichern des Kategorienamens
 
-      if (id) {
-        fetchExDetails();
+          console.log(subcateg.name);
+        }
+
+        setEx({
+          id: exDetails.id,
+          content: exDetails.content,
+          solution: exDetails.solution,
+          language: exDetails.language,
+          difficulty: exDetails.difficulty,
+          category: categ ? categoryName : "",
+          subcategory: subcateg ? subcategoryName : "",
+          // Füge weitere Felder hinzu, falls vorhanden
+        });
       }
-    });
-  }, [id]); // Führe den Effekt aus, wenn sich die ID ändert
+    };
+
+    if (id) {
+      fetchExDetails();
+    }
+  }, [id, categories]); // Führe den Effekt aus, wenn sich die ID ändert
 
   return (
     <>
@@ -240,9 +192,12 @@ export default function EditForm({ id }) {
                 value={selectedCategory}
                 onChange={onChangeCategory}
               >
-                {categories.map((category, index) => (
-                  <option key={index} value={category} disabled={index === 0}>
-                    {category}
+                <option value="" disabled>
+                  -- Bitte wähle eine Kategorie --
+                </option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
                   </option>
                 ))}
               </select>
@@ -256,14 +211,16 @@ export default function EditForm({ id }) {
                 value={selectedSubcategory}
                 onChange={onChangeSubcategory}
               >
-                {subcategories[categories.indexOf(selectedCategory)].map(
-                  (subcategory, index) => (
-                    <option key={index} value={subcategory}>
-                      {subcategory}
-                    </option>
-                  )
-                )}
+                <option value="" disabled>
+                  -- Wähle bitte eine Unterkategorie --
+                </option>
+                {subcategories.map((subcategory) => (
+                  <option key={subcategory.id} value={subcategory.name}>
+                    {subcategory.name}
+                  </option>
+                ))}
               </select>
+              <label htmlFor="subcategory">: {subcategoryName} (vorher)</label>
             </div>
             <div className="pure-control-group">
               <label htmlFor="content">Aufgabentext: </label>

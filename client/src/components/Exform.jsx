@@ -4,6 +4,7 @@ import { askServer } from "../utils/connector";
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 import { cat, loadCat } from "../signals/categories.js";
+
 export default function ExForm() {
   const { showNotification } = useContext(SearchContext);
   const [ex, setEx] = useState({
@@ -15,87 +16,34 @@ export default function ExForm() {
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
-
-  let categories = [
-    "-- Bitte wähle eine Kategorie --",
-    "Zahlen",
-    "Arithmetik und Algebra",
-    "Geometrie",
-    "Analysis",
-    "Stochastik",
-    "Vertiefende Themen",
-  ];
-  const subcategories = [
-    ["-- Wähle bitte zuerst eine Kategorie --"],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Zahlensysteme",
-      "Spezielle Zahlen",
-      "Zahlenmengen",
-      "Sonstiges",
-    ],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Rechenarten",
-      "Gleichungen und Ungleichungen",
-      "Funktionen",
-      "Sonstiges",
-    ],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Allgemeine Geometrie der Ebene",
-      "Trigonometrie",
-      "Allgemeine Geometrie des Raums",
-      "Vektorgeometrie",
-      "Sonstiges",
-    ],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Grundlagen",
-      "Differentialrechnung",
-      "Integralrechnung",
-      "Sonstiges",
-    ],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Wahrscheinlichkeitstheorie",
-      "Kombinatorik",
-      "Statistik",
-      "Sonstiges",
-    ],
-    [
-      "-- Wähle bitte eine Unterkategorie --",
-      "Komplexe Zahlen",
-      "Kegelschnitte",
-      "Differentialgleichungen",
-      "Lineare Abbildungen und Matrizen",
-      "Graphentheorie",
-      "Sonstiges",
-    ],
-  ];
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
 
   useEffect(() => {
-    loadCat();
+    // Lade die Kategorien beim Initialisieren der Komponente
+    loadCat().then(() => {
+      setCategories(cat.value);
+    });
   }, []);
 
   // Effekt, der die ausgewählte Unterkategorie zurücksetzt, wenn die Kategorie sich ändert
   useEffect(() => {
-    if (selectedCategory && categories.indexOf(selectedCategory) > 0) {
-      setSelectedSubcategory("-- Wähle bitte eine Unterkategorie --");
+    if (selectedCategory) {
+      const categoryObject = categories.find(
+        (c) => c.name === selectedCategory
+      );
+      setSubcategories(categoryObject ? categoryObject.subcategories : []);
+      setSelectedSubcategory("");
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, categories]);
 
   const addNewEx = async (e) => {
     e.preventDefault();
 
-    const categoryObject = cat.value.find((c) => c.name === selectedCategory);
-    const subcategoryObject = selectedSubcategory
-      ? categoryObject.subcategories.find(
-          (sub) => sub.name === selectedSubcategory
-        )
-      : null;
-
-    // console.log(subcategoryObject.id);
+    const categoryObject = categories.find((c) => c.name === selectedCategory);
+    const subcategoryObject = subcategories.find(
+      (sub) => sub.name === selectedSubcategory
+    );
 
     const categoryId = categoryObject ? categoryObject.id : null;
     const subcategoryId = subcategoryObject ? subcategoryObject.id : null;
@@ -104,6 +52,7 @@ export default function ExForm() {
       console.error("Kategorie oder Unterkategorie nicht gefunden");
       return;
     }
+
     const exWithCategory = {
       ...ex,
       difficulty: parseInt(ex.difficulty),
@@ -124,8 +73,8 @@ export default function ExForm() {
         difficulty: "",
       });
 
-      setSelectedCategory(""); // Zeile 91: Zurücksetzen der Kategorie
-      setSelectedSubcategory(""); // Zeile 92: Zurücksetzen der Unterkategorie
+      setSelectedCategory(""); // Zurücksetzen der Kategorie
+      setSelectedSubcategory(""); // Zurücksetzen der Unterkategorie
       showNotification("Exercise added successfully", "green");
     }
   };
@@ -138,8 +87,12 @@ export default function ExForm() {
     }));
   };
 
-  const onChange = (e) => {
+  const onChangeCategory = (e) => {
     setSelectedCategory(e.target.value);
+  };
+
+  const onChangeSubcategory = (e) => {
+    setSelectedSubcategory(e.target.value);
   };
 
   return (
@@ -191,23 +144,16 @@ export default function ExForm() {
                 id="category"
                 name="category"
                 value={selectedCategory}
-                onChange={onChange}
+                onChange={onChangeCategory}
               >
-                {categories.map((category, index) => {
-                  if (index === 0) {
-                    return (
-                      <option disabled key={index} value="">
-                        {category}
-                      </option>
-                    );
-                  } else {
-                    return (
-                      <option key={index} value={category}>
-                        {category}
-                      </option>
-                    );
-                  }
-                })}
+                <option value="" disabled>
+                  -- Bitte wähle eine Kategorie --
+                </option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="pure-control-group">
@@ -217,26 +163,16 @@ export default function ExForm() {
                 id="subcategory"
                 name="subcategory"
                 value={selectedSubcategory}
-                onChange={(e) => setSelectedSubcategory(e.target.value)}
+                onChange={onChangeSubcategory}
               >
-                {selectedCategory &&
-                categories.indexOf(selectedCategory) > 0 ? (
-                  subcategories[categories.indexOf(selectedCategory)].map(
-                    (subcategory, index) => (
-                      <option
-                        key={index}
-                        value={subcategory}
-                        disabled={index === 0}
-                      >
-                        {subcategory}
-                      </option>
-                    )
-                  )
-                ) : (
-                  <option disabled>
-                    -- Wähle bitte zuerst eine Kategorie --
+                <option value="" disabled>
+                  -- Wähle bitte eine Unterkategorie --
+                </option>
+                {subcategories.map((subcategory) => (
+                  <option key={subcategory.id} value={subcategory.name}>
+                    {subcategory.name}
                   </option>
-                )}
+                ))}
               </select>
             </div>
             <div className="pure-control-group">
