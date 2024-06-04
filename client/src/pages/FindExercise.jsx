@@ -14,7 +14,6 @@ const FindExercise = () => {
         <h2>Aufgaben nach Text finden</h2>
         <FindExBySearchText />
         <hr />
-
         <h2>Aufgaben nach Kategorie finden</h2>
         <FindExByCategory />
         <hr />

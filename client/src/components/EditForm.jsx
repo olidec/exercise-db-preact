@@ -23,7 +23,7 @@ export default function EditForm({ id }) {
     loadCat().then(() => {
       setCategories(cat.value);
     });
-  }, []);
+  }, [categoryName]);
 
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);

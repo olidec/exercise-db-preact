@@ -1,35 +1,29 @@
 import { askServer } from "../utils/connector";
 import { signal } from "@preact/signals";
 import { cat, loadCat } from "../signals/categories.js";
-
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 import { useState, useEffect } from "preact/hooks";
-export default function FindExBySearchText() {
+
+export default function FindExByCategory() {
   const { cartSearch, showNotification } = useContext(SearchContext);
 
   const searchCategory = signal("");
   const [exerciseList, setExerciseList] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     cartSearch.value = exerciseList;
   }, [exerciseList]);
 
   useEffect(() => {
-    loadCat();
+    const fetchCategories = async () => {
+      await loadCat();
+      setCategories(cat.value);
+    };
+    fetchCategories();
   }, []);
 
-  console.log(cat.value);
-
-  const element = document.getElementById("exCat");
-  if (element) {
-    cat.value.map((c) => {
-      const el = document.createElement("option");
-      el.innerHTML = c.name;
-      el.value = c.name;
-      element.appendChild(el);
-    });
-  }
   const onChange = (e) => {
     e.preventDefault();
     const { value } = e.target;
@@ -39,9 +33,9 @@ export default function FindExBySearchText() {
   const getEx = async (e) => {
     e.preventDefault();
     const route = `/api/ex?cat=${searchCategory.value}`;
-    // console.log(route)
+
     const res = await askServer(route, "GET");
-    // console.log(res)
+
     if (res.errors || res.length === 0) {
       showNotification("No exercise matches the search term.", "red");
       return;
@@ -58,6 +52,11 @@ export default function FindExBySearchText() {
           <label htmlFor="exCat">Search Exercises by Category</label>
           <select id="exCat" onChange={onChange}>
             <option value=""> -- Kategorie auswählen -- </option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
           </select>
           <button className="pure-button">Find Category</button>
         </div>

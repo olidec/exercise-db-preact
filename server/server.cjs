@@ -90,12 +90,14 @@ const searchValidation = [
   query("id", "id must be a number").notEmpty().isInt().optional(),
   query("search").isString().notEmpty().optional().escape(),
   query("cat").isString().notEmpty().optional().escape(),
+  query("subcat").isString().notEmpty().optional().escape(),
 ];
 
 router.get("/api/ex", searchValidation, async (req, res) => {
   const result = validationResult(req);
   if (result.isEmpty()) {
-    const { id, search, cat } = req.query;
+    const { id, search, cat, subcat } = req.query;
+
     if (id) {
       const ex = await prisma.exercise.findUnique({
         where: { id: Number(id) },
@@ -106,16 +108,35 @@ router.get("/api/ex", searchValidation, async (req, res) => {
         where: { content: { contains: search } },
       });
       res.json(exs);
+    } else if (cat && subcat) {
+      console.log(cat, subcat);
+      const exs = await prisma.exercise.findMany({
+        where: {
+          categories: { name: cat },
+          subcategories: { name: subcat },
+        },
+        include: {
+          categories: true,
+          subcategories: true,
+        },
+      });
+      res.json(exs);
     } else if (cat) {
       const exs = await prisma.exercise.findMany({
         where: { categories: { name: cat } },
         include: {
           categories: true,
+          subcategories: true,
         },
       });
       res.json(exs);
     } else {
-      const exs = await prisma.exercise.findMany();
+      const exs = await prisma.exercise.findMany({
+        include: {
+          categories: true,
+          subcategories: true,
+        },
+      });
       res.json(exs);
     }
   } else {
