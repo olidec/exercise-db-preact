@@ -1,7 +1,5 @@
-import { h } from "preact";
-import { signal } from "@preact/signals";
 import Card from "./Card";
-import { useParams } from "react-router-dom";
+
 import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";

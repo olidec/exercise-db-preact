@@ -1,7 +1,6 @@
 import { askServer } from "../utils/connector";
 import { signal } from "@preact/signals";
 import { useState, useEffect } from "preact/hooks";
-import { route } from "preact-router";
 
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";

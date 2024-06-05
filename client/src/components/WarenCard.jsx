@@ -1,6 +1,3 @@
-import { h } from "preact";
-import { signal } from "@preact/signals";
-//import { handleDelete } from "../signals/warenkorb";
 import Card from "./Card";
 import { useContext, useState } from "preact/hooks";
 import { WarenkorbContext } from "../signals/warenkorb.jsx";

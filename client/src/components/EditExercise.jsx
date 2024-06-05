@@ -1,6 +1,5 @@
 import { h } from "preact";
 import EditForm from "./EditForm.jsx";
-import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { useContext, useState } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 

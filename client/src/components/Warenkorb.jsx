@@ -4,7 +4,7 @@ import WarenCard from "./WarenCard.jsx";
 import { useEffect } from "preact/hooks";
 
 const Warenkorb = ({}) => {
-  const { cartItems, getCart, getCartCount } = useContext(WarenkorbContext);
+  const { cartItems, getCartCount } = useContext(WarenkorbContext);
 
   useEffect(() => {
     MathJax.typeset();
