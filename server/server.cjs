@@ -123,6 +123,9 @@ router.get("/api/ex", searchValidation, async (req, res) => {
       res.json(exs);
     } else if (cat) {
       const exs = await prisma.exercise.findMany({
+        orderBy: {
+          updatedAt: "desc",
+        },
         where: { categories: { name: cat } },
         include: {
           categories: true,
@@ -305,28 +308,35 @@ router.post("/api/download", async (req, res) => {
         },
       },
     });
-    const writeToFile = (exercises) => {
-      const contentAndSolution = exercises.map((exercise) => ({
-        content: exercise.content,
-        solution: exercise.solution,
-      }));
+    const sortedExercises = exerciseIds.map((id) => {
+      const exercise = exercises.find((ex) => ex.id === id);
+      return exercise;
+    });
 
-      fs.writeFile(
-        "/path/to/output.txt",
-        JSON.stringify(contentAndSolution),
-        (err) => {
-          if (err) {
-            console.error("Error writing to file:", err);
-          } else {
-            console.log("Data written to file successfully");
-            res.download("/path/to/output.txt", "output.txt");
-          }
-        }
-      );
-    };
+    console.log(sortedExercises);
+    return res.json(sortedExercises);
+    // const writeToFile = (exercises) => {
+    //   const contentAndSolution = exercises.map((exercise) => ({
+    //     content: exercise.content,
+    //     solution: exercise.solution,
+    //   }));
 
-    writeToFile(exercises);
-    res.json(exercises);
+    //   fs.writeFile(
+    //     "/path/to/output.txt",
+    //     JSON.stringify(contentAndSolution),
+    //     (err) => {
+    //       if (err) {
+    //         console.error("Error writing to file:", err);
+    //       } else {
+    //         console.log("Data written to file successfully");
+    //         res.download("/path/to/output.txt", "output.txt");
+    //       }
+    //     }
+    //   );
+    // };
+
+    // writeToFile(exercises);
+    // res.json(exercises);
   } catch (error) {
     res.json({ msg: "Error in DB request", err: error });
   }
