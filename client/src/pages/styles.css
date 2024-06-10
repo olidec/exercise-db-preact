@@ -54,3 +54,61 @@ header h1 {
   padding: 10px 20px;
   border-radius: 5px;
 }
+
+.category-item {
+  cursor: pointer;
+  padding: 10px 15px;
+  display: inline-block;
+  transition:
+    font-weight 0.3s,
+    border 0.3s,
+    font-size 0.3s;
+  width: fit-content;
+  margin-bottom: 10px;
+  border-bottom: 1px solid black;
+}
+
+.category-item:hover {
+  font-weight: bold;
+}
+
+.category-item.selected {
+  font-weight: bold;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px 15px;
+}
+
+.category-item:not(.selected) {
+  font-size: 0.9em;
+}
+
+.subcategory-item {
+  cursor: pointer;
+  padding: 5px 15px;
+  display: inline-block;
+  transition:
+    font-weight 0.3s,
+    border 0.3s,
+    font-size 0.3s;
+  width: fit-content;
+  margin: 10px 0; /* Erhöht den vertikalen Abstand */
+  border-left: 2px solid black; /* Fügt einen vertikalen Strich links hinzu */
+  padding-left: 25px;
+}
+
+.subcategory-item:hover {
+  font-weight: bold;
+}
+
+.subcategory-item.selected {
+  font-weight: bold;
+  border-left: 2px solid black;
+  border-radius: 10px;
+  padding: 5px 15px;
+  background-color: #ffe6e6;
+}
+
+.subcategory-item {
+  font-size: 1.1em;
+}
