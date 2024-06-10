@@ -11,6 +11,8 @@ export default function Menu() {
     setSelectedMenu(menu);
   };
 
+  const logout = () => {};
+
   return (
     <div
       className="pure-menu pure-menu-horizontal"
@@ -36,7 +38,7 @@ export default function Menu() {
           }`}
         >
           <Link
-            href="/exercise-db-preact/user"
+            href="/exercise-db-preact/login"
             className="pure-menu-link"
             onClick={() => handleMenuClick("user")}
           >

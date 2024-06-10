@@ -31,7 +31,7 @@ export function App() {
       {currentPath !== "/exercise-db-preact/" && <Menu />}
       <div className="inhalt">
         <Router onChange={handleRouteChange}>
-          <User path="/exercise-db-preact/user" />
+          <Login path="/exercise-db-preact/login" />
           <AddExercise path="/exercise-db-preact/add" />
           <FindExercise path="/exercise-db-preact/find" />
           <AufgDetails path="/exercise-db-preact/:id" />
