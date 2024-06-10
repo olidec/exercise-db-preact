@@ -149,7 +149,7 @@ app.use(methodOverride("_method"));
 //   next();
 // };
 
-app.get("/dashboard", (req, res) => {
+router.get("/dashboard", (req, res) => {
   console.log(req.isAuthenticated());
   return res.json({
     title: "Dashboard",
@@ -157,11 +157,11 @@ app.get("/dashboard", (req, res) => {
   });
 });
 
-app.get("/login", (req, res) => {
+router.get("/login", (req, res) => {
   return res.redirect("http://localhost:5173/exercise-db-preact/login");
 });
 
-app.post(
+router.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/dashboard",
@@ -184,7 +184,7 @@ app.post(
 //   });
 // });
 
-app.delete("/logout", (req, res) => {
+router.delete("/logout", (req, res) => {
   req.logout(function (err) {
     if (err) {
       return next(err);

@@ -85,8 +85,19 @@ function initialize(passport, getUser) {
   passport.use(
     new LocalStrategy({ usernameField: "username" }, authenticateUser)
   );
-  passport.serializeUser((user, done) => done(null, { ...user }));
-  passport.deserializeUser((user, done) => done(null, { ...user }));
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser((id, done) => {
+    try {
+      user = getUser(id);
+      if (user === null) throw new Error("User not found");
+      return done(null, getUser(user));
+    } catch (error) {
+      return done(null, error);
+    }
+  });
 }
 
 module.exports = {
