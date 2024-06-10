@@ -1,0 +1,20 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Projektskizze}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Projektplanung und Design}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Backend-Entwicklung}{5}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Frontend-Entwicklung}{6}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Testing und Qualitätssicherung}{6}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Deployment und Inbetriebnahme}{7}{subsection.1.5}%
+\contentsline {subsection}{\numberline {1.6}Dokumentation und Übergabe}{7}{subsection.1.6}%
+\contentsline {section}{\numberline {2}Dokumentation}{8}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Anforderungsanalyse}{8}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Datenmodellierung}{9}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Architekturdesign}{10}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Komponentenübersicht}{12}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Technologische Auswahl}{14}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Backend-Entwicklung}{14}{subsection.2.6}%
+\contentsline {subsubsection}{\numberline {2.6.1}CRUD- und HTTP-Operationen}{14}{subsubsection.2.6.1}%
+\contentsline {subsubsection}{\numberline {2.6.2}Authentifizierung und Autorisierung}{15}{subsubsection.2.6.2}%
+\contentsline {section}{\numberline {A}Anhang}{17}{appendix.A}%
+\contentsline {section}{\numberline {B}Bilderverzeichnis}{18}{appendix.B}%
+\contentsline {section}{\numberline {C}Literaturverzeichnis}{19}{appendix.C}%
