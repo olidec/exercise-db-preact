@@ -7,3 +7,8 @@
   margin-right: 5%;
   padding-top: 1%;
 }
+
+.button-error {
+  background: rgb(202, 60, 60);
+  /* this is a maroon */
+}

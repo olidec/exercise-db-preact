@@ -1,12 +1,11 @@
 import { askServer } from "../utils/connector";
 import { signal } from "@preact/signals";
 import { useState, useEffect } from "preact/hooks";
-import { route } from "preact-router";
 
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 export default function FindExById() {
-  const { cartSearch } = useContext(SearchContext);
+  const { cartSearch, showNotification } = useContext(SearchContext);
   const myId = signal(1);
   const [exerciseList, setExerciseList] = useState([]);
 
@@ -31,7 +30,7 @@ export default function FindExById() {
 
     const res = await askServer(route, "GET");
     if (res === null || res === undefined || res.errors || res.length === 0) {
-      alert("No exercises match the search term.");
+      showNotification("No exercise matches the search term.", "red");
       return;
     } else {
       setExerciseList(res);
@@ -43,9 +42,9 @@ export default function FindExById() {
     <>
       <form className="pure-form pure-form-aligned" onSubmit={(e) => getEx(e)}>
         <div className="pure-control-group">
-        <label htmlFor="exid-2">Select Exercise via ID</label>
-        <input id="exid-2" type="number" value={myId} onChange={onChange} />
-        <button className="pure-button">Get Exercise by ID</button>
+          <label htmlFor="exid-2">Select Exercise via ID</label>
+          <input id="exid-2" type="number" value={myId} onChange={onChange} />
+          <button className="pure-button">Get Exercise by ID</button>
         </div>
       </form>
     </>

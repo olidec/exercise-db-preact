@@ -1,23 +1,59 @@
-import { h } from "preact";
-import { signal } from "@preact/signals";
-import { Link } from "preact-router/match";
-const Card = ({ key, id, summary, content }) => {
+const Card = ({
+  id,
+  summary,
+  content,
+  solution,
+  difficulty,
+  author,
+  categories,
+  subcategories,
+  currentPath,
+}) => {
+  const detailPath = `/exercise-db-preact/${id}`;
+
+  const difficultyMapping = {
+    1: "Leicht",
+    2: "Mittel",
+    3: "Schwer",
+  };
+
+  const schwierigkeitText = difficultyMapping[difficulty];
   return (
     <>
       <div className="karte">
-        <h3>Summary</h3>
+        {currentPath === detailPath ? (
+          ""
+        ) : (
+          <>
+            <h3>Aufgabe mit ID: {id}</h3>
+            <h5>Schwierigkeit: {schwierigkeitText}</h5>
+          </>
+        )}
 
+        <h3>Summary</h3>
         <hr />
         <div className="summary">{summary}</div>
-
         <hr />
-        <Link href={`/exercise-db-preact/${id}`}>
-          <h3>Content</h3>
-        </Link>
+
+        <h3>Content</h3>
 
         <hr />
         <div className="content">{content}</div>
         <hr />
+
+        {currentPath === detailPath ? (
+          <>
+            <h3>Lösung:</h3>
+            <div className="solution">{solution}</div>
+            <hr />
+            <h5>Kategorie: {categories}</h5>
+            <h5>Subkategorie: {subcategories}</h5>
+            <h5>Schwierigkeit: {schwierigkeitText}</h5>
+            <h5>Autor: {author}</h5>
+          </>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

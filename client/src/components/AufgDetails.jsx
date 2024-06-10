@@ -1,77 +1,114 @@
-import { h } from "preact";
-import { signal } from "@preact/signals";
 import Card from "./Card";
-import { useParams } from "react-router-dom";
+
 import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
 import { useContext } from "preact/hooks";
+import { cat, loadCat } from "../signals/categories.js";
 const AufgDetails = ({ id }) => {
-  const {
-    cartItems,
+  const { addToKorb, handleDelete, getIndex } = useContext(WarenkorbContext);
 
-    addToKorb,
-    handleDelete,
-    getIndex,
-  } = useContext(WarenkorbContext);
   const [exDetails, setExDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [categoryName, setCategoryName] = useState("");
+  const [subcategoryName, setSubCategoryName] = useState("");
 
   useEffect(() => {
-    // Definiert eine IIFE (Immediately Invoked Function Expression), um die asynchrone Logik auszuführen
-    (async () => {
-      const route = `/api/ex?id=${id}`;
-      const exDetails = await askServer(route, "GET");
-      //console.log(exDetails);
-      //console.log(cartItems.value);
-      setExDetails(exDetails);
-    })();
+    loadCat().then((c) => {
+      // Definiert eine IIFE (Immediately Invoked Function Expression), um die asynchrone Logik auszuführen
+      (async () => {
+        const route = `/api/ex?id=${id}`;
+        const exDetails = await askServer(route, "GET");
+        if (exDetails) {
+          setExDetails(exDetails);
+
+          const categ = cat.value.find((c) => c.id === exDetails.categoryId);
+          if (categ) {
+            setCategoryName(categ.name); // Speichern des Kategorienamens
+          }
+
+          const subcateg = categ.subcategories.find(
+            (sub) => sub.id === exDetails.subcategoryId
+          );
+          if (subcateg) {
+            setSubCategoryName(subcateg.name); // Speichern des Kategorienamens
+          }
+        }
+        setLoading(false);
+
+        setExDetails(exDetails);
+      })();
+    });
   }, [id]); // Stellt sicher, dass dieser Effekt erneut ausgeführt wird, wenn sich `id` ändert
 
   useEffect(() => {
-    MathJax.typeset();
+    if (exDetails) {
+      MathJax.typeset();
+    }
   }, [exDetails]);
 
   const index = getIndex({ id: exDetails?.id });
-  console.log(index);
-  console.log(cartItems.value);
+
   // Überprüfen, ob die Daten noch geladen werden
-  if (!exDetails) {
+  if (loading) {
     return <div>Lädt...</div>;
   }
+  if (!exDetails) {
+    return <h2>Aufgabe mit ID {id} existiert nicht mehr in Datenbank</h2>;
+  }
+  function edit({ id }) {
+    window.location.href = `/exercise-db-preact/edit/${id}`;
+  }
+  console.log(exDetails);
 
   return (
     <>
-      <h1>Aufgabe Details mit ID {id}</h1>
+      <div className="inhalt">
+        <h1>Details der Aufgabe mit ID {id}</h1>
 
-      <div>
-        <Card
-          key={exDetails.id}
-          id={exDetails.id}
-          summary={exDetails.summary}
-          content={exDetails.content}
-        />
+        <div>
+          <Card
+            key={exDetails.id}
+            id={exDetails.id}
+            summary={exDetails.summary}
+            content={exDetails.content}
+            solution={exDetails.solution}
+            difficulty={exDetails.difficulty}
+            author={exDetails.authorId}
+            categories={categoryName}
+            subcategories={subcategoryName}
+            currentPath={window.location.pathname}
+          />
 
-        {index === -1 ? (
+          {index === -1 ? (
+            <button
+              className="pure-button"
+              onClick={() =>
+                addToKorb({
+                  id: exDetails.id,
+                  content: exDetails.content,
+                  summary: exDetails.summary,
+                })
+              }
+            >
+              Zum Warenkorb
+            </button>
+          ) : (
+            <button
+              className="pure-button"
+              onClick={() => handleDelete({ id: exDetails.id })}
+            >
+              Löschen aus Warenkorb
+            </button>
+          )}
+
           <button
             className="pure-button"
-            onClick={() =>
-              addToKorb({
-                id: exDetails.id,
-                content: exDetails.content,
-                summary: exDetails.summary,
-              })
-            }
+            onClick={() => edit({ id: exDetails.id })}
           >
-            Zum Warenkorb
+            Edit Aufgabe
           </button>
-        ) : (
-          <button
-            className="pure-button"
-            onClick={() => handleDelete({ id: exDetails.id })}
-          >
-            Löschen aus Warenkorb
-          </button>
-        )}
+        </div>
       </div>
     </>
   );

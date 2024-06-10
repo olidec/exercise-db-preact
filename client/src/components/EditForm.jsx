@@ -1,32 +1,35 @@
-import { h } from "preact";
 import { useState, useEffect } from "preact/hooks";
 import { askServer } from "../utils/connector";
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 import { cat, loadCat } from "../signals/categories.js";
-
-export default function ExForm() {
+export default function EditForm({ id }) {
   const { showNotification } = useContext(SearchContext);
+
+  const [categoryName, setCategoryName] = useState("");
+  const [subcategoryName, setSubCategoryName] = useState("");
+
   const [ex, setEx] = useState({
     content: "",
     solution: "",
-    language: "",
-    difficulty: "",
+    language: "Deutsch",
+    difficulty: 1,
+    category: "",
+    subcategory: "",
   });
-
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSubcategory, setSelectedSubcategory] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [subcategories, setSubcategories] = useState([]);
 
   useEffect(() => {
     // Lade die Kategorien beim Initialisieren der Komponente
     loadCat().then(() => {
       setCategories(cat.value);
     });
-  }, []);
+  }, [categoryName]);
 
-  // Effekt, der die ausgewählte Unterkategorie zurücksetzt, wenn die Kategorie sich ändert
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("");
+
   useEffect(() => {
     if (selectedCategory) {
       const categoryObject = categories.find(
@@ -35,23 +38,31 @@ export default function ExForm() {
       setSubcategories(categoryObject ? categoryObject.subcategories : []);
       setSelectedSubcategory("");
     }
-  }, [selectedCategory, categories]);
+  }, [selectedCategory]);
 
-  const addNewEx = async (e) => {
+  const updateEx = async (e) => {
+    if (
+      !ex.id ||
+      !ex.content ||
+      !ex.solution ||
+      !ex.language ||
+      !ex.difficulty
+    ) {
+      console.log("Validation error: Some required fields are missing");
+      return;
+    }
+
     e.preventDefault();
 
-    const categoryObject = categories.find((c) => c.name === selectedCategory);
-    const subcategoryObject = subcategories.find(
-      (sub) => sub.name === selectedSubcategory
-    );
+    const categoryObject = cat.value.find((c) => c.name === selectedCategory);
+    const subcategoryObject = selectedSubcategory
+      ? categoryObject.subcategories.find(
+          (sub) => sub.name === selectedSubcategory
+        )
+      : null;
 
     const categoryId = categoryObject ? categoryObject.id : null;
     const subcategoryId = subcategoryObject ? subcategoryObject.id : null;
-
-    if (!categoryId || !subcategoryId) {
-      console.error("Kategorie oder Unterkategorie nicht gefunden");
-      return;
-    }
 
     const exWithCategory = {
       ...ex,
@@ -59,23 +70,24 @@ export default function ExForm() {
       categories: { id: categoryId },
       subcategories: { id: subcategoryId },
     };
+    try {
+      const res = await askServer("/api/ex", "PUT", exWithCategory);
+      if (!res.err) {
+        console.log(res);
+        showNotification("Exercise updated successfully", "green");
 
-    const res = await askServer("/api/ex", "POST", exWithCategory);
-    console.log(res);
-
-    if (res.err) {
-      console.log("Error: ", res.err);
-    } else {
-      setEx({
-        content: "",
-        solution: "",
-        language: "",
-        difficulty: "",
-      });
-
-      setSelectedCategory(""); // Zurücksetzen der Kategorie
-      setSelectedSubcategory(""); // Zurücksetzen der Unterkategorie
-      showNotification("Exercise added successfully", "green");
+        setTimeout(() => {
+          window.location.href = `/exercise-db-preact/${id}`;
+        }, 1000); // Warte 1 Sekunde (1000 Millisekunden)
+      } else {
+        console.log(res.err);
+        showNotification(
+          "Fehler beim Aktualisieren, Aufgabe existiert schon in DB",
+          "red"
+        );
+      }
+    } catch (error) {
+      console.error("Error updating exercise:", error); // Ändere die Bestätigungsnachricht
     }
   };
 
@@ -95,14 +107,54 @@ export default function ExForm() {
     setSelectedSubcategory(e.target.value);
   };
 
+  useEffect(() => {
+    const fetchExDetails = async () => {
+      const exDetails = await askServer(`/api/ex?id=${id}`, "GET");
+      if (exDetails) {
+        console.log(exDetails);
+        const categ = cat.value.find((c) => c.id === exDetails.categoryId);
+        if (categ) {
+          setCategoryName(categ.name);
+          setSelectedCategory(categ.name); // Speichern des Kategorienamens
+
+          console.log(categ.name);
+        }
+        const subcateg = categ.subcategories.find(
+          (sub) => sub.id === exDetails.subcategoryId
+        );
+        if (subcateg) {
+          setSubCategoryName(subcateg.name);
+          setSelectedSubcategory(subcateg.name); // Speichern des Kategorienamens
+
+          console.log(subcateg.name);
+        }
+
+        setEx({
+          id: exDetails.id,
+          content: exDetails.content,
+          solution: exDetails.solution,
+          language: exDetails.language,
+          difficulty: exDetails.difficulty,
+          category: categ ? categoryName : "",
+          subcategory: subcateg ? subcategoryName : "",
+          // Füge weitere Felder hinzu, falls vorhanden
+        });
+      }
+    };
+
+    if (id) {
+      fetchExDetails();
+    }
+  }, [id, categories]); // Führe den Effekt aus, wenn sich die ID ändert
+
   return (
     <>
       <div className="pure-g">
         <form
           className="pure-form pure-form-aligned pure-u-4-5"
-          onSubmit={(e) => addNewEx(e)}
+          onSubmit={(e) => updateEx(e)}
         >
-          <legend>Füge deine eigene Aufgabe hinzu</legend>
+          <legend>Editiere die Aufgabe</legend>
           <fieldset>
             <div className="pure-control-group">
               <label htmlFor="language"> Sprache: </label>
@@ -111,11 +163,8 @@ export default function ExForm() {
                 id="language"
                 name="language"
                 value={ex.language}
-                onChange={updateExHandler}
+                onChange={(e) => setEx({ ...ex, language: e.target.value })}
               >
-                <option value="" disabled selected>
-                  -- Bitte wählen --
-                </option>
                 <option value={"Deutsch"}> Deutsch </option>
                 <option value={"English"}> English </option>
               </select>
@@ -127,11 +176,8 @@ export default function ExForm() {
                 id="difficulty"
                 name="difficulty"
                 value={ex.difficulty}
-                onChange={updateExHandler}
+                onChange={(e) => setEx({ ...ex, difficulty: e.target.value })}
               >
-                <option value="" disabled selected>
-                  -- Bitte wählen --
-                </option>
                 <option value={1}> Leicht </option>
                 <option value={2}> Mittel </option>
                 <option value={3}> Schwer </option>
@@ -174,6 +220,7 @@ export default function ExForm() {
                   </option>
                 ))}
               </select>
+              <label htmlFor="subcategory">: {subcategoryName} (vorher)</label>
             </div>
             <div className="pure-control-group">
               <label htmlFor="content">Aufgabentext: </label>
@@ -203,7 +250,7 @@ export default function ExForm() {
             </div>
             <div className="pure-controls">
               <button type="submit" className="pure-button pure-button-primary">
-                Add new exercise
+                Edit
               </button>
             </div>
           </fieldset>

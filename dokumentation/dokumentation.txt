@@ -1,57 +1,63 @@
-Projektskizze
 1. Projektplanung und Design
 1.1 Anforderungsanalyse
-•	Definiere die Kernfunktionen der Applikation: Aufgaben erstellen, durchsuchen, kommentieren und verwalten.
-•	Erstelle User Stories und Use Cases, um die Anforderungen der Endbenutzer zu verstehen.
+
+    Kernfunktionen: Die Applikation ermöglicht es Benutzern, Mathe-Aufgaben zu erstellen, durchsuchen, kommentieren und zu verwalten. Ein Warenkorb-System ermöglicht das Sammeln und Erstellen von Aufgabenblättern.
+    User Stories und Use Cases: Diese helfen, die Bedürfnisse und Erwartungen der Endbenutzer zu identifizieren. Sie dienen als Grundlage für das Design und die Entwicklung der Applikation.
+
 1.2 Datenmodellierung
-•	Entwirf die Datenbank-Schemata für Aufgaben, Kommentare, Benutzer und eventuell Aufgabenkategorien.
-•	Berücksichtige Beziehungen zwischen den Entitäten, wie z.B. Aufgaben zu Kategorien und Aufgaben zu Kommentaren.
+
+    Entwurf der Datenbank-Schemata: Die Datenstruktur für Aufgaben, Kommentare, Benutzer und Aufgabenkategorien wird definiert. Wichtige Beziehungen zwischen den Entitäten werden festgelegt, wie z.B. die Zuordnung von Aufgaben zu Kategorien und von Aufgaben zu Kommentaren.
+
 1.3 Architekturdesign
-•	Entscheide dich für eine geeignete Architektur für das Backend (REST API oder GraphQL).
-•	Plane die Struktur des Frontends, einschließlich der Komponentenhierarchie und des Zustandsmanagements.
+
+    Backend-Architektur: Entscheidung zwischen REST API oder GraphQL basierend auf den Anforderungen und Vorzügen beider Technologien.
+    Frontend-Architektur: Planung der Komponentenhierarchie und des Zustandsmanagements, um eine effiziente und wartbare Codebasis zu gewährleisten.
+
 1.4 Technologische Auswahl
-•	Bestätige die Wahl von Preact, Express und Prisma und prüfe, ob zusätzliche Bibliotheken oder Tools benötigt werden (z.B. für Authentifizierung).
+
+    Bestätigung der Technologien: Preact für das Frontend, Express für das Backend und Prisma für die Datenbankinteraktion werden als Haupttechnologien ausgewählt. Die Notwendigkeit weiterer Bibliotheken (z.B. für Authentifizierung) wird überprüft.
+
 2. Backend-Entwicklung
 2.1 Einrichten der Entwicklungsumgebung
-•	Richte Node.js, Express und Prisma ein.
-•	Initialisiere ein neues Prisma-Projekt und verbinde es mit deiner Datenbank.
+
+    Einrichtung von Node.js, Express und Prisma: Konfiguration der grundlegenden Entwicklungsumgebung, um mit der Entwicklung beginnen zu können.
+
 2.2 API-Entwicklung
-•	Implementiere CRUD-Operationen (Create, Read, Update, Delete) für Aufgaben und Kommentare.
-•	Implementiere Authentifizierung und Autorisierung für Benutzeraktionen.
-•	Entwickle eine Suchfunktion, um Aufgaben nach Stichworten oder Kategorien zu durchsuchen.
+
+    CRUD-Operationen: Implementierung der Grundoperationen für die Interaktion mit Aufgaben und Kommentaren.
+    Authentifizierung und Autorisierung: Sicherstellung, dass nur autorisierte Benutzer bestimmte Aktionen durchführen können.
+
 2.3 Datenbankintegration
-•	Verwende Prisma, um das Datenbankschema zu definieren und zu migrieren.
-•	Teste die Datenbankoperationen über Prisma.
+
+    Prisma für das Datenbankschema: Nutzung von Prisma für das Datenbank-Management, einschließlich Schema-Definition und Migrationen.
+
 3. Frontend-Entwicklung
 3.1 Einrichten der Preact-Anwendung
-•	Initialisiere ein neues Preact-Projekt.
-•	Richte Routing für die Navigation in der Anwendung ein.
+
+    Projektinitialisierung: Erstellung einer neuen Preact-Anwendung und Einrichtung des Routings.
+
 3.2 UI-Entwicklung
-•	Entwerfe und implementiere UI-Komponenten für die Anzeige und Verwaltung von Aufgaben und Kommentaren.
-•	Implementiere Formulare für das Erstellen und Bearbeiten von Aufgaben.
+
+    UI-Komponenten: Entwicklung der Benutzeroberfläche, einschließlich Komponenten für die Aufgabenverwaltung und das Kommentarsystem.
+
 3.3 Integration mit dem Backend
-•	Verwende Fetch API oder Axios, um Anfragen an das Backend zu senden und Daten zu verarbeiten.
-•	Implementiere Zustandsmanagement für das Speichern und Aktualisieren von Daten im Frontend.
+
+    Datenabfrage und -manipulation: Implementierung der Logik für die Kommunikation mit dem Backend, um Daten zu fetchen, zu erstellen und zu aktualisieren.
+
 4. Testing und Qualitätssicherung
-4.1 Backend-Tests
-•	Schreibe Unit-Tests für API-Endpunkte und Datenbankoperationen.
-4.2 Frontend-Tests
-•	Implementiere Komponententests und ggf. End-to-End-Tests für die Benutzeroberfläche.
-4.3 Benutzerakzeptanztests
-•	Führe Tests mit realen Nutzern durch, um Feedback zu sammeln und die Usability zu verbessern.
+
+    Backend- und Frontend-Tests: Durchführung von Tests auf beiden Ebenen, um die Funktionalität und Zuverlässigkeit der Anwendung zu gewährleisten.
+    Benutzerakzeptanztests: Einbeziehung der Endbenutzer in den Testprozess, um Feedback zu sammeln und die Benutzerfreundlichkeit zu optimieren.
+
 5. Deployment und Inbetriebnahme
-5.1 Vorbereitung auf das Deployment
-•	Konfiguriere das Projekt für Produktion, einschließlich Umgebungsvariablen und Build-Prozessen.
-5.2 Auswahl einer Hosting-Plattform
-•	Entscheide dich für ein Hosting für das Backend (z.B. Heroku, AWS) und das Frontend (z.B. Vercel, Netlify).
-5.3 Deployment
-•	Führe das Deployment durch und stelle sicher, dass die Anwendung wie erwartet funktioniert.
+
+    Vorbereitung und Auswahl einer Hosting-Plattform: Konfiguration des Projekts für die Produktionsumgebung und Auswahl einer geeigneten Plattform für das Hosting.
+    Durchführung des Deployments: Veröffentlichung der Anwendung und Überprüfung der Funktionalität im Produktionsumfeld.
+
 6. Dokumentation und Übergabe
-6.1 Erstellung der Dokumentation
-•	Dokumentiere den Code und die Architektur der Anwendung.
-•	Erstelle eine Benutzeranleitung für die Endbenutzer.
-6.2 Abschlusspräsentation
-•	Bereite eine Präsentation deiner Abschlussarbeit vor, die den Entwicklungsprozess zu dokumentieren.
+
+    Erstellung der Dokumentation: Dokumentation des Codes, der Architektur und der Benutzung der Anwendung.
+    Abschlusspräsentation: Präsentation des Entwicklungsprozesses und der fertigen Anwendung.
 
 Dokumentation
 1.1.	 Anforderungsanalyse

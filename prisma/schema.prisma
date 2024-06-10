@@ -11,44 +11,42 @@ datasource db {
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
-  name      String?
+  username  String     @unique
   password  String?
   role      String     @default("USER")
   exercises Exercise[]
+  retry     Int        @default(0)
+  retryExp  DateTime?  
 }
 
 model Exercise {
-  id         Int        @id @default(autoincrement())
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime?  @updatedAt
-  summary    String?
-  content    String     @unique
-  solution   String
-  language   String     @default("Deutsch")
-  difficulty Int        @default(1)
-  authorId   Int        @default(1)
-  author     User       @relation(fields: [authorId], references: [id])
-  categories Category[] @relation("CategoryToExercise")
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  summary       String? // Optional, kann null sein
+  content       String
+  solution      String
+  language      String      @default("Deutsch")
+  difficulty    Int         @default(1)
+  authorId      Int         @default(1)
+  author        User        @relation(fields: [authorId], references: [id])
+  categoryId    Int
+  categories    Category    @relation(fields: [categoryId], references: [id])
+  subcategoryId Int
+  subcategories Subcategory @relation(fields: [subcategoryId], references: [id])
 }
 
 model Category {
-  id          Int           @id @default(autoincrement())
-  name        String
-  subcategory Subcategory[]
-  exercises   Exercise[]    @relation("CategoryToExercise")
+  id            Int           @id @default(autoincrement())
+  name          String
+  subcategories Subcategory[]
+  exercises     Exercise[]
 }
 
 model Subcategory {
-  id             Int              @id @default(autoincrement())
-  name           String
-  categoryId     Int
-  category       Category         @relation(fields: [categoryId], references: [id])
-  subsubcategory Subsubcategory[]
-}
-
-model Subsubcategory {
-  id            Int         @id @default(autoincrement())
-  name          String
-  subcategoryId Int
-  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
+  id         Int        @id @default(autoincrement())
+  name       String
+  categoryId Int
+  category   Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  exercises  Exercise[]
 }

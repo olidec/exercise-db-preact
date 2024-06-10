@@ -5,8 +5,8 @@ export async function askServer(
   content = "application/json;charset=utf-8"
 ) {
   // return new Promise(() => mock(route))
-  const baseUrl = "http://139.162.166.227:3000";
-  // const baseUrl = "http://localhost:3000"
+  // const baseUrl = "http://139.162.166.227:3000";
+  const baseUrl = "http://localhost:3000";
   const data = {
     headers: {
       "Content-Type": content,
@@ -17,6 +17,10 @@ export async function askServer(
   };
 
   if (method === "POST") {
+    data.body = JSON.stringify(body);
+  }
+
+  if (method === "PUT") {
     data.body = JSON.stringify(body);
   }
   const response = await fetch(baseUrl + route, data);
