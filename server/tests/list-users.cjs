@@ -1,9 +1,7 @@
 const PrismaClient = require("@prisma/client");
 const fs = require("fs");
 const prisma = new PrismaClient.PrismaClient();
-require('dotenv').config()
-
-
+require("dotenv").config();
 
 async function listUsers() {
   const users = await prisma.user.findMany();
@@ -18,7 +16,7 @@ async function listUsers() {
   // console.log(users);
 
   const userFromDb = await prisma.user.findUnique({
-    where: { username: 'w' },
+    where: { username: "w" },
     select: {
       id: true,
       email: true,
@@ -29,8 +27,6 @@ async function listUsers() {
     },
   });
   console.log(userFromDb);
-
-  
 }
 
 listUsers();

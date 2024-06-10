@@ -19,6 +19,10 @@ export async function askServer(
   if (method === "POST") {
     data.body = JSON.stringify(body);
   }
+
+  if (method === "PUT") {
+    data.body = JSON.stringify(body);
+  }
   const response = await fetch(baseUrl + route, data);
   if (content === "text/html") {
     return response.text();

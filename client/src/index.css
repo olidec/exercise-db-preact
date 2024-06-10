@@ -1,17 +1,24 @@
+.inhalt {
+  padding-top: 25px;
+}
 .pure-menu-horizontal {
-  background-color: #438DE5;
+  background-color: #78a2d6;
 }
 
 .pure-menu-link {
-  color: #3738E6
+  color: #1d1dea;
 }
 
 .pure-menu-link:hover {
-  background-color: #73AEE5;
+  background-color: #73aee5;
 }
 
 .pure-menu-item:hover {
-  background-color: #73AEE5;
+  background-color: #73aee5;
+}
+
+.pure-menu-selected {
+  background-color: #fafbfc;
 }
 
 .kartenContainer {
@@ -70,4 +77,24 @@
   align-items: "center";
 
   text-align: "center";
+}
+
+#checkmark {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 42px;
+  z-index: 1000;
+  display: none; /* Zeigt das Element standardmäßig an */
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; /* Vier Schatten um einen vollständigen Rand zu erzeugen */
+}
+
+.card-fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out; /* Passt die Dauer und Art der Animation nach Bedarf an */
 }

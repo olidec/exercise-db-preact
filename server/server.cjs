@@ -119,12 +119,14 @@ const searchValidation = [
   query("id", "id must be a number").notEmpty().isInt().optional(),
   query("search").isString().notEmpty().optional().escape(),
   query("cat").isString().notEmpty().optional().escape(),
+  query("subcat").isString().notEmpty().optional().escape(),
 ];
 
 router.get("/api/ex", searchValidation, async (req, res) => {
   const result = validationResult(req);
   if (result.isEmpty()) {
-    const { id, search, cat } = req.query;
+    const { id, search, cat, subcat } = req.query;
+
     if (id) {
       const ex = await prisma.exercise.findUnique({
         where: { id: Number(id) },
@@ -135,13 +137,38 @@ router.get("/api/ex", searchValidation, async (req, res) => {
         where: { content: { contains: search } },
       });
       res.json(exs);
+    } else if (cat && subcat) {
+      console.log(cat, subcat);
+      const exs = await prisma.exercise.findMany({
+        where: {
+          categories: { name: cat },
+          subcategories: { name: subcat },
+        },
+        include: {
+          categories: true,
+          subcategories: true,
+        },
+      });
+      res.json(exs);
     } else if (cat) {
       const exs = await prisma.exercise.findMany({
-        where: { categories: { some: { name: { equals: cat } } } },
+        orderBy: {
+          updatedAt: "desc",
+        },
+        where: { categories: { name: cat } },
+        include: {
+          categories: true,
+          subcategories: true,
+        },
       });
       res.json(exs);
     } else {
-      const exs = await prisma.exercise.findMany();
+      const exs = await prisma.exercise.findMany({
+        include: {
+          categories: true,
+          subcategories: true,
+        },
+      });
       res.json(exs);
     }
   } else {
@@ -149,14 +176,64 @@ router.get("/api/ex", searchValidation, async (req, res) => {
   }
 });
 
+router.get("/api/cat", async (req, res) => {
+  const cat = await prisma.category.findMany({
+    include: {
+      subcategories: true,
+    },
+  });
+  console.log(cat);
+
+  res.json(cat);
+});
+
+router.get("/api/subcat", async (req, res) => {
+  const subcat = await prisma.subcategory.findMany({
+    include: {
+      exercises: true,
+    },
+  });
+  console.log(subcat);
+
+  res.json(subcat);
+});
+
 router.post("/api/ex", async (req, res) => {
-  const { summary, content, solution } = req.body;
+  console.log(req.body);
+  const {
+    content,
+    solution,
+    language,
+    difficulty,
+    author,
+    categories,
+    subcategories,
+  } = req.body;
+
   try {
+    const author = { id: 1 };
     const newEx = await prisma.exercise.create({
       data: {
-        summary,
         content,
         solution,
+        language,
+        difficulty,
+        author: {
+          connect: author,
+        },
+        categories: {
+          connect: categories,
+        },
+        subcategories: {
+          connect: subcategories,
+        },
+      },
+      include: {
+        author: true,
+        categories: true,
+        subcategories: true,
+
+        // oder ein spezifischeres Select/Include
       },
     });
     console.log(newEx);
@@ -170,14 +247,53 @@ router.post("/api/ex", async (req, res) => {
   }
 });
 
-router.get("/api/cat", async (req, res) => {
-  const cat = await prisma.category.findMany({
-    include: {
-      subcategory: true,
-    },
-  });
-  console.log(cat);
-  res.json(cat);
+router.put("/api/ex", async (req, res) => {
+  const {
+    id,
+    content,
+    solution,
+    language,
+    difficulty,
+    author,
+    categories,
+    subcategories,
+  } = req.body;
+  try {
+    const updatedEx = await prisma.exercise.update({
+      where: { id },
+      data: {
+        content,
+        solution,
+        language,
+        difficulty,
+        author: { connect: author },
+        categories: { connect: categories },
+        subcategories: { connect: subcategories },
+      },
+      include: {
+        author: true,
+        categories: true,
+        subcategories: true, // oder ein spezifischeres Select/Include
+      },
+    });
+    console.log(updatedEx);
+    res.json(updatedEx);
+  } catch (error) {
+    res.json({ msg: "Errorrrrr in DB request", err: error });
+  }
+});
+
+router.delete("/api/ex/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedEx = await prisma.exercise.delete({
+      where: { id: Number(id) },
+    });
+    console.log(deletedEx);
+    res.json(deletedEx);
+  } catch (error) {
+    res.json({ msg: "Error in DB request", err: error });
+  }
 });
 
 router.get("/api/download", async (req, res) => {
@@ -222,31 +338,35 @@ router.post("/api/download", async (req, res) => {
         },
       },
     });
+    const sortedExercises = exerciseIds.map((id) => {
+      const exercise = exercises.find((ex) => ex.id === id);
+      return exercise;
+    });
 
-    const writeToFile = (exercises) => {
-      const contentAndSolution = exercises.map((exercise) => ({
-        content: exercise.content,
-        solution: exercise.solution,
-      }));
-      console.log(contentAndSolution);
-      fs.writeFile(
-        "server/output/output.txt",
-        JSON.stringify(contentAndSolution, null, 2),
-        (err) => {
-          if (err) {
-            console.error("Error writing to file:", err);
-            res.status(500).send("Error writing to file");
-          } else {
-            console.log("Data written to file successfully");
-            res.download("server/output/output.txt", "output.txt");
-            console.log(exercises);
-          }
-        }
-      );
-    };
+    console.log(sortedExercises);
+    return res.json(sortedExercises);
+    // const writeToFile = (exercises) => {
+    //   const contentAndSolution = exercises.map((exercise) => ({
+    //     content: exercise.content,
+    //     solution: exercise.solution,
+    //   }));
 
-    //res.json(exercises);
-    writeToFile(exercises);
+    //   fs.writeFile(
+    //     "/path/to/output.txt",
+    //     JSON.stringify(contentAndSolution),
+    //     (err) => {
+    //       if (err) {
+    //         console.error("Error writing to file:", err);
+    //       } else {
+    //         console.log("Data written to file successfully");
+    //         res.download("/path/to/output.txt", "output.txt");
+    //       }
+    //     }
+    //   );
+    // };
+
+    // writeToFile(exercises);
+    // res.json(exercises);
   } catch (error) {
     console.error("Error in DB request", error);
     res.status(500).json({ msg: "Error in DB request", err: error });
