@@ -5,7 +5,6 @@ const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
 const session = require("express-session");
-const LocalStrategy = require("passport-local").Strategy;
 const { query, validationResult } = require("express-validator");
 const PrismaClient = require("@prisma/client");
 const prisma = new PrismaClient.PrismaClient();
@@ -16,14 +15,9 @@ const methodOverride = require("method-override");
 const app = express();
 const router = express.Router();
 const argon2 = require("argon2");
-// const jwt = require("jsonwebtoken");
 
 const { initializePassport } = require("./passport-config.cjs");
-initializePassport(passport, (username) => {
-  return prisma.user.findUnique({
-    where: { username },
-  });
-});
+initializePassport(passport);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
