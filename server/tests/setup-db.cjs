@@ -10,7 +10,10 @@ const prisma = new PrismaClient.PrismaClient();
 // ersetzen
 
 // backup db:
-// sqlite ./dev.db .output ./backup.sql .dump .exit
+// sqlite3 ./dev.db .output ./backup.sql .dump .exit
+
+// restore db:
+// sqlite3 ./dev.db .read ./backup.sql .exit
 
 async function setup() {
   await prisma.subcategory.update({
