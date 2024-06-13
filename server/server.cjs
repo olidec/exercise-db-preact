@@ -179,7 +179,7 @@ router.get("/api/ex", searchValidation, async (req, res) => {
 router.get("/api/cat", async (req, res) => {
   const cat = await prisma.category.findMany({
     include: {
-      subcategory: true,
+      subcategories: true,
     },
   });
   console.log(cat);
