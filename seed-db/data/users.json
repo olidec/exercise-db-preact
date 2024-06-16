@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "email": "me@echo.ch",
+    "username": "patrick",
+    "password": "1234",
+    "role": "USER",
+    "retry": 0,
+    "retryExp": null
+  }
+]
