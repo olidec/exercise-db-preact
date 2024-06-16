@@ -21,6 +21,13 @@ async function allsubcategories() {
   fs.writeFileSync("./seed-db/data/subcategories.json", JSON.stringify(topics, null, 2));
 }
 
+async function allexercises() {
+  const exercises = await prisma.exercise.findMany();
+  // console.log(exercises);
+  fs.writeFileSync("./seed-db/data/exercises.json", JSON.stringify(exercises, null, 2));
+}
+
 allusers();
 allcategories();
 allsubcategories();
+allexercises();

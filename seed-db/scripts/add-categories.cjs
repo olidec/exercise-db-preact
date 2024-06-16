@@ -3,16 +3,16 @@ const fs = require("fs");
 const prisma = new PrismaClient.PrismaClient();
 require("dotenv").config();
 
-const users = require("../data/users.json");
+const categories = require("../data/categories.json");
 
 async function setup() {
-    const deleteUsers = await prisma.user.deleteMany();
-    const newUsers = await prisma.user.createManyAndReturn({
-        data: users,
+    const deleteCategories = await prisma.category.deleteMany();
+    const newCategories = await prisma.category.createManyAndReturn({
+        data: categories,
         // only for postgres
         // skipDuplicates: true,
     });
-    console.log(newUsers);
+    console.log(newCategories);
 }
 
 setup();
