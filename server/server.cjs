@@ -15,11 +15,12 @@ const methodOverride = require("method-override");
 const { initializePassport } = require("./passport-config.cjs");
 const { getUser, createUser } = require("./controllers/users.cjs");
 
+const { setupMiddleware } = require("./middleware/index.cjs");
 const { setupRoutes } = require("./routes/index.cjs");
 
 const app = express();
 
-// setupMiddleware(app);
+setupMiddleware(app);
 
 // setupPassport(app);
 initializePassport(passport);
@@ -27,26 +28,6 @@ initializePassport(passport);
 // setupRoutes(app);
 const router = express.Router();
 setupRoutes(app);
-
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(flash());
-
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
-
-// Source: https://medium.com/@prashantramnyc/node-js-with-passport-authentication-simplified-76ca65ee91e5
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
 
 app.use(passport.initialize());
 // // init passport on every route call.
