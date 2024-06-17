@@ -1,7 +1,14 @@
+const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const argon2 = require("argon2");
-const { getUser } = require("./controllers/users.cjs");
 
+const argon2 = require("argon2");
+
+const { getUser } = require("../controllers/users.cjs");
+
+const localStrategy = new LocalStrategy(
+  { usernameField: "username", passwordField: "password" },
+  verify
+);
 /**
  * VErify function for passport
  */
@@ -29,17 +36,15 @@ async function verify(username, password, callback) {
   }
 }
 
-function initialize(passport) {
+function initialize(app) {
   // LocalStrategy ruft diese Funktion auf und liest username und password von req.body. callback wird ausgeführt entweder mit error oder ohne (kommt von passport selber)
   // TODO später: "incorrect username or password"
 
-  passport.use(
-    // "username" und "password" kommen von form body
-    new LocalStrategy(
-      { usernameField: "username", passwordField: "password" },
-      verify
-    )
-  );
+  passport.use(localStrategy);
+  // "username" und "password" kommen von form body
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   // schreibt user in session
   // möglichst wenig Daten sicher kein pw
@@ -66,5 +71,7 @@ function initialize(passport) {
 }
 
 module.exports = {
-  initializePassport: (passport, getUser) => initialize(passport, getUser),
+  setupPassport: (app) => {
+    initialize(app);
+  },
 };

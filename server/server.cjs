@@ -2,14 +2,13 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 const express = require("express");
-const passport = require("passport");
 const { query, validationResult } = require("express-validator");
 const PrismaClient = require("@prisma/client");
 const prisma = new PrismaClient.PrismaClient();
 const fs = require("fs");
-const methodOverride = require("method-override");
+const passport = require("passport");
 
-const { initializePassport } = require("./passport-config.cjs");
+const { setupPassport } = require("./auth/passport-config.cjs");
 const { getUser, createUser } = require("./controllers/users.cjs");
 
 const { setupMiddleware } = require("./middleware/index.cjs");
@@ -19,20 +18,10 @@ const app = express();
 
 setupMiddleware(app);
 
-// setupPassport(app);
-initializePassport(passport);
+setupPassport(app);
 
-// setupRoutes(app);
 const router = express.Router();
 setupRoutes(app);
-
-app.use(passport.initialize());
-// // init passport on every route call.
-
-app.use(passport.session());
-// allow passport to use "express-session".
-
-app.use(methodOverride("_method"));
 
 router.get("/dashboard", (req, res) => {
   console.log(req.isAuthenticated());
