@@ -12,14 +12,21 @@ const fs = require("fs");
 const flash = require("express-flash");
 const methodOverride = require("method-override");
 
-const app = express();
-const router = express.Router();
-const argon2 = require("argon2");
-
 const { initializePassport } = require("./passport-config.cjs");
 const { getUser, createUser } = require("./controllers/users.cjs");
-const { create } = require("domain");
+
+const { setupRoutes } = require("./routes/index.cjs");
+
+const app = express();
+
+// setupMiddleware(app);
+
+// setupPassport(app);
 initializePassport(passport);
+
+// setupRoutes(app);
+const router = express.Router();
+setupRoutes(app);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
