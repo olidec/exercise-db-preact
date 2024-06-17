@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "name": "Rechenarten",
+    "categoryId": 2
+  },
+  {
+    "id": 2,
+    "name": "Gleichungen und Ungleichungen",
+    "categoryId": 2
+  },
+  {
+    "id": 3,
+    "name": "Funktionen",
+    "categoryId": 2
+  },
+  {
+    "id": 4,
+    "name": "Sonstiges",
+    "categoryId": 2
+  },
+  {
+    "id": 5,
+    "name": "Allgemeine Geometrie der Ebene",
+    "categoryId": 3
+  },
+  {
+    "id": 6,
+    "name": "Trigonometrie",
+    "categoryId": 3
+  },
+  {
+    "id": 7,
+    "name": "Allgemeine Geometrie des Raums",
+    "categoryId": 3
+  },
+  {
+    "id": 8,
+    "name": "Vektorgeometrie",
+    "categoryId": 3
+  },
+  {
+    "id": 9,
+    "name": "Sonstiges",
+    "categoryId": 3
+  },
+  {
+    "id": 10,
+    "name": "Grundlagen",
+    "categoryId": 4
+  },
+  {
+    "id": 11,
+    "name": "Differentialrechnung",
+    "categoryId": 4
+  },
+  {
+    "id": 12,
+    "name": "Integralrechnung",
+    "categoryId": 4
+  },
+  {
+    "id": 13,
+    "name": "Sonstiges",
+    "categoryId": 4
+  },
+  {
+    "id": 14,
+    "name": "Wahrscheinlichkeitstheorie",
+    "categoryId": 5
+  },
+  {
+    "id": 15,
+    "name": "Kombinatorik",
+    "categoryId": 5
+  },
+  {
+    "id": 16,
+    "name": "Statistik",
+    "categoryId": 5
+  },
+  {
+    "id": 17,
+    "name": "Sonstiges",
+    "categoryId": 5
+  },
+  {
+    "id": 18,
+    "name": "Komplexe Zahlen",
+    "categoryId": 6
+  },
+  {
+    "id": 19,
+    "name": "Kegelschnitte",
+    "categoryId": 6
+  },
+  {
+    "id": 20,
+    "name": "Differentialgleichungen",
+    "categoryId": 6
+  },
+  {
+    "id": 21,
+    "name": "Lineare Abbildungen und Matrizen",
+    "categoryId": 6
+  },
+  {
+    "id": 22,
+    "name": "Graphentheorie",
+    "categoryId": 6
+  },
+  {
+    "id": 23,
+    "name": "Sonstiges",
+    "categoryId": 6
+  },
+  {
+    "id": 24,
+    "name": "Zahlensysteme",
+    "categoryId": 1
+  },
+  {
+    "id": 25,
+    "name": "Spezielle Zahlen",
+    "categoryId": 1
+  },
+  {
+    "id": 26,
+    "name": "Zahlenmengen",
+    "categoryId": 1
+  },
+  {
+    "id": 27,
+    "name": "Sonstiges",
+    "categoryId": 1
+  }
+]
