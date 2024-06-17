@@ -17,6 +17,7 @@ const router = express.Router();
 const argon2 = require("argon2");
 
 const { initializePassport } = require("./passport-config.cjs");
+const { getUser } = require("./controllers/users.cjs");
 initializePassport(passport);
 
 app.use(express.urlencoded({ extended: false }));
@@ -81,28 +82,30 @@ router.delete("/logout", (req, res) => {
 
 router.post("/register", async (req, res) => {
   console.log(req.body);
+  // TODO input validation
   const { email, username, password } = req.body;
   const hashedPassword = await argon2.hash(password);
   try {
-    const check =
-      (await prisma.user.findUnique({
-        where: { email },
-      })) ||
-      (await prisma.user.findUnique({
-        where: { username },
-      }));
-    if (check) {
+    // ACHTUNG nur ein Feld wird überprüft
+    // schaue getUser an für Reihenfolge
+    // TODO write checkUser function
+    const { msg, user, success } = await getUser({
+      email: email,
+      username: username,
+    });
+    console.log("ROUTE [REGISTER]:", msg, user, success);
+    if (success) {
       res.json({ msg: "User already exists", err: "User already exists" });
       return;
     } else {
       const newUser = await prisma.user.create({
         data: {
-          email,
-          username,
+          email: email,
+          username: username,
           password: hashedPassword,
         },
       });
-      console.log(newUser);
+      console.log("ROUTE [REGISTER]:", newUser);
       res.json({
         msg: "User created successfully",
         data: {
