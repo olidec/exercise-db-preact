@@ -3,15 +3,15 @@ const fs = require("fs");
 const prisma = new PrismaClient.PrismaClient();
 require("dotenv").config();
 
-const subcategories = require("../data/subcategories.json");
+const exercises = require("../data/exercises.json");
 
 async function setup() {
-  const newSubcategories = await prisma.subcategory.createMany({
-    data: subcategories,
+  const newExercises = await prisma.exercise.createMany({
+    data: exercises,
     // only for postgres
     // skipDuplicates: true,
   });
-  console.log(newSubcategories);
+  console.log(newExercises);
 }
 
-module.exports = { setupSubcategories: setup };
+module.exports = { setupExercises: setup };

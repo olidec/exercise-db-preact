@@ -1,5 +1,7 @@
-const PrismaClient = require("@prisma/client");
-const prisma = new PrismaClient.PrismaClient();
+const { setupCategories } = require("./add-categories.cjs");
+const { setupSubcategories } = require("./add-subcategories.cjs");
+const { setupExercises } = require("./add-exercises.cjs");
+const { setupUsers } = require("./add-users.cjs");
 
 // npx prisma generate
 // npx prisma migrate dev --name init
@@ -15,6 +17,11 @@ const prisma = new PrismaClient.PrismaClient();
 // restore db:
 // sqlite3 ./dev.db .read ./backup.sql .exit
 
-async function setup() {}
+async function setup() {
+  await setupCategories();
+  await setupSubcategories();
+  await setupUsers();
+  await setupExercises();
+}
 
 setup();

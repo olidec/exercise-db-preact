@@ -6,13 +6,12 @@ require("dotenv").config();
 const categories = require("../data/categories.json");
 
 async function setup() {
-    const deleteCategories = await prisma.category.deleteMany();
-    const newCategories = await prisma.category.createManyAndReturn({
-        data: categories,
-        // only for postgres
-        // skipDuplicates: true,
-    });
-    console.log(newCategories);
+  const newCategories = await prisma.category.createMany({
+    data: categories,
+    // only for postgres
+    // skipDuplicates: true,
+  });
+  console.log(newCategories);
 }
 
-setup();
+module.exports = { setupCategories: setup };
