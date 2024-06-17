@@ -3,17 +3,11 @@ const PrismaClient = require("@prisma/client");
 const prisma = new PrismaClient.PrismaClient();
 const fs = require("fs");
 const passport = require("passport");
-const router = require("express").Router();
-
 const { getUser, createUser } = require("../controllers/users.cjs");
 
-router.get("/dashboard", (req, res) => {
-  console.log(req.isAuthenticated());
-  return res.json({
-    title: "Dashboard",
-    page: "user-dashboard",
-  });
-});
+const router = require("express").Router();
+
+router.use("/dashboard", require("./dashboard.cjs"));
 
 router.get("/login", (req, res) => {
   return res.redirect("http://localhost:5173/exercise-db-preact/login");
