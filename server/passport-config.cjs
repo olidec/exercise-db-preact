@@ -14,7 +14,7 @@ function initialize(passport) {
       //check if user exists
       if (!user) {
         console.log("PASSPORT:", "No user with that username");
-        throw new Error("No user with that username");
+        return callback(null, false);
       }
 
       //user exists check for valid pw
@@ -24,7 +24,7 @@ function initialize(passport) {
       }
 
       console.log("PASSPORT:", "Password incorrect");
-      throw new Error("Password incorrect");
+      return callback(null, false);
     } catch (e) {
       return callback(e);
     }
