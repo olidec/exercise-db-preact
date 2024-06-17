@@ -1,0 +1,7 @@
+DELETE http://localhost:3000/logout
+content-type: application/json
+
+{
+    "username": "w",
+    "password": "w"
+}
