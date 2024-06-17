@@ -3,9 +3,11 @@ const { setupSubcategories } = require("./add-subcategories.cjs");
 const { setupExercises } = require("./add-exercises.cjs");
 const { setupUsers } = require("./add-users.cjs");
 
-// npx prisma generate
-// npx prisma migrate dev --name init
-// node seed-db/scripts/setup-db.cjs
+// lokale Testdatenbank initialisieren:
+// Datei dev.db löschen
+// TERMINAL: npx prisma generate
+// TERMINAL: npx prisma migrate dev --name init
+// TERMINAL: node seed-db/scripts/setup-db.cjs
 
 // resp. durch
 // npm run db-setup
