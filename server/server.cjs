@@ -2,14 +2,11 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 const express = require("express");
-const cors = require("cors");
 const passport = require("passport");
-const session = require("express-session");
 const { query, validationResult } = require("express-validator");
 const PrismaClient = require("@prisma/client");
 const prisma = new PrismaClient.PrismaClient();
 const fs = require("fs");
-const flash = require("express-flash");
 const methodOverride = require("method-override");
 
 const { initializePassport } = require("./passport-config.cjs");
@@ -356,15 +353,7 @@ router.post("/api/download", async (req, res) => {
   }
 });
 
-app.use(
-  cors({
-    origin: true,
-    // origin: ["http://localhost:5173/", "http://localhost:3000/"],
-    credentials: true,
-  })
-);
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use("/", router);
 
+// start server at port 3000
 app.listen(3000, () => console.log("listening on port 3000"));
