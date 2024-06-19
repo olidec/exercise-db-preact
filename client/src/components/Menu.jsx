@@ -11,8 +11,6 @@ export default function Menu() {
     setSelectedMenu(menu);
   };
 
-  const logout = () => {};
-
   return (
     <div
       className="pure-menu pure-menu-horizontal"
@@ -87,21 +85,6 @@ export default function Menu() {
             </Link>
           </li>
         ) : null}
-
-        <li className="pure-menu-item pure-menu-selected">
-          <div class="pure-controls">
-            <button
-              className="pure-button pure-button-primary"
-              type="submit"
-              onClick={logout}
-            >
-              Logout
-            </button>
-            {/* <form action="/logout?_method=DELETE" method="POST">
-              <button type="submit">Log Out</button>
-            </form> */}
-          </div>
-        </li>
 
         <li
           className={`pure-menu-item ${

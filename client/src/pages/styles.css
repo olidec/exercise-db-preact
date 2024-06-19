@@ -79,6 +79,13 @@ header h1 {
   padding: 10px 15px;
 }
 
+.category-item.underline {
+  font-weight: bold;
+  text-decoration: underline;
+  border: none;
+  font-size: 1.1em;
+}
+
 .category-item:not(.selected) {
   font-size: 0.9em;
 }
@@ -92,7 +99,7 @@ header h1 {
     border 0.3s,
     font-size 0.3s;
   width: fit-content;
-  margin: 10px 0; /* Erhöht den vertikalen Abstand */
+  margin: 10px 10px; /* Erhöht den vertikalen Abstand */
   border-left: 2px solid black; /* Fügt einen vertikalen Strich links hinzu */
   padding-left: 25px;
 }
@@ -103,10 +110,9 @@ header h1 {
 
 .subcategory-item.selected {
   font-weight: bold;
-  border-left: 2px solid black;
+  border: 2px solid black;
   border-radius: 10px;
   padding: 5px 15px;
-  background-color: #ffe6e6;
 }
 
 .subcategory-item {

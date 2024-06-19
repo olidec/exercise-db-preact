@@ -98,3 +98,58 @@
   opacity: 0;
   transition: opacity 0.5s ease-out; /* Passt die Dauer und Art der Animation nach Bedarf an */
 }
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  margin: 40px 0;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 50%; /* Macht die Checkbox rund */
+  -webkit-appearance: none; /* Entfernt das Standard-Checkbox-Styling */
+  -moz-appearance: none; /* Entfernt das Standard-Checkbox-Styling */
+  appearance: none; /* Entfernt das Standard-Checkbox-Styling */
+  background-color: #fff; /* Hintergrundfarbe der Checkbox */
+  border: 2px solid #ccc; /* Rahmen der Checkbox */
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked {
+  border-color: #007bff; /* Rahmenfarbe der Checkbox, wenn sie aktiviert ist */
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 20%;
+  left: 60%;
+  width: 8px;
+  height: 20px;
+  background-color: transparent;
+  border: solid #007bff;
+  border-width: 0 3px 3px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.checkbox-wrapper label {
+  font-size: 16px;
+  text-align: center;
+}
+
+.checkbox-container span {
+  font-size: 16px;
+  font-weight: bold;
+}
