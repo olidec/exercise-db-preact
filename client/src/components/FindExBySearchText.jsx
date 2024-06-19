@@ -6,10 +6,8 @@ import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 
 export default function FindExBySearchText() {
-  const { setCartSearch, cartSearch, showNotification } =
+  const { setCartSearch, cartSearch, showNotification, searchText } =
     useContext(SearchContext);
-
-  const searchText = signal("");
 
   const onChange = (e) => {
     e.preventDefault();

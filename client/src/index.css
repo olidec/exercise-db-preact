@@ -39,7 +39,7 @@
 }
 
 .karte {
-  border: 1px solid #d21515;
+  border: 1px solid #ccc;
   border-radius: "8px";
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -152,4 +152,125 @@
 .checkbox-container span {
   font-size: 16px;
   font-weight: bold;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #3498db;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+
+.feature {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+  width: 30%;
+  text-align: center;
+}
+
+.call-to-action {
+  background-color: #2ecc71;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 40px;
+}
+
+.call-to-action a {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  border: 2px solid white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.category-item {
+  cursor: pointer;
+  padding: 10px 15px;
+  display: inline-block;
+  transition:
+    font-weight 0.3s,
+    border 0.3s,
+    font-size 0.3s;
+  width: fit-content;
+  margin-bottom: 10px;
+  border-bottom: 1px solid black;
+}
+
+.category-item:hover {
+  font-weight: bold;
+}
+
+.category-item.selected {
+  font-weight: bold;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px 15px;
+}
+
+.category-item.underline {
+  font-weight: bold;
+  text-decoration: underline;
+  border: none;
+  font-size: 1.1em;
+}
+
+.category-item:not(.selected) {
+  font-size: 0.9em;
+}
+
+.subcategory-item {
+  cursor: pointer;
+  padding: 5px 15px;
+  display: inline-block;
+  transition:
+    font-weight 0.3s,
+    border 0.3s,
+    font-size 0.3s;
+  width: fit-content;
+  margin: 10px 10px; /* Erhöht den vertikalen Abstand */
+  border-left: 2px solid black; /* Fügt einen vertikalen Strich links hinzu */
+  padding-left: 25px;
+}
+
+.subcategory-item:hover {
+  font-weight: bold;
+}
+
+.subcategory-item.selected {
+  font-weight: bold;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 5px 15px;
+}
+
+.subcategory-item {
+  font-size: 1.1em;
 }

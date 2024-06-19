@@ -11,7 +11,7 @@
     "list-users": "node server/list-users.cjs"
   },
   "dependencies": {
-    "@preact/signals": "^1.2.2",
+    "@preact/signals": "^1.2.3",
     "@prisma/client": "^5.13.0",
     "argon2": "^0.40.1",
     "better-react-mathjax": "^2.0.3",

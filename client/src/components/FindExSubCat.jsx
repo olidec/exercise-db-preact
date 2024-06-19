@@ -5,7 +5,8 @@ import { SearchContext } from "../signals/exercise.jsx";
 import SearchKorb from "./SearchKorb.jsx";
 
 export default function FindExSubCat() {
-  const { showNotification, setCartSearch } = useContext(SearchContext);
+  const { showNotification, setCartSearch, searchText } =
+    useContext(SearchContext);
 
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -41,6 +42,7 @@ export default function FindExSubCat() {
       showNotification("No exercise matches the search term.", "red");
     } else {
       setCartSearch(res);
+      searchText.value = "";
     }
   };
 
@@ -56,6 +58,7 @@ export default function FindExSubCat() {
       setSelectedSubcategory("");
     } else {
       setCartSearch(res);
+      searchText.value = "";
     }
   };
 

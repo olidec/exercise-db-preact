@@ -9,6 +9,10 @@ export const SearchProvider = ({ children }) => {
     JSON.parse(window.localStorage.getItem("cartSearch")) || []
   );
 
+  const searchText = signal(
+    JSON.parse(window.localStorage.getItem("searchText"))
+  );
+
   const setCartSearch = (exercises) => {
     cartSearch.value = exercises;
   };
@@ -86,10 +90,12 @@ export const SearchProvider = ({ children }) => {
 
   effect(() => {
     window.localStorage.setItem("cartSearch", JSON.stringify(cartSearch.value));
+    window.localStorage.setItem("searchText", JSON.stringify(searchText.value));
   });
   return (
     <SearchContext.Provider
       value={{
+        searchText,
         loadEx,
         setCartSearch,
         cartSearch,
