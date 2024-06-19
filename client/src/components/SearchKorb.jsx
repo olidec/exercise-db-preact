@@ -17,6 +17,7 @@ const SearchKorb = ({}) => {
 
   return (
     <div>
+      <h1>Suchresultate ({cartSearch.value.length})</h1>
       {normalizedList &&
         normalizedList.map((ex, index) => (
           <SearchCard

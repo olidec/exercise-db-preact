@@ -4,18 +4,14 @@ import { useContext, useState, useEffect } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 import SearchKorb from "./SearchKorb.jsx";
 
-export default function FindExByCategory() {
-  const { cartSearch, showNotification } = useContext(SearchContext);
+export default function FindExSubCat() {
+  const { showNotification, setCartSearch, cartSearch } =
+    useContext(SearchContext);
 
-  const [exerciseList, setExerciseList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [subcategories, setSubcategories] = useState([]);
-
-  useEffect(() => {
-    cartSearch.value = exerciseList;
-  }, [exerciseList]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -44,9 +40,8 @@ export default function FindExByCategory() {
 
     if (res.errors || res.length === 0) {
       showNotification("No exercise matches the search term.", "red");
-      setExerciseList([]);
     } else {
-      setExerciseList(res);
+      setCartSearch(res);
     }
   };
 
@@ -59,9 +54,8 @@ export default function FindExByCategory() {
 
     if (res.errors || res.length === 0) {
       showNotification("No exercise matches the search term.", "red");
-      setExerciseList([]);
     } else {
-      setExerciseList(res);
+      setCartSearch(res);
     }
   };
 
@@ -116,8 +110,6 @@ export default function FindExByCategory() {
         </ul>
       </div>
       <div className="content-column" style={{ width: "80%", padding: "10px" }}>
-        <h1>Suchresultate ({exerciseList.length})</h1>
-        <hr />
         <SearchKorb />
       </div>
     </div>

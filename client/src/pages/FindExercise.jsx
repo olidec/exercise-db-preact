@@ -2,7 +2,7 @@ import FindExByIdFromServer from "../components/FindExByIdFromServer.jsx";
 import FindExBySearchText from "../components/FindExBySearchText.jsx";
 import FindExByCategory from "../components/FindExByCategory.jsx";
 import FindExBySubCategory from "../components/FindExBySubCategory.jsx";
-import FindExCat from "../components/FindExCat.jsx";
+
 import FindExSubCat from "../components/FindExSubCat.jsx";
 const FindExercise = () => {
   return (

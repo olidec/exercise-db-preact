@@ -36,7 +36,7 @@ export function App() {
           <FindExercise path="/exercise-db-preact/find" />
           <AufgDetails path="/exercise-db-preact/:id" />
           <Warenkorb path="/exercise-db-preact/warenkorb" />
-
+          <SearchKorb path="/exercise-db-preact/search" />
           <EditExercise path="/exercise-db-preact/edit/:id" />
         </Router>
       </div>

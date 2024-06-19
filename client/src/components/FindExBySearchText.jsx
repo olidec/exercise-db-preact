@@ -4,16 +4,12 @@ import { signal } from "@preact/signals";
 
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
-export default function FindExBySearchText() {
-  const { cartSearch, showNotification } = useContext(SearchContext);
-  const [exerciseList, setExerciseList] = useState([]);
-  const searchText = signal("");
 
-  // // Annahme, dass cartSearch ein signal aus @preact/signals ist
-  useEffect(() => {
-    cartSearch.value = exerciseList;
-    // Aktualisiert cartSearch, wenn exerciseList sich ändert
-  }, [exerciseList]); // Abhängigkeiten, die den Effekt auslösen
+export default function FindExBySearchText() {
+  const { setCartSearch, cartSearch, showNotification } =
+    useContext(SearchContext);
+
+  const searchText = signal("");
 
   const onChange = (e) => {
     e.preventDefault();
@@ -31,8 +27,7 @@ export default function FindExBySearchText() {
       showNotification("No exercise matches the search term.", "red");
       return;
     } else {
-      setExerciseList(res);
-      window.location.href = "/exercise-db-preact/search";
+      setCartSearch(res);
     }
   };
 
