@@ -35,6 +35,7 @@ export function App() {
           <AddExercise path="/exercise-db-preact/add" />
           <FindExercise path="/exercise-db-preact/find" />
           <AufgDetails path="/exercise-db-preact/:id" />
+
           <Warenkorb path="/exercise-db-preact/warenkorb" />
           <SearchKorb path="/exercise-db-preact/search" />
           <EditExercise path="/exercise-db-preact/edit/:id" />
