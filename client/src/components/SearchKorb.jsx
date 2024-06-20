@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "preact/hooks";
 import SearchCard from "./SearchCard.jsx";
 import { SearchContext } from "../signals/exercise.jsx";
 
-const SearchKorb = ({ selectedCategory, selectedSubcategory }) => {
+const SearchKorb = ({}) => {
   const { cartSearch, searchText, categor } = useContext(SearchContext);
   const [selectedDifficulties, setSelectedDifficulties] = useState([]); // Zustand für die ausgewählten Schwierigkeitsgrade
 

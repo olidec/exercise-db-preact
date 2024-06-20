@@ -106,10 +106,7 @@ export default function FindExSubCat() {
         </ul>
       </div>
       <div className="content-column" style={{ width: "80%", padding: "10px" }}>
-        <SearchKorb
-          selectedCategory={selectedCategory}
-          selectedSubcategory={selectedSubcategory}
-        />
+        <SearchKorb />
       </div>
     </div>
   );

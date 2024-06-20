@@ -274,3 +274,13 @@ header h1 {
 .subcategory-item {
   font-size: 1.1em;
 }
+
+.swap-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.swap-buttons .pure-button {
+  padding: 5px;
+}
