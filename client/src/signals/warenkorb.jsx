@@ -31,28 +31,26 @@ export const WarenkorbProvider = ({ children }) => {
     window.localStorage.setItem("cartItems", JSON.stringify(cartItems.value));
   });
   function handleDelete({ id }) {
+    // Finden des Indexes des Elements mit der entsprechenden id
+    const index = cartItems.value.findIndex((item) => item.id === id);
+
+    // Entfernen des Elements an dem gefundenen Index
+    const updatedList = cartItems.value.filter(
+      (item, itemIndex) => itemIndex !== index
+    );
+    cartItems.value = updatedList; // Setzen eines neuen Arrays
+
+    console.log(index);
+    console.log(cartItems.value);
+
+    const checkmark = document.getElementById("checkmark");
+    checkmark.innerHTML = "x"; // Setze das Häkchen-Symbol
+    checkmark.style.color = "red"; // Setze die Farbe auf Grün
+    checkmark.style.display = "block";
+
     setTimeout(() => {
-      // Finden des Indexes des Elements mit der entsprechenden id
-      const index = cartItems.value.findIndex((item) => item.id === id);
-
-      // Entfernen des Elements an dem gefundenen Index
-      const updatedList = cartItems.value.filter(
-        (item, itemIndex) => itemIndex !== index
-      );
-      cartItems.value = updatedList; // Setzen eines neuen Arrays
-
-      console.log(index);
-      console.log(cartItems.value);
-
-      const checkmark = document.getElementById("checkmark");
-      checkmark.innerHTML = "x"; // Setze das Häkchen-Symbol
-      checkmark.style.color = "red"; // Setze die Farbe auf Grün
-      checkmark.style.display = "block";
-
-      setTimeout(() => {
-        checkmark.style.display = "none";
-      }, 700);
-    }, 400);
+      checkmark.style.display = "none";
+    }, 700);
   }
 
   function getCartCount() {

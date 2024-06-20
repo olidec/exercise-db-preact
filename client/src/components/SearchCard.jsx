@@ -1,14 +1,19 @@
 import Card from "./Card";
 import { WarenkorbContext } from "../signals/warenkorb.jsx";
-import { useContext, useState } from "preact/hooks";
+import { useContext } from "preact/hooks";
 
-const SearchCard = ({ key, id, content, summary, categoryId, difficulty }) => {
+const SearchCard = ({
+  key,
+  id,
+  summary,
+  content,
+  categoryId,
+  difficulty,
+  openModal,
+}) => {
   const { cartItems, addToKorb, handleDelete } = useContext(WarenkorbContext);
   let index = cartItems.value.findIndex((item) => item.id === id);
   console.log(index);
-
-  const currentPath = window.location.pathname;
-  const detailPath = `/exercise-db-preact/${id}`;
 
   return (
     <>
@@ -40,16 +45,9 @@ const SearchCard = ({ key, id, content, summary, categoryId, difficulty }) => {
             </button>
           )}
 
-          {currentPath === detailPath ? (
-            ""
-          ) : (
-            <button
-              className="pure-button"
-              onClick={() => (window.location.href = detailPath)}
-            >
-              Details/ Edit Aufgabe
-            </button>
-          )}
+          <button className="pure-button" onClick={() => openModal(id)}>
+            Details/ Edit Aufgabe
+          </button>
         </div>
       </div>
     </>
