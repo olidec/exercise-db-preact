@@ -3,9 +3,10 @@ import SearchCard from "./SearchCard.jsx";
 import { SearchContext } from "../signals/exercise.jsx";
 
 const SearchKorb = ({ selectedCategory, selectedSubcategory }) => {
-  const { cartSearch, searchText } = useContext(SearchContext);
+  const { cartSearch, searchText, categor } = useContext(SearchContext);
   const [selectedDifficulties, setSelectedDifficulties] = useState([]); // Zustand für die ausgewählten Schwierigkeitsgrade
 
+  console.log(cartSearch.value);
   useEffect(() => {
     MathJax.typeset();
   }, [cartSearch.value]);
@@ -34,9 +35,9 @@ const SearchKorb = ({ selectedCategory, selectedSubcategory }) => {
       <h1>Suchresultate ({filteredList.length})</h1>
 
       <h3>
-        {selectedCategory === "" || selectedSubcategory === undefined
-          ? "Suchbegriff: " + searchText.value
-          : selectedCategory + "  -  " + selectedSubcategory}
+        {searchText.value === ""
+          ? categor.value[0] + "  -  " + categor.value[1]
+          : "Suchbegriff: " + searchText.value}
       </h3>
 
       <div className="checkbox-container">

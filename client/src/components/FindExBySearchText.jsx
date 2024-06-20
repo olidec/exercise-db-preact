@@ -26,7 +26,6 @@ export default function FindExBySearchText() {
       return;
     } else {
       setCartSearch(res);
-      window.location.href = "/exercise-db-preact/search";
     }
   };
 
@@ -35,7 +34,6 @@ export default function FindExBySearchText() {
       <h2>Textsuche</h2>
       <form className="pure-form pure-form-aligned" onSubmit={(e) => getEx(e)}>
         <div className="pure-control-group">
-          <label htmlFor="exid-3">Search Exercises for contents</label>
           <input id="exid-3" value={searchText} onChange={onChange} />
           <button className="pure-button">Find Exercises containing</button>
         </div>

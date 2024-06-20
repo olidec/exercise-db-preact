@@ -93,7 +93,7 @@ export default function Menu() {
           style={{ position: "relative", marginLeft: "auto" }}
         >
           <div id="notification-container"></div>
-          <div id="checkmark">✔</div>
+          <div id="checkmark"></div>
 
           <Link
             href="/exercise-db-preact/warenkorb"
