@@ -99,11 +99,19 @@
   transition: opacity 0.5s ease-out; /* Passt die Dauer und Art der Animation nach Bedarf an */
 }
 
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .checkbox-container {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 50px;
-  margin: 40px 0;
+  margin: 20px 0;
 }
 
 .checkbox-wrapper {
@@ -112,36 +120,37 @@
   align-items: center;
 }
 
-.checkbox-wrapper input[type="checkbox"] {
-  width: 25px;
-  height: 25px;
-  margin-bottom: 10px;
+.checkbox-wrapper input[type="checkbox"],
+.checkbox-wrapper input[type="radio"] {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 50%; /* Macht die Checkbox rund */
-  -webkit-appearance: none; /* Entfernt das Standard-Checkbox-Styling */
-  -moz-appearance: none; /* Entfernt das Standard-Checkbox-Styling */
-  appearance: none; /* Entfernt das Standard-Checkbox-Styling */
-  background-color: #fff; /* Hintergrundfarbe der Checkbox */
-  border: 2px solid #ccc; /* Rahmen der Checkbox */
+  border-radius: 50%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border: 2px solid #ccc;
   cursor: pointer;
   position: relative;
 }
 
-.checkbox-wrapper input[type="checkbox"]:checked {
-  border-color: #007bff; /* Rahmenfarbe der Checkbox, wenn sie aktiviert ist */
+.checkbox-wrapper input[type="checkbox"]:checked,
+.checkbox-wrapper input[type="radio"]:checked {
+  border-color: #007bff;
 }
 
-.checkbox-wrapper input[type="checkbox"]:checked::after {
-  content: "";
+.checkbox-wrapper input[type="checkbox"]:checked::after,
+.checkbox-wrapper input[type="radio"]:checked::after {
+  content: "\2713"; /* Unicode für Häkchen */
   position: absolute;
-  top: 20%;
-  left: 60%;
-  width: 8px;
-  height: 20px;
-  background-color: transparent;
-  border: solid #007bff;
-  border-width: 0 3px 3px 0;
-  transform: translate(-50%, -50%) rotate(45deg);
+  top: 50%;
+  left: 50%;
+  font-size: 28px; /* Größe des Häkchens */
+  font-weight: bold; /* Dicke des Häkchens */
+  color: #007bff; /* Farbe des Häkchens */
+  transform: translate(-50%, -50%);
 }
 
 .checkbox-wrapper label {
@@ -149,9 +158,21 @@
   text-align: center;
 }
 
+.checkbox-wrapper .selected {
+  font-weight: bold; /* Macht die Schrift fett für die ausgewählten Checkboxen */
+}
+
+.results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 110%; /* Nimmt die volle Breite ein */
+}
+
+.search-container h1,
+.search-container h3,
 .checkbox-container span {
-  font-size: 16px;
-  font-weight: bold;
+  margin-bottom: 10px; /* Abstand nach unten */
 }
 
 body {
