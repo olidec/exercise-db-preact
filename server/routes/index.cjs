@@ -32,14 +32,17 @@ router.post("/login", authenticateLocal, (req, res) => {
 });
 
 router.delete("/logout", (req, res) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("http://localhost:5173/exercise-db-preact/login");
-  });
-  // res.redirect("/login");
-  console.log(`-------> User Logged out`);
+  if (req.session?.passport) {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(500).json({ msg: "Error in logout", err });
+      } else {
+        res.status(200).json({ msg: "User logged out" });
+      }
+    });
+  } else {
+    res.status(401).json({ msg: "User not logged in" });
+  }
 });
 
 router.post("/register", async (req, res) => {

@@ -1,12 +1,17 @@
 import { Link } from "preact-router/match";
 import { useContext, useState } from "preact/hooks";
+
 import { SearchContext } from "../signals/exercise.jsx";
-import { askServer } from "../utils/connector.js";
 import { WarenkorbContext } from "../signals/warenkorb.jsx";
+import { useAuth } from "../context/AuthContext";
+
 export default function Menu() {
   const { cartSearch } = useContext(SearchContext);
   const [selectedMenu, setSelectedMenu] = useState("");
-  const { cartItems, getCart, getCartCount } = useContext(WarenkorbContext);
+  const { getCartCount } = useContext(WarenkorbContext);
+
+  const { logout } = useAuth();
+
   const handleMenuClick = (menu) => {
     setSelectedMenu(menu);
   };
@@ -141,7 +146,7 @@ export default function Menu() {
               <Link
                 href="/exercise-db-preact/"
                 className="pure-menu-link"
-                onClick={() => handleMenuClick("contact")}
+                onClick={() => logout()}
               >
                 Logout
               </Link>
