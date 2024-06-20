@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "preact/hooks";
 import SearchCard from "./SearchCard.jsx";
 import { SearchContext } from "../signals/exercise.jsx";
 
-const SearchKorb = ({}) => {
+const SearchKorb = ({ openModal }) => {
   const { cartSearch, searchText, categor } = useContext(SearchContext);
   const [selectedDifficulties, setSelectedDifficulties] = useState([]); // Zustand für die ausgewählten Schwierigkeitsgrade
 
@@ -89,6 +89,7 @@ const SearchKorb = ({}) => {
             content={ex.content}
             categoryId={ex.categoryId}
             difficulty={ex.difficulty}
+            openModal={openModal}
           />
         ))}
     </div>

@@ -77,7 +77,7 @@ const AufgDetails = ({ id }) => {
             author={exDetails.authorId}
             categories={categoryName}
             subcategories={subcategoryName}
-            currentPath={window.location.pathname}
+            isModal={true}
           />
 
           {index === -1 ? (

@@ -9,12 +9,7 @@ const EditExercise = ({ id }) => {
     <>
       <div className="inhalt">
         <h1>Edit Exercise mit ID {id} </h1>
-        <button
-          onClick={() => (window.location.href = `/exercise-db-preact/${id}`)}
-          className="pure-button"
-        >
-          Zurück zu den Details
-        </button>
+
         <hr></hr>
 
         <EditForm id={id} />
