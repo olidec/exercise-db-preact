@@ -16,8 +16,17 @@ export function AuthProvider({ children }) {
 
   const login = async (username, password) => {
     //TODO login logic
-    const res = await askServer("/login", "POST", { username, password });
-    setUser({ username });
+    const { status, response } = await askServer("/login", "POST", {
+      username,
+      password,
+    });
+    if (status === 200) {
+      setUser({ ...response.data.user });
+      window.location.assign("/exercise-db-preact/add");
+    } else {
+      console.error(response);
+      window.location.assign("/exercise-db-preact/login");
+    }
   };
 
   const logout = () => {

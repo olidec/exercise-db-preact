@@ -9,23 +9,25 @@ export async function askServer(
   const data = {
     headers: {
       "Content-Type": content,
+      Accept: "application/json",
     },
     credentials: "include",
     mode: "cors",
     method: method,
   };
 
-  if (method === "POST") {
+  if (method === "POST" || method === "PUT") {
     data.body = JSON.stringify(body);
   }
 
-  if (method === "PUT") {
-    data.body = JSON.stringify(body);
-  }
   const response = await fetch(baseUrl + route, data);
-  if (content === "text/html") {
-    return response.text();
-  } else {
-    return response.json();
+  if (response.status === 200) {
+    return {
+      status: response.status,
+      response: await response.json(),
+    };
   }
+  return {
+    status: response.status,
+  };
 }

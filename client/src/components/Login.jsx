@@ -1,5 +1,7 @@
 import { useState } from "preact/hooks";
+
 import { askServer } from "../utils/connector";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const [log, setLog] = useState({
@@ -7,18 +9,11 @@ export default function Login() {
     password: "",
   });
 
+  const { login } = useAuth();
+
   const doLogin = async (e) => {
     e.preventDefault();
-    const res = await askServer("/login", "POST", log);
-    console.log(res);
-    if (res.err) {
-      console.log(res.err);
-    } else {
-      setLog({
-        username: "",
-        password: "",
-      });
-    }
+    login(log.username, log.password);
   };
 
   const updateUserHandler = (e) => {
