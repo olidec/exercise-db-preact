@@ -30,9 +30,3 @@ export async function askServer(
     return response.json();
   }
 }
-
-function mock(route) {
-  if (route === "api/test") {
-    return { msg: "Hello Local" };
-  }
-}
