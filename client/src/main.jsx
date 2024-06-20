@@ -4,12 +4,15 @@ import "./index.css";
 
 import { WarenkorbProvider } from "./signals/warenkorb";
 import { SearchProvider } from "./signals/exercise";
+import { AuthProvider } from "./context/AuthContext.jsx";
 render(
-  <WarenkorbProvider>
-    <SearchProvider>
-      <App />
-    </SearchProvider>
-  </WarenkorbProvider>,
+  <AuthProvider>
+    <WarenkorbProvider>
+      <SearchProvider>
+        <App />
+      </SearchProvider>
+    </WarenkorbProvider>
+  </AuthProvider>,
 
   document.getElementById("app")
 );

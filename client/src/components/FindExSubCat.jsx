@@ -3,6 +3,8 @@ import { cat, loadCat } from "../signals/categories.js";
 import { useContext, useState, useEffect } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 import SearchKorb from "./SearchKorb.jsx";
+import Modal from "./Modal.jsx";
+import AufgDetails from "./AufgDetails.jsx";
 
 export default function FindExSubCat() {
   const { showNotification, setCartSearch, searchText, categor } =
@@ -12,6 +14,8 @@ export default function FindExSubCat() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [subcategories, setSubcategories] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedExercise, setSelectedExercise] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -65,6 +69,16 @@ export default function FindExSubCat() {
     }
   };
 
+  const openModal = (id) => {
+    setSelectedExercise(id);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedExercise(null);
+  };
+
   return (
     <div className="main-container" style={{ display: "flex" }}>
       <div
@@ -106,8 +120,11 @@ export default function FindExSubCat() {
         </ul>
       </div>
       <div className="content-column" style={{ width: "80%", padding: "10px" }}>
-        <SearchKorb />
+        <SearchKorb openModal={openModal} />
       </div>
+      <Modal isOpen={modalOpen} onClose={closeModal}>
+        {selectedExercise && <AufgDetails id={selectedExercise} />}
+      </Modal>
     </div>
   );
 }

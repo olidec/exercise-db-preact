@@ -8,8 +8,10 @@ const WarenCard = ({ index, id, content, summary, swapItems }) => {
 
   const handleFadeOutAndDelete = () => {
     setIsFadingOut(true); // Startet den Ausblendeffekt
-    setTimeout(() => handleDelete({ id }), 600);
-    setIsFadingOut(false); // Wartet, bis die Animation abgeschlossen ist, um zu löschen
+    setTimeout(() => {
+      handleDelete({ id });
+      setIsFadingOut(false); // Rücksetzen des Fade-Out-Zustands nach dem Löschen
+    }, 600);
   };
 
   const handleSwap = (targetIndex) => {
@@ -19,8 +21,6 @@ const WarenCard = ({ index, id, content, summary, swapItems }) => {
       setIsFadingOut(false); // Rücksetzen des Fade-Out-Zustands
     }, 600);
   };
-
-  const detailPath = `/exercise-db-preact/${id}`;
 
   return (
     <div
@@ -32,12 +32,7 @@ const WarenCard = ({ index, id, content, summary, swapItems }) => {
         <button className="pure-button" onClick={handleFadeOutAndDelete}>
           Löschen aus Warenkorb
         </button>
-        <button
-          className="pure-button"
-          onClick={() => (window.location.href = detailPath)}
-        >
-          Details/ Edit Aufgabe
-        </button>
+
         <div className="swap-buttons">
           <button
             className="pure-button"
