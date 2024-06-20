@@ -11,8 +11,6 @@ export default function Menu() {
     setSelectedMenu(menu);
   };
 
-  const logout = () => {};
-
   return (
     <div
       className="pure-menu pure-menu-horizontal"
@@ -88,21 +86,6 @@ export default function Menu() {
           </li>
         ) : null}
 
-        <li className="pure-menu-item pure-menu-selected">
-          <div class="pure-controls">
-            <button
-              className="pure-button pure-button-primary"
-              type="submit"
-              onClick={logout}
-            >
-              Logout
-            </button>
-            {/* <form action="/logout?_method=DELETE" method="POST">
-              <button type="submit">Log Out</button>
-            </form> */}
-          </div>
-        </li>
-
         <li
           className={`pure-menu-item ${
             selectedMenu === "warenkorb" ? "pure-menu-selected" : ""
@@ -110,7 +93,7 @@ export default function Menu() {
           style={{ position: "relative", marginLeft: "auto" }}
         >
           <div id="notification-container"></div>
-          <div id="checkmark">✔</div>
+          <div id="checkmark"></div>
 
           <Link
             href="/exercise-db-preact/warenkorb"

@@ -16,7 +16,7 @@ export const WarenkorbProvider = ({ children }) => {
       console.log(cartItems.value);
       // Zeige das Häkchen an
       const checkmark = document.getElementById("checkmark");
-      checkmark.innerHTML = "✔"; // Setze das Häkchen-Symbol
+      checkmark.innerHTML = "✓";
       checkmark.style.color = "lightgreen"; // Setze die Farbe auf Grün
       checkmark.style.display = "block";
 
@@ -45,7 +45,7 @@ export const WarenkorbProvider = ({ children }) => {
       console.log(cartItems.value);
 
       const checkmark = document.getElementById("checkmark");
-      checkmark.innerHTML = "-1"; // Setze das Häkchen-Symbol
+      checkmark.innerHTML = "x"; // Setze das Häkchen-Symbol
       checkmark.style.color = "red"; // Setze die Farbe auf Grün
       checkmark.style.display = "block";
 

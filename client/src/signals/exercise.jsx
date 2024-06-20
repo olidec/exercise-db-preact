@@ -5,11 +5,21 @@ import { createContext } from "preact";
 export const SearchContext = createContext();
 
 export const SearchProvider = ({ children }) => {
-  const ex = signal([]);
-
   const cartSearch = signal(
     JSON.parse(window.localStorage.getItem("cartSearch")) || []
   );
+
+  const searchText = signal(
+    JSON.parse(window.localStorage.getItem("searchText"))
+  );
+
+  const categor = signal(
+    JSON.parse(window.localStorage.getItem("categor")) || []
+  );
+
+  const setCartSearch = (exercises) => {
+    cartSearch.value = exercises;
+  };
 
   const loadEx = async () => {
     const res = await askServer("/api/ex/", "GET");
@@ -84,12 +94,16 @@ export const SearchProvider = ({ children }) => {
 
   effect(() => {
     window.localStorage.setItem("cartSearch", JSON.stringify(cartSearch.value));
+    window.localStorage.setItem("searchText", JSON.stringify(searchText.value));
+    window.localStorage.setItem("categor", JSON.stringify(categor.value));
   });
   return (
     <SearchContext.Provider
       value={{
-        ex,
+        categor,
+        searchText,
         loadEx,
+        setCartSearch,
         cartSearch,
         getCartSearch,
         deleteCart,
