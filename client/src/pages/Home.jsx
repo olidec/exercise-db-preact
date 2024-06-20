@@ -1,6 +1,5 @@
 import { h } from "preact";
 import { Link } from "preact-router/match";
-import "./styles.css";
 
 const Home = () => {
   return (

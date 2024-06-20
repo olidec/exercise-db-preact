@@ -4,16 +4,10 @@ import { signal } from "@preact/signals";
 
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
-export default function FindExBySearchText() {
-  const { cartSearch, showNotification } = useContext(SearchContext);
-  const [exerciseList, setExerciseList] = useState([]);
-  const searchText = signal("");
 
-  // // Annahme, dass cartSearch ein signal aus @preact/signals ist
-  useEffect(() => {
-    cartSearch.value = exerciseList;
-    // Aktualisiert cartSearch, wenn exerciseList sich ändert
-  }, [exerciseList]); // Abhängigkeiten, die den Effekt auslösen
+export default function FindExBySearchText() {
+  const { setCartSearch, cartSearch, showNotification, searchText } =
+    useContext(SearchContext);
 
   const onChange = (e) => {
     e.preventDefault();
@@ -31,16 +25,15 @@ export default function FindExBySearchText() {
       showNotification("No exercise matches the search term.", "red");
       return;
     } else {
-      setExerciseList(res);
-      window.location.href = "/exercise-db-preact/search";
+      setCartSearch(res);
     }
   };
 
   return (
     <>
+      <h2>Textsuche</h2>
       <form className="pure-form pure-form-aligned" onSubmit={(e) => getEx(e)}>
         <div className="pure-control-group">
-          <label htmlFor="exid-3">Search Exercises for contents</label>
           <input id="exid-3" value={searchText} onChange={onChange} />
           <button className="pure-button">Find Exercises containing</button>
         </div>

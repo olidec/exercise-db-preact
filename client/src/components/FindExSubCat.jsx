@@ -4,18 +4,14 @@ import { useContext, useState, useEffect } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 import SearchKorb from "./SearchKorb.jsx";
 
-export default function FindExByCategory() {
-  const { cartSearch, showNotification } = useContext(SearchContext);
+export default function FindExSubCat() {
+  const { showNotification, setCartSearch, searchText, categor } =
+    useContext(SearchContext);
 
-  const [exerciseList, setExerciseList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [subcategories, setSubcategories] = useState([]);
-
-  useEffect(() => {
-    cartSearch.value = exerciseList;
-  }, [exerciseList]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -44,9 +40,11 @@ export default function FindExByCategory() {
 
     if (res.errors || res.length === 0) {
       showNotification("No exercise matches the search term.", "red");
-      setExerciseList([]);
     } else {
-      setExerciseList(res);
+      setCartSearch(res);
+      searchText.value = "";
+      categor.value[0] = categoryName;
+      categor.value[1] = "";
     }
   };
 
@@ -59,9 +57,11 @@ export default function FindExByCategory() {
 
     if (res.errors || res.length === 0) {
       showNotification("No exercise matches the search term.", "red");
-      setExerciseList([]);
+      setSelectedSubcategory("");
     } else {
-      setExerciseList(res);
+      setCartSearch(res);
+      searchText.value = "";
+      categor.value[1] = subcategoryName;
     }
   };
 
@@ -71,21 +71,19 @@ export default function FindExByCategory() {
         className="categories-column"
         style={{ width: "20%", padding: "10px", borderRight: "1px solid #ccc" }}
       >
-        <h3>Kategorien</h3>
+        <h2>Kategorien/Subkategorien</h2>
         <ul style={{ listStyleType: "none", padding: 0 }}>
           {categories.map((category) => (
             <li key={category.id}>
               <div
-                className={`category-item ${selectedCategory === category.name ? "selected" : ""}`}
+                className={`category-item ${
+                  selectedCategory === category.name && selectedSubcategory
+                    ? "underline"
+                    : selectedCategory === category.name
+                      ? "selected"
+                      : ""
+                }`}
                 onClick={() => onCategoryClick(category.name)}
-                style={{
-                  cursor: "pointer",
-                  padding: "10px 15px",
-                  width: "fit-content",
-                  marginBottom: "10px",
-                  fontSize:
-                    selectedCategory === category.name ? "1em" : "0.9em",
-                }}
               >
                 {category.name}
               </div>
@@ -96,14 +94,6 @@ export default function FindExByCategory() {
                       <div
                         className={`subcategory-item ${selectedSubcategory === subcategory.name ? "selected" : ""}`}
                         onClick={() => onSubcategoryClick(subcategory.name)}
-                        style={{
-                          cursor: "pointer",
-                          padding: "5px 15px",
-                          width: "fit-content",
-                          marginBottom: "5px",
-                          paddingLeft: "25px",
-                          fontSize: "1.1em",
-                        }}
                       >
                         {subcategory.name}
                       </div>
@@ -116,8 +106,6 @@ export default function FindExByCategory() {
         </ul>
       </div>
       <div className="content-column" style={{ width: "80%", padding: "10px" }}>
-        <h1>Suchresultate ({exerciseList.length})</h1>
-        <hr />
         <SearchKorb />
       </div>
     </div>
