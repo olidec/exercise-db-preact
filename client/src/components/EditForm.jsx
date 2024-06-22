@@ -77,7 +77,7 @@ export default function EditForm({ id }) {
         showNotification("Exercise updated successfully", "green");
 
         setTimeout(() => {
-          window.location.href = `/exercise-db-preact/${id}`;
+          window.location.href = `/exercise-db-preact/edit/${id}`;
         }, 1000); // Warte 1 Sekunde (1000 Millisekunden)
       } else {
         console.log(res.err);
