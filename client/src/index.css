@@ -3,6 +3,7 @@
 }
 .pure-menu-horizontal {
   background-color: #78a2d6;
+  z-index: 1000;
 }
 
 .pure-menu-link {
