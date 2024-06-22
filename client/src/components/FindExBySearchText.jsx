@@ -21,11 +21,13 @@ export default function FindExBySearchText() {
     e.preventDefault();
     const route = `/api/ex?search=${searchText.value}`;
     const res = await askServer(route, "GET");
-    if (res.errors || res.length === 0) {
+    const extext = res.response;
+
+    if (res.status != 200 || extext.length === 0) {
       showNotification("No exercise matches the search term.", "red");
       return;
     } else {
-      setCartSearch(res);
+      setCartSearch(extext);
     }
   };
 

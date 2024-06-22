@@ -109,7 +109,8 @@ export default function EditForm({ id }) {
 
   useEffect(() => {
     const fetchExDetails = async () => {
-      const exDetails = await askServer(`/api/ex?id=${id}`, "GET");
+      const res = await askServer(`/api/ex?id=${id}`, "GET");
+      const exDetails = res.response;
       if (exDetails) {
         console.log(exDetails);
         const categ = cat.value.find((c) => c.id === exDetails.categoryId);
