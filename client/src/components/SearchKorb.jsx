@@ -5,8 +5,8 @@ import { SearchContext } from "../signals/exercise.jsx";
 const SearchKorb = ({ openModal }) => {
   const { cartSearch, searchText, categor } = useContext(SearchContext);
   const [selectedDifficulties, setSelectedDifficulties] = useState([]); // Zustand für die ausgewählten Schwierigkeitsgrade
+  const [selectedLanguage, setSelectedLanguage] = useState("Egal"); // Zustand für die ausgewählte Sprache
 
-  console.log(cartSearch.value);
   useEffect(() => {
     MathJax.typeset();
   }, [cartSearch.value]);
@@ -15,11 +15,12 @@ const SearchKorb = ({ openModal }) => {
     ? cartSearch.value
     : [cartSearch.value];
 
-  // Aufgaben basierend auf den ausgewählten Schwierigkeitsgraden filtern
+  // Aufgaben basierend auf den ausgewählten Schwierigkeitsgraden und Sprache filtern
   const filteredList = normalizedList.filter(
     (ex) =>
-      selectedDifficulties.length === 0 ||
-      selectedDifficulties.includes(ex.difficulty)
+      (selectedDifficulties.length === 0 ||
+        selectedDifficulties.includes(ex.difficulty)) &&
+      (selectedLanguage === "Egal" || ex.language === selectedLanguage)
   );
 
   const handleDifficultyChange = (difficulty) => {
@@ -30,9 +31,13 @@ const SearchKorb = ({ openModal }) => {
     );
   };
 
+  const handleLanguageChange = (language) => {
+    setSelectedLanguage(language);
+  };
+
   return (
-    <div>
-      <h1>Suchresultate ({filteredList.length})</h1>
+    <div className="search-container">
+      <h2>Suchresultate ({filteredList.length})</h2>
 
       <h3>
         {searchText.value === ""
@@ -49,7 +54,12 @@ const SearchKorb = ({ openModal }) => {
             checked={selectedDifficulties.length === 0}
             onChange={() => setSelectedDifficulties([])}
           />
-          <label htmlFor="all">Alle</label>
+          <label
+            htmlFor="all"
+            className={selectedDifficulties.length === 0 ? "selected" : ""}
+          >
+            Alle
+          </label>
         </div>
         <div className="checkbox-wrapper">
           <input
@@ -58,7 +68,12 @@ const SearchKorb = ({ openModal }) => {
             checked={selectedDifficulties.includes(1)}
             onChange={() => handleDifficultyChange(1)}
           />
-          <label htmlFor="leicht">Leicht</label>
+          <label
+            htmlFor="leicht"
+            className={selectedDifficulties.includes(1) ? "selected" : ""}
+          >
+            Leicht
+          </label>
         </div>
         <div className="checkbox-wrapper">
           <input
@@ -67,7 +82,12 @@ const SearchKorb = ({ openModal }) => {
             checked={selectedDifficulties.includes(2)}
             onChange={() => handleDifficultyChange(2)}
           />
-          <label htmlFor="mittel">Mittel</label>
+          <label
+            htmlFor="mittel"
+            className={selectedDifficulties.includes(2) ? "selected" : ""}
+          >
+            Mittel
+          </label>
         </div>
         <div className="checkbox-wrapper">
           <input
@@ -76,22 +96,78 @@ const SearchKorb = ({ openModal }) => {
             checked={selectedDifficulties.includes(3)}
             onChange={() => handleDifficultyChange(3)}
           />
-          <label htmlFor="schwer">Schwer</label>
+          <label
+            htmlFor="schwer"
+            className={selectedDifficulties.includes(3) ? "selected" : ""}
+          >
+            Schwer
+          </label>
         </div>
       </div>
 
-      {filteredList &&
-        filteredList.map((ex, index) => (
-          <SearchCard
-            key={ex.id}
-            id={ex.id}
-            summary={ex.summary}
-            content={ex.content}
-            categoryId={ex.categoryId}
-            difficulty={ex.difficulty}
-            openModal={openModal}
+      <div className="checkbox-container">
+        <span>Sprache:</span>
+        <div className="checkbox-wrapper">
+          <input
+            type="radio"
+            id="egal"
+            name="language"
+            checked={selectedLanguage === "Egal"}
+            onChange={() => handleLanguageChange("Egal")}
           />
-        ))}
+          <label
+            htmlFor="egal"
+            className={selectedLanguage === "Egal" ? "selected" : ""}
+          >
+            Egal
+          </label>
+        </div>
+        <div className="checkbox-wrapper">
+          <input
+            type="radio"
+            id="deutsch"
+            name="language"
+            checked={selectedLanguage === "Deutsch"}
+            onChange={() => handleLanguageChange("Deutsch")}
+          />
+          <label
+            htmlFor="deutsch"
+            className={selectedLanguage === "Deutsch" ? "selected" : ""}
+          >
+            Deutsch
+          </label>
+        </div>
+        <div className="checkbox-wrapper">
+          <input
+            type="radio"
+            id="englisch"
+            name="language"
+            checked={selectedLanguage === "English"}
+            onChange={() => handleLanguageChange("English")}
+          />
+          <label
+            htmlFor="englisch"
+            className={selectedLanguage === "English" ? "selected" : ""}
+          >
+            English
+          </label>
+        </div>
+      </div>
+
+      <div className="results-container">
+        {filteredList &&
+          filteredList.map((ex) => (
+            <SearchCard
+              key={ex.id}
+              id={ex.id}
+              summary={ex.summary}
+              content={ex.content}
+              categoryId={ex.categoryId}
+              difficulty={ex.difficulty}
+              openModal={openModal}
+            />
+          ))}
+      </div>
     </div>
   );
 };
