@@ -23,7 +23,7 @@ export const SearchProvider = ({ children }) => {
 
   const loadEx = async () => {
     const res = await askServer("/api/ex/", "GET");
-    ex.value = res;
+    ex.value = res.response;
   };
 
   function getCartSearch() {
