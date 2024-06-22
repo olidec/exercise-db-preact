@@ -18,7 +18,8 @@ const AufgDetails = ({ id }) => {
       // Definiert eine IIFE (Immediately Invoked Function Expression), um die asynchrone Logik auszuführen
       (async () => {
         const route = `/api/ex?id=${id}`;
-        const exDetails = await askServer(route, "GET");
+        const res = await askServer(route, "GET");
+        const exDetails = res.response;
         if (exDetails) {
           setExDetails(exDetails);
 
