@@ -14,36 +14,21 @@ const router = require("express").Router();
 
 router.use("/dashboard", require("./dashboard.cjs"));
 
-router.get("/login", (req, res) => {
-  return res.redirect("http://localhost:5173/exercise-db-preact/login");
-});
+router.use("/login", require("./login.cjs"));
 
-router.post("/login", authenticateLocal, (req, res) => {
-  console.log(`-------> User Logged in`);
-  res.status(200).json({
-    msg: "User logged in",
-    data: {
-      user: {
-        username: req.user.username,
-        // z.B. last login etc. muss im 'serialize' mitgeschickt werden.
-      },
-    },
-  });
-});
-
-router.delete("/logout", (req, res) => {
-  if (req.session?.passport) {
-    req.session.destroy((err) => {
-      if (err) {
-        res.status(500).json({ msg: "Error in logout", err });
-      } else {
-        res.status(200).json({ msg: "User logged out" });
-      }
-    });
-  } else {
-    res.status(401).json({ msg: "User not logged in" });
-  }
-});
+// router.delete("/logout", (req, res) => {
+//   if (req.session?.passport) {
+//     req.session.destroy((err) => {
+//       if (err) {
+//         res.status(500).json({ msg: "Error in logout", err });
+//       } else {
+//         res.status(200).json({ msg: "User logged out" });
+//       }
+//     });
+//   } else {
+//     res.status(401).json({ msg: "User not logged in" });
+//   }
+// });
 
 router.post("/register", async (req, res) => {
   // TODO input validation
