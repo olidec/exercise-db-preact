@@ -1,5 +1,5 @@
 import { askServer } from "../utils/connector";
-import { cat, loadCat } from "../signals/categories.js";
+import { cat, loadCat, subcat } from "../signals/categories.js";
 import { useContext, useState, useEffect } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 import SearchKorb from "./SearchKorb.jsx";
@@ -41,11 +41,12 @@ export default function FindExSubCat() {
     const route = `/api/ex?cat=${categoryName}`;
 
     const res = await askServer(route, "GET");
+    const excat = res.response;
 
-    if (res.errors || res.length === 0) {
+    if (res.status != 200 || excat.length === 0) {
       showNotification("No exercise matches the search term.", "red");
     } else {
-      setCartSearch(res);
+      setCartSearch(excat);
       searchText.value = "";
       categor.value[0] = categoryName;
       categor.value[1] = "";
@@ -58,12 +59,13 @@ export default function FindExSubCat() {
     const route = `/api/ex?cat=${selectedCategory}&subcat=${subcategoryName}`;
 
     const res = await askServer(route, "GET");
+    const exsubcat = res.response;
 
-    if (res.errors || res.length === 0) {
+    if (res.status != 200 || exsubcat.length === 0) {
       showNotification("No exercise matches the search term.", "red");
       setSelectedSubcategory("");
     } else {
-      setCartSearch(res);
+      setCartSearch(exsubcat);
       searchText.value = "";
       categor.value[1] = subcategoryName;
     }
