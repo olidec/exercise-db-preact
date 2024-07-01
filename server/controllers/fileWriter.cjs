@@ -22,6 +22,11 @@ async function fileWriter(json) {
     });
 }
 
+/**
+ * Schreibe LaTeX-Datei aus den übergebenen Übungen
+ * @param {Array} exercises - Array mit den Übungen
+ */
+
 async function writeLatex(exercises) {
     let latexContent = `
     \\documentclass{article}
