@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const fs = require("fs");
 
 const {getRecentExercises, getExercisesByIds }  = require("../controllers/exercises.cjs");
 const {fileWriter, writeLatex}  = require("../controllers/fileWriter.cjs");
