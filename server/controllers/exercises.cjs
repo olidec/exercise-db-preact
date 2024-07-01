@@ -2,13 +2,13 @@ const PrismaClient = require("@prisma/client");
 const prisma = new PrismaClient.PrismaClient();
 
 /**
- * 
- * @param {*} exerciseIds
- * @returns
+ * Lese die letzten fünf Übungen aus der Datenbank
+ * @returns {Array} - Array mit den letzten fünf Übungen
  */
 
 async function getRecentExercises() {
     try {
+
         const exercises = await prisma.exercise.findMany({
         take: 5,
         orderBy: {
@@ -20,6 +20,13 @@ async function getRecentExercises() {
         return { msg: "Error in DB request", err: error };
     }
 }
+
+
+/**
+ * Lese Übungen aus der Datenbank anhand der übergebenen IDs
+ * @param {*} exerciseIds - Array mit den IDs der Übungen
+ * @returns {Array} - Array mit den Übungen
+ */
 
 async function getExercisesByIds(exerciseIds) {
     try {
