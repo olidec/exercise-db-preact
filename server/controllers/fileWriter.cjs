@@ -22,4 +22,54 @@ async function fileWriter(json) {
     });
 }
 
-module.exports = fileWriter;
+async function writeLatex(exercises) {
+    let latexContent = `
+    \\documentclass{article}
+    \\usepackage{enumitem}
+    \\begin{document}
+    
+    \\section*{Exercises}
+    \\begin{enumerate}[label=\\arabic*.]
+    `;
+    
+        exercises.forEach((exercise, index) => {
+            latexContent += `
+        \\item ${exercise.content}
+    `;
+        });
+    
+        latexContent += `
+    \\end{enumerate}
+    
+    \\section*{Solutions}
+    \\begin{enumerate}[label=\\arabic*.]
+    `;
+    
+        exercises.forEach((exercise, index) => {
+            latexContent += `
+        \\item ${exercise.solution}
+    `;
+        });
+    
+        latexContent += `
+    \\end{enumerate}
+    \\end{document}
+    `;
+
+    await fs.writeFile(
+        "server/output/myExercises.tex",
+        latexContent,
+        (err) => {
+            if (err) {
+            console.error("Error writing to file:", err);
+            res.json({ msg: "Error writing to file", err: err });
+            } else {
+            console.log("Data written to file successfully");
+            }
+    });
+}
+
+module.exports = {
+    fileWriter: fileWriter,
+    writeLatex: writeLatex,
+};
