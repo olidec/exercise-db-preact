@@ -3,14 +3,13 @@ const fs = require("fs");
 const PrismaClient = require("@prisma/client");
 const prisma = new PrismaClient.PrismaClient();
 
+const {getRecentExercises, getExercisesByIds }  = require("../controllers/exercises.cjs");
+
 router.get("/", async (req, res) => {
 try {
-    const exercises = await prisma.exercise.findMany({
-    take: 5,
-    orderBy: {
-        createdAt: "desc",
-    },
-    });
+    console.log("-------> Downloading exercises");
+    const exercises = await getRecentExercises();
+
     const contentAndSolution = exercises.map((exercise) => ({
     content: exercise.content,
     solution: exercise.solution,
@@ -25,6 +24,7 @@ try {
         res.json({ msg: "Error writing to file", err: err });
         } else {
         console.log("Data written to file successfully");
+        res.json({ msg: "Data written to file successfully" });
         res.download("server/output/output.txt", "output.txt");
         }
     }

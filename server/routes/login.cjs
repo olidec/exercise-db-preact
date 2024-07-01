@@ -2,6 +2,7 @@ const { protectedRoute } = require("../auth/checkauth.cjs");
 
 const { authenticateLocal } = require("../auth/checkauth.cjs");
 
+
 const router = require("express").Router();
 
 router.get("/", (req, res) => {
