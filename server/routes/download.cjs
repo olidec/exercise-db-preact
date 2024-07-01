@@ -2,6 +2,7 @@ const router = require('express').Router();
 const fs = require("fs");
 
 const {getRecentExercises, getExercisesByIds }  = require("../controllers/exercises.cjs");
+const fileWriter = require("../controllers/fileWriter.cjs");
 
 router.get("/", async (req, res) => {
 try {
@@ -13,19 +14,8 @@ try {
     solution: exercise.solution,
     }));
     console.log(contentAndSolution);
-    fs.writeFile(
-    "server/output/output.txt",
-    JSON.stringify(contentAndSolution),
-    (err) => {
-        if (err) {
-        console.error("Error writing to file:", err);
-        res.json({ msg: "Error writing to file", err: err });
-        } else {
-        console.log("Data written to file successfully");
-        res.download("server/output/output.txt", "output.txt");
-        }
-    }
-    );
+    await fileWriter(contentAndSolution);
+    res.download("server/output/output.txt", "output.txt");
 } catch (error) {
     res.json({ msg: "Error in DB request", err: error });
 }
