@@ -24,7 +24,6 @@ try {
         res.json({ msg: "Error writing to file", err: err });
         } else {
         console.log("Data written to file successfully");
-        res.json({ msg: "Data written to file successfully" });
         res.download("server/output/output.txt", "output.txt");
         }
     }
