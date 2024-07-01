@@ -20,17 +20,7 @@ router.use("/register", require("./register.cjs"));
 
 router.use("/api/ex", require("./ex.cjs"));
 
-
-router.get("/api/cat", async (req, res) => {
-  const cat = await prisma.category.findMany({
-    include: {
-      subcategories: true,
-    },
-  });
-  console.log(cat);
-
-  res.json(cat);
-});
+router.use("/api/cat", require("./cat.cjs"));
 
 router.get("/api/subcat", async (req, res) => {
   const subcat = await prisma.subcategory.findMany({
