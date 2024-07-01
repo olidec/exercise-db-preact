@@ -1,5 +1,8 @@
 const router = require("express").Router();
 
+const { getUser, createUser } = require("../controllers/users.cjs");
+
+
 router.post("/", async (req, res) => {
     // TODO input validation
     const { email, username, password } = req.body;
