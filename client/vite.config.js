@@ -1,12 +1,14 @@
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
-import { signal } from "@preact/signals";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [preact()],
-  build: {
-    outDir: "../docs",
+  server: {
+    port: 8080,
+    strictPort: true,
+    host: "0.0.0.0",
+    origin: "http://0.0.0.0:8080",
   },
-  base: "/exercise-db-preact/",
+  base: "/",
 });
