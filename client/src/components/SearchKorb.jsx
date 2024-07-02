@@ -166,6 +166,8 @@ const SearchKorb = ({ openModal }) => {
               author={ex.author}
               subcategories={ex.subcategories}
               openModal={openModal}
+              handleDifficultyChange={handleDifficultyChange}
+              handleLanguageChange={handleLanguageChange}
             />
           ))
         )}

@@ -11,6 +11,8 @@ const Card = ({
   categories,
   subcategories,
   isModal,
+  handleDifficultyChange,
+  handleLanguageChange,
 }) => {
   const difficultyMapping = {
     1: "Leicht",
@@ -44,7 +46,16 @@ const Card = ({
         window.MathJax.typesetPromise([solutionElement]);
       }
     }
-  }, [cartSearch.value, content, summary, solution]);
+  }, [
+    cartSearch.value,
+    content,
+    summary,
+    solution,
+    difficulty,
+    categories,
+    handleLanguageChange,
+    handleDifficultyChange,
+  ]);
 
   return (
     <div className="karte">
