@@ -1,0 +1,74 @@
+services:
+  proxy:
+    image: nginx # TODO: use stable version
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - outside
+      - inside
+    volumes:
+      - ./nginx/:/etc/nginx/
+      - ./certs/client/:/etc/ssl/:ro
+    container_name: proxy
+
+  client:
+    image: node:21-alpine
+    build:
+      context: ./client
+    networks:
+      - inside
+    container_name: client
+    depends_on:
+      - proxy
+    develop:
+      watch:
+        - action: sync
+          path: ./client/
+          target: /home/node/client/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./client/package.json
+
+  server:
+    build:
+      context: ./server
+    networks:
+      - inside
+    depends_on:
+      - db
+      - proxy
+    container_name: server
+    develop:
+      watch:
+        - action: sync
+          path: ./server/
+          target: /home/node/server/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./server/package.json
+
+  db:
+    image: postgres:14-alpine
+    volumes:
+      - db-postgres:/var/lib/postgresql/data:rw
+    environment:
+      - POSTGRES_PASSWORD=passw
+      - POSTGRES_USER=cege
+      - POSTGRES_DB=cege
+    networks:
+      - inside
+    container_name: db
+
+networks:
+  outside:
+    name: "outside"
+    driver: bridge
+  inside:
+    name: "inside"
+    driver: bridge
+
+volumes:
+  db-postgres:
