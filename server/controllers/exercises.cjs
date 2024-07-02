@@ -12,10 +12,29 @@ async function getRecentExercises() {
         const exercises = await prisma.exercise.findMany({
         take: 5,
         orderBy: {
-            createdAt: "desc",
+            updatedAt: "desc",
         },
         });
         return exercises;
+    } catch (error) {
+        return { msg: "Error in DB request", err: error };
+    }
+}
+
+/**
+ * Lese eine einzelne Aufgabe aus der Datenbank anhand der übergebenen ID
+ * @param {*} id - ID der Aufgabe
+ * @returns {Object} - Aufgabe
+ */
+
+async function getSingleExercise(id) {
+    try {
+        const exercise = await prisma.exercise.findUnique({
+        where: {
+            id: Number(id),
+        },
+        });
+        return exercise;
     } catch (error) {
         return { msg: "Error in DB request", err: error };
     }
@@ -47,7 +66,76 @@ async function getExercisesByIds(exerciseIds) {
     }
 }
 
+/**
+ * Suche Aufgaben nach Kategorie
+ * @param {*} cat - Kategorie
+ * @returns {Array} - Array mit den Übungen
+ */
+
+async function getExercisesByCategory(cat) {
+    try {
+        const exercises = await prisma.exercise.findMany({
+            orderBy: {
+                updatedAt: "desc",
+            },
+            where: {
+                categories: { name: cat },
+            },
+            include: {
+                categories: true,
+                subcategories: true,
+            },
+        });
+        return exercises;
+    } catch (error) {
+        return { msg: "Error in DB request", err: error };
+    }
+}
+
+/**
+ * Suche Aufgaben nach Unterkategorie
+ * @param {*} cat - Kategorie
+ * @param {*} subcat - Unterkategorie
+ * @returns {Array} - Array mit den Übungen
+ */
+
+async function getExercisesBySubcategory(cat, subcat) {
+    try {
+        const exercises = await prisma.exercise.findMany({
+            orderBy: {
+                updatedAt: "desc",
+            },
+            where: {
+                categories: { name: cat },
+                subcategories: { name: subcat },
+            },
+            include: {
+                categories: true,
+                subcategories: true,
+            },
+        });
+        return exercises;
+    } catch (error) {
+        return { msg: "Error in DB request", err: error };
+    }
+}
+
+async function getExerciseBySearch(search) {
+    try {
+        const exercises = await prisma.exercise.findMany({
+            where: { content: { contains: search } },
+        });
+        return exercises;
+    } catch (error) {
+        return { msg: "Error in DB request", err: error };
+    }
+}
+
 module.exports = {
     getRecentExercises: getRecentExercises,
+    getSingleExercise: getSingleExercise,
     getExercisesByIds: getExercisesByIds,
+    getExercisesByCategory: getExercisesByCategory,
+    getExercisesBySubcategory: getExercisesBySubcategory,
+    getExerciseBySearch: getExerciseBySearch,
 };

@@ -4,6 +4,8 @@ const { query, validationResult } = require("express-validator");
 const PrismaClient = require("@prisma/client");
 const prisma = new PrismaClient.PrismaClient();
 
+const { getRecentExercises, getSingleExercise, getExerciseBySearch, getExercisesBySubcategory, getExercisesByCategory } = require("../controllers/exercises.cjs");
+
 const searchValidation = [
     query("id", "id must be a number").notEmpty().isInt().optional(),
     query("search").isString().notEmpty().optional().escape(),
@@ -17,47 +19,20 @@ if (result.isEmpty()) {
     const { id, search, cat, subcat } = req.query;
 
     if (id) {
-    const ex = await prisma.exercise.findUnique({
-        where: { id: Number(id) },
-    });
+    const ex = await getSingleExercise(id);
     res.json(ex);
     } else if (search) {
-    const exs = await prisma.exercise.findMany({
-        where: { content: { contains: search } },
-    });
+    const exs = await getExerciseBySearch(search);
     res.json(exs);
     } else if (cat && subcat) {
     console.log(cat, subcat);
-    const exs = await prisma.exercise.findMany({
-        where: {
-        categories: { name: cat },
-        subcategories: { name: subcat },
-        },
-        include: {
-        categories: true,
-        subcategories: true,
-        },
-    });
+    const exs = await getExercisesBySubcategory(cat, subcat);
     res.json(exs);
     } else if (cat) {
-    const exs = await prisma.exercise.findMany({
-        orderBy: {
-        updatedAt: "desc",
-        },
-        where: { categories: { name: cat } },
-        include: {
-        categories: true,
-        subcategories: true,
-        },
-    });
+    const exs = await getExercisesByCategory(cat);
     res.json(exs);
     } else {
-    const exs = await prisma.exercise.findMany({
-        include: {
-        categories: true,
-        subcategories: true,
-        },
-    });
+    const exs = await getRecentExercises();
     res.json(exs);
     }
 } else {
