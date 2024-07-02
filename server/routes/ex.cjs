@@ -1,8 +1,9 @@
 const router = require("express").Router();
 
 const { query, validationResult } = require("express-validator");
-const PrismaClient = require("@prisma/client");
-const prisma = new PrismaClient.PrismaClient();
+
+const { getRecentExercises, getSingleExercise, getExerciseBySearch, getExercisesBySubcategory, getExercisesByCategory } = require("../controllers/exercises.cjs");
+const { createExercise, updateExercise, deleteExercise } = require("../controllers/writeExercises.cjs");
 
 const searchValidation = [
     query("id", "id must be a number").notEmpty().isInt().optional(),
@@ -17,47 +18,20 @@ if (result.isEmpty()) {
     const { id, search, cat, subcat } = req.query;
 
     if (id) {
-    const ex = await prisma.exercise.findUnique({
-        where: { id: Number(id) },
-    });
+    const ex = await getSingleExercise(id);
     res.json(ex);
     } else if (search) {
-    const exs = await prisma.exercise.findMany({
-        where: { content: { contains: search } },
-    });
+    const exs = await getExerciseBySearch(search);
     res.json(exs);
     } else if (cat && subcat) {
     console.log(cat, subcat);
-    const exs = await prisma.exercise.findMany({
-        where: {
-        categories: { name: cat },
-        subcategories: { name: subcat },
-        },
-        include: {
-        categories: true,
-        subcategories: true,
-        },
-    });
+    const exs = await getExercisesBySubcategory(cat, subcat);
     res.json(exs);
     } else if (cat) {
-    const exs = await prisma.exercise.findMany({
-        orderBy: {
-        updatedAt: "desc",
-        },
-        where: { categories: { name: cat } },
-        include: {
-        categories: true,
-        subcategories: true,
-        },
-    });
+    const exs = await getExercisesByCategory(cat);
     res.json(exs);
     } else {
-    const exs = await prisma.exercise.findMany({
-        include: {
-        categories: true,
-        subcategories: true,
-        },
-    });
+    const exs = await getRecentExercises();
     res.json(exs);
     }
 } else {
@@ -79,31 +53,7 @@ router.post("/", async (req, res) => {
   
     try {
       const author = { id: 1 };
-      const newEx = await prisma.exercise.create({
-        data: {
-          content,
-          solution,
-          language,
-          difficulty,
-          author: {
-            connect: author,
-          },
-          categories: {
-            connect: categories,
-          },
-          subcategories: {
-            connect: subcategories,
-          },
-        },
-        include: {
-          author: true,
-          categories: true,
-          subcategories: true,
-  
-          // oder ein spezifischeres Select/Include
-        },
-      });
-      console.log(newEx);
+      const newEx = await createExercise(content, solution, language, difficulty, author, categories, subcategories)
       res.json(newEx);
     } catch (error) {
       if (error.code === "P2002") {
@@ -126,24 +76,7 @@ router.post("/", async (req, res) => {
       subcategories,
     } = req.body;
     try {
-      const updatedEx = await prisma.exercise.update({
-        where: { id },
-        data: {
-          content,
-          solution,
-          language,
-          difficulty,
-          author: { connect: author },
-          categories: { connect: categories },
-          subcategories: { connect: subcategories },
-        },
-        include: {
-          author: true,
-          categories: true,
-          subcategories: true, // oder ein spezifischeres Select/Include
-        },
-      });
-      console.log(updatedEx);
+      const updatedEx = await updateExercise(id, content, solution, language, difficulty, author, categories, subcategories);
       res.json(updatedEx);
     } catch (error) {
       res.json({ msg: "Errorrrrr in DB request", err: error });
@@ -153,10 +86,7 @@ router.post("/", async (req, res) => {
   router.delete("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-      const deletedEx = await prisma.exercise.delete({
-        where: { id: Number(id) },
-      });
-      console.log(deletedEx);
+      const deletedEx = await deleteExercise(id);
       res.json(deletedEx);
     } catch (error) {
       res.json({ msg: "Error in DB request", err: error });
