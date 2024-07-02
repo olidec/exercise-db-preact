@@ -7,10 +7,6 @@ const SearchKorb = ({ openModal }) => {
   const [selectedDifficulties, setSelectedDifficulties] = useState([]); // Zustand für die ausgewählten Schwierigkeitsgrade
   const [selectedLanguage, setSelectedLanguage] = useState("Egal"); // Zustand für die ausgewählte Sprache
 
-  useEffect(() => {
-    MathJax.typeset();
-  }, [cartSearch.value]);
-
   const normalizedList = Array.isArray(cartSearch.value)
     ? cartSearch.value
     : [cartSearch.value];
@@ -155,7 +151,9 @@ const SearchKorb = ({ openModal }) => {
       </div>
 
       <div className="results-container">
-        {filteredList &&
+        {filteredList.length === 0 ? (
+          <p>Keine Ergebnisse gefunden</p>
+        ) : (
           filteredList.map((ex) => (
             <SearchCard
               key={ex.id}
@@ -164,9 +162,13 @@ const SearchKorb = ({ openModal }) => {
               content={ex.content}
               categoryId={ex.categoryId}
               difficulty={ex.difficulty}
+              solution={ex.solution}
+              author={ex.author}
+              subcategories={ex.subcategories}
               openModal={openModal}
             />
-          ))}
+          ))
+        )}
       </div>
     </div>
   );
