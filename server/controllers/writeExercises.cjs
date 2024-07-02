@@ -15,6 +15,7 @@ const prisma = new PrismaClient.PrismaClient();
 
 async function createExercise(content, solution, language, difficulty, author, categories, subcategories) {
     try {
+        console.log("CONTROLLER", content, solution, language, difficulty, author, categories, subcategories);
         const newEx = await prisma.exercise.create({
             data: {
                 content,
@@ -22,7 +23,7 @@ async function createExercise(content, solution, language, difficulty, author, c
                 language,
                 difficulty,
                 author: {
-                    connect: { author },
+                    connect: author,
                 },
                 categories: {
                     connect: categories,
@@ -40,6 +41,7 @@ async function createExercise(content, solution, language, difficulty, author, c
         return newEx;
     }
     catch (error) {
+        console.log("ERROR", error);
         return { msg: "Error in DB request", err: error };
     }
 }
@@ -69,7 +71,7 @@ async function updateExercise(id, content, solution, language, difficulty, autho
                 language,
                 difficulty,
                 author: {
-                    connect: { author },
+                    connect:  author ,
                 },
                 categories: {
                     connect: categories,
