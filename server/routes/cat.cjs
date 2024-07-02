@@ -1,14 +1,8 @@
 const router = require("express").Router();
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const { getCategories } = require("../controllers/categories.cjs");
 
 router.get("/", async (req, res) => {
-  const cat = await prisma.category.findMany({
-    include: {
-      subcategories: true,
-    },
-  });
-  console.log(cat);
+  const cat = await getCategories();
 
   res.json(cat);
 });
