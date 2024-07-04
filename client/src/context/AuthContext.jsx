@@ -34,6 +34,7 @@ export function AuthProvider({ children }) {
     document.cookie =
       "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     askServer("/logout", "DELETE");
+    window.localStorage.clear();
   };
 
   return (
