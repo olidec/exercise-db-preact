@@ -13,6 +13,8 @@ const SearchCard = ({
   author,
   subcategories,
   openModal,
+  handleDifficultyChange,
+  handleLanguageChange,
 }) => {
   const { cartItems, addToKorb, handleDelete } = useContext(WarenkorbContext);
   let index = cartItems.value.findIndex((item) => item.id === id);
@@ -30,6 +32,8 @@ const SearchCard = ({
         author={author}
         subcategories={subcategories}
         isModal={false}
+        handleDifficultyChange={handleDifficultyChange}
+        handleLanguageChange={handleLanguageChange}
       />
 
       <div className="warenkorbColumn">
