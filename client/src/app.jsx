@@ -1,7 +1,8 @@
-import "./app.css";
+import { useState } from "preact/hooks";
+import { Router } from "preact-router";
+
 import AddExercise from "./pages/AddExercise.jsx";
 import FindExercise from "./pages/FindExercise.jsx";
-import { Router } from "preact-router";
 import User from "./pages/User.jsx";
 import Warenkorb from "./components/Warenkorb.jsx";
 import SearchKorb from "./components/SearchKorb.jsx";
@@ -11,7 +12,7 @@ import EditExercise from "./components/EditExercise.jsx";
 import Home from "./pages/Home.jsx";
 import AufgDetails from "./components/AufgDetails.jsx";
 import Modal from "./components/Modal.jsx";
-import { useState } from "preact/hooks";
+
 
 export function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
