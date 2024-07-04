@@ -13,10 +13,14 @@ try {
     solution: exercise.solution,
     }));
     console.log(contentAndSolution);
-    await fileWriter(contentAndSolution);
-    res.download("server/output/output.txt", "output.txt");
+    const success = await fileWriter(contentAndSolution);
+    console.log(success);
+    if (!success) {
+      throw new Error("Error writing exercises");
+    }
+    res.download("/home/node/server/output/output.txt", "output.txt");
 } catch (error) {
-    res.json({ msg: "Error in DB request", err: error });
+    res.json({ msg: "ROUTES: Error writing exercises", err: error });
 }
 });
   
@@ -31,7 +35,7 @@ try {
             }));
         console.log(contentAndSolution);
         await writeLatex(contentAndSolution);
-        res.download("server/output/output.txt", "output.txt");
+        res.download("/home/node/server/output/myExercises.tex", "myExercises.tex");
     } catch (error) {
       console.error("Error in DB request", error);
       res.status(500).json({ msg: "Error in DB request", err: error });
