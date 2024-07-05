@@ -21,7 +21,7 @@ const Warenkorb = ({}) => {
   };
 
   return (
-    <div className="inhalt">
+    <div>
       <h1>Warenkorb ({getCartCount()})</h1>
       <hr />
       <div>

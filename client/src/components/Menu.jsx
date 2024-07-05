@@ -17,7 +17,7 @@ export default function Menu() {
   };
 
   return (
-    <div className="pure-menu pure-menu-horizontal pure-menu-fixed my-bg-color">
+    <div className="pure-menu pure-menu-horizontal my-bg-color">
       <ul
         className="pure-menu-list"
         // style={{
@@ -33,7 +33,7 @@ export default function Menu() {
         >
           <Link
             href="/exercise-db-preact/login"
-            className="pure-menu-link my-link-color"
+            className="pure-menu-link my-link"
             onClick={() => handleMenuClick("user")}
           >
             User
@@ -46,7 +46,7 @@ export default function Menu() {
         >
           <Link
             href="/exercise-db-preact/add"
-            className="pure-menu-link my-link-color"
+            className="pure-menu-link my-link"
             onClick={() => handleMenuClick("add")}
           >
             Aufgaben hinzufügen
@@ -59,7 +59,7 @@ export default function Menu() {
         >
           <Link
             href="/exercise-db-preact/find"
-            className="pure-menu-link my-link-color"
+            className="pure-menu-link my-link"
             onClick={() => handleMenuClick("find")}
           >
             Aufgaben finden
@@ -73,7 +73,7 @@ export default function Menu() {
           >
             <Link
               href="/exercise-db-preact/search"
-              className="pure-menu-link my-link-color"
+              className="pure-menu-link my-link"
               // style={{ color: "black" }}
               onClick={() => handleMenuClick("search")}
             >
@@ -93,7 +93,7 @@ export default function Menu() {
 
           <Link
             href="/exercise-db-preact/warenkorb"
-            className="pure-menu-link my-link-color"
+            className="pure-menu-link my-link"
             onClick={() => handleMenuClick("warenkorb")}
           >
             Warenkorb ({getCartCount()})
@@ -107,7 +107,7 @@ export default function Menu() {
         >
           <Link
             href="/exercise-db-preact/"
-            className="pure-menu-link"
+            className="pure-menu-link logout-link"
             onClick={() => logout()}
           >
             Logout

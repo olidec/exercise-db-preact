@@ -13,7 +13,6 @@ import Home from "./pages/Home.jsx";
 import AufgDetails from "./components/AufgDetails.jsx";
 import Modal from "./components/Modal.jsx";
 
-
 export function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const [modalOpen, setModalOpen] = useState(false);
@@ -35,7 +34,7 @@ export function App() {
 
   return (
     <>
-      <div id="app">
+      <div>
         <Router onChange={handleRouteChange}>
           <Home path="/exercise-db-preact" />
         </Router>

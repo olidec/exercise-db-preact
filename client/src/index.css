@@ -15,8 +15,10 @@ body {
 :root {
   --footer-height: 20px;
   --header-height: 80px;
-  --navbar-bg-color: #3498db;
+  --navbar-bg-color: #7bbce7;
   --link-color: #1d1dea;
+  --hover-color: #73aee5;
+  --logout-link-color: #eb0c00;
 }
 
 .inhalt {
@@ -42,21 +44,31 @@ body {
   z-index: 1000;
 } */
 
-.my-link-color {
+.my-link {
   color: var(--link-color);
+  font-weight: bold;
 }
 
-.pure-menu-link:hover {
+.logout-link {
+  color: var(--logout-link-color);
+  font-weight: bold;
+}
+
+/* .my-link-color:hover {
+  color: var(--hover-color);
+} */
+
+/* .pure-menu-link:hover {
   background-color: #73aee5;
 }
 
 .pure-menu-item:hover {
   background-color: #73aee5;
-}
+} */
 
-.pure-menu-selected {
+/* .pure-menu-selected {
   background-color: #fafbfc;
-}
+} */
 
 .kartenContainer {
   display: flex;
@@ -86,26 +98,15 @@ body {
   margin-bottom: 16px;
 }
 
-.summary {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.content {
-  margin-top: 10px;
-  font-size: 16px;
-}
-
 .warenkorbColumn {
   width: 100%;
   display: flex;
-
   align-items: center;
 }
 
-.pure-button {
+/* .pure-button {
   margin-left: 30px;
-}
+} */
 
 .findEx {
   display: "flex";
@@ -212,6 +213,13 @@ body {
   margin-bottom: 10px; /* Abstand nach unten */
 }
 
+header {
+  background-color: var(--navbar-bg-color);
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
 .container {
   padding: 20px;
   max-width: 1200px;
@@ -236,7 +244,7 @@ body {
 }
 
 .call-to-action {
-  background-color: #2ecc71;
+  background-color: var(--link-color);
   color: white;
   text-align: center;
   padding: 40px 20px;

@@ -33,12 +33,20 @@ export default function FindExBySearchText() {
 
   return (
     <>
-      <h2>Textsuche</h2>
-      <form className="pure-form pure-form-aligned" onSubmit={(e) => getEx(e)}>
-        <div className="pure-control-group">
-          <input id="exid-3" value={searchText} onChange={onChange} />
-          <button className="pure-button">Find Exercises containing</button>
-        </div>
+      <h2>Volltextsuche</h2>
+      <form className="pure-form" onSubmit={(e) => getEx(e)}>
+        <fieldset>
+          <legend>Search for Exercises</legend>
+          <input
+            className="pure-input-1-3"
+            value={searchText}
+            placeholder="seach text"
+            onChange={onChange}
+          />
+          <button className="pure-button pure-button-primary">
+            Find Exercises
+          </button>
+        </fieldset>
       </form>
     </>
   );
