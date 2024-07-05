@@ -16,18 +16,8 @@ body {
   --footer-height: 20px;
   --header-height: 80px;
   --navbar-bg-color: #3498db;
+  --link-color: #1d1dea;
 }
-
-/* header {
-  background-color: var(--navbar-bg-color);
-  color: white;
-  padding: 20px 0;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-} */
 
 .inhalt {
   margin-left: 5%;
@@ -35,21 +25,25 @@ header h1 {
   padding-top: 5%;
 }
 
-.my-menu {
+/* .my-menu {
   position: "fixed";
   top: "0";
   width: "100%";
   font-size: "18px";
   font-weight: "bold";
+} */
+
+.my-bg-color {
+  background-color: var(--navbar-bg-color);
 }
 
-.pure-menu-horizontal {
+/* .pure-menu-horizontal {
   background-color: #78a2d6;
   z-index: 1000;
-}
+} */
 
-.pure-menu-link {
-  color: #1d1dea;
+.my-link-color {
+  color: var(--link-color);
 }
 
 .pure-menu-link:hover {
