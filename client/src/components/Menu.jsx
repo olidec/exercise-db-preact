@@ -17,16 +17,7 @@ export default function Menu() {
   };
 
   return (
-    <div
-      className="pure-menu pure-menu-horizontal"
-      style={{
-        position: "fixed",
-        top: "0",
-        width: "100%",
-        fontSize: "18px",
-        fontWeight: "bold",
-      }}
-    >
+    <div className="pure-menu pure-menu-horizontal pure-menu-fixed">
       <ul
         className="pure-menu-list"
         style={{

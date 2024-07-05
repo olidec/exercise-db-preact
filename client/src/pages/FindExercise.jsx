@@ -5,7 +5,7 @@ import FindExSubCat from "../components/FindExSubCat.jsx";
 const FindExercise = () => {
   return (
     <>
-      <div className="inhalt">
+      <div>
         <hr />
 
         <FindExBySearchText />

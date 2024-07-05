@@ -15,10 +15,11 @@ body {
 :root {
   --footer-height: 20px;
   --header-height: 80px;
+  --navbar-bg-color: #3498db;
 }
 
-header {
-  background-color: #3498db;
+/* header {
+  background-color: var(--navbar-bg-color);
   color: white;
   padding: 20px 0;
   text-align: center;
@@ -26,11 +27,22 @@ header {
 
 header h1 {
   margin: 0;
-}
+} */
 
 .inhalt {
-  padding-top: 25px;
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-top: 5%;
 }
+
+.my-menu {
+  position: "fixed";
+  top: "0";
+  width: "100%";
+  font-size: "18px";
+  font-weight: "bold";
+}
+
 .pure-menu-horizontal {
   background-color: #78a2d6;
   z-index: 1000;
@@ -105,7 +117,6 @@ header h1 {
   display: "flex";
   justify-content: "center";
   align-items: "center";
-
   text-align: "center";
 }
 
@@ -361,12 +372,6 @@ header h1 {
 
 .pure-g > div {
   box-sizing: border-box;
-}
-
-.inhalt {
-  margin-left: 5%;
-  margin-right: 5%;
-  padding-top: 1%;
 }
 
 .button-error {
