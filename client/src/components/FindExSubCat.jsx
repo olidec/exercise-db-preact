@@ -1,12 +1,15 @@
 import { askServer } from "../utils/connector";
 import { cat, loadCat, subcat } from "../signals/categories.js";
 import { useContext, useState, useEffect } from "preact/hooks";
+import { createContext } from "preact";
 import { SearchContext } from "../signals/exercise.jsx";
 import SearchKorb from "./SearchKorb.jsx";
 import Modal from "./Modal.jsx";
 import AufgDetails from "./AufgDetails.jsx";
 
-export default function FindExSubCat() {
+export const FindExContext = createContext();
+
+export default function FindExSubCat({ children }) {
   const { showNotification, setCartSearch, searchText, categor } =
     useContext(SearchContext);
 
@@ -37,9 +40,8 @@ export default function FindExSubCat() {
   const onCategoryClick = async (categoryName) => {
     setSelectedCategory(categoryName);
     setSelectedSubcategory(""); // Reset subcategory when selecting a new category
-
+    
     const route = `/api/ex?cat=${categoryName}`;
-
     const res = await askServer(route, "GET");
     const excat = res.response;
 
@@ -62,16 +64,13 @@ export default function FindExSubCat() {
     setSelectedSubcategory(subcategoryName);
 
     const route = `/api/ex?cat=${selectedCategory}&subcat=${subcategoryName}`;
-
     const res = await askServer(route, "GET");
     const exsubcat = res.response;
 
     if (res.status != 200 || exsubcat.length === 0) {
       showNotification("No exercise matches the search term.", "red");
       setCartSearch([]);
-      setSelectedSubcategory("");
       searchText.value = "";
-      categor.value[0] = selectedCategory;
       categor.value[1] = subcategoryName;
     } else {
       setCartSearch(exsubcat);
@@ -80,6 +79,11 @@ export default function FindExSubCat() {
     }
   };
 
+  const resetSelection = () => {
+    setSelectedCategory("");
+    setSelectedSubcategory("");
+  };
+  
   const openModal = (id) => {
     setSelectedExercise(id);
     setModalOpen(true);
@@ -91,6 +95,8 @@ export default function FindExSubCat() {
   };
 
   return (
+    <FindExContext.Provider value={{ resetSelection }}>
+      {children}
     <div className="main-container" style={{ display: "flex" }}>
       <div
         className="categories-column"
@@ -137,5 +143,7 @@ export default function FindExSubCat() {
         {selectedExercise && <AufgDetails id={selectedExercise} />}
       </Modal>
     </div>
+ 
+    </FindExContext.Provider>
   );
 }

@@ -1,11 +1,12 @@
 import { useState, useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
+import { FindExContext } from "./FindExSubCat.jsx";
 import { askServer } from "../utils/connector";
 
 export default function FindExBySearchText() {
   const { setCartSearch, showNotification, searchText } = useContext(SearchContext);
   const [inputValue, setInputValue] = useState("");
-
+  const { resetSelection } = useContext(FindExContext);
   const onChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -16,6 +17,7 @@ export default function FindExBySearchText() {
       showNotification("No exercise matches the search term.", "red");
       searchText.value = "-";
       setCartSearch([]);
+      resetSelection(); // Reset selected category and subcategory
       return;
     }
 
@@ -31,6 +33,7 @@ export default function FindExBySearchText() {
       setCartSearch(extext);
     }
 
+    resetSelection(); // Reset selected category and subcategory
     setInputValue(""); // Clear the input field
   };
 
