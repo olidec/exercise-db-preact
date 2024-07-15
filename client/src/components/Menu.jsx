@@ -74,22 +74,6 @@ export default function Menu() {
             Aufgaben finden
           </Link>
         </li>
-        {cartSearch.value.length !== 0 ? (
-          <li
-            className={`pure-menu-item ${
-              selectedMenu === "search" ? "pure-menu-selected" : ""
-            }`}
-          >
-            <Link
-              href="/exercise-db-preact/search"
-              className="pure-menu-link"
-              style={{ color: "black" }}
-              onClick={() => handleMenuClick("search")}
-            >
-              Letzte Suchresultate
-            </Link>
-          </li>
-        ) : null}
 
         <li
           className={`pure-menu-item ${

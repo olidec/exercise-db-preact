@@ -22,15 +22,7 @@ export function App() {
     setCurrentPath(e.url);
   };
 
-  const openModal = (id) => {
-    setSelectedExercise(id);
-    setModalOpen(true);
-  };
 
-  const closeModal = () => {
-    setModalOpen(false);
-    setSelectedExercise(null);
-  };
 
   return (
     <>
@@ -46,13 +38,10 @@ export function App() {
           <AddExercise path="/exercise-db-preact/add" />
           <FindExercise path="/exercise-db-preact/find" />
           <Warenkorb path="/exercise-db-preact/warenkorb" />
-          <SearchKorb path="/exercise-db-preact/search" openModal={openModal} />
           <EditExercise path="/exercise-db-preact/edit/:id" />
         </Router>
       </div>
-      <Modal isOpen={modalOpen} onClose={closeModal}>
-        {selectedExercise && <AufgDetails id={selectedExercise} />}
-      </Modal>
+  
     </>
   );
 }

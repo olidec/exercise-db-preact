@@ -47,6 +47,9 @@ export default function FindExSubCat() {
       showNotification("No exercise matches the search term.", "red");
       setCartSearch([]);
       setSelectedCategory("");
+      searchText.value = "";
+      categor.value[0] = categoryName;
+      categor.value[1] = "";
     } else {
       setCartSearch(excat);
       searchText.value = "";
@@ -67,6 +70,8 @@ export default function FindExSubCat() {
       showNotification("No exercise matches the search term.", "red");
       setCartSearch([]);
       setSelectedSubcategory("");
+      searchText.value = "";
+      categor.value[0] = selectedCategory;
       categor.value[1] = subcategoryName;
     } else {
       setCartSearch(exsubcat);
