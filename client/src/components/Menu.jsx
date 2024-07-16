@@ -35,33 +35,8 @@ export default function Menu() {
           width: "100%",
         }}
       >
-        <li
-          className={`pure-menu-item ${
-            selectedMenu === "user" ? "pure-menu-selected" : ""
-          }`}
-        >
-          <Link
-            href="/exercise-db-preact/login"
-            className="pure-menu-link"
-            onClick={() => handleMenuClick("user")}
-          >
-            User
-          </Link>
-        </li>
-        <li
-          className={`pure-menu-item ${
-            selectedMenu === "add" ? "pure-menu-selected" : ""
-          }`}
-        >
-          <Link
-            href="/exercise-db-preact/add"
-            className="pure-menu-link"
-            onClick={() => handleMenuClick("add")}
-          >
-            Aufgaben hinzufügen
-          </Link>
-        </li>
-        <li
+
+<li
           className={`pure-menu-item ${
             selectedMenu === "find" ? "pure-menu-selected" : ""
           }`}
@@ -75,6 +50,21 @@ export default function Menu() {
           </Link>
         </li>
 
+    
+        <li
+          className={`pure-menu-item ${
+            selectedMenu === "add" ? "pure-menu-selected" : ""
+          }`}
+        >
+          <Link
+            href="/exercise-db-preact/add"
+            className="pure-menu-link"
+            onClick={() => handleMenuClick("add")}
+          >
+            Aufgaben hinzufügen
+          </Link>
+        </li>
+       
         <li
           className={`pure-menu-item ${
             selectedMenu === "warenkorb" ? "pure-menu-selected" : ""
@@ -103,7 +93,7 @@ export default function Menu() {
             href="/exercise-db-preact/"
             id="menuLink1"
             className="pure-menu-link"
-            onClick={() => handleMenuClick("contact")}
+            onClick={() => logout()}
           >
             Profil/Logout
           </Link>
@@ -112,7 +102,7 @@ export default function Menu() {
               <Link
                 href="/exercise-db-preact/"
                 className="pure-menu-link"
-                onClick={() => handleMenuClick("contact")}
+                onClick={() => logout()}
               >
                 Email
               </Link>
@@ -121,7 +111,7 @@ export default function Menu() {
               <Link
                 href="/exercise-db-preact/"
                 className="pure-menu-link"
-                onClick={() => handleMenuClick("contact")}
+                onClick={() => logout()}
               >
                 Profil
               </Link>
