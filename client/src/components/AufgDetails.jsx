@@ -5,6 +5,11 @@ import { askServer } from "../utils/connector";
 import { useState, useEffect } from "preact/hooks";
 import { useContext } from "preact/hooks";
 import { cat, loadCat } from "../signals/categories.js";
+
+export function edit({ id }) {
+  window.location.href = `/exercise-db-preact/edit/${id}`;
+}
+
 const AufgDetails = ({ id }) => {
   const { addToKorb, handleDelete, getIndex } = useContext(WarenkorbContext);
 
@@ -57,9 +62,7 @@ const AufgDetails = ({ id }) => {
   if (!exDetails) {
     return <h2>Aufgabe mit ID {id} existiert nicht mehr in Datenbank</h2>;
   }
-  function edit({ id }) {
-    window.location.href = `/exercise-db-preact/edit/${id}`;
-  }
+
   console.log(exDetails);
 
   return (

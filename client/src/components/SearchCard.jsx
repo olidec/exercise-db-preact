@@ -1,6 +1,7 @@
 import Card from "./Card";
 import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { useContext, useEffect } from "preact/hooks";
+import { edit } from "./AufgDetails.jsx";
 
 const SearchCard = ({
   key,
@@ -51,7 +52,10 @@ const SearchCard = ({
         )}
 
         <button className="pure-button" onClick={() => openModal(id)}>
-          Details/ Edit Aufgabe
+          Details
+        </button>
+        <button className="pure-button" onClick={() => edit({ id })}>
+          Bearbeiten
         </button>
       </div>
     </div>
