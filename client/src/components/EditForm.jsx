@@ -72,19 +72,17 @@ export default function EditForm({ id }) {
     };
     try {
       const res = await askServer("/api/ex", "PUT", exWithCategory);
-      if (!res.err) {
-        console.log(res);
-        showNotification("Exercise updated successfully", "green");
-
-        setTimeout(() => {
-          window.location.href = `/exercise-db-preact/edit/${id}`;
-        }, 1000); // Warte 1 Sekunde (1000 Millisekunden)
-      } else {
+      if (res.status === 401) {
         console.log(res.err);
         showNotification(
-          "Fehler beim Aktualisieren, Aufgabe existiert schon in DB",
+          "Fehler beim Aktualisieren",
           "red"
         );
+        // setTimeout(() => {
+        //   window.location.href = `/exercise-db-preact/edit/${id}`;
+        // }, 1000); // Warte 1 Sekunde (1000 Millisekunden)
+      } else {
+        showNotification("Exercise updated successfully", "green");
       }
     } catch (error) {
       console.error("Error updating exercise:", error); // Ändere die Bestätigungsnachricht
@@ -106,6 +104,9 @@ export default function EditForm({ id }) {
   const onChangeSubcategory = (e) => {
     setSelectedSubcategory(e.target.value);
   };
+
+  const { deleteCart } = useContext(SearchContext);
+
 
   useEffect(() => {
     const fetchExDetails = async () => {
@@ -251,8 +252,15 @@ export default function EditForm({ id }) {
             </div>
             <div className="pure-controls">
               <button type="submit" className="pure-button pure-button-primary">
-                Edit
+                Save Changes
               </button>
+
+              <button
+          className="button-error pure-button"
+          onClick={() => deleteCart({ id })}
+        >
+          Delete aus DB
+        </button>
             </div>
           </fieldset>
         </form>
