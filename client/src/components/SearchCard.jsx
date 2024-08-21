@@ -20,6 +20,9 @@ const SearchCard = ({
   const { cartItems, addToKorb, handleDelete } = useContext(WarenkorbContext);
   let index = cartItems.value.findIndex((item) => item.id === id);
 
+  const user = true;
+  // TODO Add function that tests if user is author of exercise
+
   return (
     <div key={key} className="kartenContainer">
       <Card
@@ -54,9 +57,11 @@ const SearchCard = ({
         <button className="pure-button" onClick={() => openModal(id)}>
           Details
         </button>
-        <button className="pure-button" onClick={() => edit({ id })}>
-          Bearbeiten
-        </button>
+        {user && (
+          <button className="pure-button" onClick={() => edit({ id })}>
+            Bearbeiten
+          </button>
+        )}
       </div>
     </div>
   );
