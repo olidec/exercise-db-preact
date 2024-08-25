@@ -60,7 +60,7 @@ export default function ExForm() {
       difficulty: parseInt(ex.difficulty),
       categories: { id: categoryId },
       subcategories: { id: subcategoryId },
-      authorId: userId.id,
+      author: { id: userId.id },
     };
 
     const res = await askServer("/api/ex", "POST", exWithCategory);
