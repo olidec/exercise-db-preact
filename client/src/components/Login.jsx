@@ -27,11 +27,12 @@ export default function Login() {
 
   return (
     <>
+      <h1>Login</h1>
       <form
         className="pure-form pure-form-aligned"
         onSubmit={(e) => doLogin(e)}
       >
-        <legend>Login</legend>
+        {/* <legend>Login</legend> */}
         <fieldset>
           <div class="pure-control-group">
             <label for="username">Username </label>

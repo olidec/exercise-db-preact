@@ -1,6 +1,7 @@
 import Card from "./Card";
 import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { useContext, useEffect } from "preact/hooks";
+import { edit } from "./AufgDetails.jsx";
 
 const SearchCard = ({
   key,
@@ -18,6 +19,9 @@ const SearchCard = ({
 }) => {
   const { cartItems, addToKorb, handleDelete } = useContext(WarenkorbContext);
   let index = cartItems.value.findIndex((item) => item.id === id);
+
+  const user = true;
+  // TODO Add function that tests if user is author of exercise
 
   return (
     <div key={key} className="kartenContainer">
@@ -51,8 +55,13 @@ const SearchCard = ({
         )}
 
         <button className="pure-button" onClick={() => openModal(id)}>
-          Details/ Edit Aufgabe
+          Details
         </button>
+        {user && (
+          <button className="pure-button" onClick={() => edit({ id })}>
+            Bearbeiten
+          </button>
+        )}
       </div>
     </div>
   );

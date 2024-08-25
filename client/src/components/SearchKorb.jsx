@@ -37,8 +37,10 @@ const SearchKorb = ({ openModal }) => {
 
       <h3>
         {searchText.value === ""
-          ? categor.value[0] + "  -  " + categor.value[1]
-          : "Suchbegriff: " + searchText.value}
+        ? categor.value[1] === ""? categor.value[0] : categor.value[0] + " - " + categor.value[1]
+         
+          : searchText.value===null?
+          "Suchbegriff: " : "Suchbegriff: " + searchText.value}
       </h3>
 
       <div className="checkbox-container">

@@ -4,7 +4,6 @@ import { useContext, useState } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 
 const EditExercise = ({ id }) => {
-  const { deleteCart } = useContext(SearchContext);
   return (
     <>
       <div className="inhalt">
@@ -16,12 +15,7 @@ const EditExercise = ({ id }) => {
 
         <hr />
 
-        <button
-          className="button-error pure-button"
-          onClick={() => deleteCart({ id })}
-        >
-          Delete aus DB
-        </button>
+
         <hr />
       </div>
     </>

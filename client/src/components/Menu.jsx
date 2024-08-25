@@ -17,23 +17,14 @@ export default function Menu() {
   };
 
   return (
-    <div
-      className="pure-menu pure-menu-horizontal"
-      style={{
-        position: "fixed",
-        top: "0",
-        width: "100%",
-        fontSize: "18px",
-        fontWeight: "bold",
-      }}
-    >
+    <div className="pure-menu pure-menu-horizontal my-bg-color">
       <ul
         className="pure-menu-list"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
-        }}
+        // style={{
+        //   display: "flex",
+        //   justifyContent: "space-between",
+        //   width: "100%",
+        // }}
       >
         <li
           className={`pure-menu-item ${
@@ -42,7 +33,7 @@ export default function Menu() {
         >
           <Link
             href="/exercise-db-preact/login"
-            className="pure-menu-link"
+            className="pure-menu-link my-link"
             onClick={() => handleMenuClick("user")}
           >
             User
@@ -55,7 +46,7 @@ export default function Menu() {
         >
           <Link
             href="/exercise-db-preact/add"
-            className="pure-menu-link"
+            className="pure-menu-link my-link"
             onClick={() => handleMenuClick("add")}
           >
             Aufgaben hinzufügen
@@ -68,41 +59,25 @@ export default function Menu() {
         >
           <Link
             href="/exercise-db-preact/find"
-            className="pure-menu-link"
+            className="pure-menu-link my-link"
             onClick={() => handleMenuClick("find")}
           >
             Aufgaben finden
           </Link>
         </li>
-        {cartSearch.value.length !== 0 ? (
-          <li
-            className={`pure-menu-item ${
-              selectedMenu === "search" ? "pure-menu-selected" : ""
-            }`}
-          >
-            <Link
-              href="/exercise-db-preact/search"
-              className="pure-menu-link"
-              style={{ color: "black" }}
-              onClick={() => handleMenuClick("search")}
-            >
-              Letzte Suchresultate
-            </Link>
-          </li>
-        ) : null}
 
         <li
           className={`pure-menu-item ${
             selectedMenu === "warenkorb" ? "pure-menu-selected" : ""
           }`}
-          style={{ position: "relative", marginLeft: "auto" }}
+          // style={{ position: "relative", marginLeft: "auto" }}
         >
           <div id="notification-container"></div>
           <div id="checkmark"></div>
 
           <Link
             href="/exercise-db-preact/warenkorb"
-            className="pure-menu-link"
+            className="pure-menu-link my-link"
             onClick={() => handleMenuClick("warenkorb")}
           >
             Warenkorb ({getCartCount()})
@@ -110,20 +85,18 @@ export default function Menu() {
         </li>
 
         <li
-          className={`pure-menu-item pure-menu-has-children pure-menu-allow-hover ${
+          className={`pure-menu-item ${
             selectedMenu === "contact" ? "pure-menu-selected" : ""
           }`}
-          style={{ marginLeft: "auto" }}
         >
           <Link
             href="/exercise-db-preact/"
-            id="menuLink1"
-            className="pure-menu-link"
-            onClick={() => handleMenuClick("contact")}
+            className="pure-menu-link logout-link"
+            onClick={() => logout()}
           >
-            Profil/Logout
+            Logout
           </Link>
-          <ul className="pure-menu-children">
+          {/* <ul className="pure-menu-children">
             <li className="pure-menu-item">
               <Link
                 href="/exercise-db-preact/"
@@ -151,7 +124,7 @@ export default function Menu() {
                 Logout
               </Link>
             </li>
-          </ul>
+          </ul> */}
         </li>
       </ul>
     </div>
