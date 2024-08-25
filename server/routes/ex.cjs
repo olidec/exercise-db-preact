@@ -49,13 +49,15 @@ router.post("/", async (req, res) => {
       solution,
       language,
       difficulty,
-      author,
+      authorId,
       categories,
       subcategories,
     } = req.body;
   
     try {
-      const author = { id: 1 };
+      const author = { id: authorId };
+      const categories = { id: 1 };
+      const subcategories = { id: 1 };
       const newEx = await createExercise(content, solution, language, difficulty, author, categories, subcategories)
       res.json(newEx);
     } catch (error) {
