@@ -15,7 +15,7 @@ const searchValidation = [
     query("subcat").isString().notEmpty().optional().escape(),
 ];
   
-router.get("/", searchValidation, async (req, res) => {
+router.get("/", protectedRoute, searchValidation, async (req, res) => {
 const result = validationResult(req);
 if (result.isEmpty()) {
     const { id, search, cat, subcat } = req.query;
@@ -42,22 +42,20 @@ if (result.isEmpty()) {
 }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", protectedRoute, async (req, res) => {
     console.log(req.body);
     const {
       content,
       solution,
       language,
       difficulty,
-      authorId,
+      author,
       categories,
       subcategories,
     } = req.body;
   
     try {
-      const author = { id: authorId };
-      const categories = { id: 1 };
-      const subcategories = { id: 1 };
+      // const author = { id: authorId };
       const newEx = await createExercise(content, solution, language, difficulty, author, categories, subcategories)
       res.json(newEx);
     } catch (error) {
@@ -88,7 +86,7 @@ router.post("/", async (req, res) => {
     }
   });
   
-  router.delete("/:id", async (req, res) => {
+  router.delete("/:id", protectedRoute, async (req, res) => {
     const { id } = req.params;
     try {
       const deletedEx = await deleteExercise(id);
