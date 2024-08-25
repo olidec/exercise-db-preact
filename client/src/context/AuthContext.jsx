@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
     });
     if (status === 200) {
       setUser({ ...response.data.user });
-      window.location.assign("/add");
+      window.location.assign("/find");
     } else {
       console.error(response);
       window.location.assign("/login");

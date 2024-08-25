@@ -16,6 +16,7 @@ router.post("/", authenticateLocal, (req, res) => {
     data: {
       user: {
         username: req.user.username,
+        id: req.user.id,
         // z.B. last login etc. muss im 'serialize' mitgeschickt werden.
       },
     },
