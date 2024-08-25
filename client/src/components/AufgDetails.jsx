@@ -78,7 +78,7 @@ const AufgDetails = ({ id }) => {
             content={exDetails.content}
             solution={exDetails.solution}
             difficulty={exDetails.difficulty}
-            author={exDetails.authorId}
+            authorId={exDetails.authorId}
             categories={categoryName}
             subcategories={subcategoryName}
             isModal={true}

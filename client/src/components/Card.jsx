@@ -7,7 +7,7 @@ const Card = ({
   content,
   solution,
   difficulty,
-  author,
+  authorId,
   categories,
   subcategories,
   isModal,
@@ -52,6 +52,7 @@ const Card = ({
     summary,
     solution,
     difficulty,
+    authorId,
     categories,
     handleLanguageChange,
     handleDifficultyChange,
@@ -86,7 +87,7 @@ const Card = ({
           <h5>Kategorie: {categories}</h5>
           <h5>Subkategorie: {subcategories}</h5>
           <h5>Schwierigkeit: {schwierigkeitText}</h5>
-          <h5>Autor: {author}</h5>
+          <h5>Autor: {authorId}</h5>
         </>
       )}
     </div>
