@@ -34,3 +34,5 @@ dist-ssr
 *.lof
 
 certs/
+
+package-lock.json

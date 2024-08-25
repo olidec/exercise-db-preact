@@ -1,3 +1,6 @@
+const { canEditEx } = require("../auth/checkuser.cjs")
+const { protectedRoute } = require("../auth/checkauth.cjs");
+
 const router = require("express").Router();
 
 const { query, validationResult } = require("express-validator");
@@ -64,7 +67,7 @@ router.post("/", async (req, res) => {
     }
   });
   
-  router.put("/", async (req, res) => {
+  router.put("/",protectedRoute, canEditEx, async (req, res) => {
     const {
       id,
       content,

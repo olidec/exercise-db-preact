@@ -4,7 +4,8 @@ import { FindExContext } from "./FindExSubCat.jsx";
 import { askServer } from "../utils/connector";
 
 export default function FindExBySearchText() {
-  const { setCartSearch, showNotification, searchText } = useContext(SearchContext);
+  const { setCartSearch, showNotification, searchText } =
+    useContext(SearchContext);
   const [inputValue, setInputValue] = useState("");
   const { resetSelection } = useContext(FindExContext);
   const onChange = (e) => {
@@ -43,7 +44,9 @@ export default function FindExBySearchText() {
       <form className="pure-form pure-form-aligned" onSubmit={getEx}>
         <div className="pure-control-group">
           <input id="exid-3" value={inputValue} onChange={onChange} />
-          <button className="pure-button" type="submit">Find Exercises containing</button>
+          <button className="pure-button" type="submit">
+            Find Exercises containing
+          </button>
         </div>
       </form>
     </>

@@ -51,7 +51,7 @@ const Home = () => {
             Werden Sie Teil unserer Community und tragen Sie zur größten
             Mathematik-Sammlungsdatenbank bei.
           </p>
-          <Link href="/exercise-db-preact/user">Registrieren / Login</Link>
+          <Link href="/exercise-db-preact/login">Registrieren / Login</Link>
         </section>
       </div>
     </div>

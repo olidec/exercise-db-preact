@@ -1,26 +1,74 @@
-.inhalt {
-  padding-top: 25px;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-.pure-menu-horizontal {
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+:root {
+  --footer-height: 20px;
+  --header-height: 80px;
+  --navbar-bg-color: #7bbce7;
+  --link-color: #1d1dea;
+  --hover-color: #73aee5;
+  --logout-link-color: #eb0c00;
+}
+
+.inhalt {
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-top: 5%;
+}
+
+/* .my-menu {
+  position: "fixed";
+  top: "0";
+  width: "100%";
+  font-size: "18px";
+  font-weight: "bold";
+} */
+
+.my-bg-color {
+  background-color: var(--navbar-bg-color);
+}
+
+/* .pure-menu-horizontal {
   background-color: #78a2d6;
   z-index: 1000;
+} */
+
+.my-link {
+  color: var(--link-color);
+  font-weight: bold;
 }
 
-.pure-menu-link {
-  color: #1d1dea;
+.logout-link {
+  color: var(--logout-link-color);
+  font-weight: bold;
 }
 
-.pure-menu-link:hover {
+/* .my-link-color:hover {
+  color: var(--hover-color);
+} */
+
+/* .pure-menu-link:hover {
   background-color: #73aee5;
 }
 
 .pure-menu-item:hover {
   background-color: #73aee5;
-}
+} */
 
-.pure-menu-selected {
+/* .pure-menu-selected {
   background-color: #fafbfc;
-}
+} */
 
 .kartenContainer {
   display: flex;
@@ -44,39 +92,26 @@
   border-radius: "8px";
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
   width: calc(100% - 16px);
   height: fit-content;
   word-wrap: "break-word";
   margin-bottom: 16px;
 }
 
-.summary {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.content {
-  margin-top: 10px;
-  font-size: 16px;
-}
-
 .warenkorbColumn {
   width: 100%;
   display: flex;
-
   align-items: center;
 }
 
-.pure-button {
+/* .pure-button {
   margin-left: 30px;
-}
+} */
 
 .findEx {
   display: "flex";
   justify-content: "center";
   align-items: "center";
-
   text-align: "center";
 }
 
@@ -178,21 +213,11 @@
   margin-bottom: 10px; /* Abstand nach unten */
 }
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
 header {
-  background-color: #3498db;
+  background-color: var(--navbar-bg-color);
   color: white;
-  padding: 20px 0;
   text-align: center;
-}
-
-header h1 {
-  margin: 0;
+  padding: 10px 0;
 }
 
 .container {
@@ -219,7 +244,7 @@ header h1 {
 }
 
 .call-to-action {
-  background-color: #2ecc71;
+  background-color: var(--link-color);
   color: white;
   text-align: center;
   padding: 40px 20px;
@@ -345,4 +370,13 @@ header h1 {
   font-size: 1.5rem;
   cursor: pointer;
   color: black;
+}
+
+.pure-g > div {
+  box-sizing: border-box;
+}
+
+.button-error {
+  background: rgb(202, 60, 60);
+  /* this is a maroon */
 }

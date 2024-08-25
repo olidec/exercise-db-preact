@@ -2,6 +2,7 @@ import { WarenkorbContext } from "../signals/warenkorb.jsx";
 import { useContext } from "preact/hooks";
 import WarenCard from "./WarenCard.jsx";
 import { useEffect } from "preact/hooks";
+import AuthWrapper from "./AuthWrapper.jsx";
 
 const Warenkorb = ({}) => {
   const { cartItems, getCartCount } = useContext(WarenkorbContext);
@@ -21,7 +22,7 @@ const Warenkorb = ({}) => {
   };
 
   return (
-    <div className="inhalt">
+    <AuthWrapper>
       <h1>Warenkorb ({getCartCount()})</h1>
       <hr />
       <div>
@@ -35,7 +36,7 @@ const Warenkorb = ({}) => {
           />
         ))}
       </div>
-    </div>
+    </AuthWrapper>
   );
 };
 
