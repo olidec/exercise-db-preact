@@ -10,7 +10,7 @@ export default function Form() {
 
   const addNewUser = async (e) => {
     e.preventDefault();
-    console.log("hallo");
+    // console.log("hallo");
     const res = await askServer("/register", "POST", user);
     console.log(res);
     if (res.err) {
@@ -22,6 +22,7 @@ export default function Form() {
         password: "",
       });
       console.log("user added");
+      // window.location.assign("/login");
     }
   };
 
@@ -36,11 +37,11 @@ export default function Form() {
 
   return (
     <>
+      <h1>Registrieren</h1>
       <form
         className="pure-form pure-form-aligned"
         onSubmit={(e) => addNewUser(e)}
       >
-        <legend>Add a new User</legend>
         <fieldset>
           <div class="pure-control-group">
             <label for="aligned-email">Email </label>

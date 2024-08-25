@@ -11,13 +11,15 @@ const argon2 = require("argon2");
  */
 async function createUser(username, email, password) {
   const hashedPassword = await argon2.hash(password);
+  console.log("createUser: ", username);
   const user = await prisma.user.create({
     data: {
-      username,
-      email,
-      hashedPassword,
+      username: username,
+      email: email,
+      password: hashedPassword,
     },
   });
+  console.log("createdUser: ", username);
   return user;
 }
 
@@ -46,7 +48,34 @@ async function getUser(options = { id, username, email }) {
   else return { msg: "User not found", success: false };
 }
 
+async function findOrCreateUser(email, username, password) {
+  console.log("findOrCreateUser");
+  console.log(email, username);
+  hashedPassword = await argon2.hash(password);
+  const emailExists = await prisma.user.findUnique({ where: { email: email } });
+  const usernameExists = await prisma.user.findUnique({
+    where: { username: username },
+  });
+  if (emailExists) {
+    console.log("Email exists");
+    return { msg: "Email already exists", success: false };
+  } else if (usernameExists) {
+    console.log("Username exists");
+    return { msg: "Username already exists", success: false };
+  } else {
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        username,
+        hashedPassword,
+      },
+    });
+    return { msg: "User created", success: true, user: newUser };
+  }
+}
+
 module.exports = {
   getUser: getUser,
   createUser: createUser,
+  findOrCreateUser: findOrCreateUser,
 };

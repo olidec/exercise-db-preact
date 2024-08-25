@@ -6,7 +6,7 @@ const { authenticateLocal } = require("../auth/checkauth.cjs");
 const router = require("express").Router();
 
 router.get("/", (req, res) => {
-    return res.redirect("http://localhost:5173/exercise-db-preact/login");
+    return res.redirect("http://localhost:5173/login");
 });
   
 router.post("/", authenticateLocal, (req, res) => {
