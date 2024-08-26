@@ -1,9 +1,10 @@
 const router = require('express').Router();
 
 const {getRecentExercises, getExercisesByIds }  = require("../controllers/exercises.cjs");
-const {fileWriter, writeLatex}  = require("../controllers/fileWriter.cjs");
+const {fileWriter, texContent}  = require("../controllers/fileWriter.cjs");
 
 router.get("/", async (req, res) => {
+  console.log("-------> hello");
 try {
     console.log("-------> Downloading exercises");
     const exercises = await getRecentExercises();
@@ -25,6 +26,7 @@ try {
 });
   
   router.post("/", async (req, res) => {
+    console.log(req.body);
     const { exerciseIds } = req.body;
     console.log(exerciseIds);
     try {
@@ -34,8 +36,8 @@ try {
             solution: exercise.solution,
             }));
         console.log(contentAndSolution);
-        await writeLatex(contentAndSolution);
-        res.download("/home/node/server/output/myExercises.tex", "myExercises.tex");
+        const data = texContent(contentAndSolution);
+        res.json(data);
     } catch (error) {
       console.error("Error in DB request", error);
       res.status(500).json({ msg: "Error in DB request", err: error });

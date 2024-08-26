@@ -65,7 +65,7 @@ export const SearchProvider = ({ children }) => {
       if (container.contains(notification)) {
         container.removeChild(notification);
       }
-    }, 2500);
+    }, 3500);
   };
 
   const deleteCart = async ({ id }) => {
