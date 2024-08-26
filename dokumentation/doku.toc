@@ -9,16 +9,18 @@
 \contentsline {subsubsection}{\numberline {3.2.3}Zustandsmanagement:}{9}{subsubsection.3.2.3}%
 \contentsline {subsubsection}{\numberline {3.2.4}Vergleich: Signals vs. useState/useEffect}{10}{subsubsection.3.2.4}%
 \contentsline {subsubsection}{\numberline {3.2.5} Reaktivität}{10}{subsubsection.3.2.5}%
-\contentsline {subsection}{\numberline {3.3}Die Datenmodellierung}{13}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.3}Die Datenmodellierung}{12}{subsection.3.3}%
 \contentsline {section}{\numberline {4}Methodik}{13}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Backend-Entwicklung}{13}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Frontend-Entwicklung}{13}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Authentifizierug und Autorisierung}{13}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Ergbenisse}{13}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Allgemeines}{13}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Die Komponentenübersicht}{13}{subsection.5.2}%
-\contentsline {section}{\numberline {6}Fazit/Diskussion}{13}{section.6}%
-\contentsline {section}{\numberline {7}Schlusswort}{13}{section.7}%
-\contentsline {section}{\numberline {A}Anhang}{14}{appendix.A}%
-\contentsline {section}{\numberline {B}Bilderverzeichnis}{15}{appendix.B}%
-\contentsline {section}{\numberline {C}Literaturverzeichnis}{16}{appendix.C}%
+\contentsline {subsection}{\numberline {4.2}Frontend-Entwicklung}{15}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Authentifizierug und Autorisierung}{15}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Testing und Qualitätssicherung: }{16}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Deployment und Inbetriebnahme: }{16}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Ergbenisse}{16}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Allgemeines}{16}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Die Komponentenübersicht}{17}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Fazit/Diskussion}{19}{section.6}%
+\contentsline {section}{\numberline {7}Schlusswort}{19}{section.7}%
+\contentsline {section}{\numberline {A}Anhang}{21}{appendix.A}%
+\contentsline {section}{\numberline {B}Bilderverzeichnis}{22}{appendix.B}%
+\contentsline {section}{\numberline {C}Literaturverzeichnis}{23}{appendix.C}%

@@ -209,18 +209,151 @@ Bsp aus App:
 
 \subsection{Die Datenmodellierung}
 
+Die Applikation nutzt ein relationales Datenmodell mit folgenden Hauptentitäten:
+
+•	Benutzer (Users)
+
+o	Attribute: BenutzerID, Name, Email, Passwort, Rolle
+
+o	Beziehungen: 1: n zu Aufgaben, 1: n zu Kommentaren
+
+•	Aufgaben (Exercises)
+
+o	Attribute: AufgabenID, Titel, Inhalt, Zusammenfassung, Lösung, Erstellungsdatum, Update-Datum, AutorID
+
+o	Beziehungen: n:1 zu Benutzer, n:1 zu Kategorien, n:1 zu Subkategorien
+
+•	Kategorien (Categories)
+
+o	Attribute: KategorieID, Name, Beschreibung
+
+o	Beziehungen: 1:n zu Aufgaben, 1: n zu Subkategorien
+
+•	Subkategorien (Subcategories)
+
+o	Attribute: SubkategorieID, Name, Beschreibung, KategorieID
+
+o	Beziehungen: n:1 zu Kategorie, 1:n zu Aufgaben
+
+•	Kommentare (Comments)
+
+o	Attribute: KommentarID, Inhalt, Erstellungsdatum, BenutzerID, AufgabenID
+
+o	Beziehungen: n:1 zu Benutzer, n:1 zu Aufgaben
+
+
+Die Datenbankstruktur unterstützt umfassende Interaktionen zwischen Benutzern, ihren Aufgaben und Kommentaren sowie die Kategorisierung von Aufgaben.
+
+
 \section{Methodik}
+Unser Projekt folgte einem strukturierten Softwareentwicklungsprozess, der in mehrere Phasen unterteilt war. Wir begannen mit einer detaillierten Anforderungsanalyse und der Definition von Use Cases, um die Bedürfnisse der Endbenutzer zu verstehen.
+
 \subsection{Backend-Entwicklung}
+Die Implementierung von CRUD-Operationen und Authentifizierungssystemen stellte sicher, dass die Anwendung sicher und robust ist.
+
+CRUD- und HTTP-Operationen:
+
+CRUD steht für Create, Read, Update, Delete und bezieht sich auf die vier grundlegenden Operationen, die in vielen Anwendungen zur Interaktion mit Datenbanken oder Datenspeichern verwendet werden. Die Implementierung von CRUD-Operationen ermöglicht es Benutzern (oder Systemen), Daten zu erstellen, abzurufen (lesen), zu aktualisieren und zu löschen.
+
+In einer Webanwendung werden CRUD-Operationen typischerweise über das Backend realisiert, wobei das Frontend (die Benutzeroberfläche) Anfragen an das Backend sendet, um Daten zu erstellen, abzurufen, zu aktualisieren oder zu löschen. Das Backend interagiert dann mit der Datenbank, um die angeforderten Aktionen durchzuführen und das Ergebnis (z.B. die abgerufenen Daten oder eine Bestätigung der Aktion) an das Frontend zurückzusenden, wo es dem Benutzer angezeigt wird.
+
+Für das Backend, das oft eine API bereitstellt, können diese Operationen spezifischen Endpunkten entsprechen, z.B.:
+
+•	GET /api/users	für das Abrufen von Benutzern (Read)
+
+•	POST /api/user	für das Erstellen eines neuen Benutzers (Create)
+
+•	PUT /api/user	für das Aktualisieren eines spezifischen Benutzers (Update)
+
+•	POST /api/ex	für das Erstellen einer neuen Aufgabe (Create)
+
+•	GET /api/ex	für das Abrufen von Aufgaben (Read)
+
+•	PUT /api/ex/:id	für das Aktualisieren einer spezifischen Aufgabe (Update)
+
+•	DELETE /api/ex/:id 	für das Löschen einer Aufgabe (Delete)
+
+•	GET /api/ex/search/:serachText	für das Abrufen von Aufgaben nach Suchbegriffen (Read)
+
+•	GET /api/ex/category/:category	für das Abrufen von Aufgaben nach Kategorien (Read)
+
+•	GET /api/ex/:id	für das Abrufen einer spezifischen Aufgabe (Read)
+
+•	POST /api/download/ 	für das Herunterladen der spezifischen Aufgabe im Warenkorb (Download)
+
+
 \subsection{Frontend-Entwicklung}
+Wir entwickelten mehrere UI-Komponenten, die es den Nutzern ermöglichen, Aufgaben einfach zu erstellen, zu durchsuchen und zu verwalten.
 \subsection{Authentifizierug und Autorisierung}
+Argon2 nimmt als Eingabe das Passwort des Benutzers, einen Salz (eine zufällig generierte Zeichenfolge, die jedem Passwort-Hash hinzugefügt wird, um die Einzigartigkeit zu gewährleisten), und mehrere Parameter, die die Komplexität des Hashing-Vorgangs steuern (wie Speicherbedarf, Rechenzeit und Parallelität).Basierend auf diesen Eingaben führt Argon2 eine Reihe von komplexen, rechenintensiven Operationen durch. Diese Operationen sind so gestaltet, dass sie sowohl eine hohe Menge an CPU-Ressourcen als auch Speicher benötigen. Dies macht es sehr schwierig für Angreifer, Passwörter zu erraten oder Brute-Force-Angriffe durchzuführen, selbst wenn sie über leistungsfähige Hardware verfügen.
+
+Das Ergebnis des Prozesses ist ein Passwort-Hash, der in der Datenbank gespeichert wird. Da der gleiche Prozess (mit dem gleichen Salz und denselben Parametern) immer denselben Hash erzeugt, kann das System das vom Benutzer bei der Anmeldung eingegebene Passwort überprüfen, ohne das eigentliche Passwort kennen oder speichern zu müssen. Sicherheit gegen Brute-Force-Angriffe: Die rechen- und speicherintensive Natur von Argon2 macht es teuer und zeitaufwändig, Hashes zu knacken. Dies schützt gegen Angriffe, die darauf abzielen, Passwörter durch Ausprobieren vieler möglicher Kombinationen (Brute-Force) zu erraten.
+
+\subsection{Testing und Qualitätssicherung: }
+Wir führten umfangreiche Tests durch, einschließlich Unit-Tests und Benutzerakzeptanztests, um sicherzustellen, dass die Anwendung den Erwartungen entspricht.
+
+
+\subsection{Deployment und Inbetriebnahme: }
+Nach Abschluss der Entwicklungsarbeiten wurde die Anwendung auf einer geeigneten Hosting-Plattform bereitgestellt und auf ihre Funktionalität in der Produktionsumgebung überprüft.
 
 
 \section{Ergbenisse}
 \subsection{Allgemeines}
-\subsection{Die Komponentenübersicht}
-\section{Fazit/Diskussion}
-\section{Schlusswort}
 
+Die entwickelte Webanwendung bietet Mathematiklehrern eine Plattform, auf der sie Aufgaben erstellen, durchsuchen, kommentieren und verwalten können. Zu den wichtigsten Funktionen gehören:
+
+•	Aufgaben erstellen und verwalten: Lehrer können neue Aufgaben zur Datenbank hinzufügen und bestehende Aufgaben bearbeiten oder löschen.
+
+•	Aufgabensuche: Die Suchfunktion ermöglicht es den Nutzern, spezifische Aufgaben nach Stichworten oder Kategorien zu finden.
+
+•	Warenkorbsystem: Lehrer können ausgewählte Aufgaben in einem Warenkorb sammeln und daraus Aufgabenblätter erstellen.
+
+Die Anwendung wurde erfolgreich implementiert und erfüllt die gestellten Anforderungen.
+
+\subsection{Die Komponentenübersicht}
+
+•	Aufgabendetails (Exercise Details):
+
+Eine Detailansicht (AufgDetails) für jede Aufgabe, die Informationen wie Aufgabentext, Lösung, Kommentare und Kategoriezugehörigkeit enthält. Benutzer können Aufgaben kommentieren und in den Warenkorb legen.
+
+•	Suchergebnisse (Search Results):
+
+Komponenten für die Anzeige von Suchergebnissen, einschließlich Suchkarten (SearchCard), die einzelne Aufgaben darstellen, und einer Listenansicht (CardListSearch), die eine Sammlung von Suchkarten enthält. Ein spezieller Warenkorb für die Suche (SearchKorb) sammelt gesuchte Aufgaben für spätere Aktionen.
+
+•	Warenkorb (Warenkorb):
+
+Beinhaltet Komponenten zum Verwalten der ausgewählten Aufgaben, wie WarenCard für einzelne Aufgaben im Warenkorb und CardListWaren für die Gesamtansicht des Warenkorbs. Der WarenKorb selbst ist die Hauptkomponente, die den Nutzern die Interaktion mit dem Warenkorb ermöglicht, einschließlich der Überprüfung und Finalisierung ihrer Auswahl.
+
+•	Aufgaben hinzufügen (Add Exercises):
+
+Die ExForm-Komponente ermöglicht das Erstellen neuer Aufgaben. Sie umfasst Formularfelder für die Eingabe von Titel, Inhalt, Lösung und optionalen Kategorien. Über eine API-Anfrage (askServer(/api/ex, "POST", ex)) werden die Daten an das Backend gesendet und die Aufgabe wird der Datenbank hinzugefügt.
+
+•	Aufgaben finden (Find Exercises):
+
+Dieser Bereich umfasst mehrere Komponenten, die unterschiedliche Methoden zur Aufgabensuche anbieten, darunter FindExByCategory für kategoriebasierte Suche, FindExByIdFromServer für die direkte Abfrage einer Aufgabe über ihre ID und FindExBySearchText für textbasierte Suchanfragen.
+
+•	Benutzerregistrierung und -anmeldung (User Registration/Login):
+
+Eine Form-Komponente unterstützt die Registrierung neuer Benutzer und die Anmeldung bestehender Benutzer durch Übermittlung ihrer Anmeldeinformationen an das Backend (askServer(/api/user, "POST", user)). Authentifizierungsdaten werden überprüft, um Zugang zu geschützten Bereichen der Anwendung zu gewähren.
+
+•	Navigation (Navigation):
+
+Die Menu-Komponente stellt die Hauptnavigation der Anwendung bereit und ermöglicht den Zugriff auf die verschiedenen Seiten und Funktionen der App, darunter die Startseite (/), das Hinzufügen von Aufgaben (/add), das Finden von Aufgaben (/find), den Warenkorb (/warenkorb) und die Detailansicht einer spezifischen Aufgabe (/:id).
+
+•	Seiten (Pages):
+
+Definiert die Struktur der Anwendung und beinhaltet Seitenkomponenten wie User für die Benutzerregistrierung und -anmeldung, AddExercise für das Hinzufügen neuer Aufgaben, FindExercise für die Aufgabensuche, Letzte Suchresultate für das Anzeigen der zuletzt gesuchten Aufgaben und WarenKorb für die Ansicht und Verwaltung des Warenkorbs.
+
+
+
+
+\section{Fazit/Diskussion}
+Unsere Untersuchung hat gezeigt, dass die gewählten Technologien geeignet waren, um eine benutzerfreundliche und effiziente Webanwendung zu entwickeln. Die Hypothese, dass eine solche Anwendung den Bedürfnissen von Mathematiklehrern gerecht wird, konnte bestätigt werden. Allerdings stießen wir auf einige Herausforderungen, insbesondere im Bereich der Performance-Optimierung und der Benutzerfreundlichkeit, die in zukünftigen Projekten weiter untersucht werden sollten.
+
+Zukünftige Arbeiten könnten sich darauf konzentrieren, die Anwendung durch zusätzliche Funktionen wie die Integration von KI-gestützten Aufgabenvorschlägen zu erweitern.
+
+\section{Schlusswort}
+Die Arbeit an diesem Projekt war eine wertvolle Erfahrung, die uns sowohl im Bereich der Softwareentwicklung als auch in der Projektorganisation weitergebracht hat. Die Erreichung unserer Ziele hat unsere Erwartungen erfüllt, und wir hoffen, dass unsere Anwendung einen praktischen Beitrag zur Verbesserung des Mathematikunterrichts leisten kann.
 
 \newpage
    
