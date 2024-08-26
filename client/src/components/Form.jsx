@@ -1,7 +1,11 @@
 import { useState } from "preact/hooks";
 import { askServer } from "../utils/connector";
+import { useContext } from "preact/hooks";
+import { SearchContext } from "../signals/exercise.jsx";
 
 export default function Form() {
+  const { showNotification } = useContext(SearchContext);
+
   const [user, setUser] = useState({
     email: "",
     username: "",
@@ -10,18 +14,26 @@ export default function Form() {
 
   const addNewUser = async (e) => {
     e.preventDefault();
-    console.log("hallo");
     const res = await askServer("/register", "POST", user);
-    console.log(res);
-    if (res.err) {
-      console.log(res.err);
+    // console.log(res.response.err.code);
+    if (res.response.err && res.response.err.code === "P2002") {
+      // console.log("ERROR:", res.response.err);
+      // console.log("CLIENT: user already exists");
+      showNotification("ERROR: User already exists", "red");
     } else {
       setUser({
         email: "",
         username: "",
         password: "",
       });
-      console.log("user added");
+      // console.log("CLIENT: User added successfully");
+      showNotification(
+        "User added successfully\nRedirecting to Login Page",
+        "green"
+      );
+      setTimeout(() => {
+        window.location.assign("/login");
+      }, 3500);
     }
   };
 
@@ -36,11 +48,11 @@ export default function Form() {
 
   return (
     <>
+      <h1>Registrieren</h1>
       <form
         className="pure-form pure-form-aligned"
         onSubmit={(e) => addNewUser(e)}
       >
-        <legend>Add a new User</legend>
         <fieldset>
           <div class="pure-control-group">
             <label for="aligned-email">Email </label>
@@ -53,9 +65,9 @@ export default function Form() {
               onChange={updateUserHandler}
               placeholder="E-Mail"
             />
-            <span class="pure-form-message-inline">
+            {/* <span class="pure-form-message-inline">
               This is a required field.
-            </span>
+            </span> */}
           </div>
 
           <div class="pure-control-group">

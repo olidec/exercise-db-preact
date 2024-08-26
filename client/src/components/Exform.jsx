@@ -26,6 +26,8 @@ export default function ExForm() {
     });
   }, []);
 
+  const userId = JSON.parse(localStorage.getItem("user"));
+
   // Effekt, der die ausgewählte Unterkategorie zurücksetzt, wenn die Kategorie sich ändert
   useEffect(() => {
     if (selectedCategory) {
@@ -58,6 +60,7 @@ export default function ExForm() {
       difficulty: parseInt(ex.difficulty),
       categories: { id: categoryId },
       subcategories: { id: subcategoryId },
+      author: { id: userId.id },
     };
 
     const res = await askServer("/api/ex", "POST", exWithCategory);

@@ -34,7 +34,7 @@ export default function FindExById() {
       return;
     } else {
       setExerciseList(res);
-      window.location.href = "/exercise-db-preact/search"; // Verwendet `route` von `preact-router` für die Weiterleitung
+      window.location.href = "/search"; // Verwendet `route` von `preact-router` für die Weiterleitung
     }
   };
 

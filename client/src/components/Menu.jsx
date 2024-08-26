@@ -16,36 +16,31 @@ export default function Menu() {
     setSelectedMenu(menu);
   };
 
+  const loggedIn = localStorage.getItem("user") != null ? true : false;
+
   return (
     <div className="pure-menu pure-menu-horizontal my-bg-color">
-      <ul
-        className="pure-menu-list"
-        // style={{
-        //   display: "flex",
-        //   justifyContent: "space-between",
-        //   width: "100%",
-        // }}
-      >
-        <li
+      <ul className="pure-menu-list">
+        {/* <li
           className={`pure-menu-item ${
             selectedMenu === "user" ? "pure-menu-selected" : ""
           }`}
         >
           <Link
-            href="/exercise-db-preact/login"
+            href="/login"
             className="pure-menu-link my-link"
             onClick={() => handleMenuClick("user")}
           >
-            User
+            Login
           </Link>
-        </li>
+        </li> */}
         <li
           className={`pure-menu-item ${
             selectedMenu === "add" ? "pure-menu-selected" : ""
           }`}
         >
           <Link
-            href="/exercise-db-preact/add"
+            href="/add"
             className="pure-menu-link my-link"
             onClick={() => handleMenuClick("add")}
           >
@@ -58,7 +53,7 @@ export default function Menu() {
           }`}
         >
           <Link
-            href="/exercise-db-preact/find"
+            href="/find"
             className="pure-menu-link my-link"
             onClick={() => handleMenuClick("find")}
           >
@@ -76,7 +71,7 @@ export default function Menu() {
           <div id="checkmark"></div>
 
           <Link
-            href="/exercise-db-preact/warenkorb"
+            href="/warenkorb"
             className="pure-menu-link my-link"
             onClick={() => handleMenuClick("warenkorb")}
           >
@@ -89,17 +84,19 @@ export default function Menu() {
             selectedMenu === "contact" ? "pure-menu-selected" : ""
           }`}
         >
-          <Link
-            href="/exercise-db-preact/"
-            className="pure-menu-link logout-link"
-            onClick={() => logout()}
-          >
-            Logout
-          </Link>
+          {loggedIn && (
+            <Link
+              href="/"
+              className="pure-menu-link logout-link"
+              onClick={() => logout()}
+            >
+              Logout
+            </Link>
+          )}
           {/* <ul className="pure-menu-children">
             <li className="pure-menu-item">
               <Link
-                href="/exercise-db-preact/"
+                href="/"
                 className="pure-menu-link"
                 onClick={() => handleMenuClick("contact")}
               >
@@ -108,7 +105,7 @@ export default function Menu() {
             </li>
             <li className="pure-menu-item">
               <Link
-                href="/exercise-db-preact/"
+                href="/"
                 className="pure-menu-link"
                 onClick={() => handleMenuClick("contact")}
               >
@@ -117,7 +114,7 @@ export default function Menu() {
             </li>
             <li className="pure-menu-item">
               <Link
-                href="/exercise-db-preact/"
+                href="/"
                 className="pure-menu-link"
                 onClick={() => logout()}
               >

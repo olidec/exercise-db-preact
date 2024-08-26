@@ -7,7 +7,7 @@ import { useContext } from "preact/hooks";
 import { cat, loadCat } from "../signals/categories.js";
 
 export function edit({ id }) {
-  window.location.href = `/exercise-db-preact/edit/${id}`;
+  window.location.href = `/edit/${id}`;
 }
 
 const AufgDetails = ({ id }) => {
@@ -78,7 +78,7 @@ const AufgDetails = ({ id }) => {
             content={exDetails.content}
             solution={exDetails.solution}
             difficulty={exDetails.difficulty}
-            author={exDetails.authorId}
+            authorId={exDetails.authorId}
             categories={categoryName}
             subcategories={subcategoryName}
             isModal={true}

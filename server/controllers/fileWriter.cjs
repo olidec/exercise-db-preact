@@ -77,7 +77,44 @@ async function writeLatex(exercises) {
     });
 }
 
+function texContent(exercises) {
+    let latexContent = `
+    \\documentclass{article}
+    \\usepackage{enumitem}
+    \\begin{document}
+    
+    \\section*{Exercises}
+    \\begin{enumerate}[label=\\arabic*.]
+    `;
+    
+        exercises.forEach((exercise, index) => {
+            latexContent += `
+        \\item ${exercise.content}
+    `;
+        });
+    
+        latexContent += `
+    \\end{enumerate}
+    
+    \\section*{Solutions}
+    \\begin{enumerate}[label=\\arabic*.]
+    `;
+    
+        exercises.forEach((exercise, index) => {
+            latexContent += `
+        \\item ${exercise.solution}
+    `;
+        });
+    
+        latexContent += `
+    \\end{enumerate}
+    \\end{document}
+    `;
+        return latexContent;
+}
+
 module.exports = {
     fileWriter: fileWriter,
     writeLatex: writeLatex,
+    texContent: texContent
 };
