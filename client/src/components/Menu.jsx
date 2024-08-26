@@ -20,15 +20,8 @@ export default function Menu() {
 
   return (
     <div className="pure-menu pure-menu-horizontal my-bg-color">
-      <ul
-        className="pure-menu-list"
-        // style={{
-        //   display: "flex",
-        //   justifyContent: "space-between",
-        //   width: "100%",
-        // }}
-      >
-        <li
+      <ul className="pure-menu-list">
+        {/* <li
           className={`pure-menu-item ${
             selectedMenu === "user" ? "pure-menu-selected" : ""
           }`}
@@ -38,9 +31,9 @@ export default function Menu() {
             className="pure-menu-link my-link"
             onClick={() => handleMenuClick("user")}
           >
-            User
+            Login
           </Link>
-        </li>
+        </li> */}
         <li
           className={`pure-menu-item ${
             selectedMenu === "add" ? "pure-menu-selected" : ""

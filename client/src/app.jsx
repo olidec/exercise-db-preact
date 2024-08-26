@@ -26,7 +26,10 @@ export function App() {
           <Home path="" />
         </Router>
       </div>
-      {currentPath !== "/" && <Menu />}
+      {/* {currentPath !== "/" && <Menu />} */}
+      <div className="menu">
+        <Menu />
+      </div>
       <div className="inhalt">
         <Router onChange={handleRouteChange}>
           <LoginPage path="/login" />
