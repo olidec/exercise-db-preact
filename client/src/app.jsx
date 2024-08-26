@@ -15,23 +15,27 @@ export function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState(null);
 
+  const loggedIn = localStorage.getItem("user") !== null;
+
   const handleRouteChange = (e) => {
     setCurrentPath(e.url);
   };
 
   return (
     <>
-      <div>
+      {/* <div>
         <Router onChange={handleRouteChange}>
-          <Home path="" />
         </Router>
-      </div>
+        </div> */}
+      {loggedIn && (
+        <div className="menu">
+          <Menu />
+        </div>
+      )}
       {/* {currentPath !== "/" && <Menu />} */}
-      <div className="menu">
-        <Menu />
-      </div>
       <div className="inhalt">
         <Router onChange={handleRouteChange}>
+          <Home path="/" />
           <LoginPage path="/login" />
           <RegisterPage path="/register" />
           <AddExercise path="/add" />
