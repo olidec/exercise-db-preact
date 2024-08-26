@@ -1,7 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1724577309 "/Users/patrickweber/Desktop/FullStack/exercise-db-preact/dokumentation/doku.tex" "doku.pdf" "doku" 1724577310 0
-  "/Users/patrickweber/Desktop/FullStack/exercise-db-preact/dokumentation/doku.tex" 1718011073 16736 ca47723be7b218239763b004047a6d67 ""
-  "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
+["pdflatex"] 1724684349 "/Users/patrickweber/Desktop/FullStack/exercise-db-preact/dokumentation/doku.tex" "doku.pdf" "doku" 1724684349 0
+  "/Users/patrickweber/Desktop/FullStack/exercise-db-preact/dokumentation/doku.tex" 1724684349 4583 0d14405b0e57fe2bd3d075402f3dbfaf ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -25,6 +24,7 @@
   "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1248133631 32080 340ef9bf63678554ee606688e7b5339d ""
   "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1248133631 32362 179c33bbf43f19adbb3825bb4e36e57a ""
+  "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1248133631 32587 1788b0c1c5b39540c96f5e42ccd6dae8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1248133631 36118 fad905eba93cff5bce1e185fe980a177 ""
   "/usr/local/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2023/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1575674566 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
@@ -112,11 +112,11 @@
   "/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1700414764 4623355 b8cad38412faebe1ce5b780a45db67bd ""
   "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1700414755 7883458 41b7df62c8071e6aded5cd8d0b25e2dd ""
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
-  "doku.aux" 1724577310 3122 84d73e636e0f512c1b3fb4c31428fbf0 "pdflatex"
-  "doku.lof" 1724577310 30 dd9a1bdf2f8dbad8adb0552ea4fb4223 "pdflatex"
-  "doku.out" 1724577310 3059 f9abae2b9185af2586ebcac4e3a6f55c "pdflatex"
-  "doku.tex" 1718011073 16736 ca47723be7b218239763b004047a6d67 ""
-  "doku.toc" 1724577310 1662 dafb23a0b18343ef174c2fedfe60f254 "pdflatex"
+  "doku.aux" 1724684349 1401 535746e6efd1bda09969bb0ff4d569b6 "pdflatex"
+  "doku.lof" 1724684349 30 dd9a1bdf2f8dbad8adb0552ea4fb4223 "pdflatex"
+  "doku.out" 1724684349 775 e67b655e85e40ca180fdb1fa2cd62d53 "pdflatex"
+  "doku.tex" 1724684349 4583 0d14405b0e57fe2bd3d075402f3dbfaf ""
+  "doku.toc" 1724684349 493 c679e212b6a937beba5703b06890470e "pdflatex"
   (generated)
   "doku.aux"
   "doku.lof"

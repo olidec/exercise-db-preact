@@ -33,7 +33,7 @@
 \begin{document}
 
 
-ljkwqbdfcljkbnqwDLKN
+
 \maketitle % Hier wird die Titelseite mit den obigen Informationen eingefügt. Falls man eine "kunstvollere" Titelseite mit einem anderen Programm erstellen möchte, kann man sie hier einfügen. Dafür muss man die Titelseite im gleichen Verzeichnis (z.B. mit dem Namen TitelseiteMA2016.pdf) im pdf Format ablegen und mit dem Befehl
 % \includepdf{TitelseiteMA2016}
 % wird sie dann eingefügt.
@@ -65,10 +65,161 @@ ljkwqbdfcljkbnqwDLKN
 
 
 % Die Grundstruktur einer Arbeit:
-\section{Projektskizze}
-\subsection{Projektplanung und Design}
-\subsubsection{Anforderungsanalyse}
+\section{Vorwort}
+Im Rahmen unseres GymInf-Projekts haben wir uns entschieden, eine Webanwendung für Mathematikaufgaben zu entwickeln. Besonders möchten wir unserem Betreuer Urs Meyer danken, der uns durch wertvolle Ratschläge und Unterstützung geholfen hat, dieses Projekt erfolgreich umzusetzen.
 
+Die Wahl dieses Themas basiert auf dem Interesse die Frontend und Backend Applikationsentwicklung besser kennenzulernen und um auch Ideen für unseren Informatikunterricht zu sammeln, wie z.B:
+
+Projektbasierter Unterricht: Die Schüler können ein echtes Projekt umsetzen, z.B. eine einfache Webanwendung, die sie von Grund auf entwickeln. Dies könnte ein Online-Quiz, ein kleiner Blog oder eine To-Do-Liste sein.
+
+Einführung in Web-Technologien: Die Schüler können grundlegende Web-Technologien (HTML/CSS/JavaScript) im Unterricht kennen lernen, mit denen Sie einfache Webseiten erstellen und gestalten können. Fortgeschrittene Schüler könne auch mit Frameworks wie React/Preact/Svelte arbeiten, um moderne Webanwendungen zu entwickeln.
+
+Datenbanken: Grundlagen von Datenbanken, sowohl relationale (SQL) als auch nicht-relationale (NoSQL), können den Schülern aufgezeigt werden und wie diese in Webanwendungen integriert werden.
+
+API-Design und -Nutzung: Das Konzept von APIs und wie es zur Kommunikation zwischen Frontend und Backend verwendet wird kann den Schülern aufgezeigt werden. Die Schüler können einfache APIs erstellen und verwenden.
+
+Sicherheitsaspekte in der Webentwicklung: Grundlagen der Web-Sicherheit, wie Authentifizierung, Autorisierung können den Schülern vermittelt werden.
+
+Fächerübergreifende Projekte: Die Schüler können Webanwendungen entwickeln die schulische Konzepte veranschaulichen können, wie z.B. mathematische Probleme lösen oder biologische Daten verarbeiten.
+
+Des Weiteren haben wir bisher als Mathematik-Lehrpersonen keinen «offiziellen» Austausch an Mathematik Aufgaben ausserhalb der verschiedenen Schulstandorte. Die Aufgaben-Datenbank soll dazu beitragen, dass Lehrpersonen Zugang zu einer umfangreicheren Sammlung an Mathematik Aufgaben haben können. Im Speziellen wäre es für Mathematik Lehrpersonen sehr hilfreich sich über Matura Aufgaben der verschiedenen Schulstandorte einen Überblick zu verschaffen, damit die Schüler mit hilfreichen Aufgaben sich optimal auf die Matura vorbereiten können.
+
+
+
+\section{Einleitung}
+Die Entwicklung einer Webanwendung für Mathematikaufgaben ist angesichts der zunehmenden Digitalisierung des Bildungswesens von Relevanz, da das Teilen und Bereitstellen von guten, lernreichen Aufgaben für die Qualität des Mathematik Unterrichts unabdingbar ist. Diese Arbeit zielt darauf ab, Mathematiklehrern eine effiziente Möglichkeit zu bieten, Aufgaben für den Unterricht zu finden und zu verwalten.
+
+
+Mathematikaufgaben sollen über eine benutzerfreundliche Eingabemaske kategorisiert und unterkategorisiert in die Datenbank eingegeben werden können. Diese Aufgaben müssen nicht nur leicht erstellbar sein, sondern auch problemlos nachträglich bearbeitet oder gelöscht werden können. Besonders wichtig war uns, dass die Formeln direkt im LaTeX-Format eingegeben werden, um eine präzise und standardisierte Darstellung mathematischer Ausdrücke zu gewährleisten. Zudem sollen die erstellten Aufgaben im LaTeX-Format heruntergeladen werden können, um sie nahtlos in bestehende Lehrmaterialien integrieren zu können. Als Mathematiklehrer möchte ich die Möglichkeit haben, eine umfangreiche Sammlung von Mathematikaufgaben gezielt zu durchsuchen und daraus didaktisch sinnvolle Aufgabenblätter für meine Klassen effizient zusammenzustellen.
+
+Unsere Forschungsfrage lautet: 
+
+Wie kann eine Webanwendung entwickelt werden, die den Bedürfnissen von Mathematiklehrern gerecht wird, indem sie eine benutzerfreundliche und funktionsreiche Plattform bereitstellt?
+
+Kernfunktionen dieser Webapplikation sind:
+
+• Aufgaben erstellen: Lehrer können neue Mathematikaufgaben zur Datenbank
+hinzufügen.
+
+• Aufgaben durchsuchen: Lehrer können vorhandene Aufgaben nach verschiedenen Kriterien durchsuchen.
+
+• Aufgaben kommentieren: Nutzer können Kommentare zu Aufgaben hinterlassen, um Feedback oder Lösungsvorschläge zu geben.
+
+• Aufgaben verwalten: Lehrer können ihre erstellten Aufgaben bearbeiten oder löschen.
+
+• Warenkorb für Aufgaben: Lehrer können ausgewählte Aufgaben in einem Warenkorb sammeln, um sie später in ein Aufgabenblatt zu integrieren.
+
+In dieser Arbeit werden wir die Ziele des Projekts definieren, die gewählten Methoden erläutern und die wichtigsten Ergebnisse präsentieren. 
+
+
+\section{Theoretischer Hintergrund}
+\subsection{Allgemeines}
+Die Digitalisierung hat das Bildungswesen grundlegend transformiert, insbesondere durch den Einsatz von E-Learning-Plattformen und digitalen Hilfsmitteln. In der Fachliteratur finden sich zahlreiche Ansätze zur Entwicklung von Webanwendungen, die den Unterricht effizienter gestalten sollen. Um dieses Ziel zu erreichen, haben wir uns für den Einsatz moderner und bewährter Web-Technologien entschieden.
+
+Preact wurde als unsere bevorzugte Frontend-Bibliothek ausgewählt, da es eine leichtgewichtige und performante Alternative zu React darstellt. Preact ermöglicht uns die Entwicklung interaktiver Benutzeroberflächen, die eine reibungslose und schnelle Benutzererfahrung gewährleisten. Die Bibliothek bietet die Möglichkeit, wiederverwendbare Komponenten zu erstellen, was die Entwicklung und Wartung der Benutzeroberfläche erheblich vereinfacht.
+
+Für das Backend haben wir Express gewählt, ein minimalistisch und flexibel gestaltetes Framework für Node.js. Express bietet eine robuste Basis für die Entwicklung von serverseitiger Logik und API-Routen. Es ermöglicht uns, HTTP-Anfragen effizient zu verarbeiten, Daten sicher zu speichern und verschiedene Authentifizierungsmechanismen zu implementieren. Dank der modularen Struktur von Express konnten wir eine skalierbare Backend-Architektur entwickeln, die sowohl leistungsfähig als auch leicht zu erweitern ist.
+
+Die Datenbankinteraktion wird durch Prisma gesteuert, ein modernes ORM (Object-Relational Mapping) Tool, das eine einfache und typsichere Datenbankanbindung ermöglicht. Prisma erlaubt es uns, die Datenbankabfragen direkt in TypeScript zu schreiben, was die Konsistenz und Sicherheit des Codes erhöht. Es unterstützt Migrationen, wodurch das Datenbankschema während der Entwicklung problemlos angepasst werden kann, und ermöglicht eine effiziente Verwaltung der Datenmodelle.
+
+Unsere Hypothese lautet, dass durch die gezielte Auswahl und Kombination dieser Technologien – Preact, Express und Prisma – eine leistungsstarke, skalierbare, benutzerfreundliche und effiziente Webanwendung entwickelt werden kann, die den Anforderungen von Mathematiklehrern gerecht wird.
+
+\subsection{Das Architekturdesign}
+
+\subsubsection{Backend-Architektur:} 
+
+Für die Entwicklung des Backends haben wir uns bewusst für die Implementierung einer RESTful API entschieden. Diese Architektur bietet eine hohe Flexibilität und ist durch ihre breite Akzeptanz und Standardisierung besonders gut geeignet, um unterschiedliche Anforderungen effizient zu erfüllen. Durch die Nutzung von HTTP-Methoden wie GET, POST, PUT und DELETE können wir Ressourcen auf einfache Weise manipulieren, was die Interaktion zwischen dem Frontend und der Datenbank erheblich vereinfacht. Mit Express als unserem Backend-Framework konnten wir die API-Routen schnell und modular aufbauen, wodurch eine robuste und skalierbare Backend-Struktur entstanden ist.
+
+\subsubsection{Frontend-Architektur:} 
+
+Im Frontend haben wir uns auf eine klare Trennung der Komponentenstruktur konzentriert. Die Komponentenhierarchie ist so gestaltet, dass atomare und molekulare UI-Komponenten (kleinere, wiederverwendbare Bausteine) von Seitenkomponenten (größere, zusammengesetzte Einheiten) getrennt sind, die den Anwendungsfluss steuern. Diese Trennung ermöglicht eine saubere und wartbare Codebasis, in der Änderungen an einer Komponente nicht ungewollt andere Teile der Anwendung beeinflussen.
+
+\subsubsection{Zustandsmanagement:} 
+
+Ein effektives Zustandsmanagement ist entscheidend für die Verwaltung der Anwendungsdaten sowie der verschiedenen UI-Zustände, wie Benutzereingaben oder geladene Daten (Aufgaben). Preact bietet uns hierfür mehrere Optionen: Für lokale Zustände innerhalb einzelner Komponenten nutzen wir die useState und useEffect Hooks, die eine einfache und reaktive Verwaltung dieser Zustände ermöglichen. 
+Der useState Hook ermöglicht es, Zustände innerhalb einer Funktionskomponente zu verwalten. Wenn man useState aufruft, erhält man ein Array mit zwei Werten: den aktuellen Zustand und eine Funktion, um diesen Zustand zu aktualisieren.
+
+const [state, setState] = useState(initialValue);
+
+-	state: Der aktuelle Zustand, den man verwenden kann.
+
+-	setState: Eine Funktion, mit der man den Zustand ändern können.
+
+-	initialValue: Der Anfangswert des Zustands.
+
+Der useEffect Hook wird verwendet, um Seiteneffekte in Funktionskomponenten zu behandeln. Ein Seiteneffekt ist z.B. das Abrufen von Daten von einem Server, das Managen von Timern oder das Ändern des DOM.
+
+Bsp. aus App
+
+
+Zusätzlich bietet Preact die Möglichkeit, Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
+
+Signals sind eine leistungsstarke Ergänzung zu den traditionellen Hooks wie useState und useEffect in Preact. Sie sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und Komponenten effizient zu aktualisieren.
+
+Bsp. aus App
+
+
+\subsubsection{Vergleich: Signals vs. useState/useEffect} 
+\subsubsection{ Reaktivität}
+
+•	useState/useEffect:
+
+o	useState verwaltet den Zustand, und useEffect behandelt Seiteneffekte basierend auf Zustandsänderungen.
+
+o	Man muss explizit Hooks verwenden, um auf Zustandsänderungen zu reagieren.
+
+•	Signals:
+
+o	Signals bieten eine automatische Reaktivität. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, wenn sich das Signal ändert.
+
+o	Keine Notwendigkeit für separate useEffect-Hooks, um auf einfache Zustandsänderungen zu reagieren.
+
+
+Leistung
+
+•	useState/useEffect:
+
+o	Können zu übermäßigen Neurenderings führen, insbesondere wenn viele Zustandsänderungen und abhängige Effekte vorhanden sind.
+
+•	Signals:
+
+o	Feinkörnige Reaktivität ermöglicht gezieltere Updates, was die Leistung verbessern kann, da nur die betroffenen Teile der UI aktualisiert werden.
+
+
+Komplexität
+
+•	useState/useEffect:
+
+o	Kann komplex werden, wenn viele Zustände und Effekte verwaltet werden müssen.
+
+o	Erfordert oft das Aufteilen von Logik in mehrere Hooks.
+
+•	Signals:
+
+o	Einfachere und direktere Zustandsverwaltung.
+
+o	Weniger Boilerplate-Code und klarere Zustandsabhängigkeiten.
+
+
+
+Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit useContext können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht und eine reibungslose und intuitive Benutzererfahrung unterstützt.
+
+
+Bsp aus App:
+
+\subsection{Die Datenmodellierung}
+
+\section{Methodik}
+\subsection{Backend-Entwicklung}
+\subsection{Frontend-Entwicklung}
+\subsection{Authentifizierug und Autorisierung}
+
+
+\section{Ergbenisse}
+\subsection{Allgemeines}
+\subsection{Die Komponentenübersicht}
+\section{Fazit/Diskussion}
+\section{Schlusswort}
 
 
 \newpage
