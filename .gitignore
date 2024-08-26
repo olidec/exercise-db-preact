@@ -36,3 +36,5 @@ dist-ssr
 certs/
 
 package-lock.json
+dokumentation/doku.synctex.gz
+dokumentation/doku.fdb_latexmk
