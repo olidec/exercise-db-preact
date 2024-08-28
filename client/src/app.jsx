@@ -15,7 +15,7 @@ export function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState(null);
 
-  const loggedIn = localStorage.getItem("user") !== null;
+  const loggedIn = localStorage.getItem("user") != null;
 
   const handleRouteChange = (e) => {
     setCurrentPath(e.url);
