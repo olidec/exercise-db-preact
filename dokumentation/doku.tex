@@ -21,7 +21,24 @@
 
 %Code
 \usepackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    stringstyle=\color{orange},
+    commentstyle=\color{gray},
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=10pt,
+    showspaces=false,
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    tabsize=2,
+    captionpos=b,
+}
 
+\usepackage{xcolor}
 
 % Informationen für die Titelseite
 \title{GymInf Thesis: Webapp für Matheaufgaben}
@@ -138,14 +155,12 @@ const [state, setState] = useState(initialValue);
 Der useEffect Hook wird verwendet, um Seiteneffekte in Funktionskomponenten zu behandeln. Ein Seiteneffekt ist z.B. das Abrufen von Daten von einem Server, das Managen von Timern oder das Ändern des DOM.
 
 Zusätzlich bietet Preact die Möglichkeit, Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
-
 Signals sind eine leistungsstarke Ergänzung zu den traditionellen Hooks wie useState und useEffect in Preact. Sie sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und Komponenten effizient zu aktualisieren.
 
 Die Folgenden Beispiel beziehen sich auf die Seite um Aufgaben nach Kategorien und Subkategorien durch clicken auf dieselben zu suchen.
 
 
-\begin{lstlisting}[language=Python]
-
+\begin{lstlisting}
 const cat = signal([]);
 const loadCat = async () => {
   const res = await askServer("/api/cat/", "GET");
@@ -157,7 +172,7 @@ const loadCat = async () => {
 
 Das Signal cat wird verwendet um ale Kategorien vom Server zu laden.
 
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}
 
 const [categories, setCategories] = useState([]);
 useEffect(() => {
@@ -189,7 +204,7 @@ useEffect(() => {
 \end{lstlisting}
 
 
-useEffect() für Unterkategorien: Diese Funktion wird aufgerufen, wenn selectedCategory oder categories sich ändern. Sie sucht die Unterkategorien der ausgewählten Kategorie und speichert diese in subcategories.
+useEffect() für Unterkategorien: Diese Funktion sucht die Unterkategorien der ausgewählten Kategorie und speichert diese in subcategories und zwar jedes Mal, wenn dich selectedCategory oder categories ändert (Seiteneffekt). Ob sich categories ändert, würd nur beim ersten redndern der Seite überprüft, da bei der ersten useEffect() Funktion das Array leer blieb. 
 
 
 
