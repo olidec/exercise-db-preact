@@ -7,20 +7,20 @@
 \contentsline {subsubsection}{\numberline {3.2.1}Backend-Architektur:}{8}{subsubsection.3.2.1}%
 \contentsline {subsubsection}{\numberline {3.2.2}Frontend-Architektur:}{9}{subsubsection.3.2.2}%
 \contentsline {subsubsection}{\numberline {3.2.3}Zustandsmanagement:}{9}{subsubsection.3.2.3}%
-\contentsline {subsubsection}{\numberline {3.2.4}Vergleich: Signals vs. useState/useEffect}{10}{subsubsection.3.2.4}%
-\contentsline {subsubsection}{\numberline {3.2.5} Reaktivität}{10}{subsubsection.3.2.5}%
-\contentsline {subsection}{\numberline {3.3}Die Datenmodellierung}{12}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Methodik}{13}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Backend-Entwicklung}{13}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Frontend-Entwicklung}{15}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Authentifizierug und Autorisierung}{15}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Testing und Qualitätssicherung: }{16}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Deployment und Inbetriebnahme: }{16}{subsection.4.5}%
-\contentsline {section}{\numberline {5}Ergbenisse}{16}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Allgemeines}{16}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Die Komponentenübersicht}{17}{subsection.5.2}%
-\contentsline {section}{\numberline {6}Fazit/Diskussion}{19}{section.6}%
-\contentsline {section}{\numberline {7}Schlusswort}{19}{section.7}%
-\contentsline {section}{\numberline {A}Anhang}{21}{appendix.A}%
-\contentsline {section}{\numberline {B}Bilderverzeichnis}{22}{appendix.B}%
-\contentsline {section}{\numberline {C}Literaturverzeichnis}{23}{appendix.C}%
+\contentsline {subsubsection}{\numberline {3.2.4}Vergleich: Signals vs. useState/useEffect}{14}{subsubsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.5} Reaktivität}{14}{subsubsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.3}Die Datenmodellierung}{16}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Methodik}{17}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Backend-Entwicklung}{18}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Frontend-Entwicklung}{19}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Authentifizierug und Autorisierung}{19}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Testing und Qualitätssicherung: }{20}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Deployment und Inbetriebnahme: }{20}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Ergbenisse}{21}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Allgemeines}{21}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Die Komponentenübersicht}{21}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Fazit/Diskussion}{23}{section.6}%
+\contentsline {section}{\numberline {7}Schlusswort}{24}{section.7}%
+\contentsline {section}{\numberline {A}Anhang}{25}{appendix.A}%
+\contentsline {section}{\numberline {B}Bilderverzeichnis}{26}{appendix.B}%
+\contentsline {section}{\numberline {C}Literaturverzeichnis}{27}{appendix.C}%

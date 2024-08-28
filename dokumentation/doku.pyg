@@ -1,0 +1,12 @@
+
+  const [categories, setCategories] = useState([]);
+
+
+ useEffect(() => {
+    const fetchCategories = async () => {
+      await loadCat();
+      setCategories(cat.value);
+    };
+    fetchCategories();
+  }, []);
+

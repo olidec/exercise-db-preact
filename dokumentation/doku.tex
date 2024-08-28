@@ -19,6 +19,8 @@
 \usepackage{hyperref}
 \usepackage{datetime}
 
+%Code
+\usepackage{listings}
 
 
 % Informationen für die Titelseite
@@ -40,28 +42,14 @@
 
 
 
-
-
-
-
-
-
-
-
 \newpage % Eine neue Seite wird begonnen...
 \tableofcontents % Hier wird automatisch das Inhaltsverzeichnis eingefügt. Achtung: Änderungen werden erst nach dem zweiten kompilieren sichtbar.
 
 
 
 
-
-
-
-
-
-
-
 \newpage
+
 
 
 % Die Grundstruktur einer Arbeit:
@@ -149,14 +137,140 @@ const [state, setState] = useState(initialValue);
 
 Der useEffect Hook wird verwendet, um Seiteneffekte in Funktionskomponenten zu behandeln. Ein Seiteneffekt ist z.B. das Abrufen von Daten von einem Server, das Managen von Timern oder das Ändern des DOM.
 
-Bsp. aus App
-
-
 Zusätzlich bietet Preact die Möglichkeit, Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
 
 Signals sind eine leistungsstarke Ergänzung zu den traditionellen Hooks wie useState und useEffect in Preact. Sie sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und Komponenten effizient zu aktualisieren.
 
-Bsp. aus App
+Die Folgenden Beispiel beziehen sich auf die Seite um Aufgaben nach Kategorien und Subkategorien durch clicken auf dieselben zu suchen.
+
+
+\begin{lstlisting}[language=Python]
+
+const cat = signal([]);
+const loadCat = async () => {
+  const res = await askServer("/api/cat/", "GET");
+
+  cat.value = res.response;
+};
+
+\end{lstlisting}
+
+Das Signal cat wird verwendet um ale Kategorien vom Server zu laden.
+
+\begin{lstlisting}[language=Python]
+
+const [categories, setCategories] = useState([]);
+useEffect(() => {
+    const fetchCategories = async () => {
+      await loadCat();
+      ;
+    };
+    fetchCategories();
+  }, []);
+
+\end{lstlisting}
+
+
+Nun wird useEffect() verwendet damit beim laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und in das array categories schreibt (setCategories(cat.value)) . Da sich diese Variable beim laden der Seite verändern könnte wird sie als useState Variable definiert.
+
+\begin{lstlisting}[language=Python]
+const [selectedCategory, setSelectedCategory] = useState("");
+const [subcategories, setSubcategories] = useState([]);
+  
+useEffect(() => {
+    if (selectedCategory) {
+      const category = categories.find((c) => c.name === selectedCategory);
+      setSubcategories(category ? category.subcategories : []);
+    } else {
+      setSubcategories([]);
+    }
+  }, [selectedCategory, categories]);
+      
+\end{lstlisting}
+
+
+useEffect() für Unterkategorien: Diese Funktion wird aufgerufen, wenn selectedCategory oder categories sich ändern. Sie sucht die Unterkategorien der ausgewählten Kategorie und speichert diese in subcategories.
+
+
+
+Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit useContext können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht und eine reibungslose und intuitive Benutzererfahrung unterstützt.
+
+
+\begin{lstlisting}[language=Python]
+  const { showNotification, setCartSearch, searchText, categor } =
+    useContext(SearchContext);
+ \end{lstlisting}  
+    
+Die Variablen showNotification, setCartSearch, searchText, categor werden als Signals und im LocalStorage gespeichert, weil sie über verschiedene Komponenten hinweg geteilt werden müssen
+
+setCartSearch speichert die Suchresultate, searchText speichert die Texteingabe nach der gesucht wird, cetegor speichert die angeclickten Kategorie und Subkategorien, und showNotification speichert die jeweiligen Fehlermeldungen beim Editieren, Eingeben oder Suchen der Aufgaben.
+
+
+\begin{lstlisting}[language=Python]
+const onCategoryClick = async (categoryName) => {
+setSelectedCategory(categoryName);
+setSelectedSubcategory(""); // Reset subcategory when selecting a new category
+    
+const route = `/api/ex?cat=${categoryName}`;
+const res = await askServer(route, "GET");
+const excat = res.response;
+    
+\end{lstlisting}
+
+
+onCategoryClick: Diese Funktion wird aufgerufen, wenn eine Kategorie angeklickt wird. Sie setzt die ausgewählte Kategorie und setzt die Unterkategorie zurück. Dann sendet sie eine Anfrage an den Server, um Übungen basierend auf der Kategorie zu laden.
+
+
+\begin{lstlisting}[language=Python]
+    if (res.status != 200 || excat.length === 0) {
+      showNotification("No exercise matches the search term.", "red");
+      setCartSearch([]);
+      setSelectedCategory("");
+      searchText.value = "";
+      categor.value[0] = categoryName;
+      categor.value[1] = "";
+    } else {
+      setCartSearch(excat);
+      searchText.value = "";
+      categor.value[0] = categoryName;
+      categor.value[1] = "";
+    }
+  };
+
+
+\end{lstlisting}
+Verarbeiten der Antwort: Wenn die Serverantwort keinen Erfolg bringt (Status nicht 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung angezeigt und die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen gespeichert.
+
+
+\begin{lstlisting}[language=Python]
+  const onSubcategoryClick = async (subcategoryName) => {
+    setSelectedSubcategory(subcategoryName);
+
+    const route = `/api/ex?cat=${selectedCategory}&subcat=${subcategoryName}`;
+    const res = await askServer(route, "GET");
+    const exsubcat = res.response;
+    
+    
+\end{lstlisting}
+
+onSubcategoryClick: Diese Funktion wird aufgerufen, wenn eine Unterkategorie ausgewählt wird. Sie sendet eine Anfrage an den Server, um Übungen basierend auf der ausgewählten Unterkategorie zu laden.
+
+\begin{lstlisting}[language=Python]
+
+    if (res.status != 200 || exsubcat.length === 0) {
+      showNotification("No exercise matches the search term.", "red");
+      setCartSearch([]);
+      searchText.value = "";
+      categor.value[1] = subcategoryName;
+    } else {
+      setCartSearch(exsubcat);
+      searchText.value = "";
+      categor.value[1] = subcategoryName;
+    }
+  };
+\end{lstlisting}
+
+Verarbeiten der Antwort: Ähnlich wie bei der Kategorieauswahl wird eine Benachrichtigung angezeigt und die Unterkategorieauswahl zurückgesetzt, wenn keine passenden Übungen gefunden werden. Ansonsten wird die Liste der Übungen aktualisiert.
 
 
 \subsubsection{Vergleich: Signals vs. useState/useEffect} 
