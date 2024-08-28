@@ -30,12 +30,12 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
+    window.localStorage.clear();
     setUser(null);
-    window.localStorage.removeItem("user");
+    // window.localStorage.removeItem("user");
     document.cookie =
       "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     askServer("/logout", "DELETE");
-    window.localStorage.clear();
   };
 
   return (
