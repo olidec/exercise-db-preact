@@ -40,7 +40,7 @@ export default function FindExSubCat({ children }) {
   const onCategoryClick = async (categoryName) => {
     setSelectedCategory(categoryName);
     setSelectedSubcategory(""); // Reset subcategory when selecting a new category
-    
+
     const route = `/api/ex?cat=${categoryName}`;
     const res = await askServer(route, "GET");
     const excat = res.response;
@@ -83,7 +83,7 @@ export default function FindExSubCat({ children }) {
     setSelectedCategory("");
     setSelectedSubcategory("");
   };
-  
+
   const openModal = (id) => {
     setSelectedExercise(id);
     setModalOpen(true);
@@ -97,53 +97,49 @@ export default function FindExSubCat({ children }) {
   return (
     <FindExContext.Provider value={{ resetSelection }}>
       {children}
-    <div className="main-container" style={{ display: "flex" }}>
-      <div
-        className="categories-column"
-        style={{ width: "20%", padding: "10px", borderRight: "1px solid #ccc" }}
-      >
-        <h2>Kategorien/Subkategorien</h2>
-        <ul style={{ listStyleType: "none", padding: 0 }}>
-          {categories.map((category) => (
-            <li key={category.id}>
-              <div
-                className={`category-item ${
-                  selectedCategory === category.name && selectedSubcategory
-                    ? "underline"
-                    : selectedCategory === category.name
-                      ? "selected"
-                      : ""
-                }`}
-                onClick={() => onCategoryClick(category.name)}
-              >
-                {category.name}
-              </div>
-              {selectedCategory === category.name && (
-                <ul style={{ listStyleType: "none", paddingLeft: "25px" }}>
-                  {subcategories.map((subcategory) => (
-                    <li key={subcategory.id}>
-                      <div
-                        className={`subcategory-item ${selectedSubcategory === subcategory.name ? "selected" : ""}`}
-                        onClick={() => onSubcategoryClick(subcategory.name)}
-                      >
-                        {subcategory.name}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
+      <div className="main-container">
+        <div className="categories-column">
+          <h2>Kategorien/Subkategorien</h2>
+          <ul className="categories-list">
+            {categories.map((category) => (
+              <li key={category.id}>
+                <div
+                  className={`category-item ${
+                    selectedCategory === category.name && selectedSubcategory
+                      ? "underline"
+                      : selectedCategory === category.name
+                        ? "selected"
+                        : ""
+                  }`}
+                  onClick={() => onCategoryClick(category.name)}
+                >
+                  {category.name}
+                </div>
+                {selectedCategory === category.name && (
+                  <ul className="subcategories-list">
+                    {subcategories.map((subcategory) => (
+                      <li key={subcategory.id}>
+                        <div
+                          className={`subcategory-item ${selectedSubcategory === subcategory.name ? "selected" : ""}`}
+                          onClick={() => onSubcategoryClick(subcategory.name)}
+                        >
+                          {subcategory.name}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="content-column">
+          <SearchKorb openModal={openModal} />
+        </div>
+        <Modal isOpen={modalOpen} onClose={closeModal}>
+          {selectedExercise && <AufgDetails id={selectedExercise} />}
+        </Modal>
       </div>
-      <div className="content-column" style={{ width: "80%", padding: "10px" }}>
-        <SearchKorb openModal={openModal} />
-      </div>
-      <Modal isOpen={modalOpen} onClose={closeModal}>
-        {selectedExercise && <AufgDetails id={selectedExercise} />}
-      </Modal>
-    </div>
- 
     </FindExContext.Provider>
   );
 }

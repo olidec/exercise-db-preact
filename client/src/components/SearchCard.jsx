@@ -27,7 +27,7 @@ const SearchCard = ({
   console.log("userAuthor", userAuthor);
 
   return (
-    <div key={key} className="kartenContainer">
+    <div key={key} className="karten-container">
       <Card
         key={id}
         id={id}

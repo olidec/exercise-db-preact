@@ -60,34 +60,22 @@ const Card = ({
 
   return (
     <div className="karte">
-      <h3>Aufgabe mit ID: {id}</h3>
-      <h5>Schwierigkeit: {schwierigkeitText}</h5>
-
-      <h3>Summary</h3>
-      <hr />
-      <div id={`summary-${id}`} className="summary">
-        {summary}
-      </div>
-      <hr />
-
-      <h3>Content</h3>
-      <hr />
+      <h2>Aufgabe {id}</h2>
       <div id={`content-${id}`} className="content">
         {content}
       </div>
-      <hr />
 
       {isModal && (
         <>
-          <h3>Lösung:</h3>
+          <hr />
+          <h5>Lösung</h5>
           <div id={`solution-${id}`} className="solution">
             {solution}
           </div>
-          <hr />
           <h5>Kategorie: {categories}</h5>
           <h5>Subkategorie: {subcategories}</h5>
-          <h5>Schwierigkeit: {schwierigkeitText}</h5>
           <h5>Autor: {authorId}</h5>
+          <h5>Schwierigkeitsgrad: {schwierigkeitText}</h5>
         </>
       )}
     </div>

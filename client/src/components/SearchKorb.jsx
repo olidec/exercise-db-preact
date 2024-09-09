@@ -36,6 +36,7 @@ const SearchKorb = ({ openModal }) => {
       <h2>Suchresultate ({filteredList.length})</h2>
 
       <h3>
+        Angezeigt:{" "}
         {searchText.value === ""
           ? categor.value[1] === ""
             ? categor.value[0]
@@ -45,6 +46,7 @@ const SearchKorb = ({ openModal }) => {
             : "Suchbegriff: " + searchText.value}
       </h3>
 
+      <h4>Nach Schwierigkeitsgrad oder Sprache Filtern:</h4>
       <div className="checkbox-container">
         <span>Schwierigkeitsgrad:</span>
         <div className="checkbox-wrapper">
