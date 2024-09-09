@@ -25,7 +25,6 @@ const SearchCard = ({
   console.log("authorId", authorId);
   const userAuthor = localUser.id === authorId;
   console.log("userAuthor", userAuthor);
-  // TODO Add function that tests if user is author of exercise
 
   return (
     <div key={key} className="kartenContainer">

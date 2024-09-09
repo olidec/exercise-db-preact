@@ -45,7 +45,7 @@ export default function FindExBySearchText() {
         <div className="pure-control-group">
           <input id="exid-3" value={inputValue} onChange={onChange} />
           <button className="pure-button" type="submit">
-            Find Exercises containing
+            Freitextsuche starten
           </button>
         </div>
       </form>

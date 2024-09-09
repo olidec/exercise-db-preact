@@ -65,6 +65,13 @@ const AufgDetails = ({ id }) => {
 
   console.log(exDetails);
 
+  const localUser = JSON.parse(localStorage.getItem("user"));
+  console.log("localUser", localUser.id);
+  const authorId = exDetails.authorId;
+  console.log("authorId", authorId);
+  const userAuthor = localUser.id === authorId;
+  console.log("userAuthor", userAuthor);
+
   return (
     <>
       <div className="inhalt">
@@ -106,12 +113,14 @@ const AufgDetails = ({ id }) => {
             </button>
           )}
 
-          <button
-            className="pure-button"
-            onClick={() => edit({ id: exDetails.id })}
-          >
-            Edit Aufgabe
-          </button>
+          {userAuthor && (
+            <button
+              className="pure-button"
+              onClick={() => edit({ id: exDetails.id })}
+            >
+              Aufgabe Bearbeiten
+            </button>
+          )}
         </div>
       </div>
     </>
