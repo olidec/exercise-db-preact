@@ -453,79 +453,6 @@ Bsp aus App:
 
 In diesem Abschnitt wird das Datenbankmodell beschrieben, welches für die Speicherung der Benutzerinformationen, Aufgaben und deren Kategorisierung verwendet wird. Die Implementierung erfolgt mit Prisma ORM und PostgreSQL als Datenbank. Im Folgenden wird die Struktur der relevanten Tabellen dokumentiert.
 
-\subsubsection{Datenbanktabellen}
-
-Das Datenbankmodell umfasst vier Haupttabellen: \texttt{User}, \texttt{Exercise}, \texttt{Category} und \texttt{Subcategory}. Diese Tabellen sind miteinander verknüpft, sodass Benutzer Aufgaben erstellen und diese in Kategorien und Unterkategorien organisieren können.
-
-\subsubsection{Tabelle \texttt{User}}
-
-Die Tabelle \texttt{User} speichert die Informationen der Benutzer. Jeder Benutzer hat eine eindeutige ID sowie eine E-Mail-Adresse und einen Benutzernamen. Optional kann ein Passwort gespeichert werden. Benutzer können eine Rolle besitzen (standardmäßig \texttt{USER}), die ihre Berechtigungen festlegt. Zusätzlich verwaltet die Tabelle die Aufgaben, die ein Benutzer erstellt hat.
-
-\begin{itemize}
-  \item \texttt{id}: Primärschlüssel, automatisch inkrementiert.
-  \item \texttt{email}: Eindeutige E-Mail-Adresse des Benutzers.
-  \item \texttt{username}: Eindeutiger Benutzername.
-  \item \texttt{password}: Optionales Passwortfeld, kann null sein.
-  \item \texttt{role}: Rolle des Benutzers (standardmäßig \texttt{USER}).
-  \item \texttt{exercises}: Beziehung zur Tabelle \texttt{Exercise}. Verknüpfung zu den von diesem Benutzer erstellten Aufgaben, dies ist eine \texttt{1:n}-Beziehung da der Benutzer mehrer Aufgaben erstellen kann
-  \item \texttt{retry}: Anzahl der fehlgeschlagenen Anmeldeversuche.
-  \item \texttt{retryExp}: Zeitpunkt, ab dem der Benutzer nach mehreren Fehlversuchen erneut versuchen kann, sich anzumelden.
-\end{itemize}
-
-\subsubsection{Tabelle \texttt{Exercise}}
-
-Die Tabelle \texttt{Exercise} speichert die einzelnen Mathematikaufgaben, die von Benutzern erstellt werden. Jede Aufgabe enthält Informationen wie den Inhalt, die Lösung, die Sprache und den Schwierigkeitsgrad. Jede Aufgabe ist einem Benutzer (dem Autor), einer Kategorie und einer Unterkategorie zugeordnet.
-
-\begin{itemize}
-  \item \texttt{id}: Primärschlüssel, automatisch inkrementiert.
-  \item \texttt{createdAt}: Erstellungsdatum der Aufgabe, standardmäßig die aktuelle Zeit.
-  \item \texttt{updatedAt}: Automatisch aktualisiertes Datum, wenn die Aufgabe geändert wird.
-  \item \texttt{summary}: Eine optionale Zusammenfassung der Aufgabe.
-  \item \texttt{content}: Der eigentliche Inhalt der Aufgabe.
-  \item \texttt{solution}: Die Lösung der Aufgabe.
-  \item \texttt{language}: Sprache der Aufgabe (standardmäßig \texttt{Deutsch}).
-  \item \texttt{difficulty}: Schwierigkeitsgrad der Aufgabe (standardmäßig 1).
-  \item \texttt{authorId}: Fremdschlüssel, der den Benutzer referenziert, der die Aufgabe erstellt hat.
-   \item \texttt{author}: Beziehung zum Benutzer, der die Aufgabe erstellt hat. Diese Beziehung ist eine \texttt{1:n}-Beziehung, da ein Benutzer mehrere Aufgaben erstellen kann.
-  \item \texttt{categoryId}: Fremdschlüssel, der die Kategorie referenziert, zu der die Aufgabe gehört.
-  
-\item \texttt{categories}: Beziehung zur Tabelle \texttt{Category}. Diese Beziehung ist eine \texttt{n:1}-Beziehung, da jede Aufgabe genau einer Kategorie zugeordnet ist, aber eine Kategorie mehrere Aufgaben enthalten kann.
-  \item \texttt{subcategoryId}: Fremdschlüssel, der die Unterkategorie referenziert, zu der die Aufgabe gehört.
-    \item \texttt{subcategories}: Beziehung zur Tabelle \texttt{Subcategory}. Diese Beziehung ist ebenfalls eine \texttt{n:1}-Beziehung, da jede Aufgabe genau einer Unterkategorie zugeordnet ist, aber eine Unterkategorie mehrere Aufgaben umfassen kann.
-\end{itemize}
-
-\subsubsection{Tabelle \texttt{Category}}
-
-Die Tabelle \texttt{Category} enthält Informationen über die Hauptkategorien, denen Aufgaben zugeordnet werden können. Eine Kategorie kann mehrere Unterkategorien und Aufgaben beinhalten.
-
-\begin{itemize}
-  \item \texttt{id}: Primärschlüssel, automatisch inkrementiert.
-  \item \texttt{name}: Name der Kategorie.
-   \item \texttt{subcategories}: Beziehung zur Tabelle \texttt{Subcategory}. Diese Beziehung ist eine \texttt{1:n}-Beziehung, da eine Kategorie mehrere Unterkategorien enthalten kann, aber jede Unterkategorie nur zu einer Kategorie gehört.
-  \item \texttt{exercises}: Beziehung zur Tabelle \texttt{Exercise}. Diese Beziehung ist ebenfalls eine \texttt{1:n}-Beziehung, da eine Kategorie mehrere Aufgaben enthalten kann, aber jede Aufgabe nur zu einer Kategorie gehört.
-\end{itemize}
-
-\subsubsection{Tabelle \texttt{Subcategory}}
-
-Die Tabelle \texttt{Subcategory} speichert Informationen über die Unterkategorien, die einer übergeordneten Kategorie zugeordnet sind. Jede Unterkategorie kann mehrere Aufgaben enthalten.
-
-\begin{itemize}
-  \item \texttt{id}: Primärschlüssel, automatisch inkrementiert.
-  \item \texttt{name}: Name der Unterkategorie.
-  \item \texttt{categoryId}: Fremdschlüssel, der die übergeordnete Kategorie referenziert.
- \item \texttt{category}: Beziehung zur Tabelle \texttt{Category}. Diese Beziehung ist eine \texttt{n:1}-Beziehung, da jede Unterkategorie zu genau einer Kategorie gehört, aber eine Kategorie mehrere Unterkategorien enthalten kann.Beziehung zur übergeordneten Kategorie, bei deren Löschung die Unterkategorie ebenfalls gelöscht wird (Cascade-Löschung).
- 
-   \item \texttt{exercises}: Beziehung zur Tabelle \texttt{Exercise}. Diese Beziehung ist eine \texttt{1:n}-Beziehung, da eine Unterkategorie mehrere Aufgaben enthalten kann, aber jede Aufgabe nur zu einer Unterkategorie gehört.
-\end{itemize}
-
-\subsubsection{Zusammenfassung}
-
-Das beschriebene Datenbankmodell ermöglicht eine klare und logische Strukturierung von Benutzern, Aufgaben, Kategorien und Unterkategorien. Mithilfe von \texttt{Prisma} ORM und \texttt{PostgreSQL} als Datenbank wird sichergestellt, dass die Anwendung skalierbar und effizient auf große Datenmengen zugreifen kann. Jede Tabelle ist durch eindeutige Beziehungen verknüpft, was eine einfache Verwaltung der Daten und eine effiziente Abfrage ermöglicht.
-
-
-Die Datenbankstruktur unterstützt umfassende Interaktionen zwischen Benutzern, ihren Aufgaben und Kommentaren sowie die Kategorisierung von Aufgaben.
-
-
 \begin{lstlisting}[language=Python]
 
 generator client {
@@ -582,6 +509,81 @@ model Subcategory {
 }
 
 \end{lstlisting}
+
+
+\subsubsection{Datenbanktabellen}
+
+Das Datenbankmodell umfasst vier Haupttabellen: \texttt{User}, \texttt{Exercise}, \texttt{Category} und \texttt{Subcategory}. Diese Tabellen sind miteinander verknüpft, sodass Benutzer Aufgaben erstellen und diese in Kategorien und Unterkategorien organisieren können.
+
+\subsubsection{Tabelle \texttt{User}}
+
+Die Tabelle \texttt{User} speichert die Informationen der Benutzer. Jeder Benutzer hat eine eindeutige ID sowie eine E-Mail-Adresse und einen Benutzernamen. Optional kann ein Passwort gespeichert werden. Benutzer können eine Rolle besitzen (standardmäßig \texttt{USER}), die ihre Berechtigungen festlegt. Zusätzlich verwaltet die Tabelle die Aufgaben, die ein Benutzer erstellt hat.
+
+\begin{itemize}
+  \item \texttt{id}: Primärschlüssel, automatisch inkrementiert.
+  \item \texttt{email}: Eindeutige E-Mail-Adresse des Benutzers.
+  \item \texttt{username}: Eindeutiger Benutzername.
+  \item \texttt{password}: Optionales Passwortfeld, kann null sein.
+  \item \texttt{role}: Rolle des Benutzers (standardmäßig \texttt{USER}).
+  \item \texttt{exercises}: Beziehung zur Tabelle \texttt{Exercise}. Verknüpfung zu den von diesem Benutzer erstellten Aufgaben, dies ist eine \texttt{1:n}-Beziehung da der Benutzer mehrer Aufgaben erstellen kann
+  \item \texttt{retry}: Anzahl der fehlgeschlagenen Anmeldeversuche.
+  \item \texttt{retryExp}: Zeitpunkt, ab dem der Benutzer nach mehreren Fehlversuchen erneut versuchen kann, sich anzumelden.
+\end{itemize}
+
+\subsubsection{Tabelle \texttt{Exercise}}
+
+Die Tabelle \texttt{Exercise} speichert die einzelnen Mathematikaufgaben, die von Benutzern erstellt werden. Jede Aufgabe enthält Informationen wie den Inhalt, die Lösung, die Sprache und den Schwierigkeitsgrad. Jede Aufgabe ist einem Benutzer (dem Autor), einer Kategorie und einer Unterkategorie zugeordnet.
+
+\begin{itemize}
+  \item \texttt{id}: Primärschlüssel, automatisch inkrementiert.
+  \item \texttt{createdAt}: Erstellungsdatum der Aufgabe, standardmäßig die aktuelle Zeit.
+  \item \texttt{updatedAt}: Automatisch aktualisiertes Datum, wenn die Aufgabe geändert wird.
+  \item \texttt{summary}: Eine optionale Zusammenfassung der Aufgabe.
+  \item \texttt{content}: Der eigentliche Inhalt der Aufgabe.
+  \item \texttt{solution}: Die Lösung der Aufgabe.
+  \item \texttt{language}: Sprache der Aufgabe (standardmäßig \texttt{Deutsch}).
+  \item \texttt{difficulty}: Schwierigkeitsgrad der Aufgabe (standardmäßig 1).
+  \item \texttt{authorId}: Fremdschlüssel, der den Benutzer referenziert, der die Aufgabe erstellt hat.
+   \item \texttt{author}: Beziehung zur Tabelle \texttt{User}, der die Aufgabe erstellt hat. Diese Beziehung ist eine \texttt{1:n}-Beziehung, da ein Benutzer mehrere Aufgaben erstellen kann.
+  \item \texttt{categoryId}: Fremdschlüssel, der die Kategorie referenziert, zu der die Aufgabe gehört.
+  
+\item \texttt{categories}: Beziehung zur Tabelle \texttt{Category}. Diese Beziehung ist eine \texttt{n:1}-Beziehung, da jede Aufgabe genau einer Kategorie zugeordnet ist, aber eine Kategorie mehrere Aufgaben enthalten kann.
+  \item \texttt{subcategoryId}: Fremdschlüssel, der die Unterkategorie referenziert, zu der die Aufgabe gehört.
+    \item \texttt{subcategories}: Beziehung zur Tabelle \texttt{Subcategory}. Diese Beziehung ist ebenfalls eine \texttt{n:1}-Beziehung, da jede Aufgabe genau einer Unterkategorie zugeordnet ist, aber eine Unterkategorie mehrere Aufgaben umfassen kann.
+\end{itemize}
+
+\subsubsection{Tabelle \texttt{Category}}
+
+Die Tabelle \texttt{Category} enthält Informationen über die Hauptkategorien, denen Aufgaben zugeordnet werden können. Eine Kategorie kann mehrere Unterkategorien und Aufgaben beinhalten.
+
+\begin{itemize}
+  \item \texttt{id}: Primärschlüssel, automatisch inkrementiert.
+  \item \texttt{name}: Name der Kategorie.
+   \item \texttt{subcategories}: Beziehung zur Tabelle \texttt{Subcategory}. Diese Beziehung ist eine \texttt{1:n}-Beziehung, da eine Kategorie mehrere Unterkategorien enthalten kann, aber jede Unterkategorie nur zu einer Kategorie gehört.
+  \item \texttt{exercises}: Beziehung zur Tabelle \texttt{Exercise}. Diese Beziehung ist ebenfalls eine \texttt{1:n}-Beziehung, da eine Kategorie mehrere Aufgaben enthalten kann, aber jede Aufgabe nur zu einer Kategorie gehört.
+\end{itemize}
+
+\subsubsection{Tabelle \texttt{Subcategory}}
+
+Die Tabelle \texttt{Subcategory} speichert Informationen über die Unterkategorien, die einer übergeordneten Kategorie zugeordnet sind. Jede Unterkategorie kann mehrere Aufgaben enthalten.
+
+\begin{itemize}
+  \item \texttt{id}: Primärschlüssel, automatisch inkrementiert.
+  \item \texttt{name}: Name der Unterkategorie.
+  \item \texttt{categoryId}: Fremdschlüssel, der die übergeordnete Kategorie referenziert.
+ \item \texttt{category}: Beziehung zur Tabelle \texttt{Category}. Diese Beziehung ist eine \texttt{n:1}-Beziehung, da jede Unterkategorie zu genau einer Kategorie gehört, aber eine Kategorie mehrere Unterkategorien enthalten kann.Beziehung zur übergeordneten Kategorie, bei deren Löschung die Unterkategorie ebenfalls gelöscht wird (Cascade-Löschung).
+ 
+   \item \texttt{exercises}: Beziehung zur Tabelle \texttt{Exercise}. Diese Beziehung ist eine \texttt{1:n}-Beziehung, da eine Unterkategorie mehrere Aufgaben enthalten kann, aber jede Aufgabe nur zu einer Unterkategorie gehört.
+\end{itemize}
+
+\subsubsection{Zusammenfassung}
+
+Das beschriebene Datenbankmodell ermöglicht eine klare und logische Strukturierung von Benutzern, Aufgaben, Kategorien und Unterkategorien. Mithilfe von \texttt{Prisma} ORM und \texttt{PostgreSQL} als Datenbank wird sichergestellt, dass die Anwendung skalierbar und effizient auf große Datenmengen zugreifen kann. Jede Tabelle ist durch eindeutige Beziehungen verknüpft, was eine einfache Verwaltung der Daten und eine effiziente Abfrage ermöglicht.
+
+
+Die Datenbankstruktur unterstützt umfassende Interaktionen zwischen Benutzern, ihren Aufgaben sowie die Kategorisierung von Aufgaben.
+
+
 
 
 \section{Methodik}
