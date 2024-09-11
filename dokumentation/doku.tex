@@ -653,39 +653,42 @@ Die Anwendung wurde erfolgreich implementiert und erfüllt die gestellten Anford
 
 \subsection{Die Komponentenübersicht}
 
-•	Aufgabendetails (Exercise Details):
+\begin{itemize}
+
+
+\item Aufgabendetails (Exercise Details):
 
 Eine Detailansicht (AufgDetails) für jede Aufgabe, die Informationen wie Aufgabentext, Lösung, Kommentare und Kategoriezugehörigkeit enthält. Benutzer können Aufgaben kommentieren und in den Warenkorb legen.
 
-•	Suchergebnisse (Search Results):
+\item Suchergebnisse (Search Results):
 
 Komponenten für die Anzeige von Suchergebnissen, einschließlich Suchkarten (SearchCard), die einzelne Aufgaben darstellen, und einer Listenansicht (CardListSearch), die eine Sammlung von Suchkarten enthält. Ein spezieller Warenkorb für die Suche (SearchKorb) sammelt gesuchte Aufgaben für spätere Aktionen.
 
-•	Warenkorb (Warenkorb):
+\item Warenkorb (Warenkorb):
 
 Beinhaltet Komponenten zum Verwalten der ausgewählten Aufgaben, wie WarenCard für einzelne Aufgaben im Warenkorb und CardListWaren für die Gesamtansicht des Warenkorbs. Der WarenKorb selbst ist die Hauptkomponente, die den Nutzern die Interaktion mit dem Warenkorb ermöglicht, einschließlich der Überprüfung und Finalisierung ihrer Auswahl.
 
-•	Aufgaben hinzufügen (Add Exercises):
+\item Aufgaben hinzufügen (Add Exercises):
 
 Die ExForm-Komponente ermöglicht das Erstellen neuer Aufgaben. Sie umfasst Formularfelder für die Eingabe von Titel, Inhalt, Lösung und optionalen Kategorien. Über eine API-Anfrage (askServer(/api/ex, "POST", ex)) werden die Daten an das Backend gesendet und die Aufgabe wird der Datenbank hinzugefügt.
 
-•	Aufgaben finden (Find Exercises):
+\item Aufgaben finden (Find Exercises):
 
 Dieser Bereich umfasst mehrere Komponenten, die unterschiedliche Methoden zur Aufgabensuche anbieten, darunter FindExByCategory für kategoriebasierte Suche, FindExByIdFromServer für die direkte Abfrage einer Aufgabe über ihre ID und FindExBySearchText für textbasierte Suchanfragen.
 
-•	Benutzerregistrierung und -anmeldung (User Registration/Login):
+\item Benutzerregistrierung und -anmeldung (User Registration/Login):
 
 Eine Form-Komponente unterstützt die Registrierung neuer Benutzer und die Anmeldung bestehender Benutzer durch Übermittlung ihrer Anmeldeinformationen an das Backend (askServer(/api/user, "POST", user)). Authentifizierungsdaten werden überprüft, um Zugang zu geschützten Bereichen der Anwendung zu gewähren.
 
-•	Navigation (Navigation):
+\item Navigation (Navigation):
 
 Die Menu-Komponente stellt die Hauptnavigation der Anwendung bereit und ermöglicht den Zugriff auf die verschiedenen Seiten und Funktionen der App, darunter die Startseite (/), das Hinzufügen von Aufgaben (/add), das Finden von Aufgaben (/find), den Warenkorb (/warenkorb) und die Detailansicht einer spezifischen Aufgabe (/:id).
 
-•	Seiten (Pages):
+\item Seiten (Pages):
 
 Definiert die Struktur der Anwendung und beinhaltet Seitenkomponenten wie User für die Benutzerregistrierung und -anmeldung, AddExercise für das Hinzufügen neuer Aufgaben, FindExercise für die Aufgabensuche, Letzte Suchresultate für das Anzeigen der zuletzt gesuchten Aufgaben und WarenKorb für die Ansicht und Verwaltung des Warenkorbs.
 
-
+\end{itemize}
 
 
 \section{Fazit/Diskussion}

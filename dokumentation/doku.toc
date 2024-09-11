@@ -26,6 +26,6 @@
 \contentsline {subsection}{\numberline {5.2}Die Komponentenübersicht}{29}{subsection.5.2}%
 \contentsline {section}{\numberline {6}Fazit/Diskussion}{31}{section.6}%
 \contentsline {section}{\numberline {7}Schlusswort}{31}{section.7}%
-\contentsline {section}{\numberline {A}Anhang}{32}{appendix.A}%
-\contentsline {section}{\numberline {B}Bilderverzeichnis}{33}{appendix.B}%
-\contentsline {section}{\numberline {C}Literaturverzeichnis}{34}{appendix.C}%
+\contentsline {section}{\numberline {A}Anhang}{33}{appendix.A}%
+\contentsline {section}{\numberline {B}Bilderverzeichnis}{34}{appendix.B}%
+\contentsline {section}{\numberline {C}Literaturverzeichnis}{35}{appendix.C}%
