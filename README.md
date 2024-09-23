@@ -1,16 +1,16 @@
-# Math Exercise Database 
+# Math Exercise Database
 
-## After Copying/Cloning
-Run `npm install `
+## Running on Production
 
-## Running Server and CLient
+connect to server via ssh
+
+```bash
+ssh db-admin@139.162.166.227
+
+# Navigate to project
+
+cd execise-db-preact
+git pull
 ```
-npm run server
-```
-and in a new terminal
-```
-npm run client
-```
 
-
-
+create env files `.env` and `db.env`
