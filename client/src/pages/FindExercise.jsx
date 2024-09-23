@@ -7,11 +7,8 @@ const FindExercise = () => {
   return (
     <AuthWrapper>
       <div>
-        <hr />
         <FindExSubCat>
           <FindExBySearchText />
-          <hr />
-       
         </FindExSubCat>
       </div>
     </AuthWrapper>

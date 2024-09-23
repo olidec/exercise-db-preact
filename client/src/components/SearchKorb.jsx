@@ -36,13 +36,17 @@ const SearchKorb = ({ openModal }) => {
       <h2>Suchresultate ({filteredList.length})</h2>
 
       <h3>
+        Angezeigt:{" "}
         {searchText.value === ""
-        ? categor.value[1] === ""? categor.value[0] : categor.value[0] + " - " + categor.value[1]
-         
-          : searchText.value===null?
-          "Suchbegriff: " : "Suchbegriff: " + searchText.value}
+          ? categor.value[1] === ""
+            ? categor.value[0]
+            : categor.value[0] + " - " + categor.value[1]
+          : searchText.value === null
+            ? "Suchbegriff: "
+            : "Suchbegriff: " + searchText.value}
       </h3>
 
+      <h4>Nach Schwierigkeitsgrad oder Sprache Filtern:</h4>
       <div className="checkbox-container">
         <span>Schwierigkeitsgrad:</span>
         <div className="checkbox-wrapper">
@@ -165,7 +169,7 @@ const SearchKorb = ({ openModal }) => {
               categoryId={ex.categoryId}
               difficulty={ex.difficulty}
               solution={ex.solution}
-              author={ex.author}
+              authorId={ex.authorId}
               subcategories={ex.subcategories}
               openModal={openModal}
               handleDifficultyChange={handleDifficultyChange}

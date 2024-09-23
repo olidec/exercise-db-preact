@@ -36,3 +36,9 @@ dist-ssr
 certs/
 
 package-lock.json
+dokumentation/doku.toc
+dokumentation/doku.pdf
+dokumentation/doku.out
+dokumentation/doku.fls
+dokumentation/doku.fdb_latexmk
+dokumentation/doku.aux

@@ -22,19 +22,20 @@ export function AuthProvider({ children }) {
     });
     if (status === 200) {
       setUser({ ...response.data.user });
-      window.location.assign("/exercise-db-preact/add");
+      window.location.assign("/find");
     } else {
       console.error(response);
-      window.location.assign("/exercise-db-preact/login");
+      window.location.assign("/login");
     }
   };
 
-  const logout = () => {
-    setUser(null);
+  const logout = async () => {
+    // setUser(null);
+    await window.localStorage.clear();
+    // window.localStorage.removeItem("user");
     document.cookie =
       "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     askServer("/logout", "DELETE");
-    window.localStorage.clear();
   };
 
   return (

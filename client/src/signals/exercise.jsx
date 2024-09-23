@@ -65,7 +65,7 @@ export const SearchProvider = ({ children }) => {
       if (container.contains(notification)) {
         container.removeChild(notification);
       }
-    }, 2500);
+    }, 3500);
   };
 
   const deleteCart = async ({ id }) => {
@@ -81,7 +81,7 @@ export const SearchProvider = ({ children }) => {
         showNotification("Aufgabe erfolgreich gelöscht.", "red");
 
         setTimeout(() => {
-          window.location.href = `/exercise-db-preact/add`;
+          window.location.href = `/add`;
         }, 1000);
       } else {
         console.error("Fehler beim Löschen der Aufgabe");

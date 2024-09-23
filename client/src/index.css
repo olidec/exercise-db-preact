@@ -4,14 +4,6 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  width: 100%;
-  font-family: Arial, sans-serif;
-}
-
 :root {
   --footer-height: 20px;
   --header-height: 80px;
@@ -21,10 +13,35 @@ body {
   --logout-link-color: #eb0c00;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
 .inhalt {
   margin-left: 5%;
   margin-right: 5%;
   padding-top: 5%;
+}
+
+header {
+  background-color: var(--navbar-bg-color);
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.main-container {
+  display: flex;
 }
 
 /* .my-menu {
@@ -70,31 +87,31 @@ body {
   background-color: #fafbfc;
 } */
 
-.kartenContainer {
+.karten-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap; /* Hier wird die Zeilenumbruch-Eigenschaft hinzugefügt */
   gap: 20px; /* Hier kannst du den Abstand zwischen den Karten einstellen */
   border: 1px solid #0b1610;
-  border-radius: "8px";
+  border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(65, 23, 23, 0.9);
-  max-width: calc(70% - 16px);
+  width: calc(70% - 16px);
   margin-left: 0%;
   height: fit-content;
-  word-wrap: "break-word";
+  word-wrap: break-word;
   margin-bottom: 28px;
 }
 
 .karte {
   border: 1px solid #ccc;
-  border-radius: "8px";
+  border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: calc(100% - 16px);
   height: fit-content;
-  word-wrap: "break-word";
+  word-wrap: break-word;
   margin-bottom: 16px;
 }
 
@@ -109,10 +126,10 @@ body {
 } */
 
 .findEx {
-  display: "flex";
-  justify-content: "center";
-  align-items: "center";
-  text-align: "center";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 #checkmark {
@@ -160,8 +177,8 @@ body {
 
 .checkbox-wrapper input[type="checkbox"],
 .checkbox-wrapper input[type="radio"] {
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   margin-bottom: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 50%;
@@ -211,19 +228,6 @@ body {
 .search-container h3,
 .checkbox-container span {
   margin-bottom: 10px; /* Abstand nach unten */
-}
-
-header {
-  background-color: var(--navbar-bg-color);
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-}
-
-.container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: auto;
 }
 
 .features {
@@ -379,4 +383,25 @@ header {
 .button-error {
   background: rgb(202, 60, 60);
   /* this is a maroon */
+}
+
+/* find exercise page */
+.categories-column {
+  width: 20%;
+  padding: 10px;
+}
+
+.categories-list {
+  list-style: none;
+  padding: 0;
+}
+
+.subcategories-list {
+  list-style: none;
+  padding-left: 5%;
+}
+
+.content-column {
+  width: 80%;
+  padding: 10px;
 }

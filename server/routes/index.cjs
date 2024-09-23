@@ -14,6 +14,8 @@ router.use("/api/subcat", require("./subcat.cjs"));
 
 router.use("/api/download", require("./download.cjs"));
 
+router.use("/logout", require("./logout.cjs"));
+
 
 
 module.exports = {

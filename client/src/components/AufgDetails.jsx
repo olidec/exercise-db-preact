@@ -7,7 +7,7 @@ import { useContext } from "preact/hooks";
 import { cat, loadCat } from "../signals/categories.js";
 
 export function edit({ id }) {
-  window.location.href = `/exercise-db-preact/edit/${id}`;
+  window.location.href = `/edit/${id}`;
 }
 
 const AufgDetails = ({ id }) => {
@@ -65,6 +65,13 @@ const AufgDetails = ({ id }) => {
 
   console.log(exDetails);
 
+  const localUser = JSON.parse(localStorage.getItem("user"));
+  console.log("localUser", localUser.id);
+  const authorId = exDetails.authorId;
+  console.log("authorId", authorId);
+  const userAuthor = localUser.id === authorId;
+  console.log("userAuthor", userAuthor);
+
   return (
     <>
       <div className="inhalt">
@@ -78,7 +85,7 @@ const AufgDetails = ({ id }) => {
             content={exDetails.content}
             solution={exDetails.solution}
             difficulty={exDetails.difficulty}
-            author={exDetails.authorId}
+            authorId={exDetails.authorId}
             categories={categoryName}
             subcategories={subcategoryName}
             isModal={true}
@@ -106,12 +113,14 @@ const AufgDetails = ({ id }) => {
             </button>
           )}
 
-          <button
-            className="pure-button"
-            onClick={() => edit({ id: exDetails.id })}
-          >
-            Edit Aufgabe
-          </button>
+          {userAuthor && (
+            <button
+              className="pure-button"
+              onClick={() => edit({ id: exDetails.id })}
+            >
+              Aufgabe Bearbeiten
+            </button>
+          )}
         </div>
       </div>
     </>

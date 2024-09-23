@@ -13,7 +13,7 @@ export const WarenkorbProvider = ({ children }) => {
     setTimeout(() => {
       cartItems.value = [...cartItems.value, { id, summary, content }];
 
-      console.log(cartItems.value);
+      // console.log(cartItems.value);
       // Zeige das Häkchen an
       const checkmark = document.getElementById("checkmark");
       checkmark.innerHTML = "✓";
@@ -68,7 +68,7 @@ export const WarenkorbProvider = ({ children }) => {
   const cartCount = computed(() => cartItems.value.length);
 
   const arrayIDs = cartItems.value.map((obj) => obj.id);
-  console.log(arrayIDs);
+  // console.log(arrayIDs);
 
   return (
     <WarenkorbContext.Provider

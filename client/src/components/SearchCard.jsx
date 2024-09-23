@@ -11,7 +11,7 @@ const SearchCard = ({
   categoryId,
   difficulty,
   solution,
-  author,
+  authorId,
   subcategories,
   openModal,
   handleDifficultyChange,
@@ -20,11 +20,14 @@ const SearchCard = ({
   const { cartItems, addToKorb, handleDelete } = useContext(WarenkorbContext);
   let index = cartItems.value.findIndex((item) => item.id === id);
 
-  const user = true;
-  // TODO Add function that tests if user is author of exercise
+  const localUser = JSON.parse(localStorage.getItem("user"));
+  console.log("localUser", localUser.id);
+  console.log("authorId", authorId);
+  const userAuthor = localUser.id === authorId;
+  console.log("userAuthor", userAuthor);
 
   return (
-    <div key={key} className="kartenContainer">
+    <div key={key} className="karten-container">
       <Card
         key={id}
         id={id}
@@ -33,7 +36,7 @@ const SearchCard = ({
         categories={categoryId}
         difficulty={difficulty}
         solution={solution}
-        author={author}
+        authorId={authorId}
         subcategories={subcategories}
         isModal={false}
         handleDifficultyChange={handleDifficultyChange}
@@ -57,7 +60,7 @@ const SearchCard = ({
         <button className="pure-button" onClick={() => openModal(id)}>
           Details
         </button>
-        {user && (
+        {userAuthor && (
           <button className="pure-button" onClick={() => edit({ id })}>
             Bearbeiten
           </button>
