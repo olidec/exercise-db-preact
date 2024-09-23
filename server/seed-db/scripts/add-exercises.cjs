@@ -9,7 +9,7 @@ async function setup() {
   const newExercises = await prisma.exercise.createMany({
     data: exercises,
     // only for postgres
-    // skipDuplicates: true,
+    skipDuplicates: true,
   });
   console.log(newExercises);
 }

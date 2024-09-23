@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "email": "me@echo.ch",
     "username": "patrick",
     "password": "1234",
@@ -9,7 +8,6 @@
     "retryExp": null
   },
   {
-    "id": 2,
     "email": "w@w",
     "username": "w",
     "password": "$argon2id$v=19$m=65536,t=3,p=4$xi3p8i8IbrF9tc1gJbtsEQ$KDFMdL++nhPkT35J2JhIJ4qADQxMnHQCAdDK9/k9P6A",
@@ -18,7 +16,6 @@
     "retryExp": "2024-05-11T19:39:27.547Z"
   },
   {
-    "id": 3,
     "email": "b@b",
     "username": "b",
     "password": "$argon2id$v=19$m=65536,t=3,p=4$n8/862CQHv0+pKxtazrjdg$Y4aVXAdpnU1oU1dEdPAkwGuaBfNOoc1zFLpHMa77Vqw",
@@ -27,7 +24,6 @@
     "retryExp": null
   },
   {
-    "id": 4,
     "email": "c@c",
     "username": "c",
     "password": "$argon2id$v=19$m=65536,t=3,p=4$tOPpYxMKE1U/mjhHVoDFSw$QJT1c8kdJrgj6sGgsh6G+kfNUVqRuv8m7hDWPqB+6Q8",
@@ -36,7 +32,6 @@
     "retryExp": null
   },
   {
-    "id": 5,
     "email": "s@s",
     "username": "s",
     "password": "$argon2id$v=19$m=65536,t=3,p=4$crV9epUS61rHilYzyhN0vw$MMmSVVAIEEcvmFoVlWvvwofX59RHejDthYCbNKDKrXw",
@@ -45,7 +40,6 @@
     "retryExp": null
   },
   {
-    "id": 6,
     "email": "h@h",
     "username": "h",
     "password": "$argon2id$v=19$m=65536,t=3,p=4$EJX1d/7p4K/N8CuITZxDfQ$bk8Bk5GRYBqXrs2J0VgeRJjam4h7RD7UjX1ucwKkQUg",

@@ -7,5 +7,4 @@ async function deleteAll() {
   const deleteUsers = await prisma.user.deleteMany({});
   const deleteExercises = await prisma.exercise.deleteMany({});
 }
-
-module.exports = deleteAll;
+deleteAll();
