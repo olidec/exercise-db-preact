@@ -1,26 +1,20 @@
 [
   {
-    "id": 1,
     "name": "Zahlen"
   },
   {
-    "id": 2,
     "name": "Arithmetik und Algebra"
   },
   {
-    "id": 3,
     "name": "Geometrie"
   },
   {
-    "id": 4,
     "name": "Analysis"
   },
   {
-    "id": 5,
     "name": "Stochastik"
   },
   {
-    "id": 6,
     "name": "Vertiefende Themen"
   }
 ]

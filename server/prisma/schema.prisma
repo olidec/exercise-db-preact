@@ -29,11 +29,11 @@ model Exercise {
   language      String      @default("Deutsch")
   difficulty    Int         @default(1)
   authorId      Int         @default(1)
-  author        User        @relation(fields: [authorId], references: [id])
+  author        User        @relation(fields: [authorId], references: [id], onDelete: Cascade)
   categoryId    Int         @default(1)
-  categories    Category    @relation(fields: [categoryId], references: [id])
+  categories    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   subcategoryId Int @default(1)
-  subcategories Subcategory @relation(fields: [subcategoryId], references: [id])
+  subcategories Subcategory @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
 }
 
 model Category {

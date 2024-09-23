@@ -9,7 +9,7 @@ async function setup() {
   const newCategories = await prisma.category.createMany({
     data: categories,
     // only for postgres
-    // skipDuplicates: true,
+    skipDuplicates: true,
   });
   console.log(newCategories);
 }

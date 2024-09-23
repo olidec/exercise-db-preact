@@ -9,7 +9,7 @@ async function setup() {
   const newUsers = await prisma.user.createMany({
     data: users,
     // only for postgres
-    // skipDuplicates: true,
+    skipDuplicates: true,
   });
   console.log(newUsers);
 }
