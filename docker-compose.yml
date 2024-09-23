@@ -54,8 +54,10 @@ services:
     image: postgres:14-alpine
     volumes:
       - db-postgres:/var/lib/postgresql/data:rw
-    env_file:
-      - ./server/db.env
+    environment:
+      - POSTGRES_PASSWORD=passw
+      - POSTGRES_USER=exdb
+      - POSTGRES_DB=exdb
     networks:
       - inside
     container_name: db
