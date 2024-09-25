@@ -1,5 +1,6 @@
 import { useEffect, useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
+import LatexRenderer from "./LatexRenderer.jsx";
 
 const Card = ({
   id,
@@ -61,6 +62,7 @@ const Card = ({
   return (
     <div className="karte">
       <h2>Aufgabe {id}</h2>
+
       <div id={`content-${id}`} className="content">
         {content}
       </div>
