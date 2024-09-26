@@ -4,7 +4,6 @@ import WarenCard from "./WarenCard.jsx";
 import { useEffect } from "preact/hooks";
 import AuthWrapper from "./AuthWrapper.jsx";
 import { askServer } from "../utils/connector.js";
-import LatexRenderer from "./LatexRenderer.jsx";
 
 const Warenkorb = ({}) => {
   const { cartItems, getCartCount } = useContext(WarenkorbContext);
@@ -40,9 +39,9 @@ const Warenkorb = ({}) => {
   //   console.log(data);
   // };
 
-  useEffect(() => {
-    MathJax.typeset();
-  }, [cartItems.value]);
+  // useEffect(() => {
+  //   MathJax.typeset();
+  // }, [cartItems.value]);
 
   const swapItems = (index1, index2) => {
     if (index2 < 0 || index2 >= cartItems.value.length) return; // Überprüfen, ob der Index gültig ist
@@ -61,7 +60,6 @@ const Warenkorb = ({}) => {
         Ausgewählte Aufgaben im LaTeX Format herunterladen
       </button>
       <hr />
-      <LatexRenderer />
       <div>
         {cartItems.value.map((ex, index) => (
           <WarenCard

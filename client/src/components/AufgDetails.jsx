@@ -47,11 +47,11 @@ const AufgDetails = ({ id }) => {
     });
   }, [id]); // Stellt sicher, dass dieser Effekt erneut ausgeführt wird, wenn sich `id` ändert
 
-  useEffect(() => {
-    if (exDetails) {
-      MathJax.typeset();
-    }
-  }, [exDetails]);
+  // useEffect(() => {
+  //   if (exDetails) {
+  //     MathJax.typeset();
+  //   }
+  // }, [exDetails]);
 
   const index = getIndex({ id: exDetails?.id });
 
