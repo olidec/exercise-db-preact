@@ -11,6 +11,8 @@
   "dependencies": {
     "@preact/signals": "^1.2.3",
     "dotenv": "^16.4.5",
+    "katex": "^0.16.11",
+    "latex.js": "^0.12.6",
     "preact": "^10.20.1",
     "preact-router": "^4.1.2",
     "react": "npm:@preact/compat",
