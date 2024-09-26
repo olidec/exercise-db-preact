@@ -39,9 +39,9 @@ const Warenkorb = ({}) => {
   //   console.log(data);
   // };
 
-  useEffect(() => {
-    MathJax.typeset();
-  }, [cartItems.value]);
+  // useEffect(() => {
+  //   MathJax.typeset();
+  // }, [cartItems.value]);
 
   const swapItems = (index1, index2) => {
     if (index2 < 0 || index2 >= cartItems.value.length) return; // Überprüfen, ob der Index gültig ist
