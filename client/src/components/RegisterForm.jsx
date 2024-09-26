@@ -124,7 +124,7 @@ export default function Form() {
 
           <div class="pure-controls">
             <button className="pure-button pure-button-primary" type="submit">
-              Add new user
+              Registrieren
             </button>
           </div>
         </fieldset>
