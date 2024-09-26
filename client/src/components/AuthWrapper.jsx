@@ -11,7 +11,6 @@ export default function AuthWrapper({ children }) {
       <>
         <div>Nicht eingeloggt.</div>
         <Link to="/login">zum Login</Link>
-        <button onClick={() => login("w", "w")}>HackLogin</button>
       </>
     );
   }
