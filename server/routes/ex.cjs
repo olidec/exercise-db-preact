@@ -27,7 +27,6 @@ if (result.isEmpty()) {
     const exs = await getExerciseBySearch(search);
     res.json(exs);
     } else if (cat && subcat) {
-    console.log(cat, subcat);
     const exs = await getExercisesBySubcategory(cat, subcat);
     res.json(exs);
     } else if (cat) {
@@ -43,7 +42,6 @@ if (result.isEmpty()) {
 });
 
 router.post("/", protectedRoute, async (req, res) => {
-    console.log(req.body);
     const {
       content,
       solution,

@@ -12,8 +12,6 @@ export const WarenkorbProvider = ({ children }) => {
   function addToKorb({ id, summary, content }) {
     setTimeout(() => {
       cartItems.value = [...cartItems.value, { id, summary, content }];
-
-      // console.log(cartItems.value);
       // Zeige das Häkchen an
       const checkmark = document.getElementById("checkmark");
       checkmark.innerHTML = "✓";
@@ -40,9 +38,6 @@ export const WarenkorbProvider = ({ children }) => {
     );
     cartItems.value = updatedList; // Setzen eines neuen Arrays
 
-    console.log(index);
-    console.log(cartItems.value);
-
     const checkmark = document.getElementById("checkmark");
     checkmark.innerHTML = "x"; // Setze das Häkchen-Symbol
     checkmark.style.color = "red"; // Setze die Farbe auf Grün
@@ -68,7 +63,6 @@ export const WarenkorbProvider = ({ children }) => {
   const cartCount = computed(() => cartItems.value.length);
 
   const arrayIDs = cartItems.value.map((obj) => obj.id);
-  // console.log(arrayIDs);
 
   return (
     <WarenkorbContext.Provider

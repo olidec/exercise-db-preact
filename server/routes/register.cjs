@@ -5,8 +5,6 @@ const { findOrCreateUser, createUser } = require("../controllers/users.cjs");
 
 router.post("/", async (req, res) => {
     // TODO input validation
-    console.log("Registering user");
-    console.log(req.body);
     const { email, username, password } = req.body;
   
     try {
@@ -14,7 +12,6 @@ router.post("/", async (req, res) => {
       // schaue getUser an für Reihenfolge
       // TODO write checkUser function
       const newUser = await createUser(username, email, password);
-      console.log(newUser);
         res.json({
           msg: "User created successfully",
           data: {

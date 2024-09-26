@@ -77,7 +77,6 @@ export const SearchProvider = ({ children }) => {
       const deleteEx = await askServer(route, "DELETE");
 
       if (deleteEx) {
-        console.log("Aufgabe erfolgreich gelöscht:", deleteEx);
         showNotification("Aufgabe erfolgreich gelöscht.", "red");
 
         setTimeout(() => {
@@ -87,8 +86,6 @@ export const SearchProvider = ({ children }) => {
         console.error("Fehler beim Löschen der Aufgabe");
         showNotification("Fehler beim Löschen der Aufgabe.", "red");
       }
-    } else {
-      console.log("Löschen abgebrochen");
     }
   };
 

@@ -5,15 +5,6 @@ require("dotenv").config();
 
 async function listUsers() {
   const users = await prisma.user.findMany();
-  console.log(users);
-  // const users = await prisma.user.create({
-  //   data: {
-  //     email: "w@w",
-  //     username: "W",
-  //     password: "w",
-  //   },
-  // });
-  // console.log(users);
 
   const userFromDb = await prisma.user.findUnique({
     where: { username: "w" },
@@ -26,7 +17,6 @@ async function listUsers() {
       retryExp: true,
     },
   });
-  console.log(userFromDb);
 }
 
 listUsers();

@@ -15,10 +15,7 @@ export default function Form() {
   const addNewUser = async (e) => {
     e.preventDefault();
     const res = await askServer("/register", "POST", user);
-    // console.log(res.response.err.code);
     if (res.response.err && res.response.err.code === "P2002") {
-      // console.log("ERROR:", res.response.err);
-      // console.log("CLIENT: user already exists");
       showNotification("ERROR: User already exists", "red");
     } else {
       setUser({
@@ -26,7 +23,6 @@ export default function Form() {
         username: "",
         password: "",
       });
-      // console.log("CLIENT: User added successfully");
       showNotification(
         "User added successfully\nRedirecting to Login Page",
         "green"

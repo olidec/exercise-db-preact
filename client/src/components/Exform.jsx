@@ -64,10 +64,7 @@ export default function ExForm() {
     };
 
     const res = await askServer("/api/ex", "POST", exWithCategory);
-    console.log(res);
-
     if (res.err) {
-      console.log("Error: ", res.err);
     } else {
       setEx({
         content: "",

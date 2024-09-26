@@ -8,8 +8,6 @@ require('dotenv').config()
 
 
 const authUser = async (user, password) => {
-    console.log("Authenticating user");
-    console.log(user);
     try {
       const userFromDb = await prisma.user.findUnique({
         where: { username: user },
@@ -22,22 +20,15 @@ const authUser = async (user, password) => {
           retryExp: true,
         },
       });
-      console.log(userFromDb);
-  //   } catch (error) {
-  //     console.log("Error in DB request", error);
-  //   }
-  // }
+
 
       if (!userFromDb) {
-        console.log("User or password does not match");
         return;
       }
       const pass = await argon2.verify(userFromDb.password, password);
-      console.log(pass);
       if (!pass) {
         if (userFromDb.retry >= 3) {
           if (userFromDb.retryExp > new Date()) {
-            console.log("User is locked out");
             return;
           }
         }
@@ -50,7 +41,6 @@ const authUser = async (user, password) => {
             retryExp: new Date(Date.now() + 1000 * 60 * 60),
           },
         });
-        console.log("User or password does not match");
         return;
       }
 
@@ -63,11 +53,8 @@ const authUser = async (user, password) => {
           retryExp: null,
         },
       });
-      console.log("User retries updated successfully");
       let authenticated_user = { id: userFromDb.id, name: userFromDb.username };
-      console.log("User authenticated successfully", authenticated_user);
     } catch (error) {
-      console.log("Error in DB request");
     }
     //Let's assume that a search within your DB returned the username and password match for "Kyle".
   };
