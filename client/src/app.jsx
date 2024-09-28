@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import About from "./pages/About.jsx";
 import Impressum from "./pages/Impressum.jsx";
+import Datenschutz from "./pages/Datenschutz.jsx";
 
 export function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -46,8 +47,13 @@ export function App() {
           <EditExercise path="/edit/:id" />
           <About path="/about" />
           <Impressum path="/impressum" />
+          <Datenschutz path="/datenschutz" />
         </Router>
       </div>
+      <footer className="container">
+        <a href="/impressum">Impressum</a> <br />
+        <a href="/datenschutz">Datenschutz</a>
+      </footer>
     </>
   );
 }

@@ -44,7 +44,6 @@ const About = () => {
         Insbesondere die Darstellung von Tabellen funktioniert nicht. Die
         Darstellung von Formeln und Text funktioniert jedoch einwandfrei.
       </div>
-      <a href="/impressum">Impressum</a>
     </div>
   );
 };
