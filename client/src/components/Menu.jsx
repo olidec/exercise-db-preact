@@ -21,19 +21,6 @@ export default function Menu() {
   return (
     <div className="pure-menu pure-menu-horizontal my-bg-color">
       <ul className="pure-menu-list">
-        {/* <li
-          className={`pure-menu-item ${
-            selectedMenu === "user" ? "pure-menu-selected" : ""
-          }`}
-        >
-          <Link
-            href="/login"
-            className="pure-menu-link my-link"
-            onClick={() => handleMenuClick("user")}
-          >
-            Login
-          </Link>
-        </li> */}
         <li
           className={`pure-menu-item ${
             selectedMenu === "add" ? "pure-menu-selected" : ""
@@ -58,6 +45,19 @@ export default function Menu() {
             onClick={() => handleMenuClick("find")}
           >
             Aufgaben finden
+          </Link>
+        </li>
+        <li
+          className={`pure-menu-item ${
+            selectedMenu === "find" ? "pure-menu-selected" : ""
+          }`}
+        >
+          <Link
+            href="/about"
+            className="pure-menu-link my-link"
+            onClick={() => handleMenuClick("about")}
+          >
+            Infos zur Webseite
           </Link>
         </li>
 
