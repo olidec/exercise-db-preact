@@ -11,7 +11,6 @@ async function setup() {
     // only for postgres
     skipDuplicates: true,
   });
-  console.log(newSubcategories);
 }
 
 module.exports = { setupSubcategories: setup };

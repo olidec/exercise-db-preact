@@ -48,7 +48,6 @@ export default function EditForm({ id }) {
       !ex.language ||
       !ex.difficulty
     ) {
-      console.log("Validation error: Some required fields are missing");
       return;
     }
 
@@ -73,11 +72,7 @@ export default function EditForm({ id }) {
     try {
       const res = await askServer("/api/ex", "PUT", exWithCategory);
       if (res.status === 401) {
-        console.log(res.err);
         showNotification("Fehler beim Aktualisieren", "red");
-        // setTimeout(() => {
-        //   window.location.href = `/edit/${id}`;
-        // }, 1000); // Warte 1 Sekunde (1000 Millisekunden)
       } else {
         showNotification("Exercise updated successfully", "green");
       }
@@ -109,13 +104,10 @@ export default function EditForm({ id }) {
       const res = await askServer(`/api/ex?id=${id}`, "GET");
       const exDetails = res.response;
       if (exDetails) {
-        console.log(exDetails);
         const categ = cat.value.find((c) => c.id === exDetails.categoryId);
         if (categ) {
           setCategoryName(categ.name);
           setSelectedCategory(categ.name); // Speichern des Kategorienamens
-
-          console.log(categ.name);
         }
         const subcateg = categ.subcategories.find(
           (sub) => sub.id === exDetails.subcategoryId
@@ -123,8 +115,6 @@ export default function EditForm({ id }) {
         if (subcateg) {
           setSubCategoryName(subcateg.name);
           setSelectedSubcategory(subcateg.name); // Speichern des Kategorienamens
-
-          console.log(subcateg.name);
         }
 
         setEx({

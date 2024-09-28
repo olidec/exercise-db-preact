@@ -21,10 +21,7 @@ const SearchCard = ({
   let index = cartItems.value.findIndex((item) => item.id === id);
 
   const localUser = JSON.parse(localStorage.getItem("user"));
-  console.log("localUser", localUser.id);
-  console.log("authorId", authorId);
   const userAuthor = localUser.id === authorId;
-  console.log("userAuthor", userAuthor);
 
   return (
     <div key={key} className="karten-container">

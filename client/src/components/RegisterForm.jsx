@@ -1,10 +1,39 @@
 import { useState } from "preact/hooks";
-import { askServer } from "../utils/connector";
+import { askServer } from "../utils/connector.js";
 import { useContext } from "preact/hooks";
 import { SearchContext } from "../signals/exercise.jsx";
 
 export default function Form() {
-  const { showNotification } = useContext(SearchContext);
+  const showNotification = (message, color) => {
+    // Finde den Container für die Benachrichtigungen
+    const container = document.getElementById("registration-notification");
+
+    // Erstelle das Benachrichtigungselement
+    const notification = document.createElement("div");
+    notification.textContent = message;
+    notification.style.position = "fixed";
+    notification.style.top = "20px"; // Positioniere die Benachrichtigung am oberen Rand
+    notification.style.left = "50%"; // Zentriere die Benachrichtigung horizontal
+    notification.style.transform = "translateX(-50%)"; // Stelle sicher, dass sie genau zentriert ist
+    notification.style.backgroundColor = color;
+    notification.style.color = "white";
+    notification.style.padding = "20px"; // Größere Padding-Werte für ein größeres Fenster
+    notification.style.minWidth = "300px"; // Stelle eine Mindestbreite ein
+    notification.style.textAlign = "center"; // Zentriere den Text innerhalb der Benachrichtigung
+    notification.style.borderRadius = "5px";
+    notification.style.zIndex = "1000";
+    notification.style.fontSize = "18px"; // Vergrößere die Schriftgröße
+
+    // Füge die Benachrichtigung zum Container hinzu
+    container.appendChild(notification);
+
+    // Entferne die Benachrichtigung nach 3 Sekunden
+    setTimeout(() => {
+      if (container.contains(notification)) {
+        container.removeChild(notification);
+      }
+    }, 3500);
+  };
 
   const [user, setUser] = useState({
     email: "",
@@ -15,10 +44,7 @@ export default function Form() {
   const addNewUser = async (e) => {
     e.preventDefault();
     const res = await askServer("/register", "POST", user);
-    // console.log(res.response.err.code);
     if (res.response.err && res.response.err.code === "P2002") {
-      // console.log("ERROR:", res.response.err);
-      // console.log("CLIENT: user already exists");
       showNotification("ERROR: User already exists", "red");
     } else {
       setUser({
@@ -26,7 +52,7 @@ export default function Form() {
         username: "",
         password: "",
       });
-      // console.log("CLIENT: User added successfully");
+      console.log(res);
       showNotification(
         "User added successfully\nRedirecting to Login Page",
         "green"
@@ -49,6 +75,7 @@ export default function Form() {
   return (
     <>
       <h1>Registrieren</h1>
+      <div id="registration-notification"></div>
       <form
         className="pure-form pure-form-aligned"
         onSubmit={(e) => addNewUser(e)}
@@ -97,7 +124,7 @@ export default function Form() {
 
           <div class="pure-controls">
             <button className="pure-button pure-button-primary" type="submit">
-              Add new user
+              Registrieren
             </button>
           </div>
         </fieldset>

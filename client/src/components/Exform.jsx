@@ -64,10 +64,7 @@ export default function ExForm() {
     };
 
     const res = await askServer("/api/ex", "POST", exWithCategory);
-    console.log(res);
-
     if (res.err) {
-      console.log("Error: ", res.err);
     } else {
       setEx({
         content: "",
@@ -206,7 +203,7 @@ export default function ExForm() {
             </div>
             <div className="pure-controls">
               <button type="submit" className="pure-button pure-button-primary">
-                Add new exercise
+                Neue Aufgabe hinzufügen
               </button>
             </div>
           </fieldset>

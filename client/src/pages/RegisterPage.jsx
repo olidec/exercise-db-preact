@@ -1,10 +1,11 @@
-import Form from "../components/Form.jsx";
+import RegisterForm from "../components/RegisterForm.jsx";
 
 const RegisterPage = () => {
   return (
     <>
       <div>
-        <Form />
+        <RegisterForm />
+        Bereits registriert? <a href="/login">Hier geht's zum Login</a>
       </div>
     </>
   );

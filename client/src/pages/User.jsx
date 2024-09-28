@@ -2,7 +2,7 @@ import { h } from "preact";
 
 import Button from "../components/Button.jsx";
 import Menu from "../components/Menu.jsx";
-import Form from "../components/Form.jsx";
+import Form from "../components/RegisterForm.jsx";
 import { useState } from "preact/hooks";
 
 const Home = () => {

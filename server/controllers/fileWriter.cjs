@@ -9,17 +9,13 @@ const fs = require("node:fs");
 
 async function fileWriter(json) {
     let success = true;
-    console.log("Writing to file");
-    console.log(json);
     await fsp.writeFile(
         "/home/node/server/output/output.txt",
         JSON.stringify(json),
         (err) => {
             if (err) {
-            console.log("CONTROLLER:","Error writing to file:", err);
             success = false;
             } else {
-            console.log("CONTROLLER: Data written to file successfully");
             }
     });
     return success;
@@ -72,7 +68,6 @@ async function writeLatex(exercises) {
             console.error("Error writing to file:", err);
             res.json({ msg: "Error writing to file", err: err });
             } else {
-            console.log("Data written to file successfully");
             }
     });
 }

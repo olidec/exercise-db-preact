@@ -9,6 +9,8 @@ import EditExercise from "./components/EditExercise.jsx";
 import Home from "./pages/Home.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
+import About from "./pages/About.jsx";
+import Impressum from "./pages/Impressum.jsx";
 
 export function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -42,6 +44,8 @@ export function App() {
           <FindExercise path="/find" />
           <Warenkorb path="/warenkorb" />
           <EditExercise path="/edit/:id" />
+          <About path="/about" />
+          <Impressum path="/impressum" />
         </Router>
       </div>
     </>

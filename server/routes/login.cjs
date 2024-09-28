@@ -10,7 +10,6 @@ router.get("/", (req, res) => {
 });
   
 router.post("/", authenticateLocal, (req, res) => {
-  console.log(`-------> User Logged in`);
   res.status(200).json({
     msg: "User logged in",
     data: {

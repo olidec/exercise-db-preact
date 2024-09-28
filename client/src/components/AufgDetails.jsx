@@ -63,14 +63,9 @@ const AufgDetails = ({ id }) => {
     return <h2>Aufgabe mit ID {id} existiert nicht mehr in Datenbank</h2>;
   }
 
-  console.log(exDetails);
-
   const localUser = JSON.parse(localStorage.getItem("user"));
-  console.log("localUser", localUser.id);
   const authorId = exDetails.authorId;
-  console.log("authorId", authorId);
   const userAuthor = localUser.id === authorId;
-  console.log("userAuthor", userAuthor);
 
   return (
     <>

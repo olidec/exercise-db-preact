@@ -123,7 +123,7 @@ async function getExercisesBySubcategory(cat, subcat) {
 async function getExerciseBySearch(search) {
     try {
         const exercises = await prisma.exercise.findMany({
-            where: { content: { contains: search } },
+            where: { content: { contains: search, mode: 'insensitive' } },
         });
         return exercises;
     } catch (error) {

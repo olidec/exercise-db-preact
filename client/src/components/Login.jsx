@@ -32,7 +32,6 @@ export default function Login() {
         className="pure-form pure-form-aligned"
         onSubmit={(e) => doLogin(e)}
       >
-        {/* <legend>Login</legend> */}
         <fieldset>
           <div class="pure-control-group">
             <label for="username">Username </label>

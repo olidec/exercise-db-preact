@@ -13,13 +13,6 @@ const Warenkorb = ({}) => {
       exerciseIds: cartItems.value.map((ex) => ex.id),
     });
     const texContent = res.response;
-    console.log(texContent);
-    // const texContent = `
-    //     \\documentclass{article}
-    //     \\begin{document}
-    //     Hello, World!
-    //     \\end{document}
-    //   `;
 
     // Create a Blob from the content
     const blob = new Blob([texContent], { type: "text/plain" });
@@ -34,14 +27,6 @@ const Warenkorb = ({}) => {
     link.click();
     document.body.removeChild(link);
   };
-  // const download = async () => {
-  //   const data = await askServer("/api/download", "GET");
-  //   console.log(data);
-  // };
-
-  // useEffect(() => {
-  //   MathJax.typeset();
-  // }, [cartItems.value]);
 
   const swapItems = (index1, index2) => {
     if (index2 < 0 || index2 >= cartItems.value.length) return; // Überprüfen, ob der Index gültig ist
