@@ -4,7 +4,7 @@ const Impressum = () => {
       <div className="container">
         <h2>Kontaktadresse</h2>
         <p>
-          mathdb
+          Fachschaft Mathematik
           <br />
           Gründenstrasse 30
           <br />
@@ -51,17 +51,6 @@ const Impressum = () => {
           mathdb oder den speziell genannten Rechtsinhabern. Für die
           Reproduktion jeglicher Elemente ist die schriftliche Zustimmung der
           Urheberrechtsträger im Voraus einzuholen.
-        </p>
-
-        <h2>Quelle</h2>
-
-        <p>
-          Dieses Impressum wurde am 28.09.2024 mit dem Impressum Generator der
-          Webdesign Agentur{" "}
-          <a href="https://webkoenig.ch/" target="_blank">
-            Webkönig
-          </a>{" "}
-          erstellt. Die Agentur Webkönig übernimmt keine Haftung.
         </p>
       </div>
     </div>
