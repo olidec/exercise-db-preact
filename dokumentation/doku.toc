@@ -1,7 +1,0 @@
-\babel@toc {ngerman}{}\relax 
-\contentsline {section}{\numberline {1}Projektskizze}{4}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Projektplanung und Design}{4}{subsection.1.1}%
-\contentsline {subsubsection}{\numberline {1.1.1}Anforderungsanalyse}{4}{subsubsection.1.1.1}%
-\contentsline {section}{\numberline {A}Anhang}{5}{appendix.A}%
-\contentsline {section}{\numberline {B}Bilderverzeichnis}{6}{appendix.B}%
-\contentsline {section}{\numberline {C}Literaturverzeichnis}{7}{appendix.C}%
