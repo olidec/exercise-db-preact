@@ -5,7 +5,7 @@ export async function askServer(
   content = "application/json;charset=utf-8"
 ) {
   // const baseUrl = "http://139.162.166.227:3000";
-  const baseUrl = "https://server.exdb.local";
+  const baseUrl = "https://server.letstalkaboutx.ch";
   const data = {
     headers: {
       "Content-Type": content,
