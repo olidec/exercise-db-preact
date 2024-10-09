@@ -168,7 +168,9 @@ Für die Entwicklung des Backends haben wir uns bewusst für die Implementierung
 
 Im Frontend haben wir uns auf eine klare Trennung der Komponentenstruktur konzentriert. Die Komponentenhierarchie ist so gestaltet, dass atomare und molekulare UI-Komponenten (kleinere, wiederverwendbare Bausteine) von Seitenkomponenten (größere, zusammengesetzte Einheiten) getrennt sind, die den Anwendungsfluss steuern. Diese Trennung ermöglicht eine saubere und wartbare Codebasis, in der Änderungen an einer Komponente nicht ungewollt andere Teile der Anwendung beeinflussen.
 
-\subsubsection{Zustandsmanagement mit useState, useEffect und Signals} 
+\subsection{Zustandsmanagement}
+
+\subsubsection{Allgemeines: useState, useEffect und Signals}
 
 Ein effektives Zustandsmanagement ist entscheidend für die Verwaltung der Anwendungsdaten sowie der verschiedenen UI-Zustände, wie Benutzereingaben oder geladene Daten (Aufgaben). Preact bietet uns hierfür mehrere Optionen: Für lokale Zustände innerhalb einzelner Komponenten nutzen wir die useState und useEffect Hooks, die eine einfache und reaktive Verwaltung dieser Zustände ermöglichen. 
 Der useState Hook ermöglicht es, Zustände innerhalb einer Funktionskomponente zu verwalten. Wenn man useState aufruft, erhält man ein Array mit zwei Werten: den aktuellen Zustand und eine Funktion, um diesen Zustand zu aktualisieren.
@@ -184,7 +186,8 @@ Der useState Hook ermöglicht es, Zustände innerhalb einer Funktionskomponente 
 Der useEffect Hook wird verwendet, um Seiteneffekte in Funktionskomponenten zu behandeln. Ein Seiteneffekt ist z.B. das Abrufen von Daten von einem Server, das Managen von Timern oder das Ändern des DOM.
 
 Zusätzlich bietet Preact die Möglichkeit, Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
-Signals sind eine leistungsstarke Ergänzung zu den traditionellen Hooks wie useState und useEffect in Preact. Sie sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und Komponenten effizient zu aktualisieren.
+Signals sind eine leistungsstarke Ergänzung zu den traditionellen Hooks wie useState und useEffect in Preact. Sie sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und Komponenten effizient zu aktualisieren. Signals bieten eine automatische Reaktivität. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, wenn sich das Signal ändert.
+
 
 \subsubsection{Zustandsmanagement für die Komponente FindExSubCat } 
 Die Folgenden Beispiel beziehen sich auf die Seite um Aufgaben nach Kategorien und Subkategorien durch clicken auf dieselben zu suchen.
@@ -380,85 +383,13 @@ Verarbeiten der Server-Antwort: Ähnlich wie bei der Kategorieauswahl wird eine 
 \end{lstlisting}
 
 
-
-
-\subsubsection{Vergleich: Signals vs. useState/useEffect} 
-\begin{itemize}
- \item Reaktivität
-
-\begin{itemize}
-
-\item useState/useEffect:
-
-\begin{itemize}
-\item useState verwaltet den Zustand, und useEffect behandelt Seiteneffekte basierend auf Zustandsänderungen.
-
-\item Man muss explizit Hooks verwenden, um auf Zustandsänderungen zu reagieren.
-
-\end{itemize}
-
-\item Signals:
-
-\begin{itemize}
-
-\item Signals bieten eine automatische Reaktivität. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, wenn sich das Signal ändert.
-
-\item Keine Notwendigkeit für separate useEffect-Hooks, um auf einfache Zustandsänderungen zu reagieren.
-
-\end{itemize}
-\end{itemize}
-
-
-\item Leistung
-
-\begin{itemize}
-
-\item useState/useEffect:
-
-\begin{itemize}
-\item Können zu übermäßigen Neurenderings führen, insbesondere wenn viele Zustandsänderungen und abhängige Effekte vorhanden sind.
-\end{itemize}
-
-
-\item Signals:
-\begin{itemize}
-\item Feinkörnige Reaktivität ermöglicht gezieltere Updates, was die Leistung verbessern kann, da nur die betroffenen Teile der UI aktualisiert werden.
-\end{itemize}
-\end{itemize}
-
-
-\item Komplexität
-
-\begin{itemize}
-\item useState/useEffect:
-\begin{itemize}
-\item Kann komplex werden, wenn viele Zustände und Effekte verwaltet werden müssen.
-
-\item Erfordert oft das Aufteilen von Logik in mehrere Hooks.
-\end{itemize}
-
-
-\item Signals:
-\begin{itemize}
-\item Einfachere und direktere Zustandsverwaltung.
-
-\item Weniger Boilerplate-Code und klarere Zustandsabhängigkeiten.
-
-\end{itemize}
-\end{itemize}
-\end{itemize}
-
-Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit useContext können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht und eine reibungslose und intuitive Benutzererfahrung unterstützt.
-
-
-Bsp aus App:
-
-
-
-
 \subsection{Datenbankmodell}
 
+\subsubsection{Datenbanktabellen}
+
 In diesem Abschnitt wird das Datenbankmodell beschrieben, welches für die Speicherung der Benutzerinformationen, Aufgaben und deren Kategorisierung verwendet wird. Die Implementierung erfolgt mit Prisma ORM und PostgreSQL als Datenbank. Im Folgenden wird die Struktur der relevanten Tabellen dokumentiert.
+
+Das Datenbankmodell umfasst vier Haupttabellen: \texttt{User}, \texttt{Exercise}, \texttt{Category} und \texttt{Subcategory}. Diese Tabellen sind miteinander verknüpft, sodass Benutzer Aufgaben erstellen und diese in Kategorien und Unterkategorien organisieren können.
 
 \begin{lstlisting}[language=Python]
 
@@ -518,9 +449,7 @@ model Subcategory {
 \end{lstlisting}
 
 
-\subsubsection{Datenbanktabellen}
 
-Das Datenbankmodell umfasst vier Haupttabellen: \texttt{User}, \texttt{Exercise}, \texttt{Category} und \texttt{Subcategory}. Diese Tabellen sind miteinander verknüpft, sodass Benutzer Aufgaben erstellen und diese in Kategorien und Unterkategorien organisieren können.
 
 \subsubsection{Tabelle \texttt{User}}
 
