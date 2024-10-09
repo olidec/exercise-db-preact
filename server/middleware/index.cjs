@@ -16,7 +16,7 @@ module.exports = {
 
     app.use(
       cors({
-        origin: "https://exdb.local",
+        origin: "https://letstalkaboutx.ch",
         credentials: true,
       })
     );
