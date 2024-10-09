@@ -9,7 +9,6 @@ services:
       - inside
     volumes:
       - ./nginx/:/etc/nginx/
-      - ./certs/client/:/etc/ssl/:ro
       - /etc/letsencrypt/:/etc/letsencrypt/:ro
     container_name: proxy
 
