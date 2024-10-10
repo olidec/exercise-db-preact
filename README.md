@@ -1,15 +1,16 @@
 # Math Exercise Database
 
-## Seed Database
+## Seed Test Database
 
 delete volume `db-postgres` on docker desktop
 
 run `docker compose watch`
 
 in server `exec` tab run
+
 ```bash
 npx prisma migrate dev --name init
-node seed-db/scripts/setup-db.cjs 
+node seed-db/scripts/setup-db.cjs
 ```
 
 ## Running Test Environment
@@ -18,13 +19,12 @@ node seed-db/scripts/setup-db.cjs
 docker compose watch
 ```
 
-
-## Running Production
+## Setting Up Production
 
 connect to server via ssh
 
 ```bash
-ssh db-admin@139.162.166.227
+ssh db-admin@172.104.225.199
 
 # Navigate to project
 
@@ -33,9 +33,24 @@ git pull
 ```
 
 create env files `.env` and `db.env`
+change configuration to match the files in the `production-config` branch
 
-run 
+### Set Up Certificates
+
+```bash
+sudo apt update
+sudo apt install certbot
+
+sudo certbot certonly --standalone -d letstalkaboutx.ch
+```
+
+### Running for the First Time
 
 ```bash
 docker compose up -d
+docker exec -it server sh
+npx prisma migrate dev --name init
+node seed-db/scripts/setup-db.cjs
+# Change `setup-db.cjs` for customized setup
+exit
 ```
