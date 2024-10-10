@@ -45,7 +45,7 @@
     numberstyle=\tiny\color{gray},      % Stil für Zeilennummern
     emph={function, return, var},       % Hervorhebung spezifischer Schlüsselwörter
     emphstyle=\color{magenta},          % Stil der hervorgehobenen Wörter
-    commentstyle=\color{green!60!black}, % Stil für Kommentare (z.B. grünlich)
+    commentstyle=\color{gray}, % Stil für Kommentare (z.B. grünlich)
     literate=
     *{0}{{{\color{red}0}}}{1}           % Zahlen in Rot
      {1}{{{\color{red}1}}}{1}
@@ -57,8 +57,10 @@
      {7}{{{\color{red}7}}}{1}
      {8}{{{\color{red}8}}}{1}
      {9}{{{\color{red}9}}}{1}
-     {=>}{{{\color{blue}=>}}}{2},       % Operatoren hervorheben
+     {=>}{{{\color{blue}=>}}}{2},    
+     comment=[l]{//}  % Legt // als Kommentarzeichen fest   % Operatoren hervorheben
 }
+
 
 
 % Informationen für die Titelseite
@@ -110,7 +112,7 @@ Sicherheitsaspekte in der Webentwicklung: Grundlagen der Web-Sicherheit, wie Aut
 
 Fächerübergreifende Projekte: Die Schüler können Webanwendungen entwickeln die schulische Konzepte veranschaulichen können, wie z.B. mathematische Probleme lösen oder biologische Daten verarbeiten.
 
-Des Weiteren haben wir bisher als Mathematik-Lehrpersonen keinen «offiziellen» Austausch an Mathematik Aufgaben ausserhalb der verschiedenen Schulstandorte. Die Aufgaben-Datenbank soll dazu beitragen, dass Lehrpersonen Zugang zu einer umfangreicheren Sammlung an Mathematik Aufgaben haben können. Im Speziellen wäre es für Mathematik Lehrpersonen sehr hilfreich sich über Matura Aufgaben der verschiedenen Schulstandorte einen Überblick zu verschaffen, damit die Schüler mit hilfreichen Aufgaben sich optimal auf die Matura vorbereiten können.
+Des Weiteren haben wir bisher als Mathematik-Lehrpersonen keinen offiziellen Austausch an Mathematik Aufgaben ausserhalb der verschiedenen Schulstandorte. Die Aufgaben-Datenbank soll dazu beitragen, dass Lehrpersonen Zugang zu einer umfangreicheren Sammlung an Mathematik Aufgaben haben können. Im Speziellen wäre es für Mathematik Lehrpersonen sehr hilfreich sich über Matura Aufgaben der verschiedenen Schulstandorte einen Überblick zu verschaffen, damit die Schüler mit hilfreichen Aufgaben sich optimal auf die Matura vorbereiten können.
 
 
 
@@ -125,17 +127,21 @@ Unsere Forschungsfrage lautet:
 Wie kann eine Webanwendung entwickelt werden, die den Bedürfnissen von Mathematiklehrern gerecht wird, indem sie eine benutzerfreundliche und funktionsreiche Plattform bereitstellt?
 
 Kernfunktionen dieser Webapplikation sind:
+\begin{itemize}
 
-• Aufgaben erstellen: Lehrer können neue Mathematikaufgaben zur Datenbank
+
+
+\item Aufgaben erstellen: Lehrer können neue Mathematikaufgaben zur Datenbank
 hinzufügen.
 
-• Aufgaben durchsuchen: Lehrer können vorhandene Aufgaben nach verschiedenen Kriterien durchsuchen.
+\item Aufgaben durchsuchen: Lehrer können vorhandene Aufgaben nach verschiedenen Kriterien durchsuchen.
 
-• Aufgaben kommentieren: Nutzer können Kommentare zu Aufgaben hinterlassen, um Feedback oder Lösungsvorschläge zu geben.
+\item Aufgaben kommentieren: Nutzer können Kommentare zu Aufgaben hinterlassen, um Feedback oder Lösungsvorschläge zu geben.
 
-• Aufgaben verwalten: Lehrer können ihre erstellten Aufgaben bearbeiten oder löschen.
+\item Aufgaben verwalten: Lehrer können ihre erstellten Aufgaben bearbeiten oder löschen.
 
-• Warenkorb für Aufgaben: Lehrer können ausgewählte Aufgaben in einem Warenkorb sammeln, um sie später in ein Aufgabenblatt zu integrieren.
+\item Warenkorb für Aufgaben: Lehrer können ausgewählte Aufgaben in einem Warenkorb sammeln, um sie später in ein Aufgabenblatt zu integrieren.
+\end{itemize}
 
 In dieser Arbeit werden wir die Ziele des Projekts definieren, die gewählten Methoden erläutern und die wichtigsten Ergebnisse präsentieren. 
 
@@ -162,27 +168,31 @@ Für die Entwicklung des Backends haben wir uns bewusst für die Implementierung
 
 Im Frontend haben wir uns auf eine klare Trennung der Komponentenstruktur konzentriert. Die Komponentenhierarchie ist so gestaltet, dass atomare und molekulare UI-Komponenten (kleinere, wiederverwendbare Bausteine) von Seitenkomponenten (größere, zusammengesetzte Einheiten) getrennt sind, die den Anwendungsfluss steuern. Diese Trennung ermöglicht eine saubere und wartbare Codebasis, in der Änderungen an einer Komponente nicht ungewollt andere Teile der Anwendung beeinflussen.
 
-\subsubsection{Zustandsmanagement:} 
+\subsection{Zustandsmanagement}
+
+\subsubsection{Allgemeines: useState, useEffect und Signals}
 
 Ein effektives Zustandsmanagement ist entscheidend für die Verwaltung der Anwendungsdaten sowie der verschiedenen UI-Zustände, wie Benutzereingaben oder geladene Daten (Aufgaben). Preact bietet uns hierfür mehrere Optionen: Für lokale Zustände innerhalb einzelner Komponenten nutzen wir die useState und useEffect Hooks, die eine einfache und reaktive Verwaltung dieser Zustände ermöglichen. 
 Der useState Hook ermöglicht es, Zustände innerhalb einer Funktionskomponente zu verwalten. Wenn man useState aufruft, erhält man ein Array mit zwei Werten: den aktuellen Zustand und eine Funktion, um diesen Zustand zu aktualisieren.
 
-const [state, setState] = useState(initialValue);
+- \texttt{const [state, setState] = useState(initialValue);}
 
--	state: Der aktuelle Zustand, den man verwenden kann.
+- \texttt{state}: Der aktuelle Zustand, den man verwenden kann.
 
--	setState: Eine Funktion, mit der man den Zustand ändern können.
+- \texttt{setState}: Eine Funktion, mit der man den Zustand ändern können.
 
--	initialValue: Der Anfangswert des Zustands.
+- \texttt{initialValue}: Der Anfangswert des Zustands.
 
 Der useEffect Hook wird verwendet, um Seiteneffekte in Funktionskomponenten zu behandeln. Ein Seiteneffekt ist z.B. das Abrufen von Daten von einem Server, das Managen von Timern oder das Ändern des DOM.
 
 Zusätzlich bietet Preact die Möglichkeit, Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
-Signals sind eine leistungsstarke Ergänzung zu den traditionellen Hooks wie useState und useEffect in Preact. Sie sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und Komponenten effizient zu aktualisieren.
+Signals sind eine leistungsstarke Ergänzung zu den traditionellen Hooks wie useState und useEffect in Preact. Sie sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und Komponenten effizient zu aktualisieren. Signals bieten eine automatische Reaktivität. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, wenn sich das Signal ändert.
 
+
+\subsubsection{Zustandsmanagement für die Komponente FindExSubCat } 
 Die Folgenden Beispiel beziehen sich auf die Seite um Aufgaben nach Kategorien und Subkategorien durch clicken auf dieselben zu suchen.
 
-Das Signal cat wird verwendet um ale Kategorien vom Server zu laden.
+Das Signal \texttt{cat} wird verwendet um ale Kategorien vom Server zu laden.
 
 \begin{lstlisting}
 const cat = signal([]);
@@ -194,7 +204,7 @@ const loadCat = async () => {
 
 \end{lstlisting}
 
-Nun wird die useEffect()-Funktion verwendet damit beim laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und in das array categories schreibt (setCategories(cat.value)) . Da sich diese Variable beim laden der Seite verändern könnte, wird sie als useState Variable definiert. 
+Nun wird die useEffect()-Funktion verwendet damit beim laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und in das array categories schreibt \texttt{(setCategories(cat.value))} . Da sich diese Variable beim laden der Seite verändern könnte, wird sie als useState Variable definiert. 
 Diese useEffect()-Funktion wird nur beim laden der Seite ausgeführt, da die Liste der Abhängigkeiten (leeres Array auf der letzten Zeile) leer bleibt. Diese Liste von Variablen definert, dass die useEffect()-Funktion erneut ausgeführt werden muss, sofern es eine Änderung der Variablen in diesem Array gibt.
 \begin{lstlisting}
 
@@ -210,16 +220,16 @@ useEffect(() => {
 \end{lstlisting}
 
 
-Die Funktion onCategoryClick: Diese Funktion wird aufgerufen, wenn eine Kategorie angeklickt wird. Sie setzt die ausgewählte Kategorie in die Variable selectedCategory und setzt das Array der Unterkategorie zurück (leere Liste). Dann sendet sie eine Anfrage an den Server, um Übungen basierend auf der Kategorie zu laden und in der Variablen excat zu speichern.
+Die Funktion \texttt{onCategoryClick}: Diese Funktion wird aufgerufen, wenn eine Kategorie angeklickt wird. Sie setzt die ausgewählte Kategorie in die Variable selectedCategory und setzt das Array der Unterkategorie zurück (leere Liste). Dann sendet sie eine Anfrage an den Server, um Übungen basierend auf der Kategorie zu laden und in der Variablen excat zu speichern.
 
 \begin{lstlisting}[language=Python]
 const [selectedCategory, setSelectedCategory] = useState("");
-const [subcategories, setSubcategories] = useState([]);
+const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
 
 const onCategoryClick = async (categoryName) => {
 setSelectedCategory(categoryName);
-setSelectedSubcategory(""); // Reset subcategory when selecting a new category
+setSelectedSubcategory(""); # Reset subcategory when selecting a new category
     
 const route = `/api/ex?cat=${categoryName}`;
 const res = await askServer(route, "GET");
@@ -227,7 +237,7 @@ const excat = res.response;
     
 \end{lstlisting}
 
-Nun wird die Antwort des Servers verarbeitet: Wenn die Serverantwort keinen Erfolg bringt (Status nicht 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung angezeigt und die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion setCartSearch gespeichert. (siehe useContext)
+Nun wird die Antwort des Servers verarbeitet: Wenn die Serverantwort keinen Erfolg bringt (Status nicht 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung angezeigt und die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe useContext)
 
 
 \begin{lstlisting}[language=Python]
@@ -251,11 +261,12 @@ Nun wird die Antwort des Servers verarbeitet: Wenn die Serverantwort keinen Erfo
 
 
 
-useEffect() für Unterkategorien: Diese Funktion sucht die Unterkategorien der ausgewählten Kategorie, die in der Variablen selectedCategory gespeichert wurde und speichert diese im Array subcategories und zwar jedes Mal, wenn dich selectedCategory oder categories ändert (Seiteneffekt). Ob sich das Array categories ändert, wird nur beim ersten rendern der Seite überprüft, da bei der ersten useEffect() Funktion das Abhängigkeits- Array leer bleibt.
+useEffect() für Unterkategorien: Diese Funktion sucht die Unterkategorien der ausgewählten Kategorie, die in der Variablen \texttt{selectedCategory} gespeichert wurde und speichert diese im Array \texttt{subcategories} und zwar jedes Mal, wenn sich \texttt{selectedCategory} oder \texttt{categories} ändert (Seiteneffekt). Ob sich das Array categories ändert, wird nur beim ersten rendern der Seite überprüft, da bei der ersten useEffect() Funktion das Abhängigkeits- Array leer bleibt.
 
 
 \begin{lstlisting}[language=Python]
-
+const [subcategories, setSubcategories] = useState([]);
+ 
 useEffect(() => {
     if (selectedCategory) {
       const category = categories.find((c) => c.name === selectedCategory);
@@ -269,7 +280,7 @@ useEffect(() => {
 
 
 
-Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit useContext können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht und eine reibungslose und intuitive Benutzererfahrung unterstützt.
+Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit \texttt{useContext} können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht und eine reibungslose und intuitive Benutzererfahrung unterstützt.
 
 
 \begin{lstlisting}[language=Python]
@@ -280,11 +291,10 @@ Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – al
 Hier werden mehrere Variablen (showNotification, setCartSearch, searchText und categor) aus dem SearchContext abgerufen, die als Signals implementiert sind und im localStorage des Browsers gespeichert werden, da diese Daten zwischen verschiedenen Komponenten geteilt werden müssen.
 
 \begin{itemize}
- \item   setCartSearch speichert die Suchergebnisse, die von der Benutzerabfrage zurückgegeben werden.
-\item    searchText hält den eingegebenen Suchtext, nach dem der Benutzer sucht.
-  \item  categor speichert die vom Benutzer angeklickte Kategorie und Subkategorie.
- \item   showNotification speichert und verwaltet Benachrichtigungen oder Fehlermeldungen, die beim Bearbeiten, Eingeben oder Suchen von Aufgaben auftreten.
-    
+    \item \texttt{setCartSearch} speichert die Suchergebnisse, die von der Benutzerabfrage zurückgegeben werden.
+    \item \texttt{searchText} hält den eingegebenen Suchtext, nach dem der Benutzer sucht.
+    \item \texttt{categor} speichert die vom Benutzer angeklickte Kategorie und Subkategorie.
+    \item \texttt{showNotification} speichert und verwaltet Benachrichtigungen oder Fehlermeldungen, die beim Bearbeiten, Eingeben oder Suchen von Aufgaben auftreten.
 \end{itemize}
 
 
@@ -337,11 +347,11 @@ effect(() => {
 
 
  \end{lstlisting}  
-Der Kontext-Provider gibt die Werte und Funktionen (categor, setCartSearch, cartSearch, showNotification) weiter, sodass alle untergeordneten Komponenten auf diese zugreifen können.
+Der Kontext-Provider gibt die Werte und Funktionen (\texttt{categor, setCartSearch, cartSearch, showNotification}) weiter, sodass alle untergeordneten Komponenten auf diese zugreifen können.
 Mit diesem Ansatz stellen wir sicher, dass wichtige Zustandsinformationen wie Suchergebnisse, ausgewählte Kategorien und Benachrichtigungen zentral gespeichert und zwischen verschiedenen Komponenten geteilt werden können. 
 
 
-Die Funktion onSubcategoryClick: Diese Funktion wird aufgerufen, wenn eine Unterkategorie ausgewählt wird. Sie sendet eine Anfrage an den Server, um Übungen basierend auf der ausgewählten Unterkategorie zu laden und und in der Variablen exsubcat zu speichern.
+Die Funktion \texttt{onSubcategoryClick}: Diese Funktion wird aufgerufen, wenn eine Unterkategorie ausgewählt wird. Sie sendet eine Anfrage an den Server, um Übungen basierend auf der ausgewählten Unterkategorie zu laden und und in der Variablen \texttt{exsubcat} zu speichern.
 
 \begin{lstlisting}[language=Python]
   const onSubcategoryClick = async (subcategoryName) => {
@@ -354,7 +364,7 @@ Die Funktion onSubcategoryClick: Diese Funktion wird aufgerufen, wenn eine Unter
     
 \end{lstlisting}
 
-Verarbeiten der Server-Antwort: Ähnlich wie bei der Kategorieauswahl wird eine Benachrichtigung angezeigt und die Unterkategorieauswahl zurückgesetzt, wenn keine passenden Übungen gefunden werden. Ansonsten wird die Liste der Übungen mit der Funktion setCartSearch gespeichert. (siehe useContext API).
+Verarbeiten der Server-Antwort: Ähnlich wie bei der Kategorieauswahl wird eine Benachrichtigung angezeigt und die Unterkategorieauswahl zurückgesetzt, wenn keine passenden Übungen gefunden werden. Ansonsten wird die Liste der Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe useContext API).
 
 
 \begin{lstlisting}[language=Python]
@@ -373,85 +383,13 @@ Verarbeiten der Server-Antwort: Ähnlich wie bei der Kategorieauswahl wird eine 
 \end{lstlisting}
 
 
-
-
-\subsubsection{Vergleich: Signals vs. useState/useEffect} 
-\begin{itemize}
- \item Reaktivität
-
-\begin{itemize}
-
-\item useState/useEffect:
-
-\begin{itemize}
-\item useState verwaltet den Zustand, und useEffect behandelt Seiteneffekte basierend auf Zustandsänderungen.
-
-\item Man muss explizit Hooks verwenden, um auf Zustandsänderungen zu reagieren.
-
-\end{itemize}
-
-\item Signals:
-
-\begin{itemize}
-
-\item Signals bieten eine automatische Reaktivität. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, wenn sich das Signal ändert.
-
-\item Keine Notwendigkeit für separate useEffect-Hooks, um auf einfache Zustandsänderungen zu reagieren.
-
-\end{itemize}
-\end{itemize}
-
-
-\item Leistung
-
-\begin{itemize}
-
-\item useState/useEffect:
-
-\begin{itemize}
-\item Können zu übermäßigen Neurenderings führen, insbesondere wenn viele Zustandsänderungen und abhängige Effekte vorhanden sind.
-\end{itemize}
-
-
-\item Signals:
-\begin{itemize}
-\item Feinkörnige Reaktivität ermöglicht gezieltere Updates, was die Leistung verbessern kann, da nur die betroffenen Teile der UI aktualisiert werden.
-\end{itemize}
-\end{itemize}
-
-
-\item Komplexität
-
-\begin{itemize}
-\item useState/useEffect:
-\begin{itemize}
-\item Kann komplex werden, wenn viele Zustände und Effekte verwaltet werden müssen.
-
-\item Erfordert oft das Aufteilen von Logik in mehrere Hooks.
-\end{itemize}
-
-
-\item Signals:
-\begin{itemize}
-\item Einfachere und direktere Zustandsverwaltung.
-
-\item Weniger Boilerplate-Code und klarere Zustandsabhängigkeiten.
-
-\end{itemize}
-\end{itemize}
-\end{itemize}
-
-Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit useContext können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht und eine reibungslose und intuitive Benutzererfahrung unterstützt.
-
-
-Bsp aus App:
-
-
-
-
 \subsection{Datenbankmodell}
 
+\subsubsection{Datenbanktabellen}
+
 In diesem Abschnitt wird das Datenbankmodell beschrieben, welches für die Speicherung der Benutzerinformationen, Aufgaben und deren Kategorisierung verwendet wird. Die Implementierung erfolgt mit Prisma ORM und PostgreSQL als Datenbank. Im Folgenden wird die Struktur der relevanten Tabellen dokumentiert.
+
+Das Datenbankmodell umfasst vier Haupttabellen: \texttt{User}, \texttt{Exercise}, \texttt{Category} und \texttt{Subcategory}. Diese Tabellen sind miteinander verknüpft, sodass Benutzer Aufgaben erstellen und diese in Kategorien und Unterkategorien organisieren können.
 
 \begin{lstlisting}[language=Python]
 
@@ -511,9 +449,7 @@ model Subcategory {
 \end{lstlisting}
 
 
-\subsubsection{Datenbanktabellen}
 
-Das Datenbankmodell umfasst vier Haupttabellen: \texttt{User}, \texttt{Exercise}, \texttt{Category} und \texttt{Subcategory}. Diese Tabellen sind miteinander verknüpft, sodass Benutzer Aufgaben erstellen und diese in Kategorien und Unterkategorien organisieren können.
 
 \subsubsection{Tabelle \texttt{User}}
 
