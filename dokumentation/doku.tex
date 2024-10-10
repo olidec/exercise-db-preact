@@ -1,5 +1,5 @@
 % Im header stehen die Grundeinstellungen des Dokuments
-\documentclass[12pt,a4paper]{article} % 12 Punkte Schrift, A4 Papier
+\documentclass[12pt,a4paper]{scrartcl} % 12 Punkte Schrift, A4 Papier
 \usepackage[utf8]{inputenc} 
 \usepackage[ngerman]{babel} % Passt alle automatischen Texte an. 
 %\usepackage[english]{babel} % Diese Variante verwenden, fall man eine Arbeit auf Englisch schreibt.
@@ -16,7 +16,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{pdfpages}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{datetime}
 
 %Code
@@ -64,9 +64,10 @@
 
 
 % Informationen für die Titelseite
-\title{GymInf Thesis: Webapp für Matheaufgaben}
+\title{Webapplikation zur Erstellung, Sammlung und Ausgabe von Mathematikaufgaben}
+\subtitle{Abschlussprojekt im Rahmen der Gyminf Weiterbildung}
 \date{\today}
-\author{Oliver De Capitani, Patrick Weber}
+\author{Oliver De Capitani \and Patrick Weber}
 
 
 
@@ -91,8 +92,6 @@
 \newpage
 
 
-
-% Die Grundstruktur einer Arbeit:
 \section{Vorwort}
 
 
@@ -115,6 +114,10 @@ Fächerübergreifende Projekte: Die Schüler können Webanwendungen entwickeln d
 Des Weiteren haben wir bisher als Mathematik-Lehrpersonen keinen offiziellen Austausch an Mathematik Aufgaben ausserhalb der verschiedenen Schulstandorte. Die Aufgaben-Datenbank soll dazu beitragen, dass Lehrpersonen Zugang zu einer umfangreicheren Sammlung an Mathematik Aufgaben haben können. Im Speziellen wäre es für Mathematik Lehrpersonen sehr hilfreich sich über Matura Aufgaben der verschiedenen Schulstandorte einen Überblick zu verschaffen, damit die Schüler mit hilfreichen Aufgaben sich optimal auf die Matura vorbereiten können.
 
 
+
+
+
+\newpage
 
 \section{Einleitung}
 Die Entwicklung einer Webanwendung für Mathematikaufgaben ist angesichts der zunehmenden Digitalisierung des Bildungswesens von Relevanz, da das Teilen und Bereitstellen von guten, lernreichen Aufgaben für die Qualität des Mathematik Unterrichts unabdingbar ist. Diese Arbeit zielt darauf ab, Mathematiklehrern eine effiziente Möglichkeit zu bieten, Aufgaben für den Unterricht zu finden und zu verwalten.
