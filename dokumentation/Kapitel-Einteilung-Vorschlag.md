@@ -16,7 +16,15 @@ Von aussen nach innen
 
 ### Client
 
+#### Komponenten
+
+#### Zustandsmanagment (Codebeispiel)
+
 ### Datenbank
+
+#### Datenbankstruktur
+
+#### Implementierung
 
 # Arbeitsprozess
 
