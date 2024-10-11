@@ -42,6 +42,9 @@ sudo apt update
 sudo apt install certbot
 
 sudo certbot certonly --standalone -d letstalkaboutx.ch
+sudo certbot certonly --standalone -d server.letstalkaboutx.ch
+sudo certbot certonly --standalone -d prisma.letstalkaboutx.ch
+# This is needed to access Prisma Studio
 ```
 
 ### Running for the First Time
