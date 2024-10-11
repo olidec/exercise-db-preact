@@ -96,12 +96,11 @@
 
 Auf der Suche nach einem geeigneten Projekt für die Abschlussarbeit der Gyminf Weiterbildung, war vor allem ein Punkt wichtig: Das Resultat dieser Arbeit sollte etwas sein, was in unserer Unterrichtstätigkeit nützlich ist. 
 
-Die Inspiration eine Art Aufgaben Datenbank zu erstellen kam von einer -- aktuell nicht mehr aktiven -- Webseite namens
-\verb|munterbunt.ch|. Auf dieser konnte man aus einer Liste von Aufgaben wählen und diese dann in einem PDF herunterladen.
+Die Inspiration eine Aufgaben Datenbank zu erstellen kam von einer -- aktuell nicht mehr aktiven -- Webseite namens \verb|munterbunt.ch|. Auf dieser konnte man aus einer Liste von Aufgaben wählen und diese dann in einem PDF herunterladen. 
 
-Über mehrere Monate haben wir (Oliver De Capitani und Patrick Weber) uns daran gemacht diese Ideen umzusetzten. Wir möchten an dieser Stelle besonders folgende Personen danken, die uns dabei unterstützt haben: 
+Über mehrere Monate haben wir (Oliver De Capitani und Patrick Weber) uns daran gemacht diese Idee umzusetzten. Wir möchten an dieser Stelle besonders folgende Personen danken, die uns dabei unterstützt haben: 
 
-Vielen Dank an Urs Meyer -- unser Betreuer and der FHNW Nordwestschweiz. Er hat immer unser Potenzial gesehen und uns sein Vertrauen geschenkt. 
+Vielen Dank an Urs Meyer -- unser Betreuer an der FHNW Nordwestschweiz. Er hat immer unser Potenzial gesehen und uns sein Vertrauen geschenkt. 
 
 Zudem möchten wir noch ein grosses Dankeschön an Cedric Geissmann geben, der uns immer wieder mit technischen Lösungen unterstützt hat. Gerade die Authentifizierungs- und Zertifizierungsaspekte dieses Projekts wären ohne seine Hilfe nicht möglich gewesen.
 
@@ -119,33 +118,19 @@ Die Webapplikation ist unter der URL \url{https://letstalkaboutx.ch} erreichbar 
 \newpage
 
 \section{Einleitung}
-Die Entwicklung einer Webanwendung für Mathematikaufgaben ist angesichts der zunehmenden Digitalisierung des Bildungswesens von Relevanz, da das Teilen und Bereitstellen von guten, lernreichen Aufgaben für die Qualität des Mathematik Unterrichts unabdingbar ist. Diese Arbeit zielt darauf ab, Mathematiklehrern eine effiziente Möglichkeit zu bieten, Aufgaben für den Unterricht zu finden und zu verwalten.
 
-
-Mathematikaufgaben sollen über eine benutzerfreundliche Eingabemaske kategorisiert und unterkategorisiert in die Datenbank eingegeben werden können. Diese Aufgaben müssen nicht nur leicht erstellbar sein, sondern auch problemlos nachträglich bearbeitet oder gelöscht werden können. Besonders wichtig war uns, dass die Formeln direkt im LaTeX-Format eingegeben werden, um eine präzise und standardisierte Darstellung mathematischer Ausdrücke zu gewährleisten. Zudem sollen die erstellten Aufgaben im LaTeX-Format heruntergeladen werden können, um sie nahtlos in bestehende Lehrmaterialien integrieren zu können. Als Mathematiklehrer möchte ich die Möglichkeit haben, eine umfangreiche Sammlung von Mathematikaufgaben gezielt zu durchsuchen und daraus didaktisch sinnvolle Aufgabenblätter für meine Klassen effizient zusammenzustellen.
-
-Unsere Forschungsfrage lautet: 
-
-Wie kann eine Webanwendung entwickelt werden, die den Bedürfnissen von Mathematiklehrern gerecht wird, indem sie eine benutzerfreundliche und funktionsreiche Plattform bereitstellt?
-
-Kernfunktionen dieser Webapplikation sind:
+Diese Arbeit hatte zum Ziel eine Webapplikation zu kreieren, auf der man Aufgaben kreieren, aussuchen und anschliessend herunterladen kann. Wie man sich vorstellen kann ist dies ein grosses Projekt mit Potenzial zum endlosen Ausbau. Aus diesem Grund haben wir uns in unserer Vereinbarung auf folgende Grundfunktionalitäten beschränkt\footnote{"beschränkt" war immer noch komplex genug.}:
 \begin{itemize}
-
-
-
-\item Aufgaben erstellen: Lehrer können neue Mathematikaufgaben zur Datenbank
-hinzufügen.
-
-\item Aufgaben durchsuchen: Lehrer können vorhandene Aufgaben nach verschiedenen Kriterien durchsuchen.
-
-\item Aufgaben kommentieren: Nutzer können Kommentare zu Aufgaben hinterlassen, um Feedback oder Lösungsvorschläge zu geben.
-
-\item Aufgaben verwalten: Lehrer können ihre erstellten Aufgaben bearbeiten oder löschen.
-
-\item Warenkorb für Aufgaben: Lehrer können ausgewählte Aufgaben in einem Warenkorb sammeln, um sie später in ein Aufgabenblatt zu integrieren.
+  \item Suchen und Filtern von Aufgaben aus der Datenbank, die in einer Vorschau (z.B. via KaTeX) in der Applikation dargestellt werden
+  \item Speichern von gewünschten Aufgaben in einer Art Warenkorb, von wo aus sie anschliessend im PDF oder im LaTeX Format heruntergeladen werden können
+  \item Login Maske, damit die Aufgaben nur registrierten Benutzern (Lehrpersonen) zugänglich sind
+  \item Benutzerkonto Administration (Passwort ändern, Konto löschen etc.)
+  \item Formular zum Erstellen von eigenen Aufgaben
 \end{itemize}
 
-In dieser Arbeit werden wir die Ziele des Projekts definieren, die gewählten Methoden erläutern und die wichtigsten Ergebnisse präsentieren. 
+Im Grossen und Ganzen ist es uns gelungen diese Funktionalitäten zur Verfügung zu stellen. Einzig die Administration des Benutzerkontos steht -- in der vorliegenden Fassung -- nicht zu Verfügung. Aufgrund des drohenden "feature creeps" wurde beschlossen, auf diese momentan zu verzichten. Personenadministration kann -- auf Anfrage -- von einem berechtigten Benutzer über den server direkt erledigt werden.
+
+
 
 
 \section{Theoretischer Hintergrund}
