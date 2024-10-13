@@ -141,47 +141,47 @@ Im Frontend haben wir uns auf eine klare Trennung der Komponentenstruktur konzen
 Grundbaustein einer Aufgabe, die den Inhalt, die Lösung, der Schwierigkeitsgrad, den Autor, die Kategorie und die Unterkategorie und die Auswahl der Schwierigkeit und die Auswahl der Sprache enthält.
 
 
-\item Suchergebnisse (SearchCard):
-Komponenten für die Anzeige von Suchergebnissen, die eine einzelne Aufgabe darstellen mit der Möglichkeit die Aufgabe zum Warenkorb hinzuzufügen bzw. aus dem Warenkorb zu löschen, die Details der Aufgabe anzeigen zu lassen und, sofern man Autor der Aufgabe ist, die Aufgabe zu bearbeiten.
+\item Suchergebniss (SearchCard):
+Komponente für die Anzeige eines Suchergebnisses, die eine einzelne Aufgabe darstellen mit der Möglichkeit die Aufgabe zum Warenkorb hinzuzufügen bzw. aus dem Warenkorb zu löschen, die Details der Aufgabe (Exercise Details) anzeigen zu lassen und, sofern man Autor der Aufgabe ist, die Aufgabe zu bearbeiten/editieren.
 
 \item Warenkorb für Sucherergebnisse (SearchKorb)
 Ein spezieller Warenkorb für die Suche  sammelt die gesuchte Aufgaben (SearchCard).
 Aus diesen Aufgaben kann man nach Sprache und Schwierigkeitsgrad die gewünschten Aufgaben filtern.
 
-\item Aufgabe in Warenkorb (WarenCard)
+\item Aufgabe im Warenkorb (WarenCard)
 Eine Aufgabe (Card) im Warenkorb kann gelöschte werden oder ihre Position mit der vorhergehenden oder nachfolgenden Aufgabe vertauscht werden, um die richtige Reihenfolge beim Downlaod der Aufgabe zu erhalten. 
 
 
-
 \item Warenkorb (Warenkorb):
-
-Die einzelnen Aufgaben (WarenCard) werden in den Warenkorb gemappt und über einen Button können alle Aufgabe im Warenkorb heruntergeladen werden.
+Die einzelnen Aufgaben (WarenCard) werden untereinander im Warenkorb angezeigt und über einen Button können alle Aufgabe im Warenkorb heruntergeladen werden.
 
 
 \item Aufgabendetails (Exercise Details):
-
-Eine Detailansicht (AufgDetails) für jede Aufgabe, die Informationen wie Aufgabentext, Lösung und Kategoriezugehörigkeit enthält. Benutzer können Aufgaben in den Warenkorb legen.
-
+Eine Detailansicht (AufgDetails) für jede Aufgabe erfolgt in einer Modal Ansicht (Fenster innerhalb des Browsers erscheint), wobei neben dem Aufgabentext auch die Lösung, die Kategoriezugehörigkeit, der Schwierigkeitsgrad und der Autor der Aufgabe zu sehen ist. Die Aufgabe kann auch in dieser Ansicht zum Warenkorb hinzugefügt werden oder aus dem Warenkorb gelöscht werden.
 
 
 \item Aufgaben hinzufügen (Add Exercises):
+Diese Komponente ermöglicht das Erstellen neuer Aufgaben. Sie umfasst Formularfelder für die Eingabe von Sprache, Schwierigkeitsgrad, Kategorie, Unterkategorie, Aufgabentext und Lösung. Über eine API-Anfrage \texttt{(askServer(/api/ex, "POST", ex))} werden die Daten an das Backend gesendet und die Aufgabe wird der Datenbank hinzugefügt.
 
-Die ExForm-Komponente ermöglicht das Erstellen neuer Aufgaben. Sie umfasst Formularfelder für die Eingabe von Titel, Inhalt, Lösung und optionalen Kategorien. Über eine API-Anfrage (askServer(/api/ex, "POST", ex)) werden die Daten an das Backend gesendet und die Aufgabe wird der Datenbank hinzugefügt.
 
-\item Aufgaben finden (Find Exercises):
+\item Aufgaben editieren (EditForm)
+Die Sprache, der Schwierigkeitsgrad, die Kategorie, die Unterkategorie, der Aufgabentext und die Lösungen können über eine Eingabemaske aktualiert werden, sofern man Autor der Aufgabe ist.
+Die API Anfrage \texttt{askServer("/api/ex", "PUT", exWithCategory)} aktualisiert die Aufgabe in der Datenbank
 
-Dieser Bereich umfasst mehrere Komponenten, die unterschiedliche Methoden zur Aufgabensuche anbieten, darunter FindExByCategory für kategoriebasierte Suche, FindExByIdFromServer für die direkte Abfrage einer Aufgabe über ihre ID und FindExBySearchText für textbasierte Suchanfragen.
+\item Aufgaben finden (FindExSubCat, FindExBySearchText):
+Dieser Bereich umfasst zwei Komponenten, die unterschiedliche Methoden zur Aufgabensuche anbieten. Mit FindExSubCatak können Aufgaben nach Kategorien und Unterkategorien gesucht werden. (Siehe Kapitel Zustandsmanagement). 
+Über eine API Anfrage \texttt{(askServer(`/api/ex?cat={selectedCategory}\&subcat={subcategoryName}`, "GET"))}
+Mit FindExBySearchText kann eine Aufgabe nach einer textbasierten Suchanfrage (inputValue) gesucht werde mit einer API Anfrage \texttt{(askServer(`/api/ex?search=\${inputValue}`, "GET")}
 
+
+ 
 \item Benutzerregistrierung und -anmeldung (User Registration/Login):
-
-Eine Form-Komponente unterstützt die Registrierung neuer Benutzer und die Anmeldung bestehender Benutzer durch Übermittlung ihrer Anmeldeinformationen an das Backend (askServer(/api/user, "POST", user)). Authentifizierungsdaten werden überprüft, um Zugang zu geschützten Bereichen der Anwendung zu gewähren.
+Eine Form-Komponente unterstützt die Registrierung neuer Benutzer und die Anmeldung bestehender Benutzer durch Übermittlung ihrer Anmeldeinformationen an das Backend \texttt{(askServer(/api/user, "POST", user))}. Authentifizierungsdaten werden überprüft, um Zugang zu geschützten Bereichen der Anwendung zu gewähren.
 
 \item Navigation (Navigation):
-
 Die Menu-Komponente stellt die Hauptnavigation der Anwendung bereit und ermöglicht den Zugriff auf die verschiedenen Seiten und Funktionen der App, darunter die Startseite (/), das Hinzufügen von Aufgaben (/add), das Finden von Aufgaben (/find), den Warenkorb (/warenkorb) und die Detailansicht einer spezifischen Aufgabe (/:id).
 
 \item Seiten (Pages):
-
 Definiert die Struktur der Anwendung und beinhaltet Seitenkomponenten wie User für die Benutzerregistrierung und -anmeldung, AddExercise für das Hinzufügen neuer Aufgaben, FindExercise für die Aufgabensuche, Letzte Suchresultate für das Anzeigen der zuletzt gesuchten Aufgaben und WarenKorb für die Ansicht und Verwaltung des Warenkorbs.
 
 \end{itemize}
