@@ -68,4 +68,22 @@ Jede dieser Aufgaben entspricht dann einer Funktion, die an geeigneter Stelle au
 
 Da wir für die Datenbank Prisma verwenden, sind diese Anfragen wiederum als eingebaute Funktionen erhältlich und wir müssen einfach die korrekten Funktionen mit den gewünschten Eingaben aufrufen. 
 
+Zum Beispiel liefert der untenstehende Controller die fünf neusten Aufagben aus der Datenbank:
+
+\begin{lstlisting}
+async function getRecentExercises() {
+    try {
+        const exercises = await prisma.exercise.findMany({
+        take: 5,
+        orderBy: {
+            updatedAt: "desc",
+        },
+        });
+        return exercises;
+    } catch (error) {
+        return { msg: "Error in DB request", err: error };
+    }
+}
+\end{lstlisting}
+
 
