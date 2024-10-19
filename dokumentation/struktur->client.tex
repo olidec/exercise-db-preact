@@ -1,11 +1,11 @@
 \subsection{Client: Frontend-Architektur:} 
 
-Im Frontend haben wir das Suchen der Aufgaben und dem Anzeigen des Warenkorbsystems in eine Komponentenhierarchie gebracht, damit es einfacher ist, einen guten Überblick über die Anwendung zu behalten zu und die Applikation in eine saubere und wartbare Codebasis zu bringen.
+Im Frontend haben wir das Suchen der Aufgaben (AufgabenSuchen-Komponente), die detaillierten Ansicht einer Aufgabe (AufgabeDetails-Komponente), das Hinzufügen von Aufgaben (AufgabeHinzufügen-Komponente), das Editieren von Aufgaben (AufgabeEditieren-Komponente) und das Anzeigen des Warenkorbsystems (Warenkorb-Komponente) in eine Komponentenhierarchie gebracht, damit es einfacher ist, einen guten Überblick über die Anwendung zu behalten zu und die Applikation in eine saubere und wartbare Codebasis zu bringen.
 Ein weitere Vorteil einer Komponentenhierarchie ist, das Änderungen an einer Komponente nicht ungewollt andere Teile der Applikation beeinflussen.
 
 \subsubsection{Die Komponentenhierarchie}
 
-\texttt{Die AufgabenSuchen-Komponente:}
+\texttt{3.4.1.1 Die AufgabenSuchen-Komponente:}
 
 \centfig{0.6}{Suchen_Komp.png}
 
@@ -16,19 +16,28 @@ Ein weitere Vorteil einer Komponentenhierarchie ist, das Änderungen an einer Ko
 Grundbaustein einer Aufgabe, die den Inhalt, die Lösung, der Schwierigkeitsgrad, den Autor, die Kategorie und die Unterkategorie und die Auswahl der Schwierigkeit und die Auswahl der Sprache enthält.
 
 \item Suchergebniss (SearchCard):
-Komponente für die Anzeige eines Suchergebnisses, die eine einzelne Aufgabe darstellt (Card) mit der Möglichkeit die Aufgabe zum Warenkorb hinzuzufügen bzw. aus dem Warenkorb zu löschen, die Details der Aufgabe (Exercise Details) anzeigen zu lassen und, sofern man Autor der Aufgabe ist, die Aufgabe zu bearbeiten/editieren.
+Komponente für die Anzeige eines Suchergebnisses, die eine einzelne Aufgabe darstellt (Card) mit der Möglichkeit die Aufgabe zum Warenkorb hinzuzufügen bzw. aus dem Warenkorb zu löschen, die Details der Aufgabe (AufgabeDetails) in der Modal-Ansicht (Fenster innerhalb des Browsers) anzeigen zu lassen und, sofern man Autor der Aufgabe ist, die Aufgabe zu bearbeiten/editieren.
 
-\item Warenkorb für Sucherergebnisse (SearchKorb):
-Ein spezieller Warenkorb für die Suche sammelt die gesuchte Aufgaben (SearchCard).
-Aus diesen Aufgaben kann man nach Sprache und Schwierigkeitsgrad die gewünschten Aufgaben filtern.
+\item Auflistung aller Sucherergebnisse (SearchKorb):
+Die einzelnen Aufgaben (SearchCard) werden in der Komponente SearchKorb zusammen angezeigt.
+Diese Aufgaben kann man nach Sprache und Schwierigkeitsgrad filtern.
 
 \item AufgabenSuchen (Seitenkomponente):
-Diese Seitenkomponente umfasst zwei Komponenten (FindExSubCat und FindExBySearchText), die unterschiedliche Methoden zur Aufgabensuche anbieten. Mit FindExSubCatak können Aufgaben nach Kategorien und Unterkategorien über eine API Anfrage \texttt{(askServer(`/api/ex?cat={selectedCategory}\&subcat={subcategoryName}`, "GET"))} gesucht werden (Siehe Kapitel Zustandsmanagement).
+Diese Seitenkomponente umfasst zwei Komponenten (FindExSubCat und FindExBySearchText), die unterschiedliche Methoden zur Aufgabensuche anbieten. Mit FindExSubCat können Aufgaben nach Kategorien und Unterkategorien über eine API Anfrage \texttt{(askServer(`/api/ex?cat={selectedCategory}\&subcat={subcategoryName}`, "GET"))} gesucht werden (Siehe Kapitel Zustandsmanagement).
 Mit FindExBySearchText kann eine Aufgabe nach einer textbasierten Suchanfrage (inputValue) gesucht werde, mit der API Anfrage \texttt{askServer(`/api/ex?search=\${inputValue}`, "GET")}.
 Beides Mal werden die anzuzeigenden Aufgaben in der Komponente SearchKorb angezeigt.
 
 
-\texttt{Die Warenkorb-Komponente:}
+\texttt{3.4.1.2 Die AufgabeDetails-Komponente:}
+
+\item Aufgabendetails:
+Eine Detailansicht für jede Aufgabe erfolgt in einer Modal Ansicht (Fenster innerhalb des Browsers erscheint), wobei neben dem Aufgabentext auch die Lösung, die Kategoriezugehörigkeit, der Schwierigkeitsgrad und der Autor der Aufgabe zu sehen ist. 
+Die API Anfrage \texttt{askServer("/api/ex?id=\${id}", "GET")} ruft von der Datenbank die Aufgabe mit der entsprechenden ID ab.
+Die Aufgabe kann auch in dieser detaillierten Ansicht zum Warenkorb hinzugefügt werden oder aus dem Warenkorb gelöscht werden.
+
+\centfig{0.5}{AufgabeDetails.png}
+
+\texttt{3.4.1.3 Die Warenkorb-Komponente:}
 
 \centfig{0.5}{Warenkorb.png}
 
@@ -40,26 +49,41 @@ Eine Aufgabe (Card) im Warenkorb kann gelöschte werden oder ihre Position mit d
 Die einzelnen Aufgaben (WarenCard) werden untereinander im Warenkorb angezeigt und über einen Button können alle Aufgabe im Warenkorb heruntergeladen werden.
 
 
-\subsubsection{Die weiteren Seiten-Komponenten}
-\item Aufgabendetails:
-Eine Detailansicht für jede Aufgabe erfolgt in einer Modal Ansicht (Fenster innerhalb des Browsers erscheint), wobei neben dem Aufgabentext auch die Lösung, die Kategoriezugehörigkeit, der Schwierigkeitsgrad und der Autor der Aufgabe zu sehen ist. 
-Die API Anfrage \texttt{askServer("/api/ex?id=\${id}", "GET")} ruft von der Datenbank die Aufgabe mit der entsprechenden ID ab.
-Die Aufgabe kann auch in dieser detaillierten Ansicht zum Warenkorb hinzugefügt werden oder aus dem Warenkorb gelöscht werden.
+
+\texttt{3.4.1.4 Die AufgabeHinzufügen-Komponente:}
+
+\centfig{0.3}{ExForm.png}
+
+\item{ExerciseForm}:
+
+Die Komponente (ExerciseForm) umfasst Formularfelder für die Eingabe von Sprache, Schwierigkeitsgrad, Kategorie, Unterkategorie, Aufgabentext und Lösung.
+
+\item ExForm (Seitenkomponente): :
+Diese Komponente ermöglicht das Erstellen neuer Aufgaben. Über eine API-Anfrage \texttt{(askServer(/api/ex, "POST", ex))} werden die Daten an das Backend gesendet und die Aufgabe wird der Datenbank hinzugefügt.
 
 
-\item Aufgaben hinzufügen :
-Diese Komponente ermöglicht das Erstellen neuer Aufgaben. Sie umfasst Formularfelder für die Eingabe von Sprache, Schwierigkeitsgrad, Kategorie, Unterkategorie, Aufgabentext und Lösung. Über eine API-Anfrage \texttt{(askServer(/api/ex, "POST", ex))} werden die Daten an das Backend gesendet und die Aufgabe wird der Datenbank hinzugefügt.
+\texttt{3.4.1.5 Die AufgabeEditieren-Komponente:}
 
+\centfig{0.3}{EditForm.png}
 
-\item Aufgaben editieren:
+\item{EditForm} (Seitenkomponente):
+
 Die Sprache, der Schwierigkeitsgrad, die Kategorie, die Unterkategorie, der Aufgabentext und die Lösungen können über eine Eingabemaske aktualiert werden, sofern man Autor der Aufgabe ist.
 Die API Anfrage \texttt{askServer("/api/ex", "PUT", exWithCategory)} aktualisiert die Aufgabe in der Datenbank
 
 
- 
-\item Benutzerregistrierung und -anmeldung (Register- und Login-Komponente):
-Diese Login-Komponente ermöglicht es dem Benutzer, seinen Benutzernamen und sein Passwort in ein Formular einzugeben. Die API Anfrage \texttt{(askServer(/api/user, "POST", user))} sendet die Daten an das Backend.
+\subsubsection{Weiteren Seiten-Komponenten}
+
+\item Startseite (Seitenkomponente):
+ Die Startseite (Landingpage) zeigt eine zusammenfassende und einladende Beschreibung der Webseite an. Über einen Registeren/Login-Button gelangt man zur Login Seite. Hat man noch keine Login, kann man über einen Link zur Registrierungsseite wechseln.
+
+\item Login-Komponente (Seitenkomponente):
+Diese Login-Komponente ermöglicht es dem Benutzer, seinen Benutzernamen und sein Passwort in ein Formular einzugeben. Die API Anfrage \texttt{(askServer("/login", "POST", {username,password}))} sendet die Daten an das Backend.
 Beim Absenden des Formulars wird ein Cookie mit den Authentifizierungsdaten gesendet. Diese Cookie wird in der Anwendung gespeichert und geprüft, um den Zugang zu geschützten Bereichen der Anwendung zu gewähren.
+
+
+\item Registrieren-Komponente (Seitenkomponente):
+Die Registrieren-Komponente ermöglicht es dem Benutzer über die Email Adresse, den Benutzernamen und sein Passwort, einen neuen Benutzer anzulegen. Die API Anfrage \texttt{(askServer("/register", "POST", user))} sendet die Daten an das Backend.
 
 \item Navigation:
 Die Menu-Komponente stellt die Hauptnavigation der Anwendung bereit und ermöglicht den Zugriff auf die verschiedenen Seiten und Funktionen der App, darunter die Startseite (/), das Hinzufügen von Aufgaben (/add), das Finden von Aufgaben (/find), den Warenkorb (/warenkorb), Infos zur Webseite (/about) und die Registrierung und Anmeldung (/login).
@@ -68,29 +92,42 @@ Die Menu-Komponente stellt die Hauptnavigation der Anwendung bereit und ermögli
 \end{itemize}
 
 
-\subsubsection{Zustandsmanagement: useState, useEffect und Signals inkl. Code-Beispielen}
+\subsubsection{Zustandsmanagement: useState, useEffect und Signals}
 
 
 
 Ein effektives Zustandsmanagement ist entscheidend für die Verwaltung der Anwendungsdaten sowie der verschiedenen UI-Zustände, wie Benutzereingaben oder geladene Daten (Aufgaben). Preact bietet uns hierfür mehrere Optionen: Für lokale Zustände innerhalb einzelner Komponenten nutzen wir die useState und useEffect Hooks, die eine einfache und reaktive Verwaltung dieser Zustände ermöglichen. 
 Der useState Hook ermöglicht es, Zustände innerhalb einer Funktionskomponente zu verwalten. Wenn man useState aufruft, erhält man ein Array mit zwei Werten: den aktuellen Zustand und eine Funktion, um diesen Zustand zu aktualisieren.
 
-- \texttt{const [state, setState] = useState(initialValue);}
+\begin{lstlisting}
+const [state, setState] = useState(initialValue);
+// state: Die aktuelle Zustandsvariable, den man verwenden kann.
+// setState: Eine Funktion, mit der man den Zustand der Variable aktualisieren kann.
+//initialValue: Der Anfangswert des Zustands.
 
-- \texttt{state}: Der aktuelle Zustand, den man verwenden kann.
+\end{lstlisting}
 
-- \texttt{setState}: Eine Funktion, mit der man den Zustand ändern können.
 
-- \texttt{initialValue}: Der Anfangswert des Zustands.
+Der useEffect Hook wird verwendet, um Seiteneffekte (dependencys) in Funktionskomponenten zu behandeln. Ein Seiteneffekt ist z.B. das Abrufen von Daten von einem Server oder das Ändern des DOM.
 
-Der useEffect Hook wird verwendet, um Seiteneffekte in Funktionskomponenten zu behandeln. Ein Seiteneffekt ist z.B. das Abrufen von Daten von einem Server, das Managen von Timern oder das Ändern des DOM.
+\begin{lstlisting}
+useEffect(() => {
+  // Effekt-Funktion, z.B. Daten laden oder DOM aktualisieren
+  return () => {
+    // Cleanup-Funktion, z.B. Event-Listener entfernen
+  };
+}, [dependency1, dependency2]);
+
+\end{lstlisting}
+  
+
 
 Zusätzlich bietet Preact die Möglichkeit, Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
 Signals sind eine leistungsstarke Ergänzung zu den traditionellen Hooks wie useState und useEffect in Preact. Sie sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und Komponenten effizient zu aktualisieren. Signals bieten eine automatische Reaktivität. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, wenn sich das Signal ändert.
 
 
 \subsubsection{Zustandsmanagement für die Komponente FindExSubCat } 
-Die Folgenden Beispiel beziehen sich auf die Seite um Aufgaben nach Kategorien und Subkategorien durch clicken auf dieselben zu suchen.
+Die Folgenden Beispiel beziehen sich auf die Komponente \texttt{FindExSubCat} um Aufgaben nach Kategorien und Subkategorien durch clicken auf dieselben zu suchen.
 
 Das Signal \texttt{cat} wird verwendet um ale Kategorien vom Server zu laden.
 
@@ -98,16 +135,15 @@ Das Signal \texttt{cat} wird verwendet um ale Kategorien vom Server zu laden.
 const cat = signal([]);
 const loadCat = async () => {
   const res = await askServer("/api/cat/", "GET");
-
   cat.value = res.response;
 };
 
 \end{lstlisting}
 
-Nun wird die useEffect()-Funktion verwendet damit beim laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und in das array categories schreibt \texttt{(setCategories(cat.value))} . Da sich diese Variable beim laden der Seite verändern könnte, wird sie als useState Variable definiert. 
+Nun wird die useEffect()-Funktion verwendet damit beim laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und in das array categories schreibt \texttt{(setCategories(cat.value))}. Da sich diese Variable beim laden der Seite verändern könnte, wird sie als useState Variable definiert. 
 Diese useEffect()-Funktion wird nur beim laden der Seite ausgeführt, da die Liste der Abhängigkeiten (leeres Array auf der letzten Zeile) leer bleibt. Diese Liste von Variablen definert, dass die useEffect()-Funktion erneut ausgeführt werden muss, sofern es eine Änderung der Variablen in diesem Array gibt.
-\begin{lstlisting}
 
+\begin{lstlisting}
 const [categories, setCategories] = useState([]);
 useEffect(() => {
     const fetchCategories = async () => {
@@ -118,66 +154,6 @@ useEffect(() => {
   }, []);
 
 \end{lstlisting}
-
-
-Die Funktion \texttt{onCategoryClick}: Diese Funktion wird aufgerufen, wenn eine Kategorie angeklickt wird. Sie setzt die ausgewählte Kategorie in die Variable selectedCategory und setzt das Array der Unterkategorie zurück (leere Liste). Dann sendet sie eine Anfrage an den Server, um Übungen basierend auf der Kategorie zu laden und in der Variablen excat zu speichern.
-
-\begin{lstlisting}[language=Python]
-const [selectedCategory, setSelectedCategory] = useState("");
-const [selectedSubcategory, setSelectedSubcategory] = useState("");
-
-
-const onCategoryClick = async (categoryName) => {
-setSelectedCategory(categoryName);
-setSelectedSubcategory(""); # Reset subcategory when selecting a new category
-    
-const route = `/api/ex?cat=${categoryName}`;
-const res = await askServer(route, "GET");
-const excat = res.response;
-    
-\end{lstlisting}
-
-Nun wird die Antwort des Servers verarbeitet: Wenn die Serverantwort keinen Erfolg bringt (Status nicht 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung angezeigt und die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe useContext)
-
-
-\begin{lstlisting}[language=Python]
-    if (res.status != 200 || excat.length === 0) {
-      showNotification("No exercise matches the search term.", "red");
-      setCartSearch([]);
-      setSelectedCategory("");
-      searchText.value = "";
-      categor.value[0] = categoryName;
-      categor.value[1] = "";
-    } else {
-      setCartSearch(excat);
-      searchText.value = "";
-      categor.value[0] = categoryName;
-      categor.value[1] = "";
-    }
-  };
-
-
-\end{lstlisting}
-
-
-
-useEffect() für Unterkategorien: Diese Funktion sucht die Unterkategorien der ausgewählten Kategorie, die in der Variablen \texttt{selectedCategory} gespeichert wurde und speichert diese im Array \texttt{subcategories} und zwar jedes Mal, wenn sich \texttt{selectedCategory} oder \texttt{categories} ändert (Seiteneffekt). Ob sich das Array categories ändert, wird nur beim ersten rendern der Seite überprüft, da bei der ersten useEffect() Funktion das Abhängigkeits- Array leer bleibt.
-
-
-\begin{lstlisting}[language=Python]
-const [subcategories, setSubcategories] = useState([]);
- 
-useEffect(() => {
-    if (selectedCategory) {
-      const category = categories.find((c) => c.name === selectedCategory);
-      setSubcategories(category ? category.subcategories : []);
-    } else {
-      setSubcategories([]);
-    }
-  }, [selectedCategory, categories]);
-      
-\end{lstlisting}
-
 
 
 Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit \texttt{useContext} können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht und eine reibungslose und intuitive Benutzererfahrung unterstützt.
@@ -192,16 +168,15 @@ Hier werden mehrere Variablen (showNotification, setCartSearch, searchText und c
 
 \begin{itemize}
     \item \texttt{setCartSearch} speichert die Suchergebnisse, die von der Benutzerabfrage zurückgegeben werden.
-    \item \texttt{searchText} hält den eingegebenen Suchtext, nach dem der Benutzer sucht.
-    \item \texttt{categor} speichert die vom Benutzer angeklickte Kategorie und Subkategorie.
-    \item \texttt{showNotification} speichert und verwaltet Benachrichtigungen oder Fehlermeldungen, die beim Bearbeiten, Eingeben oder Suchen von Aufgaben auftreten.
+    \item \texttt{searchText} enthält den eingegebenen Suchtext nach dem der Benutzer sucht und zeigt ihn oberhalb der Suchergebnisse an.
+    \item \texttt{categor} speichert die vom Benutzer angeklickte Kategorie und Subkategorie und zeigt sie oberhalb der Suchergebnisse an.
+    \item \texttt{showNotification} speichert und verwaltet Benachrichtigungen oder Fehlermeldungen, die beim Bearbeiten, Eingeben oder Suchen von Aufgaben auftreten und zeigt sie in roter oder grüner Farbe für eine kurze Zeit an. 
 \end{itemize}
 
 
-Die Signale für diese Variablen sind wie folgt definiert. Der SearchProvider erstellt einen Kontext mit diesen Variablen und Funktionen, der von allen untergeordneten Komponenten (Children) genutzt werden kann:
+Die Signals für diese Variablen sind wie folgt definiert. Der SearchProvider erstellt einen Kontext mit diesen Variablen und Funktionen, der von allen untergeordneten Komponenten (Children) genutzt werden kann:
     
 \begin{lstlisting}[language=Python]
-
 export const SearchProvider = ({ children }) => {
   const cartSearch = signal(
     JSON.parse(window.localStorage.getItem("cartSearch")) || []
@@ -251,6 +226,66 @@ Der Kontext-Provider gibt die Werte und Funktionen (\texttt{categor, setCartSear
 Mit diesem Ansatz stellen wir sicher, dass wichtige Zustandsinformationen wie Suchergebnisse, ausgewählte Kategorien und Benachrichtigungen zentral gespeichert und zwischen verschiedenen Komponenten geteilt werden können. 
 
 
+
+
+Die Funktion \texttt{onCategoryClick}: Diese Funktion wird aufgerufen, wenn eine Kategorie angeklickt wird. Sie setzt die ausgewählte Kategorie in die Variable selectedCategory und setzt das Array der Unterkategorie zurück (leere Liste). Dann sendet sie eine Anfrage an den Server, um Übungen basierend auf der Kategorie zu laden und in der Variablen excat zu speichern.
+
+\begin{lstlisting}[language=Python]
+const [selectedCategory, setSelectedCategory] = useState("");
+const [selectedSubcategory, setSelectedSubcategory] = useState("");
+const onCategoryClick = async (categoryName) => {
+setSelectedCategory(categoryName);
+setSelectedSubcategory(""); # Reset subcategory when selecting a new category
+const route = `/api/ex?cat=${categoryName}`;
+const res = await askServer(route, "GET");
+const excat = res.response;
+    
+\end{lstlisting}
+
+Nun wird die Antwort des Servers verarbeitet: Wenn die Serverantwort keinen Erfolg bringt (Status nicht 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung angezeigt und die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe useContext)
+
+
+\begin{lstlisting}[language=Python]
+    if (res.status != 200 || excat.length === 0) {
+      showNotification("No exercise matches the search term.", "red");
+      setCartSearch([]);
+      setSelectedCategory("");
+      searchText.value = "";
+      categor.value[0] = categoryName;
+      categor.value[1] = "";
+    } else {
+      setCartSearch(excat);
+      searchText.value = "";
+      categor.value[0] = categoryName;
+      categor.value[1] = "";
+    }
+  };
+
+
+\end{lstlisting}
+
+
+
+Die useEffect() Funktion für Unterkategorien sucht die Unterkategorien der ausgewählten Kategorie, die in der Variablen \texttt{selectedCategory} gespeichert wurde und speichert diese im Array \texttt{subcategories} und zwar jedes Mal, wenn sich \texttt{selectedCategory} oder \texttt{categories} ändert (Seiteneffekt). Ob sich das Array categories ändert, wird nur beim ersten rendern der Seite überprüft, da bei der ersten useEffect() Funktion das Abhängigkeits- Array leer bleibt.
+
+
+\begin{lstlisting}[language=Python]
+const [subcategories, setSubcategories] = useState([]);
+useEffect(() => {
+    if (selectedCategory) {
+      const category = categories.find((c) => c.name === selectedCategory);
+      setSubcategories(category ? category.subcategories : []);
+    } else {
+      setSubcategories([]);
+    }
+  }, [selectedCategory, categories]);
+      
+\end{lstlisting}
+
+
+
+
+
 Die Funktion \texttt{onSubcategoryClick}: Diese Funktion wird aufgerufen, wenn eine Unterkategorie ausgewählt wird. Sie sendet eine Anfrage an den Server, um Übungen basierend auf der ausgewählten Unterkategorie zu laden und und in der Variablen \texttt{exsubcat} zu speichern.
 
 \begin{lstlisting}[language=Python]
@@ -268,13 +303,13 @@ Verarbeiten der Server-Antwort: Ähnlich wie bei der Kategorieauswahl wird eine 
 
 
 \begin{lstlisting}[language=Python]
-
-    if (res.status != 200 || exsubcat.length === 0) {
+if (res.status != 200 || exsubcat.length === 0) {
       showNotification("No exercise matches the search term.", "red");
       setCartSearch([]);
       searchText.value = "";
       categor.value[1] = subcategoryName;
-    } else {
+    }
+else {
       setCartSearch(exsubcat);
       searchText.value = "";
       categor.value[1] = subcategoryName;

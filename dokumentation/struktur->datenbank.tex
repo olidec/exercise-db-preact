@@ -7,8 +7,7 @@ In diesem Abschnitt wird das Datenbankmodell beschrieben, welches für die Speic
 Das Datenbankmodell umfasst vier Haupttabellen: \texttt{User}, \texttt{Exercise}, \texttt{Category} und \texttt{Subcategory}. Diese Tabellen sind miteinander verknüpft, sodass Benutzer Aufgaben erstellen und diese in Kategorien und Unterkategorien organisieren können.
 
 \begin{lstlisting}[language=Python]
-
-generator client {
+  generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["fullTextIndex", "fullTextSearch"]
 }
