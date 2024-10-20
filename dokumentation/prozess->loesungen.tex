@@ -1,0 +1,15 @@
+\subsection{Probleme und Lösungen}
+
+Bei einem Projekt dieses Ausmasses, war es uns unmöglich im Voraus alle möglichen Arten von Problemen vorzustellen. Neben 'normalen' Programmierproblemen, gab es auch einen Haufen von anderen Problemen und Fehlermeldungen, die manchmal sehr kreative Lösungen erforderten (oder solche, die im Nachhinein als richtig dumm sich erpuppten). Wir werden an dieser Stelle keine komplette Aufzählung liefern, aber ein kleines 'best of' präsentieren.
+
+\subsubsection{CORS} 
+Ein immer wiederkehrendes Problem war, dass Chrome, Firefox und co. Mühe damit hatten, dass Anfragen von der Webseite an einen anderen (in der Produktionsphase ungesichterten) Server gingen. Dies führte zu sogenannten \emph{cross-origin resource sharing-} oder CORS-Problemen. Kurz gesagt, beudeutet dies, dass der Browser nocht will, dass Informationen von einer anderen domain übertragen werden.
+
+Die Lösung war, dass man im Server Code explizit die Webseite angeben musste, die darauf zugreifen darf. Da in der Schlussversion die einzelnen Teile innerhalb eines Docker Containers waren, hat sich dieses Problem, dann erledigt. Die Docker Konfiguration übernahm dann diese Verbindungen.
+
+\subsubsection{Aufsetzen der Testdatenbank}
+Für eine lange Zeit hatten wir Mühe die Testdatenbank auf verschiedenen Geräten zum laufen zu bringen. Das erstaunliche war, dass sie auf einem Gerät funktionierte, aber auf anderen nicht, obwohl eigentlich derselbe Code lief. Es stellte sich heraus, dass das Problem daran lag, dass beim Aufsetzen der Datenbank die Aufgaben IDs manuell gesetzt wurden, aber dass dann der interne Zähler nicht auf dem selben Stand war. Dies führte dazu, dass die Datenbank einen neuen Eintrag mit einer bereits bestehenden ID erstellen wollte und dann abstürzte. Nachdem wir die IDs aus dem Aufsetzcode der Datenbank gelöscht hatten, funktionierte es wieder auf allen Geräten.
+
+\centfig{0.3}{facepalm.jpg}
+
+% By Alex E. Proimos - https://www.flickr.com/photos/proimos/4199675334/, CC BY 2.0, https://commons.wikimedia.org/w/index.php?curid=22535544
