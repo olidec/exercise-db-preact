@@ -6,8 +6,10 @@ Ein weitere Vorteil einer Komponentenhierarchie ist, das Änderungen an einer Ko
 \subsubsection{Die Komponentenhierarchie}
 
 \texttt{3.4.1.1 Die AufgabenSuchen-Komponente:}
-
-\centfig{0.6}{Suchen_Komp.png}
+\begin{figure}[ht]
+  \centfig{0.6}{Suchen_Komp.png}
+  \caption{Die Aufgabensuchkomponente \cite{fig:aufgabensuche}}
+\end{figure}
 
 
 \begin{itemize}
@@ -35,11 +37,16 @@ Eine Detailansicht für jede Aufgabe erfolgt in einer Modal Ansicht (Fenster inn
 Die API Anfrage \texttt{askServer("/api/ex?id=\${id}", "GET")} ruft von der Datenbank die Aufgabe mit der entsprechenden ID ab.
 Die Aufgabe kann auch in dieser detaillierten Ansicht zum Warenkorb hinzugefügt werden oder aus dem Warenkorb gelöscht werden.
 
-\centfig{0.5}{AufgDetails.png}
+\begin{figure}[ht]
+  \centfig{0.5}{AufgDetails.png}
+  \caption{Die Aufgabendetails \cite{fig:aufgabendetails}}
+\end{figure}
 
 \texttt{3.4.1.3 Die Warenkorb-Komponente:}
-
-\centfig{0.5}{Warenkorb.png}
+\begin{figure}[ht]
+  \centfig{0.5}{Warenkorb.png}
+  \caption{Der Warenkorb \cite{fig:warenkorb}}
+\end{figure}
 
 \item Aufgabe im Warenkorb (WarenCard):
 Eine Aufgabe (Card) im Warenkorb kann gelöschte werden oder ihre Position mit der vorhergehenden oder nachfolgenden Aufgabe vertauscht werden, um die richtige Reihenfolge beim Downlaod der Aufgabe zu erhalten. 
@@ -51,8 +58,10 @@ Die einzelnen Aufgaben (WarenCard) werden untereinander im Warenkorb angezeigt u
 
 
 \texttt{3.4.1.4 Die AufgabeHinzufügen-Komponente:}
-
-\centfig{0.3}{ExForm.png}
+\begin{figure}[ht]
+  \centfig{0.3}{ExForm.png}
+  \caption{Aufgaben Hinzufügen \cite{fig:hinzufuegen}}
+\end{figure}
 
 \item{ExerciseForm}:
 
@@ -63,8 +72,10 @@ Diese Komponente ermöglicht das Erstellen neuer Aufgaben. Über eine API-Anfrag
 
 
 \texttt{3.4.1.5 Die AufgabeEditieren-Komponente:}
-
-\centfig{0.3}{EditForm.png}
+\begin{figure}[ht]
+  \centfig{0.3}{EditForm.png}
+  \caption{Aufgaben Editieren \cite{fig:editieren}}
+\end{figure}
 
 \item{EditForm} (Seitenkomponente):
 

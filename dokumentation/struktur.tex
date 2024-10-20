@@ -1,8 +1,10 @@
 \section{Struktur der Webapplikation}
 
 In der folgenden Graphik sehen wir schematisch die Struktur unserer Webapplikation: Das gesamte läuft in einem Docker Container. Ein Proxy (ein zwischengeschalteter Server) vermittelt zwischen dem User und den verschiedenen Bereichen des Docker Containers. Anfragen werden an den Client gesendet, der Client kommuniziert dann via Server mit der Datenbank.
-
-\centfig{0.6}{docker-container.png}
+\begin{figure}[ht]
+    \centfig{0.6}{docker-container.png}
+    \caption{Übersicht über den Docker Container \cite{fig:docker}}
+\end{figure}
 
 \subsection{Technische Details}
 
