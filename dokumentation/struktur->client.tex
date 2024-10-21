@@ -136,15 +136,17 @@ Signals sind eine leistungsstarke Ergänzung zu den traditionellen Hooks wie use
 
 \subsubsection{Zustandsmanagement mit useContext } 
 
-Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit \texttt{useContext} können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht und eine reibungslose und intuitive Benutzererfahrung unterstützt.
+Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit \texttt{useContext} können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht.
+
+Insgesammt wurde zwei zentrale Datenquellen, SearchContext und WarenkorbContext, erstellt. Hier wird der SearchContext genauer vorgestellt, die sicherstellt, dass wichtige Zustandsinformationen wie Suchergebnisse, ausgewählte Kategorien und Benachrichtigungen zentral gespeichert und zwischen verschiedenen Komponenten geteilt werden können. 
 
 
 \begin{lstlisting}[language=Python]
-  const { showNotification, setCartSearch, searchText, categor } =
+  const { showNotification, setCartSearch, searchText, categor, deleteCard } =
     useContext(SearchContext);
  \end{lstlisting}  
  
-Hier werden mehrere Variablen (showNotification, setCartSearch, cartSearch, searchText und categor) aus dem SearchContext abgerufen, die als Signals implementiert sind und im localStorage des Browsers gespeichert werden, da diese Daten zwischen verschiedenen Komponenten geteilt werden müssen.
+Hier werden mehrere Variablen (showNotification, setCartSearch, cartSearch, searchText, categor und deleteCard) aus dem SearchContext abgerufen, die als Signals implementiert sind und im localStorage des Browsers gespeichert werden, da diese Daten zwischen verschiedenen Komponenten geteilt werden müssen.
 
 \begin{itemize}
   \item \texttt{showNotification} speichert und verwaltet Benachrichtigungen oder Fehlermeldungen, die beim Bearbeiten, Eingeben oder Suchen von Aufgaben auftreten und zeigt sie in roter oder grüner Farbe für eine kurze Zeit an.
@@ -152,11 +154,11 @@ Hier werden mehrere Variablen (showNotification, setCartSearch, cartSearch, sear
     \item \texttt{setCartSearch} speichert die Suchergebnisse in der Variablen cartSearch, die von der Benutzerabfrage zurückgegeben werden.
     \item \texttt{searchText} enthält den eingegebenen Suchtext nach dem der Benutzer sucht und zeigt ihn oberhalb der Suchergebnisse an.
     \item \texttt{categor} speichert die vom Benutzer angeklickte Kategorie und Subkategorie und zeigt sie oberhalb der Suchergebnisse an.
+    \item \texttt{deleteCard} entfernt eine Aufgabe aus der Datenbank.
   
 \end{itemize}
 
-
-Die Signals für diese Variablen sind wie folgt definiert. Der SearchProvider erstellt einen Kontext mit diesen Variablen und Funktionen, der von allen untergeordneten Komponenten (Children) genutzt werden kann:
+Die Signals für diese Variablen sind wie folgt definiert.
     
 \begin{lstlisting}[language=Python]
 export const SearchProvider = ({ children }) => {
@@ -176,14 +178,19 @@ export const SearchProvider = ({ children }) => {
     cartSearch.value = exercises;
   };
 
+  const deleteCard = async ({ id }) => {
+    const route = `/api/ex/${id}`;
+    const deleteEx = await askServer(route, "DELETE");
+    ....// "Aufgabe aus Datenbank entfernen"}
+
 const showNotification = (message, color) => {
-    const container = document.getElementById("notification-container");
-   ....// "Erstelle das Benachrichtigungselement"
-   .....}
+  const container = document.getElementById("notification-container");
+   ....// "Erstelle das Benachrichtigungselement"}
    
 effect(() => {
-    window.localStorage.setItem("cartSearch", 
+    window.localStorage.setItem("cartSearch", JSON.stringify(cartSearch.value));
     window.localStorage.setItem("categor", JSON.stringify(categor.value));
+    window.localStorage.setItem("searchText", JSON.stringify(searchText.value));
   });
   return (
     <SearchContext.Provider
@@ -193,6 +200,7 @@ effect(() => {
         setCartSearch,
         cartSearch,
         showNotification,
+        deleteCard
       }}
     >
       {children}
@@ -204,16 +212,15 @@ effect(() => {
 
 
  \end{lstlisting}  
-Der Kontext-Provider gibt die Werte und Funktionen (\texttt{categor, setCartSearch, cartSearch, showNotification}) weiter, sodass alle untergeordneten Komponenten auf diese zugreifen können.
-Mit diesem Ansatz stellen wir sicher, dass wichtige Zustandsinformationen wie Suchergebnisse, ausgewählte Kategorien und Benachrichtigungen zentral gespeichert und zwischen verschiedenen Komponenten geteilt werden können. 
-Folgende Grafik gibt einen Überblick, wie die Komponenten zum Anzeigen der gesuchten Aufgaben (FindExBySearchText, FindExSubCat) auf die Variablen im SearchProvider zugreifen können:
+Der Kontext-Provider gibt die Werte und Funktionen (\texttt{categor, setCartSearch, cartSearch, showNotification}) weiter, sodass alle untergeordneten Komponenten (Children) auf diese zugreifen können.
 
+Folgende Grafik zeigt, auf welche Variablen und Funktionen die Komponenten zum Anzeigen der gesuchten Aufgaben (FindExBySearchText, FindExSubCat) im SearchProvider zugreifen können:
 \centfig{0.45}{suchen.png}
 
-Folgende Grafik gibt einen Überblick, wie die Komponenten  zum Hinzufügen und Editieren von Aufgaben (ExForm, EditForm) auf die Variablen im SearchProvider zugreifen können:
-\centfig{0.3}{hinzufügen.png}
+Folgende Grafik gibt einen Überblick, auf welche Variablen und Funktionen die Komponenten zum Hinzufügen und Editieren von Aufgaben (ExForm, EditForm) im SearchProvider zugreifen können:
+\centfig{0.4}{hinzufügen.png}
 
-Folgende Grafik gibt einen Überblick, wie die Komponenten zum Suche nach Aufgaben (SearchKorb) auf die Variablen im SearchProvider zugreifen können:
+Folgende Grafik gibt einen Überblick auf welche Variablen und Funktionen die Komponente zum Suche nach Aufgaben (SearchKorb) im SearchProvider zugreifen können:
 \centfig{0.5}{finden.png}
 
 
