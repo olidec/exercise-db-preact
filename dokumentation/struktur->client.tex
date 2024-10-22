@@ -7,7 +7,7 @@ Ein weitere Vorteil einer Komponentenhierarchie ist, das Änderungen an einer Ko
 
 \texttt{3.4.1.1 Die AufgabenSuchen-Komponente:}
 \begin{figure}[ht]
-  \centfig{0.6}{Suchen_Komp.png}
+  \centfig{0.7}{Suchen_Komp.png}
   \caption{Die Aufgabensuchkomponente \cite{fig:aufgabensuche}}
 \end{figure}
 
@@ -32,18 +32,22 @@ Beides Mal werden die anzuzeigenden Aufgaben in der Komponente SearchKorb angeze
 
 \texttt{3.4.1.2 Die AufgabeDetails-Komponente:}
 
+\begin{figure}[H]
+  \centfig{0.5}{AufgDetails.png}
+  \caption{Die Aufgabendetails \cite{fig:aufgabendetails}}
+\end{figure}
+
 \item Aufgabendetails:
 Eine Detailansicht für jede Aufgabe erfolgt in einer Modal Ansicht (Fenster innerhalb eines Browser Fensters erscheint), wobei neben dem Aufgabentext auch die Lösung, die Kategoriezugehörigkeit, der Schwierigkeitsgrad und der Autor der Aufgabe zu sehen ist. 
 Die API Anfrage \texttt{askServer("/api/ex?id=\${id}", "GET")} ruft von der Datenbank die Aufgabe mit der entsprechenden ID ab.
 Die Aufgabe kann auch in dieser detaillierten Ansicht zum Warenkorb hinzugefügt werden oder aus dem Warenkorb gelöscht werden.
 
-\begin{figure}[ht]
-  \centfig{0.5}{AufgDetails.png}
-  \caption{Die Aufgabendetails \cite{fig:aufgabendetails}}
-\end{figure}
+
 
 \texttt{3.4.1.3 Die Warenkorb-Komponente:}
-\begin{figure}[ht]
+
+
+\begin{figure}[H]
   \centfig{0.5}{Warenkorb.png}
   \caption{Der Warenkorb \cite{fig:warenkorb}}
 \end{figure}
@@ -58,7 +62,7 @@ Die einzelnen Aufgaben (WarenCard) werden untereinander im Warenkorb angezeigt u
 
 
 \texttt{3.4.1.4 Die AufgabeHinzufügen-Komponente:}
-\begin{figure}[ht]
+\begin{figure}[H]
   \centfig{0.3}{ExForm.png}
   \caption{Aufgaben Hinzufügen \cite{fig:hinzufuegen}}
 \end{figure}
@@ -72,7 +76,7 @@ Diese Komponente ermöglicht das Erstellen neuer Aufgaben. Über eine API-Anfrag
 
 
 \texttt{3.4.1.5 Die AufgabeEditieren-Komponente:}
-\begin{figure}[ht]
+\begin{figure}[H]
   \centfig{0.3}{EditForm.png}
   \caption{Aufgaben Editieren \cite{fig:editieren}}
 \end{figure}
@@ -95,58 +99,30 @@ Beim Absenden des Formulars wird ein Cookie mit den Authentifizierungsdaten gese
 \item Registrieren-Komponente:
 Die Registrieren-Komponente ermöglicht es dem Benutzer über die Email Adresse, den Benutzernamen und sein Passwort, einen neuen Benutzer anzulegen. Die API Anfrage \texttt{(askServer("/register", "POST", user))} sendet die Daten an das Backend.
 
-\item Navigation:
+\item Navigations-Komponente:
 Die Menu-Komponente stellt die Hauptnavigation der Anwendung bereit und ermöglicht den Zugriff auf die verschiedenen Seiten und Funktionen der App, darunter die Startseite (/), das Hinzufügen von Aufgaben (/add), das Finden von Aufgaben (/find), den Warenkorb (/warenkorb), Infos zur Webseite (/about) und die Registrierung(/register) und Anmeldung (/login).
 
 
 \end{itemize}
 
 
-\subsubsection{Zustandsmanagement mit useState, useEffect und Signals}
-
-
-Ein effektives Zustandsmanagement ist entscheidend für die Verwaltung der Anwendungsdaten sowie der verschiedenen UI-Zustände, wie Benutzereingaben oder geladene Daten (Aufgaben). Preact bietet uns hierfür mehrere Optionen: Für lokale Zustände innerhalb einzelner Komponenten nutzen wir die useState und useEffect Hooks, die eine einfache und reaktive Verwaltung dieser Zustände ermöglichen. 
-Der useState Hook ermöglicht es, Zustände innerhalb einer Funktionskomponente zu verwalten. Wenn man useState aufruft, erhält man ein Array mit zwei Werten: den aktuellen Zustand und eine Funktion, um diesen Zustand zu aktualisieren.
-
-\begin{lstlisting}
-const [state, setState] = useState(initialValue);
-// state: Die aktuelle Zustandsvariable, den man verwenden kann.
-// setState: Eine Funktion, mit der man den Zustand der Variable aktualisieren kann.
-//initialValue: Der Anfangswert des Zustands.
-
-\end{lstlisting}
-
-
-Der useEffect Hook wird verwendet, um Seiteneffekte (dependencys) in Funktionskomponenten zu behandeln. Ein Seiteneffekt ist z.B. das Abrufen von Daten von einem Server oder das Ändern des DOM.
-
-\begin{lstlisting}
-useEffect(() => {
- // Effekt-Funktion, z.B. Daten laden oder DOM aktualisieren
-  return () => {
-    // Cleanup-Funktion, z.B. Event-Listener entfernen
-  };
-}, [dependency1, dependency2]);
-
-\end{lstlisting}
-  
-
-
-Zusätzlich bietet Preact die Möglichkeit, Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
-Signals sind eine leistungsstarke Ergänzung zu den traditionellen Hooks wie useState und useEffect in Preact. Sie sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und Komponenten effizient zu aktualisieren. Signals bieten eine automatische Reaktivität. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, wenn sich das Signal ändert.
 
 \subsubsection{Zustandsmanagement mit useContext } 
 
-Für komplexere Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit \texttt{useContext} können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht.
+Für komplexe Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Diese ermöglicht es, einen globalen Zustand zu schaffen, der von verschiedenen Teilen der Anwendung gemeinsam genutzt werden kann, ohne dass der Code unnötig kompliziert wird. Mit \texttt{useContext} können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht.
 
-Insgesammt wurde zwei zentrale Datenquellen, SearchContext und WarenkorbContext, erstellt. Hier wird der SearchContext genauer vorgestellt, die sicherstellt, dass wichtige Zustandsinformationen wie Suchergebnisse, ausgewählte Kategorien und Benachrichtigungen zentral gespeichert und zwischen verschiedenen Komponenten geteilt werden können. 
+Insgesammt wurde zwei zentrale Datenquellen, SearchContext und WarenkorbContext, erstellt. 
+
+\texttt{Der SearchContext}
+
+Der SearchContext stellt sicher, dass wichtige Zustandsinformationen wie Suchergebnisse, ausgewählte Kategorien und Benachrichtigungen zentral gespeichert und zwischen verschiedenen Komponenten geteilt werden können. 
 
 
 \begin{lstlisting}[language=Python]
-  const { showNotification, setCartSearch, searchText, categor, deleteCard } =
-    useContext(SearchContext);
+const { showNotification, cartSearch, setCartSearch, searchText, categor, deleteCard } = useContext(SearchContext);
  \end{lstlisting}  
  
-Hier werden die Variablen und Funktion ((\texttt{showNotification, setCartSearch, cartSearch, searchText, categor und deleteCard})) aus dem SearchContext abgerufen, die als Signals implementiert sind und im localStorage des Browsers gespeichert werden, da diese Daten zwischen verschiedenen Komponenten geteilt werden müssen.
+Hier werden die Variablen und Funktion (\texttt{showNotification, setCartSearch, cartSearch, searchText, categor und deleteCard}) aus dem SearchContext abgerufen, die als Signals implementiert (Kapitel 3.4.4) sind und im localStorage des Browsers gespeichert werden, da diese Daten zwischen verschiedenen Komponenten geteilt werden müssen.
 
 \begin{itemize}
   \item \texttt{showNotification} speichert und verwaltet Benachrichtigungen oder Fehlermeldungen, die beim Bearbeiten, Eingeben oder Suchen von Aufgaben auftreten und zeigt sie in roter oder grüner Farbe für eine kurze Zeit an.
@@ -154,35 +130,78 @@ Hier werden die Variablen und Funktion ((\texttt{showNotification, setCartSearch
     \item \texttt{setCartSearch} speichert die Suchergebnisse in der Variablen cartSearch, die von der Benutzerabfrage zurückgegeben werden.
     \item \texttt{searchText} enthält den eingegebenen Suchtext nach dem der Benutzer sucht und zeigt ihn oberhalb der Suchergebnisse an.
     \item \texttt{categor} speichert die vom Benutzer angeklickte Kategorie und Subkategorie und zeigt sie oberhalb der Suchergebnisse an.
-    \item \texttt{deleteCard} entfernt eine Aufgabe aus der Datenbank.
+    \item \texttt{deleteCard} entfernt eine Aufgabe aus der Datenbank, sofern man Autor der Aufgabe ist.
   
 \end{itemize}
 
 
 Der Kontext-Provider gibt die Variablen und Funktionen des SearchContext weiter, sodass alle untergeordneten Komponenten (Children) auf diese zugreifen können.
 
-Folgende Grafik zeigt, auf welche Variablen und Funktionen die Komponenten zum Anzeigen der gesuchten Aufgaben (FindExBySearchText, FindExSubCat) im SearchProvider zugreifen können:
+Folgende Grafik zeigt, auf welche Variablen und Funktionen im SearchProvider die verschiedene Komponenten zugreifen können:
 \begin{figure}[ht]
-\centfig{0.45}{suchen.png}
-\caption{Aufgaben suchen \cite{fig:suchen}}
+\centfig{0.45}{all.png}
+\caption{Komponenten mit Zugriff auf den SearchContext \cite{fig:all}}
 \end{figure}
 
 
-Folgende Grafik gibt einen Überblick, auf welche Variablen und Funktionen die Komponenten zum Hinzufügen und Editieren von Aufgaben (ExForm, EditForm) im SearchProvider zugreifen können:
+\texttt{Der WarenkorbContext}
 
-\begin{figure}[ht]
-\centfig{0.4}{hinzufügen.png}
-\caption{Aufgaben Editieren/hinzufügen \cite{fig:editieren/hinzufuegen}}
-\end{figure}
+Der WarenkorbContext stellt sicher, dass Zustandinsformationen zwischen dem Warenkorb und dem Anzeigen der gesuchten Aufgaben zentral gespeichert und zwischen Komponenten geteilt werden können.
+
+\begin{lstlisting}[language=Python]
+const { cartItems, addToKorb, handleDelete, getIndex, getCartCount } = useContext(WarenkorbContext);
+ \end{lstlisting} 
+
+ \begin{itemize}
+
+  \item \texttt{addToKorb} speichert die Aufgabe in der Warenkorb-Liste.
+  \item \texttt{handleDelete} entfernt eine Aufgabe aus der Warenkorb-Liste.
+  \item  \texttt{cartItems} speichert die ausgewählten Aufgaben für dem Warenkorb in der Warenkorb-Liste und verwaltet diese.
+  \item \texttt{getIndex} gibt die Position einer Aufgabe in der Warenkorb-Liste an. (Ist der Index -1, ist die Aufgabe nicht im Warenkorb und der Button addToKorb wird angezeigt.)
+  \item \texttt{getCartCount} gibt die Anzahl der gespeicherten Aufgaben in der Warenkorb-Liste an.
+ \end{itemize}
+
+ Folgende Grafik zeigt, auf welche Variablen und Funktionen im WarenkorbProvider die verschiedene Komponenten zugreifen können:
+ \begin{figure}[ht]
+ \centfig{0.45}{all2.png}
+ \caption{Komponenten mit Zugriff auf den WarenkorbContext \cite{fig:all2}}
+ \end{figure}
 
 
-Folgende Grafik gibt einen Überblick auf welche Variablen und Funktionen die Komponente zum Suche nach Aufgaben (SearchKorb) im SearchProvider zugreifen können:
-\begin{figure}[ht]
-\centfig{0.5}{finden.png}
-\caption{Aufgaben finden \cite{fig:finden}}
-\end{figure}
+ \subsubsection{Zustandsmanagement mit useState, useEffect und Signals}
 
-\subsubsection{Zustandsmanagement für die Komponente FindExSubCat } 
+
+ Ein effektives Zustandsmanagement ist entscheidend für die Verwaltung der Anwendungsdaten sowie der verschiedenen UI-Zustände, wie Benutzereingaben oder geladene Daten (gesuchte Aufgaben). Preact bietet uns hierfür mehrere Optionen: Für lokale Zustände innerhalb einzelner Komponenten nutzen wir die useState und useEffect Hooks, die eine einfache und reaktive Verwaltung dieser Zustände ermöglichen. 
+ Der useState Hook ermöglicht es, Zustände innerhalb einer Funktionskomponente zu verwalten. Wenn man useState aufruft, erhält man ein Array mit zwei Werten: den aktuellen Zustand und eine Funktion, um diesen Zustand zu aktualisieren.
+ 
+ \begin{lstlisting}
+ const [state, setState] = useState(initialValue);
+ // state: Die aktuelle Zustandsvariable, den man verwenden kann.
+ // setState: Eine Funktion, mit der man den Zustand der Variable aktualisieren kann.
+ //initialValue: Der Anfangswert des Zustands.
+ 
+ \end{lstlisting}
+ 
+ 
+ Der useEffect Hook wird verwendet, um Seiteneffekte (dependencys) in Funktionskomponenten zu behandeln. Ein Seiteneffekt ist z.B. das Abrufen von Daten von einem Server oder das Ändern des DOM. Sofern es eine Änderung der Variablen (dependencys) in diesem Array gibt, wird die useEffect()-Funktion erneut ausgeführt.
+ 
+ \begin{lstlisting}
+ useEffect(() => {
+  // Effekt-Funktion, z.B. Daten laden oder DOM aktualisieren
+   return () => {
+     // Cleanup-Funktion, z.B. Event-Listener entfernen
+   };
+ }, [dependency1, dependency2]);
+ 
+ \end{lstlisting}
+   
+ 
+ 
+Zusätzlich bietet Preact die Möglichkeit, Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
+Signals sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und so Zustände innerhalb der Komponente zu aktualisieren. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, wenn sich das Signal ändert.
+ 
+
+\subsubsection{Code-Beispiel: Zustandsmanagement für die Komponente FindExSubCat } 
 Die Folgenden Beispiel beziehen sich auf die Komponente \texttt{FindExSubCat} um Aufgaben nach Kategorien und Subkategorien durch clicken auf dieselben zu suchen.
 
 Das Signal \texttt{cat} wird verwendet um ale Kategorien vom Server zu laden.
@@ -196,8 +215,8 @@ const loadCat = async () => {
 
 \end{lstlisting}
 
-Nun wird die useEffect()-Funktion verwendet damit beim laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und in das Array categories schreibt \texttt{(setCategories(cat.value))}. Da sich diese Variable beim laden der Seite verändern könnte, wird sie als useState Variable definiert. 
-Diese useEffect()-Funktion wird nur beim laden der Seite ausgeführt, da die Liste der Abhängigkeiten (leeres Array auf der letzten Zeile) leer bleibt. Diese Liste von Variablen definert, dass die useEffect()-Funktion erneut ausgeführt werden muss, sofern es eine Änderung der Variablen in diesem Array gibt.
+Nun wird die useEffect()-Funktion verwendet damit beim laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und sie in das Array categories schreibt \texttt{(setCategories(cat.value))}. Da sich diese Variable beim laden der Seite verändern könnte, wird sie als useState Variable definiert. 
+Diese useEffect()-Funktion wird nur beim laden der Seite ausgeführt, da die Liste der Abhängigkeiten (leeres Array auf der letzten Zeile) leer bleibt. 
 
 \begin{lstlisting}
 import { cat, loadCat } from "../signals/categories.js";
@@ -213,13 +232,12 @@ useEffect(() => {
 \end{lstlisting}
 
 
-
-
-Die Funktion \texttt{onCategoryClick}: Diese Funktion wird aufgerufen, wenn eine Kategorie angeklickt wird. Sie setzt die ausgewählte Kategorie in die Variable selectedCategory und setzt das Array der Unterkategorie zurück (leere Liste). Dann sendet sie eine Anfrage an den Server, um Übungen basierend auf der Kategorie zu laden und in der Variablen excat zu speichern.
+Die Funktion \texttt{onCategoryClick} wird aufgerufen, wenn eine Kategorie angeklickt wird. Sie setzt die ausgewählte Kategorie in die Variable selectedCategory und setzt das Array der Unterkategorie auf einen leeren String zurück. Dann sendet die Funktion eine Anfrage an den Server, um Übungen basierend auf der Kategorie zu laden und in der Variablen excat zu speichern.
 
 \begin{lstlisting}[language=Python]
 const [selectedCategory, setSelectedCategory] = useState("");
 const [selectedSubcategory, setSelectedSubcategory] = useState("");
+
 const onCategoryClick = async (categoryName) => {
 setSelectedCategory(categoryName);
 setSelectedSubcategory(""); # Reset subcategory when selecting a new category
@@ -229,7 +247,7 @@ const excat = res.response;
     
 \end{lstlisting}
 
-Nun wird die Antwort des Servers verarbeitet: Wenn die Serverantwort keinen Erfolg bringt (Status nicht 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung angezeigt und die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe useContext)
+ Wenn die Serverantwort keinen Erfolg bringt (Status nicht 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung angezeigt und das Array der gesuchten Aufgaben sowie die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe SearchContext)
 
 
 \begin{lstlisting}[language=Python]
@@ -253,7 +271,7 @@ Nun wird die Antwort des Servers verarbeitet: Wenn die Serverantwort keinen Erfo
 
 
 
-Die useEffect() Funktion für Unterkategorien sucht die Unterkategorien der ausgewählten Kategorie, die in der Variablen \texttt{selectedCategory} gespeichert wurde und speichert diese im Array \texttt{subcategories} und zwar jedes Mal, wenn sich \texttt{selectedCategory} oder \texttt{categories} ändert (Seiteneffekt). Ob sich das Array categories ändert, wird nur beim ersten rendern der Seite überprüft, da bei der ersten useEffect() Funktion das Abhängigkeits- Array leer bleibt.
+Die useEffect() Funktion für Unterkategorien sucht die Unterkategorien der ausgewählten Kategorie, die in der Variablen \texttt{selectedCategory} gespeichert wurde und speichert diese im Array \texttt{subcategories} und zwar jedes Mal, wenn sich \texttt{selectedCategory} oder \texttt{categories} ändert (Seiteneffekt). 
 
 
 \begin{lstlisting}[language=Python]
@@ -271,12 +289,10 @@ useEffect(() => {
 
 
 
-
-
-Die Funktion \texttt{onSubcategoryClick}: Diese Funktion wird aufgerufen, wenn eine Unterkategorie ausgewählt wird. Sie sendet eine Anfrage an den Server, um Übungen basierend auf der ausgewählten Unterkategorie zu laden und und in der Variablen \texttt{exsubcat} zu speichern.
+Die Funktion \texttt{onSubcategoryClick} wird aufgerufen, wenn eine Unterkategorie ausgewählt wird. Sie sendet eine Anfrage an den Server, um Übungen basierend auf der ausgewählten Unterkategorie zu laden und und in der Variablen \texttt{exsubcat} zu speichern.
 
 \begin{lstlisting}[language=Python]
-  const onSubcategoryClick = async (subcategoryName) => {
+const onSubcategoryClick = async (subcategoryName) => {
     setSelectedSubcategory(subcategoryName);
 
     const route = `/api/ex?cat=${selectedCategory}&subcat=${subcategoryName}`;
@@ -286,7 +302,7 @@ Die Funktion \texttt{onSubcategoryClick}: Diese Funktion wird aufgerufen, wenn e
     
 \end{lstlisting}
 
-Verarbeiten der Server-Antwort: Ähnlich wie bei der Kategorieauswahl wird eine Benachrichtigung angezeigt und die Unterkategorieauswahl zurückgesetzt, wenn keine passenden Übungen gefunden werden. Ansonsten wird die Liste der Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe useContext API).
+ Ähnlich wie bei der Kategorieauswahl wird eine Benachrichtigung angezeigt und die Unterkategorieauswahl zurückgesetzt, wenn keine passenden Übungen gefunden werden. Ansonsten wird die Liste der Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe SearchContext).
 
 
 \begin{lstlisting}[language=Python]
