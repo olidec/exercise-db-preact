@@ -146,7 +146,7 @@ Insgesammt wurde zwei zentrale Datenquellen, SearchContext und WarenkorbContext,
     useContext(SearchContext);
  \end{lstlisting}  
  
-Hier werden mehrere Variablen (showNotification, setCartSearch, cartSearch, searchText, categor und deleteCard) aus dem SearchContext abgerufen, die als Signals implementiert sind und im localStorage des Browsers gespeichert werden, da diese Daten zwischen verschiedenen Komponenten geteilt werden müssen.
+Hier werden die Variablen und Funktion ((\texttt{showNotification, setCartSearch, cartSearch, searchText, categor und deleteCard})) aus dem SearchContext abgerufen, die als Signals implementiert sind und im localStorage des Browsers gespeichert werden, da diese Daten zwischen verschiedenen Komponenten geteilt werden müssen.
 
 \begin{itemize}
   \item \texttt{showNotification} speichert und verwaltet Benachrichtigungen oder Fehlermeldungen, die beim Bearbeiten, Eingeben oder Suchen von Aufgaben auftreten und zeigt sie in roter oder grüner Farbe für eine kurze Zeit an.
@@ -158,71 +158,29 @@ Hier werden mehrere Variablen (showNotification, setCartSearch, cartSearch, sear
   
 \end{itemize}
 
-Die Signals für diese Variablen sind wie folgt definiert.
-    
-\begin{lstlisting}[language=Python]
-export const SearchProvider = ({ children }) => {
-  const cartSearch = signal(
-    JSON.parse(window.localStorage.getItem("cartSearch")) || []
-  );
 
-  const categor = signal(
-    JSON.parse(window.localStorage.getItem("categor")) || []
-  );
-
-  const searchText = signal(
-    JSON.parse(window.localStorage.getItem("searchText"))
-  );
-  
-  const setCartSearch = (exercises) => {
-    cartSearch.value = exercises;
-  };
-
-  const deleteCard = async ({ id }) => {
-    const route = `/api/ex/${id}`;
-    const deleteEx = await askServer(route, "DELETE");
-    ....// "Aufgabe aus Datenbank entfernen"}
-
-const showNotification = (message, color) => {
-  const container = document.getElementById("notification-container");
-   ....// "Erstelle das Benachrichtigungselement"}
-   
-effect(() => {
-    window.localStorage.setItem("cartSearch", JSON.stringify(cartSearch.value));
-    window.localStorage.setItem("categor", JSON.stringify(categor.value));
-    window.localStorage.setItem("searchText", JSON.stringify(searchText.value));
-  });
-  return (
-    <SearchContext.Provider
-      value={{
-        categor,
-        searchText,
-        setCartSearch,
-        cartSearch,
-        showNotification,
-        deleteCard
-      }}
-    >
-      {children}
-    </SearchContext.Provider>
-  );
-};
-
-
-
-
- \end{lstlisting}  
-Der Kontext-Provider gibt die Werte und Funktionen (\texttt{categor, setCartSearch, cartSearch, showNotification}) weiter, sodass alle untergeordneten Komponenten (Children) auf diese zugreifen können.
+Der Kontext-Provider gibt die Variablen und Funktionen des SearchContext weiter, sodass alle untergeordneten Komponenten (Children) auf diese zugreifen können.
 
 Folgende Grafik zeigt, auf welche Variablen und Funktionen die Komponenten zum Anzeigen der gesuchten Aufgaben (FindExBySearchText, FindExSubCat) im SearchProvider zugreifen können:
+\begin{figure}[ht]
 \centfig{0.45}{suchen.png}
+\caption{Aufgaben suchen \cite{fig:suchen}}
+\end{figure}
+
 
 Folgende Grafik gibt einen Überblick, auf welche Variablen und Funktionen die Komponenten zum Hinzufügen und Editieren von Aufgaben (ExForm, EditForm) im SearchProvider zugreifen können:
+
+\begin{figure}[ht]
 \centfig{0.4}{hinzufügen.png}
+\caption{Aufgaben Editieren/hinzufügen \cite{fig:editieren/hinzufuegen}}
+\end{figure}
+
 
 Folgende Grafik gibt einen Überblick auf welche Variablen und Funktionen die Komponente zum Suche nach Aufgaben (SearchKorb) im SearchProvider zugreifen können:
+\begin{figure}[ht]
 \centfig{0.5}{finden.png}
-
+\caption{Aufgaben finden \cite{fig:finden}}
+\end{figure}
 
 \subsubsection{Zustandsmanagement für die Komponente FindExSubCat } 
 Die Folgenden Beispiel beziehen sich auf die Komponente \texttt{FindExSubCat} um Aufgaben nach Kategorien und Subkategorien durch clicken auf dieselben zu suchen.
