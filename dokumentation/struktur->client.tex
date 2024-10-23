@@ -230,13 +230,13 @@ const { cartItems, addToKorb, handleDelete, getIndex, getCartCount } = useContex
  
  
 Zusätzlich bietet Preact die Möglichkeit, Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
-Signals sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und so Zustände innerhalb der Komponente zu aktualisieren. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, wenn sich das Signal ändert.
+Signals sind reaktive Zustandscontainer, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und so Zustände innerhalb der Komponente und zwischen den Komponenten zu aktualisieren. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, wenn sich das Signal ändert.
  
 
 \subsubsection{Code-Beispiel: Zustandsmanagement für die Komponente FindExSubCat } 
-Die Folgenden Beispiel beziehen sich auf die Komponente \texttt{FindExSubCat} um Aufgaben nach Kategorien und Subkategorien durch clicken auf dieselben zu suchen.
+Das folgende Beispiel beziehen sich auf die Komponente \texttt{FindExSubCat} um Aufgaben nach Kategorien und Subkategorien durch clicken auf dieselben zu suchen.
 
-Das Signal \texttt{cat} wird verwendet um ale Kategorien vom Server zu laden.
+Das Signal \texttt{cat} wird verwendet um alle Kategorien vom Server zu laden.
 
 \begin{lstlisting}
 const cat = signal([]);
@@ -247,8 +247,8 @@ const loadCat = async () => {
 
 \end{lstlisting}
 
-Nun wird die useEffect()-Funktion verwendet damit beim laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und sie in das Array categories schreibt \\\texttt{(setCategories(cat.value)}. Da sich diese Variable beim laden der Seite verändern könnte, wird sie als useState Variable definiert. 
-Diese useEffect()-Funktion wird nur beim laden der Seite ausgeführt, da die Liste der Abhängigkeiten (leeres Array auf der letzten Zeile) leer bleibt. 
+Nun wird die useEffect()-Funktion verwendet damit beim laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und sie in das Array categories schreibt \\\texttt{(setCategories(cat.value))}. Da sich diese Variable beim laden der Seite verändern könnte, wird sie als useState Variable definiert. 
+Diese useEffect()-Funktion wird nur beim laden der Seite ausgeführt, da die Liste der Abhängigkeiten (dependencys, leeres Array auf der letzten Zeile) leer bleibt. 
 
 \begin{lstlisting}
 import { cat, loadCat } from "../signals/categories.js";
@@ -264,7 +264,7 @@ useEffect(() => {
 \end{lstlisting}
 
 
-Die Funktion \texttt{onCategoryClick} wird aufgerufen, wenn eine Kategorie angeklickt wird. Sie setzt die ausgewählte Kategorie in die Variable selectedCategory und setzt das Array der Unterkategorie auf einen leeren String zurück. Dann sendet die Funktion eine Anfrage an den Server, um Übungen basierend auf der Kategorie zu laden und in der Variablen excat zu speichern.
+Die Funktion \texttt{onCategoryClick} wird aufgerufen, wenn eine Kategorie angeklickt wird. Sie setzt die ausgewählte Kategorie in die Variable \texttt{selectedCategory} und setzt das Array der Unterkategorie auf einen leeren String zurück. Dann sendet die Funktion eine Anfrage an den Server, um Übungen basierend auf der Kategorie zu laden und in der Variablen \texttt{excat} zu speichern.
 
 \begin{lstlisting}[language=Python]
 const [selectedCategory, setSelectedCategory] = useState("");
@@ -279,7 +279,7 @@ const excat = res.response;
     
 \end{lstlisting}
 
- Wenn die Serverantwort keinen Erfolg bringt (Status ungleich 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung (showNotification) angezeigt und das Array der gesuchten Aufgaben sowie die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion \texttt{setCartSearch} in die Variablen \texttt{cartSearch} gespeichert. (siehe SearchContext)
+ Wenn der Server keine Antwort auf die Anfrage gibt (Status ungleich 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung (showNotification) angezeigt und das Array der gesuchten Aufgaben sowie die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion \texttt{setCartSearch} in die Variablen \texttt{cartSearch} gespeichert. (siehe Kapitel 3.4.3.1 SearchContext)
 
 
 \begin{lstlisting}[language=Python]
@@ -334,7 +334,7 @@ const onSubcategoryClick = async (subcategoryName) => {
     
 \end{lstlisting}
 
- Ähnlich wie bei der Kategorieauswahl wird eine Benachrichtigung angezeigt und die Unterkategorieauswahl zurückgesetzt, wenn keine passenden Übungen gefunden werden. Ansonsten wird die Liste der Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe SearchContext).
+ Ähnlich wie bei der Kategorieauswahl wird eine Benachrichtigung angezeigt und die Unterkategorieauswahl zurückgesetzt, wenn keine passenden Übungen gefunden werden. Ansonsten wird die Liste der Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe Kapitel 3.4.3.1 SearchContext).
 
 
 \begin{lstlisting}[language=Python]
