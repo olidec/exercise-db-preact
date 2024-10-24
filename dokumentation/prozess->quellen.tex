@@ -5,8 +5,103 @@ Das Erlernen der notwendigen Fertigkeiten und Wissen, um dieses Projekt zu erste
 Im Folgenden Abschnitt werden wir ein paar der wichtigsten Webseiten und Hilfsmittel, die wir verwendet haben vorstellen.
 
 \subsubsection{Die Basics} 
-Da unser Projekt als 'Full-Stack Webapplikation' bezeichnet werden kann, haben wir Tutorials gesucht, die React-Applicationen und zugehörige Server erklärt und demonstriert haben. Als sehr nützlichen Channel haben wir \texttt{Web Dev Simplified} \mbox{(\url{https://www.youtube.com/c/webdevsimplified})} empfunden, dort werden viele komplexe Inhalte relativ verständlich erklärt.
+Da unser Projekt als 'Full-Stack Webapplikation' bezeichnet werden kann, haben wir Tutorials gesucht, die React-Applicationen und zugehörige Server erklärt und demonstriert haben. Als sehr nützlichen Channel haben wir \texttt{Web Dev Simplified} \cite{site:webdev} empfunden, dort werden viele komplexe Inhalte relativ verständlich erklärt.
 
 \subsubsection{Spezifische Hilfen}
 
 \subsubsection{KI als Hilfsmittel}
+Da die Trainingssets von ChatGPT und anderen KI Tools offensichtlich auch Code Beispiele beinhaltet haben, findet man oft gute Lösungen zu kleineren Problemen beim Programmieren. Unserer Erfahrung nach funktionieren solche KI-generierten Lösungen am besten, wenn man kleine Code Chunks braucht, die einen spezifischen Effekt haben sollen. Wir können an dieser Stelle nicht auf alle Möglichkeiten eingehen, sondern möchten anhand von ein paar Beispielen zeigen, wie wir mit Hilfe von KI kleinere Code Probleme lösen konnten.
+
+\textbf{Beispiel 1} 
+\begin{description}
+    \item[Problem:] Die Aufgaben aus dem Warenkorb werden als Plaintext direkt an den Benutzer geschickt. Wir möchten, dass daraus eine \texttt{.tex} Datei gemacht wird, die dann heruntergeladen werden kann.
+    \item[KI Prompt:] \emph{I would like to take an array of JSONs as an input with keys "content" and "solution" and write the values to a LaTeX file in two sections: "Exercises" and "Solutions". Can this be done on an express server? The express server already exists and has the route "/download" for this purpose.}
+    \item[KI Response:] (\ldots)
+
+    \begin{lstlisting}
+        const express = require('express');
+        const fs = require('fs');
+        const { exec } = require('child_process');
+        
+        const app = express();
+        app.use(express.json()); // To parse JSON bodies
+        
+        app.post('/download', (req, res) => {
+            const exercises = req.body;
+        
+            if (!Array.isArray(exercises)) {
+                return res.status(400).send('Input should be an array of JSON objects');
+            }
+        
+            // Create LaTeX content
+            let latexContent = `
+        \\documentclass{article}
+        \\usepackage{enumitem}
+        \\begin{document}
+        
+        \\section*{Exercises}
+        \\begin{enumerate}[label=\\arabic*.]
+        `;
+        
+            exercises.forEach((exercise, index) => {
+                latexContent += `
+            \\item ${exercise.content}
+        `;
+            });
+        
+            latexContent += `
+        \\end{enumerate}
+        
+        \\section*{Solutions}
+        \\begin{enumerate}[label=\\arabic*.]
+        `;
+        
+            exercises.forEach((exercise, index) => {
+                latexContent += `
+            \\item ${exercise.solution}
+        `;
+            });
+        
+            latexContent += `
+        \\end{enumerate}
+        \\end{document}
+        `;
+        
+            // Write LaTeX content to a .tex file
+            fs.writeFile('output.tex', latexContent, (err) => {
+                if (err) {
+                    return res.status(500).send('Error writing LaTeX file');
+                }
+        
+                // Convert .tex to PDF using pdflatex
+                exec('pdflatex output.tex', (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`exec error: ${error}`);
+                        return res.status(500).send('Error generating PDF');
+                    }
+        
+                    // Send the generated PDF file
+                    res.sendFile(__dirname + '/output.pdf', (err) => {
+                        if (err) {
+                            console.error(`Error sending file: ${err}`);
+                        }
+                        // Clean up files
+                        fs.unlinkSync('output.tex');
+                        fs.unlinkSync('output.pdf');
+                        fs.unlinkSync('output.log');
+                        fs.unlinkSync('output.aux');
+                    });
+                });
+            });
+        });
+        
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+            \end{lstlisting}
+\end{description}
+
+Der ausgegebene Code ist nicht besonders kompliziert, aber beim Arbeiten an einem solchen Projekt erspart eine solche Lösung das Nachschauen in der Dokumentation. Am Ende haben wir nicht den ganzen Code Block verwendet, sondern nur den ersten Teil, wo der \LaTeX-Inhalt generiert wird. Das Herunterladen wurde dann auf die Client-Seite verlegt und die Aufgaben mit Hilfe eines \emph{blobs} zum Download bereit gestellt. 
+
+Dieses Vorgehen ist typisch für unsere Arbeitsweise mit KI Tools: Technische Details und genaue Syntax können an das Tool abgegeben werden, aber wir als Coder müssen wissen, was wir genau erreichen wollen und wie die ausgegeben Antworten uns helfen kann.
