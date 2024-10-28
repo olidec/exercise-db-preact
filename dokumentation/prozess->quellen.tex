@@ -113,7 +113,7 @@ Wir können an dieser Stelle nicht auf alle Möglichkeiten eingehen, sondern mö
 Der ausgegebene Code ist nicht besonders kompliziert, aber beim Arbeiten an einem solchen Projekt erspart eine solche Lösung das Nachschauen in der Dokumentation. Am Ende haben wir nicht den ganzen Code Block verwendet, sondern nur den ersten Teil, wo der \LaTeX-Inhalt generiert wird. Das Herunterladen wurde dann auf die Client-Seite verlegt und die Aufgaben mit Hilfe eines \emph{blobs} zum Download bereit gestellt. 
 
 
-\textbf{Beispiel 2} 
+\textbf{Beispiel 2.1} 
 \begin{description}
     \item[Problem:] 
 Um die Downloadreihenfolge der Aufgaben im Warenkorb zu verändern, sollte man jede Aufgabe in ihrer Position nach oben bzw. nach unten verschieben können. Dazu soll bei jeder Aufgabe im Warenkorb (WarenCard) ein entsprechender Pfeil nach oben bzw. nach unten angezeigt werden. 
@@ -149,50 +149,38 @@ Um die Downloadreihenfolge der Aufgaben im Warenkorb zu verändern, sollte man j
     \end{lstlisting}
 \end{description}
 
+Diese Funktion \texttt{swapItems} ist in der Warenkorb-Komponente implementiert. 
 
 
-\textbf{Beispiel 3} 
+\textbf{Beispiel 2.2} 
 \begin{description}
     \item[Problem:] 
-    Beim Hinzufügen, Editieren oder Suchen von einer neuen Aufgabe soll für 3.5 Sekunden eine rote Warnung oder eine grüne Info angezeigt werden. (siehe Kapitel 3.4.3.1 \texttt{showNotification})
-    \item[KI Prompt:] \emph{Schreibe eine JavaScript-Funktion showNotification, die eine Nachricht und eine Hintergrundfarbe annimmt und diese als temporäre Benachrichtigung auf der Webseite anzeigt. Die Benachrichtigung sollte:
-    Oben zentriert erscheinen und nach 3,5 Sekunden automatisch entfernt werden.
-    Ein weißer Text auf einem farblich variablen Hintergrund haben.
-    Ein padding von 20px, eine Mindestbreite von 300px und eine abgerundete Ecke von 5px aufweisen.
-    In der Mitte des Bildschirms fixiert und zentriert positioniert sein, mit einer Schriftgröße von 18px.}
-    \item[KI Response:] (\ldots)
-    \begin{lstlisting}
+Nun möchte man einen visuellen Effekt beim Vertauschen der Aufgaben haben, dass die Aufgabe während einer halben Sekunden vom dem Bildschirm ausgeblendet wird, bevor Sie tatsächlich verschwindet. 
+\item[KI Prompt:] \emph{ }
 
-        const showNotification = (message, color) => {
-            // Finde den Container fuer die Benachrichtigungen
-            const container = document.getElementById("notification-container");
-        
-            // Erstelle das Benachrichtigungselement
-            const notification = document.createElement("div");
-            notification.textContent = message;
-            notification.style.position = "fixed";
-            notification.style.top = "20px"; // Positioniere die Benachrichtigung am oberen Rand
-            notification.style.left = "50%"; // Zentriere die Benachrichtigung horizontal
-            notification.style.transform = "translateX(-50%)"; // Stelle sicher, dass sie genau zentriert ist
-            notification.style.backgroundColor = color;
-           
-            notification.style.padding = "20px";
-            
-            notification.style.textAlign = "center"; // Zentriere den Text innerhalb der Benachrichtigung
-            notification.style.borderRadius = "5px";
-          
-            notification.style.fontSize = "18px";  
-            // Fuege die Benachrichtigung zum Container hinzu
-            container.appendChild(notification);
-        
-            // Entferne die Benachrichtigung nach 3 Sekunden
-            setTimeout(() => {
-              if (container.contains(notification)) {
-                container.removeChild(notification);
-              }
-            }, 3500);
-          };
+\item[KI Response:] (\ldots)
+\begin{lstlisting}
+const handleSwap = (targetIndex) => {
+    setIsFadingOut(true);
+    setTimeout(() => {
+      swapItems(index, targetIndex);
+      setIsFadingOut(false); //Ruecksetzen des Fade-Out-Zustands
+    }, 600);
+  };
+  return (
+    <div
+      key={id}
+      className={`kartenContainer ${isFadingOut ? "card-fade-out" : ""}`}
+    >
+      <Card  />
+  )
+.card-fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out; /* Passt die Dauer und Art der Animation nach Bedarf an */
+  }
 
-    \end{lstlisting}
+\end{lstlisting}
+
+Die Funktion \texttt{swapItems} ist in der WarenCard-Komponente implementiert.
 \end{description}
 Dieses Vorgehen ist typisch für unsere Arbeitsweise mit KI Tools: Technische Details und genaue Syntax können an das Tool abgegeben werden, aber wir als Coder müssen wissen, was wir genau erreichen wollen und wie die ausgegeben Antworten uns helfen kann. 
