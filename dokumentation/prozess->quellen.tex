@@ -112,4 +112,87 @@ Wir können an dieser Stelle nicht auf alle Möglichkeiten eingehen, sondern mö
 
 Der ausgegebene Code ist nicht besonders kompliziert, aber beim Arbeiten an einem solchen Projekt erspart eine solche Lösung das Nachschauen in der Dokumentation. Am Ende haben wir nicht den ganzen Code Block verwendet, sondern nur den ersten Teil, wo der \LaTeX-Inhalt generiert wird. Das Herunterladen wurde dann auf die Client-Seite verlegt und die Aufgaben mit Hilfe eines \emph{blobs} zum Download bereit gestellt. 
 
+
+\textbf{Beispiel 2} 
+\begin{description}
+    \item[Problem:] 
+Um die Downloadreihenfolge der Aufgaben im Warenkorb zu verändern, sollte man jede Aufgabe in ihrer Position nach oben bzw. nach unten verschieben können. Dazu soll bei jeder Aufgabe im Warenkorb (WarenCard) ein entsprechender Pfeil nach oben bzw. nach unten angezeigt werden. 
+    \item[KI Prompt:] \emph{ Kannst du die Komponente WarenCard so anpassen, dass zwei Buttons mit einem Pfeil nach oben und einem Pfeil nach unten angezeigt werden und bei drücken auf den Button die Aufgabe im Warenkorb (WarenCard) um eine Position nach oben bzw. nach unten verschoben wird. }
+    \item[KI Response:] (\ldots)
+    \begin{lstlisting}
+        const swapItems = (index1, targetIndex) => {
+        if (targetIndex < 0 || targetIndex >= cartItems.value.length) return; // pruefen ob der Index gueltig ist
+            const updatedItems = [...cartItems.value];
+            [updatedItems[index1], updatedItems[targetIndex]] = [
+              updatedItems[targetIndex],
+              updatedItems[index1],
+            ];
+            cartItems.value = updatedItems;
+          };
+          return (
+            <Card/>
+                <div className="swap-buttons">
+                  <button
+                    className="pure-button"
+                    onClick={() => swapItems(index, index - 1)}
+                    disabled={index === 0} // Deaktiviert den Button, wenn es das erste Element ist
+                  >
+                  \textuparrow
+                  </button>
+                  <button
+                    className="pure-button"
+                    onClick={() => swapItems(index, index + 1)}
+                    disabled={index === cartItems.value.length - 1} // Deaktiviert den Button, wenn es das letzte Element ist
+                  >
+                  \textdownarrow
+                  </button>)
+    \end{lstlisting}
+\end{description}
+
+
+
+\textbf{Beispiel 3} 
+\begin{description}
+    \item[Problem:] 
+    Beim Hinzufügen, Editieren oder Suchen von einer neuen Aufgabe soll für 3.5 Sekunden eine rote Warnung oder eine grüne Info angezeigt werden. (siehe Kapitel 3.4.3.1 \texttt{showNotification})
+    \item[KI Prompt:] \emph{Schreibe eine JavaScript-Funktion showNotification, die eine Nachricht und eine Hintergrundfarbe annimmt und diese als temporäre Benachrichtigung auf der Webseite anzeigt. Die Benachrichtigung sollte:
+    Oben zentriert erscheinen und nach 3,5 Sekunden automatisch entfernt werden.
+    Ein weißer Text auf einem farblich variablen Hintergrund haben.
+    Ein padding von 20px, eine Mindestbreite von 300px und eine abgerundete Ecke von 5px aufweisen.
+    In der Mitte des Bildschirms fixiert und zentriert positioniert sein, mit einer Schriftgröße von 18px.}
+    \item[KI Response:] (\ldots)
+    \begin{lstlisting}
+
+        const showNotification = (message, color) => {
+            // Finde den Container fuer die Benachrichtigungen
+            const container = document.getElementById("notification-container");
+        
+            // Erstelle das Benachrichtigungselement
+            const notification = document.createElement("div");
+            notification.textContent = message;
+            notification.style.position = "fixed";
+            notification.style.top = "20px"; // Positioniere die Benachrichtigung am oberen Rand
+            notification.style.left = "50%"; // Zentriere die Benachrichtigung horizontal
+            notification.style.transform = "translateX(-50%)"; // Stelle sicher, dass sie genau zentriert ist
+            notification.style.backgroundColor = color;
+           
+            notification.style.padding = "20px";
+            
+            notification.style.textAlign = "center"; // Zentriere den Text innerhalb der Benachrichtigung
+            notification.style.borderRadius = "5px";
+          
+            notification.style.fontSize = "18px";  
+            // Fuege die Benachrichtigung zum Container hinzu
+            container.appendChild(notification);
+        
+            // Entferne die Benachrichtigung nach 3 Sekunden
+            setTimeout(() => {
+              if (container.contains(notification)) {
+                container.removeChild(notification);
+              }
+            }, 3500);
+          };
+
+    \end{lstlisting}
+\end{description}
 Dieses Vorgehen ist typisch für unsere Arbeitsweise mit KI Tools: Technische Details und genaue Syntax können an das Tool abgegeben werden, aber wir als Coder müssen wissen, was wir genau erreichen wollen und wie die ausgegeben Antworten uns helfen kann. 
