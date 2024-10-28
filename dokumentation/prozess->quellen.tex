@@ -120,9 +120,9 @@ Der ausgegebene Code ist nicht besonders kompliziert, aber beim Arbeiten an eine
 Um die Downloadreihenfolge der Aufgaben im Warenkorb zu verändern, sollte man jede Aufgabe in ihrer Position nach oben bzw. nach unten verschieben können. Dazu soll bei jeder Aufgabe im Warenkorb (WarenCard) ein entsprechender Pfeil nach oben bzw. nach unten angezeigt werden. 
     \item[KI Prompt:] \emph{ Kannst du die Komponente \texttt{WarenCard} so anpassen, dass zwei Buttons mit einem Pfeil nach oben und einem Pfeil nach unten angezeigt werden und bei drücken auf den Button die Aufgabe im Warenkorb (WarenCard) um eine Position nach oben bzw. nach unten verschoben wird. }
     \item[KI Response:] (\ldots)
-    \begin{lstlisting}
-        const swapItems = (index1, targetIndex) => {
-        if (targetIndex < 0 || targetIndex >= cartItems.value.length) return; // pruefen ob der Index gueltig ist
+\begin{lstlisting}
+const swapItems = (index1, targetIndex) => {
+    if (targetIndex < 0 || targetIndex >= cartItems.value.length) return; // pruefen ob der Index gueltig ist
             const updatedItems = [...cartItems.value];
             [updatedItems[index1], updatedItems[targetIndex]] = [
               updatedItems[targetIndex],
@@ -130,8 +130,8 @@ Um die Downloadreihenfolge der Aufgaben im Warenkorb zu verändern, sollte man j
             ];
             cartItems.value = updatedItems;
           };
-          return (
-            <Card/>
+    return (
+         <Card/>
                 <div className="swap-buttons">
                   <button
                     className="pure-button"
@@ -175,14 +175,14 @@ const handleSwap = (targetIndex) => {
     >
       <Card  />
   )
+<CSS-File:>
 .card-fade-out {
     opacity: 0;
-    transition: opacity 0.5s ease-out; /* Passt die Dauer und Art der Animation nach Bedarf an */
-  }
+    transition: opacity 0.5s ease-out; // Passt die Dauer und Art der Animation nach Bedarf an }
 
 \end{lstlisting}
 
-Die Funktion \texttt{swapItems} ist in der WarenCard-Komponente implementiert.
+Die Funktion \texttt{handleSwap} ist in der WarenCard-Komponente implementiert.
 \end{description}
 
 \textbf{Zusammenfassung}
