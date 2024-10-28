@@ -18,7 +18,7 @@ Es handelt sich dabei um folgende Komponenten:
 
 Diese Komponentenhierarchie führt zu einem besseren Überblick über die verschiedenen Funktionen und die Applikation wird in eine saubere und wartbare Codebasis gebracht.
 
-
+\newpage
 \subsubsection{Die Komponentenhierarchie}
 
 \texttt{3.4.1.1 Die AufgabenSuchen-Komponente:}
@@ -69,6 +69,7 @@ Die Aufgabe kann auch in dieser detaillierten Ansicht zum Warenkorb hinzugefügt
 
 \end{itemize}
 
+\newpage
 \texttt{3.4.1.3 Die Warenkorb-Komponente:}
 
 
@@ -170,7 +171,7 @@ Hier werden die Variablen und Funktion (\texttt{showNotification, setCartSearch,
   
 \end{itemize}
 
-
+\newpage
 Folgende Grafik zeigt, an welche Komponenten (und immer auch alle untergeordneten Komponenten (Children)) der SearchContext die verschiedene Variablen und Funktionen weitergibt:
 \begin{figure}[H]
 \centfig{0.3}{all.png}
@@ -281,7 +282,7 @@ const excat = res.response;
 
  Wenn der Server keine Antwort auf die Anfrage gibt (Status ungleich 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung (showNotification) angezeigt und das Array der gesuchten Aufgaben sowie die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion \texttt{setCartSearch} in die Variablen \texttt{cartSearch} gespeichert. (siehe Kapitel 3.4.3.1 SearchContext)
 
-
+\newpage
 \begin{lstlisting}[language=Python]
     if (res.status != 200 || excat.length === 0) {
       showNotification("No exercise matches the search term.", "red");
