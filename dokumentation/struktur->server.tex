@@ -11,7 +11,7 @@ Die einzelnen Routes werden durch den Express-Router verarbeitet. Somit können 
 \subsubsection{Authentifizierung}
 Die Authentifizierung läuft über das package \verb|passport.js|, das die notwendigen Tools für eine Registrierung und Authentifizierung liefert. Die Aufsetzung von \verb|passport.js| erfolgte in unserem Fall über eine sogenannte \verb|LocalStrategy| -- wir verwalten also unsere User selber. Es ist auch möglich bestehende Logins wie zum Beispiel Google oder Facebook in einer Seite auf ähnliche Weise einzubinden. 
 
-Im Code unten ist ein Ausschnitt aus der Konfigurierung zu sehen, wo ein User verifiziert wird: Falls kein User mit dem eingegebenen \verb|username| existiert wird in der Callback-Funtion \verb|false| mitgegeben. Falls alles korrekt ist, kommt der User als Objekt in die Callback-Funktion. Diesen User kann man dann verwenden, um einen lokalen User zu setzen und ihm Berechtigungen zu geben.
+Im Code unten ist ein Ausschnitt aus der Konfigurierung zu sehen, wo ein User verifiziert wird: Falls kein User mit dem eingegebenen \verb|username| existiert wird in der Callback-Funktion \verb|false| mitgegeben. Falls alles korrekt ist, kommt der User als Objekt in die Callback-Funktion. Diesen User kann man dann verwenden, um einen lokalen User zu setzen und ihm Berechtigungen zu geben.
 
 Ebenfalls sehen wir, dass das Passwort nicht im Plaintext verwendet wird, sondern mit dem Package \verb|argon2| 'gehasht' wird. Die Verifizierung läuft dann über einen Vergleich von 'Hashes'. 
 
