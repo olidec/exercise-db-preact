@@ -250,7 +250,7 @@ const loadCat = async () => {
 
 Nun wird die useEffect()-Funktion verwendet damit beim Laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und sie in das Array categories schreibt \\\texttt{(setCategories(cat.value))}. Da sich diese Variable beim laden der Seite verändern könnte, wird sie als useState Variable definiert. 
 Diese useEffect()-Funktion wird nur beim Laden der Seite ausgeführt, da die Liste der Abhängigkeiten (dependencies, leeres Array auf der letzten Zeile) leer bleibt. 
-
+\\
 \begin{lstlisting}
 import { cat, loadCat } from "../signals/categories.js";
 const [categories, setCategories] = useState([]);
