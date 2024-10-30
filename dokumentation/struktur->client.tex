@@ -31,7 +31,7 @@ Diese Komponentenhierarchie führt zu einem besseren Überblick über die versch
 \begin{itemize}
 
 \item Aufgabe (Card):
-Grundbaustein einer Aufgabe, die den Inhalt, die Lösung, der Schwierigkeitsgrad, den Autor, die Kategorie und die Unterkategorie enthält.
+Grundbaustein einer Aufgabe, die den Inhalt, die Lösung, den Schwierigkeitsgrad, die Sprache, den Autor, die Kategorie und die Unterkategorie enthält.
 
 \item Suchergebnis (SearchCard):
 Komponente für die Anzeige eines Suchergebnisses, die eine einzelne Aufgabe (Card) darstellt, mit der Möglichkeit die Aufgabe zum Warenkorb hinzuzufügen bzw. aus dem Warenkorb zu löschen, die Details der Aufgabe (AufgabeDetails) anzeigen zu lassen und, sofern man Autor der Aufgabe ist, die Aufgabe zu editieren.
@@ -45,7 +45,7 @@ Diese Seitenkomponente umfasst zwei Komponenten (FindExSubCat und FindExBySearch
 
 Mit FindExSubCat können Aufgaben nach Kategorien und Unterkategorien über eine API Anfrage \texttt{(askServer(`/api/ex?cat ={selectedCategory}\&subcat=\\{subcategoryName}`,"GET"))} gesucht werden (siehe Kapitel 3.4.5 Zustandsmanagement für die Komponente FindExSubCat).
 
-Mit FindExBySearchText kann eine Aufgabe nach einer textbasierten Suchanfrage (inputValue) gesucht werden, mit der API Anfrage \texttt{askServer(`/api/ex?search=\\\${inputValue}`,"GET")}.
+Mit FindExBySearchText kann eine Aufgabe mit einer textbasierten Suchanfrage (inputValue) gesucht werden, über die API Anfrage \texttt{askServer(`/api/ex?search=\\\${inputValue}`,"GET")}.
 
 Beide Male werden die anzuzeigenden Aufgaben in der Komponente SearchKorb angezeigt.
 
@@ -81,7 +81,7 @@ Die Aufgabe kann auch in dieser detaillierten Ansicht zum Warenkorb hinzugefügt
 \begin{itemize}
 
 \item Aufgabe im Warenkorb (WarenCard):
-Eine Aufgabe (Card) im Warenkorb kann gelöscht werden und ihre Position mit der vorhergehenden oder nachfolgenden Aufgabe vertauscht werden, um die richtige Reihenfolge für das Herunterladen der Aufgaben zu erhalten. 
+Eine Aufgabe (Card) im Warenkorb kann gelöscht werden und ihre Position mit der vorhergehenden oder nachfolgenden Aufgabe vertauscht werden, um die richtige Reihenfolge für das Herunterladen der Aufgaben zu erhalten (siehe Kapitel 4.3.2, Beispiel 2)
 
 
 \item Warenkorb (Seitenkomponente):
@@ -99,7 +99,7 @@ Die einzelnen Aufgaben (WarenCard) werden untereinander im Warenkorb angezeigt u
 \begin{itemize}
 
 \item{Formularfelder einer Aufgabe (ExerciseForm)}:
-Diese Komponente umfasst Formularfelder für die Eingabe von Sprache, Schwierigkeitsgrad, Kategorie, Unterkategorie, Aufgabentext und Lösung.
+Diese Komponente umfasst Formularfelder für die Eingabe von Sprache, Schwierigkeitsgrad, Kategorie, Unterkategorie, Aufgabentext und Lösung einer Aufgabe.
 
 \item ExForm (Seitenkomponente): :
 Diese Komponente ermöglicht das Erstellen neuer Aufgaben. Über eine API-Anfrage \texttt{(askServer(/api/ex, "POST", ex))} werden die Daten an das Backend gesendet und die Aufgabe wird, sofern alle Formularfelder richtig ausgefüllt sind, in die Datenbank hinzugefügt.
@@ -115,42 +115,24 @@ Diese Komponente ermöglicht das Erstellen neuer Aufgaben. Über eine API-Anfrag
 
 \begin{itemize}
 \item{EditForm} (Seitenkomponente):
-Die Sprache, der Schwierigkeitsgrad, die Kategorie, die Unterkategorie, der Aufgabentext und die Lösungen können über Formularfelder aktualisiert werden, sofern man Autor der Aufgabe ist.
+Die Sprache, der Schwierigkeitsgrad, die Kategorie, die Unterkategorie, der Aufgabentext und die Lösung können über Formularfelder aktualisiert werden, sofern man Autor der Aufgabe ist.
 Die API Anfrage \texttt{askServer("/api/ex", "PUT", exWithCategory)} aktualisiert die Aufgabe in der Datenbank.
 
 
 \end{itemize}
-\subsubsection{Weitere Seitenkomponenten}
 
-\begin{itemize}
-\item Startseite-Komponente:
- Die Startseite (Landingpage) zeigt eine zusammenfassende und einladende Beschreibung der Webseite an. Über einen Registrieren/Login-Button gelangt man zur Loginseite. Hat man noch keinen Login, kann man über einen Link zur Registrierungsseite wechseln.
-
-\item Login-Komponente:
-Diese Login-Komponente ermöglicht es dem Benutzer, seinen Benutzernamen und sein Passwort in ein Formular einzugeben. Die API Anfrage \texttt{(askServer("/login", "POST", {username,password}))} sendet die Daten an das Backend.
-Beim Absenden des Formulars wird ein Cookie mit den Authentifizierungsdaten gesendet. Dieses Cookie wird in der Anwendung gespeichert und geprüft, um den Zugang zu geschützten Bereichen der Anwendung zu gewähren.
-
-
-\item Registrieren-Komponente:
-Die Registrieren-Komponente ermöglicht es dem Benutzer über die Email Adresse, den Benutzernamen und sein Passwort, einen neuen Benutzer anzulegen. Die API Anfrage \texttt{(askServer("/register", "POST", user))} sendet die Daten an das Backend.
-
-\item Navigations-Komponente:
-Diese Komponente stellt die Hauptnavigation der Anwendung bereit und ermöglicht den Zugriff auf die verschiedenen Seiten und Funktionen der App, darunter die Startseite (/), das Hinzufügen von Aufgaben (/add), das Finden von Aufgaben (/find), den Warenkorb (/warenkorb), Infos zur Webseite (/about), die Registrierung (/register) und der Login (/login).
-
-
-\end{itemize}
 
 
 
 \subsubsection{Zustandsmanagement mit useContext } 
 
-Ein effektives Zustandsmanagement ist entscheidend für die Verwaltung der Anwendungsdaten sowie der verschiedenen UI-Zustände, wie Benutzereingaben oder geladene Daten (gesuchte Aufgaben). Preact bietet uns hierfür mehrere Optionen: Für lokale Zustände innerhalb einzelner Komponenten nutzen wir die useState und useEffect Hooks sowie Signals (Kapitel 3.4.4), die eine einfache und reaktive Verwaltung dieser Zustände ermöglichen. 
+Ein effektives Zustandsmanagement ist entscheidend für die Verwaltung der Anwendungsdaten sowie der verschiedenen UI-Zustände, wie Benutzereingaben oder geladene Daten (gesuchte oder gespeicherte Aufgaben). Preact bietet uns hierfür mehrere Optionen: Für lokale Zustände innerhalb einzelner Komponenten nutzen wir die useState und useEffect Hooks sowie Signals (Kapitel 3.4.3), die eine einfache und reaktive Verwaltung dieser Zustände ermöglichen. 
 
-Für komplexe Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten und deren Unterkomponenten (Children) gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Mit \texttt{useContext} können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Daten oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht.
+Für komplexe Szenarien, in denen ein globaler Zustand erforderlich ist – also Daten, die von mehreren Komponenten und deren Unterkomponenten (Children) gleichzeitig genutzt werden – greifen wir auf die useContext API zurück. Mit \texttt{useContext} können wir eine zentrale Datenquelle erstellen, die es verschiedenen Komponenten ermöglicht, auf dieselben Variablen oder Funktionen zuzugreifen und diese zu aktualisieren, was die Anwendung sowohl leistungsfähig als auch flexibel macht.
 
 Insgesamt wurde zwei zentrale Datenquellen (Kontext-Provider), SearchContext und WarenkorbContext, erstellt. 
 
-\texttt{3.4.3.1 Der SearchContext}
+\texttt{3.4.2.1 Der SearchContext}
 
 Der SearchContext stellt sicher, dass wichtige Zustandsinformationen wie Suchergebnisse, ausgewählte Kategorien und Benachrichtigungen zentral gespeichert und zwischen verschiedenen Komponenten geteilt werden können. 
 
@@ -159,7 +141,7 @@ Der SearchContext stellt sicher, dass wichtige Zustandsinformationen wie Sucherg
 const { showNotification, cartSearch, setCartSearch, searchText, categor, deleteCard } = useContext(SearchContext);
  \end{lstlisting}  
  
-Hier werden die Variablen und Funktionen (\texttt{showNotification, setCartSearch, cartSearch, searchText, categor und deleteCard}) aus dem SearchContext abgerufen, die als Signals (Kapitel 3.4.4) implementiert sind und im localStorage des Browsers gespeichert werden, da diese Daten zwischen verschiedenen Komponenten geteilt werden müssen.
+Hier werden die Variablen und Funktionen (\texttt{showNotification, setCartSearch,\\ cartSearch, searchText, categor und deleteCard}) aus dem SearchContext abgerufen, die als Signals (Kapitel 3.4.3) implementiert sind und im localStorage des Browsers gespeichert, da diese Daten zwischen verschiedenen Komponenten geteilt werden müssen.
 
 \begin{itemize}
   \item \texttt{showNotification} speichert und verwaltet Benachrichtigungen oder Fehlermeldungen, die beim Bearbeiten, Eingeben oder Suchen von Aufgaben auftreten und zeigt sie in roter oder grüner Farbe für eine kurze Zeit an.
@@ -171,17 +153,17 @@ Hier werden die Variablen und Funktionen (\texttt{showNotification, setCartSearc
   
 \end{itemize}
 
-\newpage
-Folgende Grafik zeigt, an welche Komponenten (und immer auch alle untergeordneten Komponenten (Children)) der SearchContext die verschiedenen Variablen und Funktionen weitergibt:
+
+Folgende Grafik zeigt, an welche Komponenten (und auch alle in der Hierarchie untergeordneten Komponenten (Children)) der SearchContext die verschiedenen Variablen und Funktionen weitergibt:
 \begin{figure}[H]
 \centfig{0.3}{all.png}
 \caption{Komponenten mit Zugriff auf den SearchContext \cite{fig:all}}
 \end{figure}
 
 
-\texttt{3.4.3.2 Der WarenkorbContext}
+\texttt{3.4.2.2 Der WarenkorbContext}
 
-Der WarenkorbContext stellt sicher, dass Zustandsinsformationen zwischen dem Warenkorb und dem Anzeigen der gesuchten Aufgaben zentral gespeichert und zwischen Komponenten geteilt werden können.
+Der WarenkorbContext stellt sicher, dass Zustandsinsformationen zwischen dem Warenkorb und dem Anzeigen der gesuchten Aufgaben zentral gespeichert und zwischen verschiedenen Komponenten geteilt werden können.
 
 \begin{lstlisting}[language=Python]
 const { cartItems, addToKorb, handleDelete, getIndex, getCartCount } = useContext(WarenkorbContext);
@@ -191,12 +173,11 @@ const { cartItems, addToKorb, handleDelete, getIndex, getCartCount } = useContex
 
   \item \texttt{addToKorb} speichert die Aufgabe in der Warenkorb-Liste.
   \item \texttt{handleDelete} entfernt eine Aufgabe aus der Warenkorb-Liste.
-  \item  \texttt{cartItems} speichert die ausgewählten Aufgaben für den Warenkorb in der Warenkorb-Liste und verwaltet diese.
+  \item  \texttt{cartItems} Variable, die die ausgewählten Aufgaben für den Warenkorb in der Warenkorb-Liste speichert und verwaltet.
   \item \texttt{getIndex} gibt die Position einer Aufgabe einer bestimmten \texttt{id} in der Warenkorb-Liste an und speichert sie in der Variablen \texttt{index}. (Ist der Index -1, ist die Aufgabe nicht im Warenkorb und der Button addToKorb wird angezeigt.)
   \item \texttt{getCartCount} gibt die Anzahl der gespeicherten Aufgaben in der Warenkorb-Liste an.
  \end{itemize}
 
- Folgende Grafik zeigt, an welche Komponenten (und immer auch alle untergeordneten Komponenten (Children)) der WarenkorbContext die verschiedenen Variablen und Funktionen weitergibt:
  \begin{figure}[ht]
  \centfig{0.3}{all2.png}
  \caption{Komponenten mit Zugriff auf den WarenkorbContext \cite{fig:all2}}
@@ -230,7 +211,7 @@ const { cartItems, addToKorb, handleDelete, getIndex, getCartCount } = useContex
    
  
  
-Zusätzlich bietet Preact die Möglichkeit, Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
+Zusätzlich bietet Preact die Möglichkeit Signals zu verwenden, die eine noch feinere Kontrolle über den reaktiven Datenfluss bieten.
 Signals sind reaktive Zustands-Container, die es ermöglichen, Zustandsänderungen automatisch zu verfolgen und so Zustände innerhalb der Komponente und zwischen den Komponenten zu aktualisieren. Komponenten, die ein Signal lesen, werden automatisch neu gerendert, sobald sich das Signal ändert.
  
 
@@ -248,9 +229,9 @@ const loadCat = async () => {
 
 \end{lstlisting}
 
-Nun wird die useEffect()-Funktion verwendet damit beim Laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und sie in das Array categories schreibt \\\texttt{(setCategories(cat.value))}. Da sich diese Variable beim laden der Seite verändern könnte, wird sie als useState Variable definiert. 
+Nun wird die useEffect()-Funktion verwendet damit beim Laden der Seite die loadCat()-Funktion die Kategorien vom Server lädt und sie in das Array categories schreibt \\\texttt{(setCategories(cat.value))}. Da sich diese Variable beim Laden der Seite verändern könnte, wird sie als useState Variable definiert. 
 Diese useEffect()-Funktion wird nur beim Laden der Seite ausgeführt, da die Liste der Abhängigkeiten (dependencies, leeres Array auf der letzten Zeile) leer bleibt. 
-\\
+\newpage
 \begin{lstlisting}
 import { cat, loadCat } from "../signals/categories.js";
 const [categories, setCategories] = useState([]);
@@ -280,7 +261,7 @@ const excat = res.response;
     
 \end{lstlisting}
 
- Wenn der Server keine Antwort auf die Anfrage gibt (Status ungleich 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung (showNotification) angezeigt und das Array der gesuchten Aufgaben sowie die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion \texttt{setCartSearch} in die Variablen \texttt{cartSearch} gespeichert. (siehe Kapitel 3.4.3.1 SearchContext)
+ Wenn der Server keine Antwort auf die Anfrage gibt (Status ungleich 200) oder keine Übungen zurückgibt, wird eine Benachrichtigung (showNotification) angezeigt und das Array der gesuchten Aufgaben sowie die Kategorieauswahl zurückgesetzt. Andernfalls wird die Liste der gefundenen Übungen mit der Funktion \texttt{setCartSearch} in die Variablen \texttt{cartSearch} gespeichert. (siehe Kapitel 3.4.2.1 SearchContext)
 
 \newpage
 \begin{lstlisting}[language=Python]
@@ -335,7 +316,7 @@ const onSubcategoryClick = async (subcategoryName) => {
     
 \end{lstlisting}
 
- Ähnlich wie bei der Kategorieauswahl wird eine Benachrichtigung angezeigt und die Unterkategorieauswahl zurückgesetzt, wenn keine passenden Übungen gefunden werden. Ansonsten wird die Liste der Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe Kapitel 3.4.3.1 SearchContext).
+ Ähnlich wie bei der Kategorienauswahl wird eine Benachrichtigung angezeigt und die Unterkategorieauswahl zurückgesetzt, wenn keine passenden Übungen gefunden werden. Ansonsten wird die Liste der Übungen mit der Funktion \texttt{setCartSearch} gespeichert. (siehe Kapitel 3.4.2.1 SearchContext).
 
 
 \begin{lstlisting}[language=Python]
