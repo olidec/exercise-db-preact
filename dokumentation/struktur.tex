@@ -1,0 +1,27 @@
+\section{Struktur der Webapplikation}
+
+In der folgenden Graphik sehen wir schematisch die Struktur unserer Webapplikation: Das Gesamte läuft in einem Docker-Container. Ein Proxy (ein zwischengeschalteter Server) vermittelt zwischen dem User und den verschiedenen Bereichen des Docker-Containers. Anfragen werden an den Client gesendet, der Client kommuniziert dann via Server mit der Datenbank.
+\begin{figure}[ht]
+    \centfig{0.6}{docker-container.png}
+    \caption{Übersicht über den Docker-Container \cite{fig:docker}}
+\end{figure}
+
+\subsection{Technische Details}
+
+Der Docker-Container läuft auf einem Linode-Server mit der IP-Adresse 172.104.225.119. Auf diesem Server ist eine Ubuntu-Instanz geladen, die für die notwendige Infrastruktur sorgt. Damit man via regulärer URL auf den Server zugreifen kann, muss man in den Einstellungen einen DNS (Domain Name Server) Eintrag erstellen lassen. Damit lässt sich dann von einer Plaintext URL auf unsere Webapplikation zugreifen. 
+
+Die Subdomains \verb|server.letstalkaboutx.ch| und \verb|prisma.letstalkaboutx.ch| haben wir auch registriert. Damit lassen sich die Anfragen an den Server (Login etc.) und direkten Zugriff auf die Datenbank realisieren.
+
+Die Zertifikation läuft über selbstgezeichnete Zertifikate, die von \verb|certbot| automatisch erstellt werden. Somit kann immer via \verb|https| auf die Applikation zugegriffen werden.
+
+Das Aufsetzen des externen Servers wird in der Datei \verb|README.md| beschrieben.
+
+
+
+\input{struktur->docker.tex}
+
+\input{struktur->server.tex}
+
+\input{struktur->client.tex}
+
+\input{struktur->datenbank.tex}

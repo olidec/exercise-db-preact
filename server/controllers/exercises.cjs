@@ -8,7 +8,6 @@ const prisma = new PrismaClient.PrismaClient();
 
 async function getRecentExercises() {
     try {
-
         const exercises = await prisma.exercise.findMany({
         take: 5,
         orderBy: {

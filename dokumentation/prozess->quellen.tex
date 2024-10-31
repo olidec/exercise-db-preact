@@ -1,0 +1,203 @@
+\subsection{Quellen und KI}
+
+Das Erlernen der notwendigen Fertigkeiten und Wissen, um dieses Projekt zu erstellen, brauchte viel Zeit und einige Hilfsmittel. Neben allgemeinen Tutorials und Webanleitungen, waren auch generative KIs von grosser Hilfe beim Verwirklichen dieser Arbeit. Da Code sehr strukturiert ist und es offensichtlich viele Code Beispiele in den Trainingssets hat, war KI-generierter Code manchmal ein äusserst effizientes Hilfsmittel.
+
+Im folgenden Abschnitt werden wir ein paar der wichtigsten Webseiten und Hilfsmittel, die wir verwendet haben, vorstellen.
+
+\subsubsection{Die Basics} 
+Da unser Projekt als 'Full-Stack Webapplikation' bezeichnet werden kann, haben wir Tutorials gesucht, die React-Applikationen und zugehörige Server erklärt und demonstriert haben. Als sehr nützlichen Channel haben wir \texttt{Web Dev Simplified} \cite{site:webdev} empfunden, dort werden viele komplexe Inhalte relativ verständlich erklärt.
+
+Andere Seiten, auf die wir immer wieder zurückgegriffen haben, waren 
+\begin{itemize}
+    \item Dokumentation von Preact\cite{site:preact}
+    \item JavaScript Dokumentationsseite von Mozilla\cite{site:js}
+    \item Dokumentationsseite der Prisma ORM\cite{site:prisma}
+    \item PureCSS Dokumentation\cite{site:pure}
+\end{itemize}
+
+\subsubsection{KI als Hilfsmittel}
+Da die Trainingssets von ChatGPT und anderen KI-Tools offensichtlich auch Code Beispiele beinhaltet haben, findet man oft gute Lösungen zu kleineren Problemen beim Programmieren. Unserer Erfahrung nach funktionieren solche KI-generierten Lösungen am besten, wenn man kleine Code Chunks braucht, die einen spezifischen Effekt haben sollen. Es ist auch hilfreich, wenn man sehr präzise die Anfragen formuliert und gewisse Details schon integriert.
+
+Wir können an dieser Stelle nicht auf alle Möglichkeiten eingehen, sondern möchten anhand von ein paar Beispielen zeigen, wie wir mit Hilfe von KI kleinere Code Probleme lösen konnten.
+
+\textbf{Beispiel 1} 
+\begin{description}
+    \item[Problem:] Die Aufgaben aus dem Warenkorb werden als Plaintext direkt an den Benutzer geschickt. Wir möchten, dass daraus eine \texttt{.tex} Datei gemacht wird, die dann heruntergeladen werden kann.
+    \item[KI Prompt:] \emph{I would like to take an array of JSONs as an input with keys ``content'' and ``solution'' and write the values to a LaTeX file in two sections: ``Exercises'' and ``Solutions''. Can this be done on an express server? The express server already exists and has the route ``/download'' for this purpose.}
+    \newpage
+    \item[KI Response:] (\ldots)
+
+    \begin{lstlisting}
+        const express = require('express');
+        const fs = require('fs');
+        const { exec } = require('child_process');
+        
+        const app = express();
+        app.use(express.json()); // To parse JSON bodies
+        
+        app.post('/download', (req, res) => {
+            const exercises = req.body;
+        
+            if (!Array.isArray(exercises)) {
+                return res.status(400).send('Input should be an array of JSON objects');
+            }
+        
+            // Create LaTeX content
+            let latexContent = `
+        \\documentclass{article}
+        \\usepackage{enumitem}
+        \\begin{document}
+        
+        \\section*{Exercises}
+        \\begin{enumerate}[label=\\arabic*.]
+        `;
+        
+            exercises.forEach((exercise, index) => {
+                latexContent += `
+            \\item ${exercise.content}
+        `;
+            });
+        
+            latexContent += `
+        \\end{enumerate}
+        
+        \\section*{Solutions}
+        \\begin{enumerate}[label=\\arabic*.]
+        `;
+        
+            exercises.forEach((exercise, index) => {
+                latexContent += `
+            \\item ${exercise.solution}
+        `;
+            });
+        
+            latexContent += `
+        \\end{enumerate}
+        \\end{document}
+        `;
+        
+            // Write LaTeX content to a .tex file
+            fs.writeFile('output.tex', latexContent, (err) => {
+                if (err) {
+                    return res.status(500).send('Error writing LaTeX file');
+                }
+        
+                // Convert .tex to PDF using pdflatex
+                exec('pdflatex output.tex', (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`exec error: ${error}`);
+                        return res.status(500).send('Error generating PDF');
+                    }
+        
+                    // Send the generated PDF file
+                    res.sendFile(__dirname + '/output.pdf', (err) => {
+                        if (err) {
+                            console.error(`Error sending file: ${err}`);
+                        }
+                        // Clean up files
+                        fs.unlinkSync('output.tex');
+                        fs.unlinkSync('output.pdf');
+                        fs.unlinkSync('output.log');
+                        fs.unlinkSync('output.aux');
+                    });
+                });
+            });
+        });
+        
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+            \end{lstlisting}
+\end{description}
+
+Der ausgegebene Code ist nicht besonders kompliziert, aber beim Arbeiten an einem solchen Projekt erspart eine solche Lösung das Nachschauen in der Dokumentation. Am Ende haben wir nicht den ganzen Code Block verwendet, sondern nur den ersten Teil, wo der \LaTeX-Inhalt generiert wird. Das Herunterladen wurde dann auf die Client-Seite verlegt und die Aufgaben mit Hilfe eines \emph{blobs} zum Download bereit gestellt. 
+
+
+\textbf{Beispiel 2.1} 
+\begin{description}
+    \item[Problem:] 
+Um die Downloadreihenfolge der Aufgaben im Warenkorb zu verändern, sollte man jede Aufgabe in ihrer Position nach oben bzw. nach unten verschieben können. Dazu soll bei jeder Aufgabe im Warenkorb (WarenCard) ein entsprechender Pfeil nach oben bzw. nach unten angezeigt werden. 
+    \item[KI Prompt:] \emph{ Kannst du die Komponente \texttt{Warenkorb} so anpassen, dass zwei Buttons mit einem Pfeil nach oben und einem Pfeil nach unten angezeigt werden und bei Drücken des Buttons die Aufgabe im Warenkorb (WarenCard) um eine Position nach (Pfeil nach oben) oben bzw. nach unten (Pfeil nach unten) verschoben wird. }
+    \item[KI Response:] (\ldots)
+\begin{lstlisting}
+const swapItems = (index1, targetIndex) => {
+    if (targetIndex < 0 || targetIndex >= cartItems.value.length) return; // pruefen ob der Index gueltig ist
+            const updatedItems = [...cartItems.value];
+            [updatedItems[index1], updatedItems[targetIndex]] = [
+              updatedItems[targetIndex],
+              updatedItems[index1],
+            ];
+            cartItems.value = updatedItems;
+          };
+    return (
+         <Card.../>
+                <div className="swap-buttons">
+                  <button
+                    className="pure-button"
+                    onClick={() => swapItems(index, index - 1)}
+                    disabled={index === 0} // Deaktiviert den Button, wenn es das erste Element ist
+                  >
+                  \textuparrow
+                  </button>
+                  <button
+                    className="pure-button"
+                    onClick={() => swapItems(index, index + 1)}
+                    disabled={index === cartItems.value.length - 1} // Deaktiviert den Button, wenn es das letzte Element ist
+                  >
+                  \textdownarrow
+                  </button>)
+//<CSS-File:>
+.swap-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.swap-buttons .pure-button {
+  padding: 5px;
+}
+
+
+    \end{lstlisting}
+\end{description}
+
+Die Funktion \texttt{swapItems} ist in der WarenCard-Komponente implementiert. 
+
+
+\textbf{Beispiel 2.2} 
+\begin{description}
+    \item[Problem:] 
+Nun möchte man einen visuellen Effekt beim Vertauschen der Aufgaben haben, dass die Aufgabe während einer halben Sekunden vom Bildschirm ausgeblendet wird, bevor Sie tatsächlich verschwindet. 
+\item[KI Prompt:] \emph{Passe die Funktion \texttt{swapItems} so an, dass beim Ausführen der Funktion die zu vertauschende Aufgabe während einer halben Sekunde ausgeblendet wird und erst dann die Aufgaben ihre Position um 1 nach oben bzw. nach unten verschieben. }
+
+\item[KI Response:] (\ldots)
+\begin{lstlisting}
+const [isFadingOut, setIsFadingOut] = useState(false); // Zustand, um das Ausblenden zu steuern
+const handleSwap = (targetIndex) => {
+    setIsFadingOut(true);
+    setTimeout(() => {
+    swapItems(index, targetIndex);
+    setIsFadingOut(false); //Ruecksetzen des Fade-Out-Zustands
+    }, 500);
+  };
+  return (
+    <div
+      key={id}
+      className={`kartenContainer ${isFadingOut ? "card-fade-out" : ""}`}
+    >
+      <Card.../>
+      <....../>
+  )
+//<CSS-File:>
+.card-fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out; // Passt die Dauer und Art der Animation nach Bedarf an }
+
+\end{lstlisting}
+
+Die Funktion \texttt{handleSwap} ist in der WarenCard-Komponente implementiert und die Funktion \texttt{swapItems} wird beim Button-Click durch die Funktion \texttt{handleSwap} ersetzt.
+\end{description}
+
+\textbf{Zusammenfassung}
+
+Dieses Vorgehen ist typisch für unsere Arbeitsweise mit KI Tools: Technische Details und genaue Syntax können an das Tool abgegeben werden, aber wir als Coder müssen wissen, was wir genau erreichen wollen und wie die ausgegeben Antworten uns helfen können. 

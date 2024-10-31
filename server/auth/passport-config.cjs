@@ -10,7 +10,7 @@ const localStrategy = new LocalStrategy(
   verify
 );
 /**
- * VErify function for passport
+ * Verify function for passport
  */
 async function verify(username, password, callback) {
   try {

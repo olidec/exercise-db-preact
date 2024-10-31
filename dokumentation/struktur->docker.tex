@@ -1,0 +1,15 @@
+\subsection{Die Applikation}
+
+Wenn wir aus der oberen Graphik nur den inneren Teil betrachten, dann können wir ein wenig näher auf die Funktionsweise unserer Webapplikation eingehen. Im oberen Bild sehen wir beispielhaft eine Anfrage vom Client an den Server, der dann wiederum bei der Datenbank anfragt.
+
+\begin{figure}
+    \centfig{0.6}{web-app-workflow.png}
+    \caption{Ein möglicher Workflow durch die Applikation \cite{fig:workflow}}
+\end{figure}
+Ein möglicher Ablauf wäre also:
+\begin{enumerate}
+    \item Client will die Aufgaben aus dem Warenkorb als \verb|.tex| Datei herunterladen und schickt dazu eine Liste von Aufgabennummern.
+    \item Server verlangt von der Datenbank die Aufgaben, die der Client wünscht.
+    \item Datenbank liefert die gewünschten Aufgaben an den Server.
+    \item Server verarbeitet die Aufgaben zu einer \verb|.tex| Datei und liefert diese an den Client zurück.
+\end{enumerate}
