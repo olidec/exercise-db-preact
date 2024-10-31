@@ -27,7 +27,7 @@ Für das Backend, das oft eine API bereitstellt, können diese Operationen spezi
 
 •	DELETE /api/ex/:id 	für das Löschen einer Aufgabe (Delete)
 
-•	GET /api/ex/search/:serachText	für das Abrufen von Aufgaben nach Suchbegriffen (Read)
+•	GET /api/ex/search/:searchText	für das Abrufen von Aufgaben nach Suchbegriffen (Read)
 
 •	GET /api/ex/category/:category	für das Abrufen von Aufgaben nach Kategorien (Read)
 
@@ -37,7 +37,7 @@ Für das Backend, das oft eine API bereitstellt, können diese Operationen spezi
 
 
 
-\subsection{Authentifizierug und Autorisierung}
+\subsection{Authentifizierung und Autorisierung}
 Argon2 nimmt als Eingabe das Passwort des Benutzers, einen Salz (eine zufällig generierte Zeichenfolge, die jedem Passwort-Hash hinzugefügt wird, um die Einzigartigkeit zu gewährleisten), und mehrere Parameter, die die Komplexität des Hashing-Vorgangs steuern (wie Speicherbedarf, Rechenzeit und Parallelität).Basierend auf diesen Eingaben führt Argon2 eine Reihe von komplexen, rechenintensiven Operationen durch. Diese Operationen sind so gestaltet, dass sie sowohl eine hohe Menge an CPU-Ressourcen als auch Speicher benötigen. Dies macht es sehr schwierig für Angreifer, Passwörter zu erraten oder Brute-Force-Angriffe durchzuführen, selbst wenn sie über leistungsfähige Hardware verfügen.
 
 Das Ergebnis des Prozesses ist ein Passwort-Hash, der in der Datenbank gespeichert wird. Da der gleiche Prozess (mit dem gleichen Salz und denselben Parametern) immer denselben Hash erzeugt, kann das System das vom Benutzer bei der Anmeldung eingegebene Passwort überprüfen, ohne das eigentliche Passwort kennen oder speichern zu müssen. Sicherheit gegen Brute-Force-Angriffe: Die rechen- und speicherintensive Natur von Argon2 macht es teuer und zeitaufwändig, Hashes zu knacken. Dies schützt gegen Angriffe, die darauf abzielen, Passwörter durch Ausprobieren vieler möglicher Kombinationen (Brute-Force) zu erraten.
@@ -50,7 +50,7 @@ Wir führten umfangreiche Tests durch, einschließlich Unit-Tests und Benutzerak
 Nach Abschluss der Entwicklungsarbeiten wurde die Anwendung auf einer geeigneten Hosting-Plattform bereitgestellt und auf ihre Funktionalität in der Produktionsumgebung überprüft.
 
 
-\section{Ergbenisse}
+\section{Ergebnisse}
 \subsection{Allgemeines}
 
 Die entwickelte Webanwendung bietet Mathematiklehrern eine Plattform, auf der sie Aufgaben erstellen, durchsuchen, kommentieren und verwalten können. Zu den wichtigsten Funktionen gehören:

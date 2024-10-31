@@ -9,7 +9,7 @@ Der Server erfüllt im Wesentlichen zwei Hauptaufgaben:
 Die einzelnen Routes werden durch den Express-Router verarbeitet. Somit können diese alle in separaten Dateien gespeichert werden und die Dateien werden übersichtlicher.
 
 \subsubsection{Authentifizierung}
-Die Authentifizierung läuft über das package \verb|passport.js|, das die notwendigen Tools für eine Registrierung und Authentifizierung liefert. Die Aufsetzung von \verb|passport.js| erfolgte in unserem Fall über eine sogenannte \verb|LocalStrategy| -- wir verwalten also unsere User selber. Es ist auch möglich bestehende Logins wie zum Beispiel Google oder Facebook in einer Seite auf ähnliche Weise einzubinden. 
+Die Authentifizierung läuft über das package \verb|passport.js|, das die notwendigen Tools für eine Registrierung und Authentifizierung liefert. Das Aufsetzen von \verb|passport.js| erfolgte in unserem Fall über eine sogenannte \verb|LocalStrategy| -- wir verwalten also unsere User selber. Es ist auch möglich bestehende Logins wie zum Beispiel Google oder Facebook in einer Seite auf ähnliche Weise einzubinden. 
 
 Im Code unten ist ein Ausschnitt aus der Konfigurierung zu sehen, wo ein User verifiziert wird: Falls kein User mit dem eingegebenen \verb|username| existiert, wird in der Callback-Funktion \verb|false| mitgegeben. Falls alles korrekt ist, kommt der User als Objekt in die Callback-Funktion. Diesen User kann man dann verwenden, um einen lokalen User zu setzen und ihm Berechtigungen zu geben.
 
@@ -52,7 +52,7 @@ Der Server hat ebenfalls die Aufgabe mit der Datenbank zu kommunizieren. Hier la
 \begin{enumerate}
     \item Aufgaben erstellen (Create)
     \item Aufgaben suchen resp. anschauen (Read)
-    \item Eigene\footnote{Sowohl beim Editieren, wie auch beim Löschen von Aufagben wird die Identität des Users noch einmal auf dem Server verifiziert. Somit kann man nicht durch lokale Anpassung des Users Aufgaben in der Datenbank verändern.} Aufgaben editieren (Update)
+    \item Eigene\footnote{Sowohl beim Editieren, wie auch beim Löschen von Aufgaben wird die Identität des Users noch einmal auf dem Server verifiziert. Somit kann man nicht durch lokale Anpassung des Users Aufgaben in der Datenbank verändern.} Aufgaben editieren (Update)
     \item Eigene Aufgaben löschen (Delete)
 \end{enumerate}
 
