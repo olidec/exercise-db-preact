@@ -104,36 +104,54 @@
 \section{Struktur der Webapplikation}
 \subsection{Architekturübersicht}
 \begin{frame}{Architekturübersicht}
-    \centfig{0.5}{docker-container.png}
+    \centfig{0.7}{docker-container.png}
+    % \begin{itemize}
+    %     \item Anwendung läuft in einem Docker-Container.
+    %     \item Proxy vermittelt zwischen Client, Server und Datenbank.
+    %     \item Sicherheit: HTTPS über selbstsignierte Zertifikate.
+    % \end{itemize}
+\end{frame}
+
+\begin{frame}{Architekturübersicht}
+    % \centfig{0.5}{docker-container.png}
     \begin{itemize}
-        \item Anwendung läuft in einem Docker-Container.
-        \item Proxy vermittelt zwischen Client, Server und Datenbank.
-        \item Sicherheit: HTTPS über selbstsignierte Zertifikate.
+        \item<1-> Anwendung läuft in einem Docker-Container.
+        \item<2-> Proxy vermittelt zwischen Client, Server und Datenbank.
+        \item<3-> Sicherheit: HTTPS über selbstsignierte Zertifikate.
     \end{itemize}
 \end{frame}
 
 \subsection{Technische Details}
 \begin{frame}{Technische Details}
     \begin{itemize}
-        \item \textbf{Server:}
+        \item<1-> \textbf{Server:}
         \begin{itemize}
             \item Express.js zur Verarbeitung von Anfragen.
             \item Passport.js für Authentifizierung.
             \item Prisma ORM für Datenbankoperationen.
         \end{itemize}
-        \item \textbf{Datenbank:} PostgreSQL mit Prisma ORM.
-        \item \textbf{Frontend:} React/Preact mit Komponentenhierarchie.
-        \item \textbf{Deployment:} Docker-Container auf einem Linode-Server.
+        \item<2-> \textbf{Datenbank:} PostgreSQL mit Prisma ORM.
+        \item<3-> \textbf{Frontend:} React/Preact mit Komponentenhierarchie.
+        \item<4-> \textbf{Deployment:} Docker-Container auf einem Linode-Server.
     \end{itemize}
 \end{frame}
 
 \subsection{Workflow der Anwendung}
 \begin{frame}{Workflow der Anwendung}
-    \centfig{0.6}{web-app-workflow.png}
+    \centfig{0.7}{web-app-workflow.png}
+    % \begin{enumerate}
+    %     \item Nutzeranfrage (z. B. Download einer Aufgabe) wird an den Server gesendet.
+    %     \item Server fragt die Datenbank ab und verarbeitet die Ergebnisse.
+    %     \item Die resultierenden Daten werden an den Client zurückgegeben.
+    % \end{enumerate}
+\end{frame}
+
+\begin{frame}{Workflow der Anwendung}
+    % \centfig{0.6}{web-app-workflow.png}
     \begin{enumerate}
-        \item Nutzeranfrage (z. B. Download einer Aufgabe) wird an den Server gesendet.
-        \item Server fragt die Datenbank ab und verarbeitet die Ergebnisse.
-        \item Die resultierenden Daten werden an den Client zurückgegeben.
+        \item<1-> Nutzeranfrage (z. B. Download einer Aufgabe) wird an den Server gesendet.
+        \item<2-> Server fragt die Datenbank ab und verarbeitet die Ergebnisse.
+        \item<3-> Die resultierenden Daten werden an den Client zurückgegeben.
     \end{enumerate}
 \end{frame}
 
@@ -141,13 +159,13 @@
 \section{Datenbank}
 \begin{frame}{Datenbankstruktur}
     \begin{itemize}
-        \item Tabellen:
+        \item<1-> Tabellen:
         \begin{itemize}
             \item \textbf{User:} Speichert Benutzerdaten und Login-Informationen.
             \item \textbf{Exercise:} Enthält Aufgabeninhalte und Metadaten.
             \item \textbf{Category/Subcategory:} Hierarchische Organisation von Aufgaben.
         \end{itemize}
-        \item Beziehungen:
+        \item<2-> Beziehungen:
         \begin{itemize}
             \item 1:n Beziehung zwischen Benutzer und Aufgaben.
             \item n:1 Beziehung zwischen Aufgaben und Kategorien.
@@ -159,14 +177,14 @@
 \section{Frontend-Architektur}
 \begin{frame}{Frontend-Architektur}
     \begin{itemize}
-        \item Komponenten:
+        \item<1-> Komponenten:
         \begin{itemize}
             \item \textbf{AufgabenSuchen:} Filterung und Anzeige von Aufgaben.
             \item \textbf{AufgabeDetails:} Detaillierte Ansicht einer Aufgabe.
             \item \textbf{Warenkorb:} Verwaltung gesammelter Aufgaben.
             \item \textbf{AufgabeHinzufügen/Ändern:} Formulare zur Bearbeitung.
         \end{itemize}
-        \item Zustandshandling:
+        \item<2-> Zustandshandling:
         \begin{itemize}
             \item \texttt{useContext}: Globaler Zustand für Suche und Warenkorb.
             \item \texttt{useState}, \texttt{useEffect}: Lokale Zustandsverwaltung.
@@ -189,12 +207,12 @@
 \subsection{Probleme und Lösungen}
 \begin{frame}{Probleme und Lösungen}
     \begin{itemize}
-        \item \textbf{CORS-Probleme:}
+        \item<1-> \textbf{CORS-Probleme:}
         \begin{itemize}
             \item Ursache: Anfragen an unsichere Domains.
             \item Lösung: Spezifikation erlaubter Domains im Server-Code.
         \end{itemize}
-        \item \textbf{Testdatenbank:}
+        \item<2-> \textbf{Testdatenbank:}
         \begin{itemize}
             \item Ursache: Konflikte durch manuell gesetzte IDs.
             \item Lösung: Automatische ID-Zuweisung.
@@ -206,24 +224,24 @@
 \section{Zusammenfassung und Ausblick}
 \begin{frame}{Zusammenfassung}
     \begin{itemize}
-        \item Umsetzung der Kernfunktionen:
+        \item<1-> Umsetzung der Kernfunktionen:
         \begin{itemize}
             \item Aufgaben filtern, sammeln, herunterladen.
             \item Benutzerregistrierung und Login.
         \end{itemize}
-        \item Lernprozess: Vertieftes Verständnis von Full-Stack-Entwicklung.
+        \item<2-> Lernprozess: Vertieftes Verständnis von Full-Stack-Entwicklung.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Ausblick}
     \begin{itemize}
-        \item Erweiterungen:
+        \item<1-> Erweiterungen:
         \begin{itemize}
             \item Benutzerprofile und Filtermöglichkeiten.
             \item Integration weiterer Fachbereiche.
             \item Kommentarfunktion für Aufgaben.
         \end{itemize}
-        \item Verbesserung der Codebasis für Skalierbarkeit.
+        \item<2-> Verbesserung der Codebasis für Skalierbarkeit.
     \end{itemize}
 \end{frame}
 
