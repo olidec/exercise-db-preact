@@ -43,3 +43,5 @@ package-lock.json
 *.fls
 *.fdb_latexmk
 *.aux
+*.nav
+*.snm
