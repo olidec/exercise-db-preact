@@ -1,6 +1,72 @@
 \documentclass{beamer}
-\usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc} 
+\usepackage[ngerman]{babel} % Passt alle automatischen Texte an. 
+%\usepackage[english]{babel} % Diese Variante verwenden, fall man eine Arbeit auf Englisch schreibt.
+
+\parindent=0cm
+\parskip=0.3cm
+\linespread{1.5}
+
 \usepackage{graphicx}
+\graphicspath{{images/},{../images/}}
+
+\newcommand{\centfig}[2]{\begin{center}
+  \includegraphics[width=#1\textwidth]{#2}
+  \end{center}}
+
+
+
+
+% Ein paar standard Pakete. Man muss genau wissen, wofür alle gebraucht werden...
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{datetime}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+%Code
+\usepackage{listings}
+\usepackage{xcolor}
+
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{blue},          % Schlüsselwörter (z.B. function, if, else)
+    stringstyle=\color{orange},         % Zeichenketten
+    commentstyle=\color{gray},          % Kommentare
+    numberstyle=\tiny\color{gray},      % Zeilennummern
+    stepnumber=1,                       % Zeilennummernschritt
+    numbersep=10pt,                     % Abstand zu Zeilennummern
+    showspaces=false,                   % Leerzeichen nicht anzeigen
+    showstringspaces=false,             % Leerzeichen in Zeichenketten nicht anzeigen
+    breaklines=true,                    % Zeilenumbruch bei langen Zeilen
+    frame=single,                       % Rahmen um den Code
+    tabsize=2,                          % Tab-Breite
+    captionpos=b,                       % Position der Beschriftung (b=unten)
+    morekeywords={console, log},        % Zusätzliche Schlüsselwörter
+    keywordstyle=[2]\color{purple},     % Stil für spezielle Schlüsselwörter (z.B. console, log)
+    identifierstyle=\color{teal},       % Stil für Variablen und Funktionsnamen
+    numberstyle=\tiny\color{gray},      % Stil für Zeilennummern
+    emph={function, return, var},       % Hervorhebung spezifischer Schlüsselwörter
+    emphstyle=\color{magenta},          % Stil der hervorgehobenen Wörter
+    commentstyle=\color{gray}, % Stil für Kommentare (z.B. grünlich)
+    literate=
+    *{0}{{{\color{red}0}}}{1}           % Zahlen in Rot
+     {1}{{{\color{red}1}}}{1}
+     {2}{{{\color{red}2}}}{1}
+     {3}{{{\color{red}3}}}{1}
+     {4}{{{\color{red}4}}}{1}
+     {5}{{{\color{red}5}}}{1}
+     {6}{{{\color{red}6}}}{1}
+     {7}{{{\color{red}7}}}{1}
+     {8}{{{\color{red}8}}}{1}
+     {9}{{{\color{red}9}}}{1}
+     {=>}{{{\color{blue}=>}}}{2},    
+     comment=[l]{//}  % Legt // als Kommentarzeichen fest   % Operatoren hervorheben
+}
+
 
 \title{Webapplikation zur Erstellung und Ausgabe von Mathematikaufgaben}
 \subtitle{Abschlussprojekt GymInf Weiterbildung}
@@ -23,7 +89,7 @@
 \begin{frame}{Einleitung}
     \begin{itemize}
         \item<1-> Ziel: Entwicklung einer Webapplikation, um Mathematikaufgaben zu erstellen, zu verwalten und herunterzuladen.
-        \item<2-> Inspiration: Frühere Plattform munterbunt.ch.
+        \item<2-> Inspiration: Frühere Plattform \url{munterbunt.ch}.
         \item<3-> Anforderungen:
         \begin{itemize}
             \item Benutzerregistrierung und Login.
@@ -38,7 +104,7 @@
 \section{Struktur der Webapplikation}
 \subsection{Architekturübersicht}
 \begin{frame}{Architekturübersicht}
-    \includegraphics[width=0.5\textwidth]{docker_overview.png}
+    \centfig{0.5}{docker-container.png}
     \begin{itemize}
         \item Anwendung läuft in einem Docker-Container.
         \item Proxy vermittelt zwischen Client, Server und Datenbank.
@@ -63,7 +129,7 @@
 
 \subsection{Workflow der Anwendung}
 \begin{frame}{Workflow der Anwendung}
-    \includegraphics[width=0.6\textwidth]{workflow.png}
+    \centfig{0.6}{web-app-workflow.png}
     \begin{enumerate}
         \item Nutzeranfrage (z. B. Download einer Aufgabe) wird an den Server gesendet.
         \item Server fragt die Datenbank ab und verarbeitet die Ergebnisse.
@@ -117,7 +183,7 @@
         \item Agile Kommunikation im kleinen Team.
         \item Herausforderung: Übersichtlichkeit und Priorisierung in der Anfangsphase.
     \end{itemize}
-    \includegraphics[width=0.6\textwidth]{trello_screenshot.png}
+    \centfig{0.6}{trello.png}
 \end{frame}
 
 \subsection{Probleme und Lösungen}
